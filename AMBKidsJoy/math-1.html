@@ -1,0 +1,630 @@
+<!doctype html><html lang="am"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Number Explorers · AMBKidsJoy</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;600;700&display=swap">
+<style>
+/* Layout: playful "mission map" across the top, one mission board at a time, a star guide (Kokeb) who talks beside every activity.
+   Place-value colours are the system: thousands=blue, hundreds=green, tens=sun, ones=clay — used everywhere. */
+:root{
+  --bg:#F3F7FC; --surface:#FFFFFF; --surface-2:#E7EEF8; --ink:#1B2A4A; --ink-soft:#4F5F7E; --line:#D3DDEB;
+  --th:#2F6FDE; --hu:#1E8A5B; --te:#E59A00; --on:#D9483B;
+  --sun:#F4B400; --good:#1E8A5B; --bad:#D9483B; --accent:#2F6FDE;
+  --th-soft:#DCE7FB; --hu-soft:#D7F0E3; --te-soft:#FDEFC8; --on-soft:#FADBD7;
+  --display:"Baloo 2","Noto Sans Ethiopic",ui-rounded,system-ui,sans-serif;
+  --body:"Noto Sans Ethiopic","Baloo 2",system-ui,sans-serif;
+  --shadow:0 3px 0 rgba(27,42,74,.12);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0F1726; --surface:#18233A; --surface-2:#22304C; --ink:#E8EEF8; --ink-soft:#A9B6CE; --line:#2E3D5C;
+  --th:#6E9DF0; --hu:#4FC08A; --te:#F6BE3A; --on:#F07A6E; --sun:#F6C33A; --good:#4FC08A; --bad:#F07A6E; --accent:#6E9DF0;
+  --th-soft:#22345A; --hu-soft:#1C3A31; --te-soft:#3D3218; --on-soft:#432424; --shadow:0 3px 0 rgba(0,0,0,.35); color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0F1726; --surface:#18233A; --surface-2:#22304C; --ink:#E8EEF8; --ink-soft:#A9B6CE; --line:#2E3D5C;
+  --th:#6E9DF0; --hu:#4FC08A; --te:#F6BE3A; --on:#F07A6E; --sun:#F6C33A; --good:#4FC08A; --bad:#F07A6E; --accent:#6E9DF0;
+  --th-soft:#22345A; --hu-soft:#1C3A31; --te-soft:#3D3218; --on-soft:#432424; --shadow:0 3px 0 rgba(0,0,0,.35); color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px 40px}
+.wrap{max-width:1040px;margin:0 auto;display:grid;gap:18px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.num{font-family:var(--display);font-variant-numeric:tabular-nums;font-weight:700}
+
+/* header */
+header.top{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand svg{width:56px;height:56px;flex:none}
+.brand h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800}
+.brand p{margin:0;color:var(--ink-soft);font-size:.95rem}
+.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:var(--surface);border:2px solid var(--line);font-family:var(--display);font-weight:700}
+.lang button{padding:4px 10px;border-radius:999px;font-weight:700}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.starcount{color:var(--ink)}
+.starcount svg{width:22px;height:22px}
+
+/* mission map */
+nav.map{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:640px){nav.map{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.chip{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:var(--surface);border:2px solid var(--line);text-align:left;box-shadow:var(--shadow);min-width:0;transition:transform .12s}
+.chip:hover{transform:translateY(-2px)}
+.chip .n{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--surface-2);font-family:var(--display);font-weight:800}
+.chip .lbl{font-family:var(--display);font-weight:700;line-height:1.15;font-size:.98rem;min-width:0}
+.chip[aria-current="true"]{border-color:var(--accent);background:var(--th-soft)}
+.chip.done .n{background:var(--sun);color:#1B2A4A}
+
+/* board */
+.board{background:var(--surface);border:2px solid var(--line);border-radius:24px;padding:clamp(16px,3vw,28px);display:grid;gap:20px;min-width:0}
+.guide{display:flex;gap:14px;align-items:flex-start}
+.guide svg{width:64px;height:64px;flex:none}
+.bubble{position:relative;background:var(--te-soft);border-radius:18px;padding:12px 16px;min-width:0;flex:1}
+.bubble::before{content:"";position:absolute;left:-10px;top:20px;border:10px solid transparent;border-right-color:var(--te-soft);border-left:0}
+.bubble h2{font-size:1.5rem;margin-bottom:4px}
+.bubble p{margin:0}
+.panel{display:grid;gap:14px;min-width:0}
+.sub{font-family:var(--display);font-size:1.15rem;font-weight:700;color:var(--ink-soft);text-transform:none}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{padding:10px 18px;border-radius:14px;background:var(--surface-2);font-family:var(--display);font-weight:700;font-size:1.05rem;border:2px solid var(--line);box-shadow:var(--shadow);transition:transform .1s}
+.btn:active{transform:translateY(2px);box-shadow:none}
+.btn.primary{background:var(--accent);color:#fff;border-color:transparent}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.feedback{min-height:1.6em;font-family:var(--display);font-weight:700;font-size:1.15rem}
+.feedback.good{color:var(--good)} .feedback.bad{color:var(--bad)}
+.divider{height:2px;background:var(--line);border-radius:2px}
+
+/* mission 1 cards */
+.cards{display:flex;gap:14px;flex-wrap:wrap}
+.card{width:78px;height:100px;border-radius:16px;background:var(--surface);border:3px solid var(--ink);font-family:var(--display);font-size:3rem;font-weight:800;display:grid;place-items:center;box-shadow:0 5px 0 var(--ink)}
+.card[disabled]{opacity:.3;transform:translateY(4px);box-shadow:none}
+.slots{display:flex;gap:8px}
+.slot{width:62px;height:76px;border-radius:12px;border:3px dashed var(--line);display:grid;place-items:center;font-family:var(--display);font-size:2.4rem;font-weight:800}
+.slot:nth-child(1){color:var(--hu)} .slot:nth-child(2){color:var(--te)} .slot:nth-child(3){color:var(--on)}
+.found{display:flex;flex-wrap:wrap;gap:8px}
+.tag{padding:6px 14px;border-radius:12px;background:var(--surface-2);font-family:var(--display);font-weight:800;font-size:1.3rem}
+.tag.empty{color:var(--ink-soft);opacity:.5}
+
+/* money */
+.money{display:flex;flex-wrap:wrap;gap:8px;min-height:64px;align-items:flex-end;padding:10px;border-radius:16px;background:var(--surface-2)}
+.bundle{width:64px;height:40px;border-radius:6px;background:var(--th);color:#fff;font-family:var(--display);font-weight:800;display:grid;place-items:center;box-shadow:0 4px 0 color-mix(in srgb,var(--th) 60%,#000),0 8px 0 color-mix(in srgb,var(--th) 40%,#000);font-size:.95rem}
+.note{width:52px;height:30px;border-radius:5px;background:var(--hu);color:#fff;font-family:var(--display);font-weight:800;display:grid;place-items:center;font-size:.85rem}
+.big{font-family:var(--display);font-weight:800;font-size:clamp(2rem,6vw,3rem);line-height:1}
+.target{display:inline-block;padding:4px 14px;border-radius:12px;background:var(--te-soft)}
+.train{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.car{padding:8px 12px;border-radius:12px 12px 4px 4px;background:var(--th-soft);border-bottom:6px solid var(--th);font-family:var(--display);font-weight:800;font-size:1.2rem;min-width:70px;text-align:center}
+.car.miss{background:var(--te-soft);border-color:var(--te);color:var(--te)}
+.car.engine{background:var(--ink);color:var(--bg);border-color:var(--ink-soft)}
+
+/* place value */
+.pv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.pv{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.col{border-radius:16px;padding:10px;display:grid;gap:8px;grid-template-rows:auto 1fr auto;min-width:0}
+.col.th{background:var(--th-soft)} .col.hu{background:var(--hu-soft)} .col.te{background:var(--te-soft)} .col.on{background:var(--on-soft)}
+.col h3{font-size:1.05rem;text-align:center}
+.col.th h3{color:var(--th)} .col.hu h3{color:var(--hu)} .col.te h3{color:var(--te)} .col.on h3{color:var(--on)}
+.blocks{display:flex;flex-wrap:wrap;gap:4px;align-content:flex-end;justify-content:center;min-height:110px}
+.b-th{width:40px;height:40px;background:var(--th);border-radius:4px;background-image:linear-gradient(rgba(255,255,255,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.35) 1px,transparent 1px);background-size:8px 8px;box-shadow:4px -4px 0 color-mix(in srgb,var(--th) 55%,#000)}
+.b-hu{width:34px;height:34px;background:var(--hu);border-radius:3px;background-image:linear-gradient(rgba(255,255,255,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.35) 1px,transparent 1px);background-size:3.4px 3.4px}
+.b-te{width:8px;height:40px;background:var(--te);border-radius:2px;background-image:linear-gradient(rgba(0,0,0,.2) 1px,transparent 1px);background-size:8px 4px}
+.b-on{width:12px;height:12px;background:var(--on);border-radius:2px}
+.ctrl{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.ctrl .c{font-family:var(--display);font-weight:800;font-size:1.6rem}
+.rb{width:40px;height:40px;border-radius:50%;background:var(--surface);border:2px solid var(--line);font-family:var(--display);font-weight:800;font-size:1.4rem;line-height:1}
+.trade{font-size:.85rem;padding:6px 8px;border-radius:10px;background:var(--sun);color:#1B2A4A;font-family:var(--display);font-weight:700}
+.readout{display:grid;gap:6px;padding:14px;border-radius:16px;background:var(--surface-2)}
+.digits{display:flex;gap:2px;font-family:var(--display);font-weight:800;font-size:clamp(2.6rem,8vw,3.6rem);line-height:1}
+.d-th{color:var(--th)} .d-hu{color:var(--hu)} .d-te{color:var(--te)} .d-on{color:var(--on)}
+.kv{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline}
+.kv b{font-family:var(--display);color:var(--ink-soft);font-weight:600}
+.seg{display:inline-flex;border-radius:999px;background:var(--surface-2);padding:4px;gap:4px}
+.seg button{padding:6px 14px;border-radius:999px;font-family:var(--display);font-weight:700}
+.seg button[aria-pressed="true"]{background:var(--surface);box-shadow:var(--shadow)}
+
+/* compare */
+.vs{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;text-align:center}
+.sym{display:flex;gap:8px;justify-content:center}
+.sym .btn{font-size:1.8rem;width:64px;padding:6px 0}
+.ptable{border-collapse:separate;border-spacing:4px;margin:0 auto}
+.ptable th{font-family:var(--display);font-size:.85rem;padding:2px 8px}
+.ptable td{width:56px;height:52px;text-align:center;border-radius:10px;font-family:var(--display);font-weight:800;font-size:1.8rem;background:var(--surface-2)}
+.ptable td.eq{outline:3px solid var(--line)}
+.ptable td.win{background:var(--sun);color:#1B2A4A}
+.scroll{overflow-x:auto}
+
+/* mountains */
+.peaks{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;align-items:end}
+.peak{display:grid;gap:4px;justify-items:center;padding:6px 2px;border-radius:14px;border:2px solid transparent;min-width:0}
+.peak svg{width:100%;max-width:120px;height:auto}
+.peak .nm{font-family:var(--display);font-weight:700;font-size:.92rem;text-align:center;line-height:1.1}
+.peak .ht{font-family:var(--display);font-weight:800}
+.peak.picked{border-color:var(--accent);background:var(--th-soft)}
+.badge{width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:var(--display);font-weight:800}
+.badge.empty{background:var(--surface-2);color:transparent}
+.ncards{display:flex;flex-wrap:wrap;gap:10px}
+.ncard{padding:10px 16px;border-radius:14px;background:var(--surface-2);border:2px solid var(--line);font-family:var(--display);font-weight:800;font-size:1.5rem;display:flex;gap:8px;align-items:center}
+.ncard.picked{border-color:var(--accent);background:var(--th-soft)}
+
+/* geez */
+.geez-strip{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:6px}
+@media (max-width:560px){.geez-strip{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.gz{border-radius:14px;background:var(--surface-2);padding:8px 4px;text-align:center;display:grid;gap:2px}
+.gz .g{font-size:2rem;font-weight:700;line-height:1.2}
+.gz .d{font-family:var(--display);font-weight:800;color:var(--th)}
+.gz .w{font-size:.75rem;color:var(--ink-soft)}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;max-width:460px}
+.mt{padding:10px;border-radius:14px;background:var(--surface-2);border:2px solid var(--line);font-size:1.6rem;font-weight:700;min-height:58px}
+.mt.sel{border-color:var(--accent);background:var(--th-soft)}
+.mt.ok{visibility:hidden}
+.mt.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+/* rounding */
+.nl svg{width:100%;height:auto;max-width:720px;display:block}
+.nl text{fill:var(--ink);font-family:var(--display)}
+
+/* think */
+.q{font-size:1.2rem;font-weight:600}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.opt{padding:12px;border-radius:14px;background:var(--surface-2);border:2px solid var(--line);font-family:var(--display);font-weight:700;font-size:1.2rem;text-align:left}
+.opt.right{border-color:var(--good);background:var(--hu-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--on-soft)}
+.explain{padding:12px 16px;border-radius:14px;background:var(--th-soft)}
+
+.winner{display:flex;gap:16px;align-items:center;padding:16px 20px;border-radius:20px;background:var(--te-soft);border:3px solid var(--sun)}
+.winner svg{width:70px;height:70px;flex:none}
+footer{color:var(--ink-soft);font-size:.9rem;display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between}
+footer button{text-decoration:underline;color:var(--ink-soft)}
+.confetti{position:fixed;top:-10px;width:10px;height:14px;border-radius:2px;pointer-events:none;z-index:50;animation:fall 1.6s ease-in forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(540deg);opacity:.6}}
+@keyframes pop{0%{transform:scale(.6)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+.pop{animation:pop .35s}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+</head><body style="margin:0"><div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <svg viewBox="0 0 100 100" class="kokeb" aria-hidden="true"></svg>
+      <div>
+        <h1 data-t="title"></h1>
+        <p data-t="chapter"></p>
+      </div>
+    </div>
+    <div class="tools">
+      <a class="pill" href="home.html" style="background:var(--accent);color:#fff;border-color:transparent;text-decoration:none" data-t="home"></a>
+      <div class="pill lang" role="group" aria-label="Language">
+        <button id="lang-am" data-lang="am">አማርኛ</button>
+        <button id="lang-en" data-lang="en">English</button>
+      </div>
+      <button class="pill" id="sound-btn"></button>
+      <span class="pill starcount"><svg viewBox="0 0 100 100" class="star-icon" aria-hidden="true"></svg><span id="stars" class="num">0</span>/9</span>
+    </div>
+  </header>
+
+  <div id="winner"></div>
+  <nav class="map" id="map" aria-label="Missions"></nav>
+
+  <section class="board" id="board">
+    <div class="guide">
+      <svg viewBox="0 0 100 100" class="kokeb" aria-hidden="true"></svg>
+      <div class="bubble"><h2 id="m-title"></h2><p id="m-tip"></p></div>
+    </div>
+    <div class="panel" id="panel"></div>
+  </section>
+
+  <footer>
+    <span data-t="footer"></span>
+    <button id="reset-btn" data-t="reset"></button>
+  </footer>
+</div>
+
+<script>
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const fmt=n=>n.toLocaleString('en-US');
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+function starPoints(cx,cy,R,r){let p=[];for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r:R;p.push((cx+rr*Math.cos(a)).toFixed(1)+','+(cy+rr*Math.sin(a)).toFixed(1))}return p.join(' ')}
+document.querySelectorAll('svg.kokeb').forEach(s=>{s.innerHTML=`<polygon points="${starPoints(50,54,46,22)}" fill="#F4B400" stroke="#C98F00" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="41" cy="52" r="5" fill="#1B2A4A"/><circle cx="59" cy="52" r="5" fill="#1B2A4A"/><circle cx="43" cy="50" r="1.6" fill="#fff"/><circle cx="61" cy="50" r="1.6" fill="#fff"/>
+<path d="M42 63 Q50 71 58 63" stroke="#1B2A4A" stroke-width="3.5" fill="none" stroke-linecap="round"/><circle cx="34" cy="62" r="4" fill="#F28B6B" opacity=".7"/><circle cx="66" cy="62" r="4" fill="#F28B6B" opacity=".7"/>`});
+document.querySelectorAll('svg.star-icon').forEach(s=>{s.innerHTML=`<polygon points="${starPoints(50,52,46,20)}" fill="#F4B400" stroke="#C98F00" stroke-width="4" stroke-linejoin="round"/>`});
+
+/* ---------- number words ---------- */
+const AU=['','አንድ','ሁለት','ሦስት','አራት','አምስት','ስድስት','ሰባት','ስምንት','ዘጠኝ'];
+const AT=['','አስር','ሃያ','ሰላሳ','አርባ','ሃምሳ','ስልሳ','ሰባ','ሰማንያ','ዘጠና'];
+function am2(n){if(n<10)return AU[n];if(n<20)return n===10?'አስር':'አስራ '+AU[n-10];return AT[Math.floor(n/10)]+(n%10?' '+AU[n%10]:'')}
+function amWords(n){if(n===0)return 'ዜሮ';const p=[],th=Math.floor(n/1000),h=Math.floor(n%1000/100),r=n%100;if(th)p.push(am2(th)+' ሺህ');if(h)p.push(AU[h]+' መቶ');if(r)p.push(am2(r));return p.join(' ')}
+const EU=['','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
+const ET=['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
+function en2(n){if(n<20)return EU[n];return ET[Math.floor(n/10)]+(n%10?'-'+EU[n%10]:'')}
+function enWords(n){if(n===0)return 'zero';const p=[],th=Math.floor(n/1000),h=Math.floor(n%1000/100),r=n%100;if(th)p.push(en2(th)+' thousand');if(h)p.push(EU[h]+' hundred');if(r)p.push(en2(r));return p.join(' ')}
+const words=n=>S.lang==='am'?amWords(n):enWords(n);
+const GEEZ=['','፩','፪','፫','፬','፭','፮','፯','፰','፱','፲'];
+
+/* ---------- text ---------- */
+const D={
+ home:{en:'← All subjects',am:'← ሁሉም ትምህርቶች'},
+ title:{en:'Number Explorers',am:'የቁጥር አሳሾች'},
+ chapter:{en:'Grade 3 Maths · Chapter 1 · Numbers up to 10,000',am:'3ኛ ክፍል ሒሳብ · ምዕራፍ 1 · እስከ 10,000 ያሉ ቁጥሮች'},
+ footer:{en:'Built on the Grade 3 Mathematics curriculum, Chapter 1. Kokeb the star is your guide.',am:'በ3ኛ ክፍል የሒሳብ ሥርዓተ ትምህርት ምዕራፍ 1 ላይ የተመሰረተ። መሪያችሁ ኮከብ ናት።'},
+ reset:{en:'Start over',am:'እንደገና ጀምሩ'},
+ resetAsk:{en:'Tap again to erase all stars',am:'ኮከቦችን ሁሉ ለማጥፋት እንደገና ንኩ'},
+ soundOn:{en:'Sound on',am:'ድምፅ አለ'}, soundOff:{en:'Sound off',am:'ድምፅ የለም'},
+ good:{en:['Great thinking!','Excellent!','You got it!','Super!'],am:['ጎበዝ!','በጣም ጥሩ!','ትክክል ነው!','ድንቅ ነው!']},
+ bad:{en:'Not yet. Look again!',am:'ገና ነው። እንደገና ተመልከቱ!'},
+ next:{en:'Next',am:'ቀጣይ'}, check:{en:'Check',am:'አረጋግጡ'}, again:{en:'Try again',am:'እንደገና ሞክሩ'}, clear:{en:'Clear',am:'አጥፉ'},
+ missionDone:{en:'Mission complete! You earned a star.',am:'ተልዕኮው ተጠናቀቀ! ኮከብ አገኛችሁ።'},
+ winTitle:{en:'You are a Number Explorer!',am:'እናንተ የቁጥር አሳሾች ናችሁ!'},
+ winText:{en:'All 8 stars collected. You can count, read, compare, order and round numbers up to 10,000.',am:'ሁሉንም 8 ኮከቦች ሰበሰባችሁ። እስከ 10,000 ያሉ ቁጥሮችን መቁጠር፣ ማንበብ፣ ማወዳደር፣ በቅደም ተከተል ማስቀመጥና ማጠጋጋት ትችላላችሁ።'},
+ /* missions */
+ m1:{en:'Warm-up',am:'ማሟሟቂያ'},
+ m1tip:{en:'Use the cards 4, 5 and 6 to make 3-digit numbers. How many different numbers can you find? A smart thinker makes a plan!',am:'4፣ 5 እና 6 ካርዶችን ተጠቅማችሁ ባለ ሶስት ሆሄ ቁጥሮችን መስርቱ። ስንት የተለያዩ ቁጥሮች ታገኛላችሁ? ብልህ አሳቢ እቅድ ያወጣል!'},
+ m1tap:{en:'Tap three cards',am:'ሶስት ካርዶችን ንኩ'},
+ m1found:{en:'Numbers found: {n} of 6',am:'የተገኙ ቁጥሮች፦ ከ6 ውስጥ {n}'},
+ m1dup:{en:'You already found {x}!',am:'{x}ን አስቀድማችሁ አግኝታችኋል!'},
+ m1all:{en:'All 6 found! The plan: put each card first, then swap the other two. From small to big:',am:'ሁሉም 6 ተገኙ! እቅዱ፦ እያንዳንዱን ካርድ በመጀመሪያ አስቀምጡ፣ ከዚያ ሌሎቹን ሁለቱን አቀያይሩ። ከትንሽ ወደ ትልቅ፦'},
+ m2:{en:'Count big',am:'በመቶና በሺህ መቁጠር'},
+ m2tip:{en:'Ten 100-birr notes tied together make a bundle of 1,000 birr. 10 hundreds = 1 thousand!',am:'አስር ባለ መቶ ብር ኖቶች አንድ ላይ ሲታሰሩ የ1,000 ብር እስር ይሆናሉ። 10 መቶዎች = 1 ሺህ!'},
+ m2make:{en:'Make exactly this amount:',am:'ልክ ይህን ያህል ብር አዘጋጁ፦'},
+ m2have:{en:'You have',am:'ያላችሁ'},
+ birr:{en:'birr',am:'ብር'},
+ m2addB:{en:'+ bundle (1,000)',am:'+ እስር (1,000)'}, m2addN:{en:'+ note (100)',am:'+ ኖት (100)'},
+ m2subB:{en:'− bundle',am:'− እስር'}, m2subN:{en:'− note',am:'− ኖት'},
+ m2tie:{en:'Tie 10 notes into 1 bundle',am:'10 ኖቶችን 1 እስር አድርጉ'},
+ m2ok:{en:'Exactly right! {b} thousands and {n} hundreds make {t}.',am:'ልክ ነው! {b} ሺህዎች እና {n} መቶዎች {t} ይሆናሉ።'},
+ m2over:{en:'Too much! Take some away.',am:'በዛ! ጥቂት ቀንሱ።'},
+ m2new:{en:'New amount',am:'አዲስ መጠን'},
+ m2train:{en:'Number train: which number is missing?',am:'የቁጥር ባቡር፦ የጎደለው ቁጥር የትኛው ነው?'},
+ m2jump:{en:'Jumping by {s}',am:'በ{s} በመዝለል'},
+ m2progress:{en:'Amounts made: {a}/2 · Trains fixed: {t}/3',am:'የተዘጋጁ መጠኖች፦ {a}/2 · የተስተካከሉ ባቡሮች፦ {t}/3'},
+ m3:{en:'Place value',am:'የቁጥር ቤት'},
+ m3tip:{en:'Every digit lives in a house. The same 5 is worth 5, 50, 500 or 5,000 depending on its house! When a house gets 10, trade them for 1 in the next house.',am:'እያንዳንዱ ሆሄ በራሱ ቤት ይኖራል። ያው 5 እንደ ቤቱ 5፣ 50፣ 500 ወይም 5,000 ዋጋ አለው! አንድ ቤት 10 ሲሞላ በቀጣዩ ቤት 1 ቀይሩት።'},
+ th:{en:'Thousands',am:'ሺህዎች'}, hu:{en:'Hundreds',am:'መቶዎች'}, te:{en:'Tens',am:'አስሮች'}, on:{en:'Ones',am:'አንዶች'},
+ m3free:{en:'Free build',am:'በነጻ ገንቡ'}, m3chal:{en:'Challenge',am:'ፈተና'},
+ m3build:{en:'Build this number with blocks:',am:'ይህንን ቁጥር በብሎኮች ገንቡ፦'},
+ m3exp:{en:'Expanded form',am:'በመተንተን ሲጻፍ'}, m3words:{en:'In words',am:'በፊደል ሲጻፍ'},
+ m3trade:{en:'Trade 10 → 1',am:'10 → 1 ቀይሩ'},
+ m3solved:{en:'Challenges solved: {n}/3',am:'የተፈቱ ፈተናዎች፦ {n}/3'},
+ m3ok:{en:'Correct! You built {x}.',am:'ትክክል! {x} ገነባችሁ።'},
+ m3no:{en:'Your blocks show {x}. Check each house.',am:'ብሎኮቻችሁ {x} ያሳያሉ። እያንዳንዱን ቤት ፈትሹ።'},
+ m3hint:{en:'Tip: the digits sit in the houses from left to right.',am:'ፍንጭ፦ ሆሄያቱ ከግራ ወደ ቀኝ በቤቶቻቸው ይቀመጣሉ።'},
+ m4:{en:'Compare',am:'ማወዳደር'},
+ m4tip:{en:'Which number is bigger? Start from the left, at the biggest house. The first house that is different decides!',am:'የትኛው ቁጥር ይበልጣል? ከግራ፣ ከትልቁ ቤት ጀምሩ። መጀመሪያ የሚለያየው ቤት ይወስናል!'},
+ m4pick:{en:'Pick the right sign:',am:'ትክክለኛውን ምልክት ምረጡ፦'},
+ m4show:{en:'Show me how',am:'እንዴት እንደሆነ አሳዩኝ'},
+ m4score:{en:'Correct answers: {n}/5',am:'ትክክለኛ መልሶች፦ {n}/5'},
+ m4digits:{en:'{a} has more digits than {b}, so it is bigger.',am:'{a} ከ{b} የበለጠ የሆሄ ብዛት ስላለው ይበልጣል።'},
+ m4same:{en:'Every house is the same, so the numbers are equal.',am:'ሁሉም ቤቶች እኩል ናቸው፤ ስለዚህ ቁጥሮቹ እኩል ናቸው።'},
+ m4decide:{en:'The digits are the same until the {p} house: {x} {s} {y}. So {a} {s} {b}.',am:'እስከ {p} ቤት ድረስ እኩል ናቸው፦ {x} {s} {y}። ስለዚህ {a} {s} {b}።'},
+ m4first:{en:'Look at the {p} house first: {x} {s} {y}. So {a} {s} {b}.',am:'መጀመሪያ የ{p} ቤትን እዩ፦ {x} {s} {y}። ስለዚህ {a} {s} {b}።'},
+ m4mouth:{en:'Remember: the open side of < or > faces the bigger number.',am:'አስታውሱ፦ የ< ወይም > ክፍት ጎን ወደ ትልቁ ቁጥር ይመለከታል።'},
+ thS:{en:'thousands',am:'ሺህ'}, huS:{en:'hundreds',am:'መቶ'}, teS:{en:'tens',am:'አስር'}, onS:{en:'ones',am:'አንድ'},
+ m5:{en:'Put in order',am:'በቅደም ተከተል'},
+ m5tip:{en:'These are high places in the Amhara region and one city. Tap them from the lowest to the highest. Compare the thousands first, then the hundreds.',am:'እነዚህ በአማራ ክልል የሚገኙ ከፍተኛ ቦታዎችና አንድ ከተማ ናቸው። ከዝቅተኛው ወደ ከፍተኛው ንኩ። መጀመሪያ ሺህዎችን፣ ከዚያ መቶዎችን አወዳድሩ።'},
+ m5note:{en:'Heights are approximate, in metres above sea level.',am:'ከፍታዎቹ ግምታዊ ናቸው፤ ከባሕር ጠለል በላይ በሜትር።'},
+ m5r2:{en:'Now order these numbers from smallest to biggest:',am:'አሁን እነዚህን ቁጥሮች ከትንሽ ወደ ትልቅ አስቀምጡ፦'},
+ m5ok:{en:'Perfect order!',am:'ፍጹም ቅደም ተከተል!'},
+ m5no:{en:'Not quite. Compare the house that is different and try again.',am:'ትክክል አይደለም። የሚለያየውን ቤት አወዳድሩና እንደገና ሞክሩ።'},
+ m5rounds:{en:'Rounds done: {n}/3',am:'የተጠናቀቁ ዙሮች፦ {n}/3'},
+ m6:{en:'Ethiopic numerals',am:'የኢትዮጵያ ቁጥሮች'},
+ m6tip:{en:'Ethiopia has its own number signs! Did you know they have no zero? Ten has its own sign: ፲.',am:'ኢትዮጵያ የራሷ የቁጥር ምልክቶች አሏት! ዜሮ እንደሌላቸው ታውቃላችሁ? አስር የራሱ ምልክት አለው፦ ፲።'},
+ m6match:{en:'Match each Ethiopic numeral with its number. Tap one on the left, then its partner on the right.',am:'እያንዳንዱን የኢትዮጵያ ቁጥር ከአቻው ጋር አዛምዱ። በግራ አንዱን፣ ከዚያ በቀኝ አቻውን ንኩ።'},
+ m6rounds:{en:'Rounds done: {n}/3',am:'የተጠናቀቁ ዙሮች፦ {n}/3'},
+ m7:{en:'Rounding',am:'አቅራብ ዋጋ'},
+ m7tip:{en:'Rounding means finding the nearest friendly number. Look at the number line: which end is the number closer to?',am:'ማጠጋጋት ማለት በጣም ቅርብ የሆነውን ቀላል ቁጥር መፈለግ ነው። የቁጥር መስመሩን እዩ፦ ቁጥሩ ለየትኛው ጫፍ ይቀርባል?'},
+ m7ask:{en:'Round {n} to the nearest {u}.',am:'{n}ን ወደ አቅራብ {u} ቤት አጠጋጉ።'},
+ m7rule:{en:'Rule: look at the digit to the right of the house. 5 or more → go up. 4 or less → stay down.',am:'ደንብ፦ ከቤቱ በስተቀኝ ያለውን ሆሄ እዩ። 5 ወይም ከዚያ በላይ ከሆነ ወደ ላይ፤ 4 ወይም ከዚያ በታች ከሆነ ወደ ታች።'},
+ m7why:{en:'The digit to look at is {d}, so {n} rounds to {r}.',am:'የምናየው ሆሄ {d} ነው፤ ስለዚህ {n} ወደ {r} ይጠጋጋል።'},
+ m7score:{en:'Correct answers: {n}/6',am:'ትክክለኛ መልሶች፦ {n}/6'},
+ m8:{en:"Thinker's challenge",am:'የአሳቢዎች ፈተና'},
+ m9:{en:'Take-home notes',am:'የቤት ማስታወሻ'},
+ m9tip:{en:'Read these notes with your family. Can you answer every exam question without looking? Then try the Young Innovator challenge.',am:'እነዚህን ማስታወሻዎች ከቤተሰባችሁ ጋር አንብቡ። ሳታዩ እያንዳንዱን የፈተና ጥያቄ መመለስ ትችላላችሁ? ከዚያ የወጣት ፈጣሪ ፈተናውን ሞክሩ።'},
+ m8tip:{en:'Real mathematicians are detectives. Read carefully, think, then choose. Every answer comes with a reason.',am:'እውነተኛ የሒሳብ ሊቃውንት መርማሪዎች ናቸው። በጥንቃቄ አንብቡ፣ አስቡ፣ ከዚያ ምረጡ። እያንዳንዱ መልስ ምክንያት አለው።'},
+ m8count:{en:'Puzzle {i} of {n}',am:'እንቆቅልሽ {i} ከ{n}'}
+};
+const PUZ=[
+ {q:{en:'I am a 4-digit number. My thousands digit is 2. My hundreds digit is 0. My tens and ones together read 47. Who am I?',am:'እኔ ባለ 4 ሆሄ ቁጥር ነኝ። የሺህ ቤት ሆሄዬ 2 ነው። የመቶ ቤት ሆሄዬ 0 ነው። የአስርና የአንድ ቤት ሆሄዎቼ አብረው ሲነበቡ 47 ናቸው። እኔ ማን ነኝ?'},o:['2,470','2,047','247','2,407'],a:1,
+  e:{en:'2 thousands, 0 hundreds, 4 tens, 7 ones → 2,047. The 0 keeps the hundreds house empty.',am:'2 ሺህዎች፣ 0 መቶዎች፣ 4 አስሮች፣ 7 አንዶች → 2,047። 0 የመቶን ቤት ባዶ ያስቀምጣል።'}},
+ {q:{en:'Abel says: "7 hundreds and 8 ones = 78." What is the correct number?',am:'አቤል "7 መቶዎችና 8 አንዶች = 78" አለ። ትክክለኛው ቁጥር ስንት ነው?'},o:['78','780','708','7,008'],a:2,
+  e:{en:'Abel forgot the tens house. It is empty, so we write 0 there: 708.',am:'አቤል የአስርን ቤት ረሳ። ቤቱ ባዶ ስለሆነ 0 እንጽፋለን፦ 708።'}},
+ {q:{en:'Use the digits 3, 0, 8 and 5 once each. What is the BIGGEST 4-digit number you can make?',am:'3፣ 0፣ 8 እና 5ን አንድ አንድ ጊዜ ተጠቀሙ። መመስረት የምትችሉት ትልቁ ባለ 4 ሆሄ ቁጥር ስንት ነው?'},o:['8,530','8,350','5,830','3,058'],a:0,
+  e:{en:'Put the biggest digit in the biggest house: 8, then 5, then 3, then 0 → 8,530.',am:'ትልቁን ሆሄ በትልቁ ቤት አስቀምጡ፦ 8፣ ከዚያ 5፣ ከዚያ 3፣ ከዚያ 0 → 8,530።'}},
+ {q:{en:'Same digits 3, 0, 8, 5. What is the SMALLEST 4-digit number?',am:'ያው ሆሄያት 3፣ 0፣ 8፣ 5። ትንሹ ባለ 4 ሆሄ ቁጥር ስንት ነው?'},o:['0,358','3,058','3,580','5,038'],a:1,
+  e:{en:'A 4-digit number cannot start with 0. So start with 3, then the smallest digits: 3,058.',am:'ባለ 4 ሆሄ ቁጥር በ0 መጀመር አይችልም። ስለዚህ በ3 እንጀምራለን፣ ከዚያ ትንንሾቹን፦ 3,058።'}},
+ {q:{en:'Which number rounds to 500 when we round to the nearest hundred?',am:'ወደ አቅራብ መቶ ቤት ሲጠጋጋ 500 የሚሆነው የትኛው ቁጥር ነው?'},o:['449','551','462','399'],a:2,
+  e:{en:'462 is between 400 and 500. Its tens digit is 6 (5 or more), so it goes up to 500.',am:'462 በ400 እና በ500 መካከል ነው። የአስር ቤት ሆሄው 6 ነው (5 ወይም ከዚያ በላይ)፤ ስለዚህ ወደ 500 ይጠጋጋል።'}},
+ {q:{en:'What number is 1,000 less than 4,359?',am:'ከ4,359 በ1,000 የሚያንሰው ቁጥር ስንት ነው?'},o:['4,259','3,359','4,349','3,459'],a:1,
+  e:{en:'Only the thousands house changes: 4 thousands become 3 thousands → 3,359.',am:'የሚለወጠው የሺህ ቤት ብቻ ነው፦ 4 ሺህዎች 3 ሺህዎች ይሆናሉ → 3,359።'}},
+ {q:{en:'9,999 + 1 = ?',am:'9,999 + 1 = ?'},o:['9,990','10,000','1,000','99,991'],a:1,
+  e:{en:'Every house fills up to 10 and trades to the next one, all the way: 10,000, the biggest number in our chapter!',am:'እያንዳንዱ ቤት 10 ሲሞላ ወደ ቀጣዩ ይቀየራል፣ እስከ መጨረሻው፦ 10,000፣ የምዕራፋችን ትልቁ ቁጥር!'}}
+];
+function t(k,v){let e=D[k];let s=e?(e[S.lang]??e.en):k;if(Array.isArray(s))s=s[Math.floor(Math.random()*s.length)];if(v)for(const x in v)s=s.split('{'+x+'}').join(v[x]);return s}
+const tt=o=>o[S.lang]??o.en;
+
+/* ---------- state ---------- */
+const S={lang:store.get('g3-lang','am'),done:store.get('g3-done-math-1',{}),sound:store.get('g3-sound',true),cur:1};
+const MIS=[1,2,3,4,5,6,7,8,9];
+
+/* sound */
+let AC=null;
+function tone(freqs,dur=.12){if(!S.sound)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();freqs.forEach((f,i)=>{const o=AC.createOscillator(),g=AC.createGain();o.type='triangle';o.frequency.value=f;g.gain.setValueAtTime(.0001,AC.currentTime+i*dur);g.gain.exponentialRampToValueAtTime(.18,AC.currentTime+i*dur+.02);g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+i*dur+dur*1.6);o.connect(g);g.connect(AC.destination);o.start(AC.currentTime+i*dur);o.stop(AC.currentTime+i*dur+dur*2)})}catch(e){}}
+const yay=()=>tone([523,659,784]),nope=()=>tone([300,240],.15),tick=()=>tone([700],.05),fanfare=()=>tone([523,659,784,1047,784,1047],.13);
+
+function confetti(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const cols=['#2F6FDE','#1E8A5B','#F4B400','#D9483B'];for(let i=0;i<40;i++){const c=document.createElement('div');c.className='confetti';c.style.left=Math.random()*100+'vw';c.style.background=cols[i%4];c.style.animationDelay=Math.random()*.5+'s';document.body.appendChild(c);setTimeout(()=>c.remove(),2300)}}
+
+function complete(id){if(S.done[id])return;S.done[id]=true;store.set('g3-done-math-1',S.done);fanfare();confetti();renderChrome()}
+
+/* ---------- missions ---------- */
+const M={};
+
+/* 1 warm-up */
+M[1]={st:{pick:[],found:[],msg:'',cls:''},
+ render(p){const s=this.st;const all=s.found.length===6;
+  p.innerHTML=`<div class="sub">${t('m1tap')}</div>
+  <div class="row" style="gap:24px;align-items:flex-end">
+   <div class="cards">${[4,5,6].map(d=>`<button class="card" data-d="${d}" ${s.pick.includes(d)||all?'disabled':''} aria-label="${d}">${d}</button>`).join('')}</div>
+   <div class="slots" aria-live="polite">${[0,1,2].map(i=>`<div class="slot">${s.pick[i]??''}</div>`).join('')}</div>
+   <button class="btn" data-act="clear">${t('clear')}</button>
+  </div>
+  <div class="feedback ${s.cls}" aria-live="polite">${s.msg}</div>
+  <div class="sub">${t('m1found',{n:s.found.length})}</div>
+  <div class="found">${[0,1,2,3,4,5].map(i=>s.found[i]?`<span class="tag pop">${s.found[i]}</span>`:`<span class="tag empty">? ? ?</span>`).join('')}</div>
+  ${all?`<div class="explain">${t('m1all')}<div class="big" style="font-size:1.7rem;margin-top:6px">${s.found.slice().sort().join(' &lt; ')}</div></div>`:''}`;
+  p.onclick=e=>{const b=e.target.closest('button');if(!b)return;
+   if(b.dataset.act==='clear'){s.pick=[];s.msg='';this.render(p);return}
+   if(b.dataset.d){tick();s.pick.push(+b.dataset.d);
+    if(s.pick.length===3){const x=s.pick.join('');
+     if(s.found.includes(x)){s.msg=t('m1dup',{x});s.cls='bad';nope()}else{s.found.push(x);s.msg=t('good');s.cls='good';yay()}
+     this.render(p);setTimeout(()=>{s.pick=[];if(s.found.length===6)complete(1);this.render(p)},650);return}
+    this.render(p)}}}};
+
+/* 2 count big */
+M[2]={st:null,
+ init(){this.st={target:this.newT(),b:0,n:0,made:0,solved:false,train:this.newTrain(),trains:0,tmsg:'',tcls:''}},
+ newT(){let x;do{x=rnd(11,99)*100}while(x%1000===0);return x},
+ newTrain(){const step=[10,100,1000][rnd(0,2)];const start=step===1000?rnd(0,4)*1000:step===100?rnd(10,60)*100:rnd(100,900)*10;
+  const seq=[0,1,2,3,4,5].map(i=>start+i*step);const mi=rnd(1,5);const c=seq[mi];const off=step===10?100:step===100?10:100;
+  let opts=shuffle([c,c+off,Math.max(0,c-off)===c?c+2*off:c-off]);return{step,seq,mi,opts,ans:null}},
+ render(p){if(!this.st)this.init();const s=this.st;const total=s.b*1000+s.n*100;
+  let msg='',cls='';if(total===s.target){msg=t('m2ok',{b:s.b,n:s.n,t:fmt(total)});cls='good'}else if(total>s.target){msg=t('m2over');cls='bad'}
+  const tr=s.train;
+  p.innerHTML=`<div class="row"><span class="sub">${t('m2make')}</span><span class="big target">${fmt(s.target)} ${t('birr')}</span></div>
+  <div class="money" aria-label="money">${'<div class="bundle">1,000</div>'.repeat(s.b)}${'<div class="note">100</div>'.repeat(s.n)}</div>
+  <div class="row"><span class="sub">${t('m2have')}:</span><span class="big num">${fmt(total)}</span><span class="sub">${t('birr')}</span></div>
+  <div class="row">
+   <button class="btn" data-act="addB" ${total+1000>10000||s.solved?'disabled':''} style="border-color:var(--th)">${t('m2addB')}</button>
+   <button class="btn" data-act="addN" ${total+100>10000||s.solved?'disabled':''} style="border-color:var(--hu)">${t('m2addN')}</button>
+   <button class="btn" data-act="subB" ${!s.b||s.solved?'disabled':''}>${t('m2subB')}</button>
+   <button class="btn" data-act="subN" ${!s.n||s.solved?'disabled':''}>${t('m2subN')}</button>
+   ${s.n>=10?`<button class="trade pop" data-act="tie">${t('m2tie')}</button>`:''}
+  </div>
+  <div class="feedback ${cls}" aria-live="polite">${msg}</div>
+  ${s.solved&&s.made<2?`<div><button class="btn primary" data-act="newT">${t('m2new')}</button></div>`:''}
+  <div class="divider"></div>
+  <div class="sub">${t('m2train')} <span style="color:var(--te)">${t('m2jump',{s:fmt(tr.step)})}</span></div>
+  <div class="scroll"><div class="train">${tr.seq.map((v,i)=>i===tr.mi?`<span class="car miss">${tr.ans!==null?fmt(tr.ans):'?'}</span>`:`<span class="car ${i===0?'engine':''}">${fmt(v)}</span>`).join('')}</div></div>
+  <div class="row">${tr.opts.map(o=>`<button class="btn" data-opt="${o}">${fmt(o)}</button>`).join('')}</div>
+  <div class="feedback ${s.tcls}" aria-live="polite">${s.tmsg}</div>
+  <div class="sub" style="font-size:1rem">${t('m2progress',{a:s.made,t:s.trains})}</div>`;
+  p.onclick=e=>{const b=e.target.closest('button');if(!b||b.disabled)return;const a=b.dataset.act;
+   if(a){tick();if(a==='addB')s.b++;if(a==='addN')s.n++;if(a==='subB')s.b--;if(a==='subN')s.n--;
+    if(a==='tie'){s.n-=10;s.b++;yay()}
+    if(a==='newT'){s.target=this.newT();s.b=0;s.n=0;s.solved=false}
+    const tot=s.b*1000+s.n*100;if(tot===s.target&&!s.solved){s.solved=true;s.made++;yay();if(s.made>=2&&s.trains>=3)complete(2)}
+    this.render(p);return}
+   if(b.dataset.opt){const v=+b.dataset.opt,c=tr.seq[tr.mi];
+    if(v===c){tr.ans=v;s.trains++;s.tmsg=t('good');s.tcls='good';yay();if(s.made>=2&&s.trains>=3)complete(2);this.render(p);setTimeout(()=>{s.train=this.newTrain();s.tmsg='';this.render(p)},1100)}
+    else{s.tmsg=t('bad');s.tcls='bad';nope();this.render(p)}}}}};
+
+/* 3 place value */
+const KEYS=['th','hu','te','on'],VAL=[1000,100,10,1];
+M[3]={st:{c:[1,2,5,4],mode:'free',target:0,solved:0,msg:'',cls:''},
+ val(){return this.st.c.reduce((a,x,i)=>a+x*VAL[i],0)},
+ newTarget(){let x;do{x=rnd(1001,9999)}while(String(x).includes('0')&&Math.random()<.4);this.st.target=x;this.st.c=[0,0,0,0];this.st.msg=''},
+ render(p){const s=this.st,v=this.val();const ds=String(v).padStart(4,' ').split('');
+  const exp=s.c.map((x,i)=>x?fmt(x*VAL[i]):null).filter(Boolean).join(' + ')||'0';
+  p.innerHTML=`<div class="row"><div class="seg" role="group">
+   <button data-mode="free" aria-pressed="${s.mode==='free'}">${t('m3free')}</button>
+   <button data-mode="chal" aria-pressed="${s.mode==='chal'}">${t('m3chal')}</button></div>
+   ${s.mode==='chal'?`<span class="sub" style="font-size:1rem">${t('m3solved',{n:s.solved})}</span>`:''}</div>
+  ${s.mode==='chal'?`<div class="explain"><div class="sub">${t('m3build')}</div><div class="big" style="font-size:clamp(1.3rem,4vw,1.9rem)">${words(s.target)}</div></div>`:''}
+  <div class="pv">${KEYS.map((k,i)=>`<div class="col ${k}"><h3>${t(k)}</h3>
+    <div class="blocks">${`<span class="b-${k}"></span>`.repeat(s.c[i])}</div>
+    <div class="ctrl"><button class="rb" data-dec="${i}" aria-label="minus ${t(k)}" ${s.c[i]?'':'disabled'}>−</button><span class="c">${s.c[i]}</span>
+     <button class="rb" data-inc="${i}" aria-label="plus ${t(k)}" ${v+VAL[i]>10000||s.c[i]>=15?'disabled':''}>+</button></div>
+    ${i>0&&s.c[i]>=10?`<button class="trade pop" data-trade="${i}">${t('m3trade')}</button>`:''}
+   </div>`).join('')}</div>
+  <div class="readout">
+   <div class="digits num" aria-label="${v}">${v>=10000?`<span class="d-th">${fmt(v)}</span>`:ds.map((d,i)=>d===' '?'':`<span class="d-${KEYS[i]}">${d}</span>${i===0?'<span>,</span>':''}`).join('')}</div>
+   <div class="kv"><b>${t('m3exp')}:</b><span class="num" style="font-size:1.2rem">${exp}</span></div>
+   <div class="kv"><b>${t('m3words')}:</b><span style="font-size:1.15rem;font-weight:600">${words(v)}</span></div>
+  </div>
+  ${s.mode==='chal'?`<div class="row"><button class="btn primary" data-act="check">${t('check')}</button><span class="feedback ${s.cls}" aria-live="polite">${s.msg}</span></div>`:''}`;
+  p.onclick=e=>{const b=e.target.closest('button');if(!b||b.disabled)return;const d=b.dataset;
+   if(d.mode){s.mode=d.mode;if(s.mode==='chal')this.newTarget();else s.c=[1,2,5,4];tick()}
+   if(d.inc!==undefined){s.c[+d.inc]++;tick();s.msg=''}
+   if(d.dec!==undefined){s.c[+d.dec]--;tick();s.msg=''}
+   if(d.trade!==undefined){const i=+d.trade;s.c[i]-=10;s.c[i-1]++;yay()}
+   if(d.act==='check'){const v2=this.val();if(v2===s.target){s.solved++;s.msg=t('m3ok',{x:fmt(v2)});s.cls='good';yay();
+     if(s.solved>=3)complete(3);this.render(p);setTimeout(()=>{this.newTarget();this.render(p)},1500);return}
+    else{s.msg=t('m3no',{x:fmt(v2)})+' '+t('m3hint');s.cls='bad';nope()}}
+   this.render(p)}}};
+
+/* 4 compare */
+M[4]={st:null,
+ gen(){const k=rnd(0,5);let a=rnd(1000,9999),b;const d=String(a).split('').map(Number);
+  if(k===0){b=rnd(100,999)}
+  else if(k===5){b=a}
+  else{const pos=Math.min(k-1,3);const nd=d.slice();let x;do{x=rnd(pos===0?1:0,9)}while(x===d[pos]);nd[pos]=x;for(let j=pos+1;j<4;j++)nd[j]=rnd(0,9);b=+nd.join('')}
+  if(Math.random()<.5)[a,b]=[b,a];return{a,b,step:-1,ans:null}},
+ init(){this.st={...this.gen(),score:0,msg:'',cls:''}},
+ explain(a,b){const sa=String(a),sb=String(b);const sym=a>b?'>':a<b?'<':'=';
+  if(sa.length!==sb.length){const big=a>b?a:b,sm=a>b?b:a;return t('m4digits',{a:fmt(big),b:fmt(sm)})}
+  for(let i=0;i<4;i++){if(sa[i]!==sb[i]){const p=t(KEYS[i]+'S');return(i===0?t('m4first',{p,x:sa[i],y:sb[i],s:sa[i]>sb[i]?'>':'<',a:fmt(a),b:fmt(b)}):t('m4decide',{p,x:sa[i],y:sb[i],s:sa[i]>sb[i]?'>':'<',a:fmt(a),b:fmt(b)}))}}
+  return t('m4same')},
+ render(p){if(!this.st)this.init();const s=this.st;const sa=String(s.a).padStart(4,' '),sb=String(s.b).padStart(4,' ');
+  let diff=-1;if(String(s.a).length===String(s.b).length){for(let i=0;i<4;i++)if(sa[i]!==sb[i]){diff=i;break}}else diff=0;
+  const cell=(ch,i)=>{let c='';if(s.step>=i){if(i<diff||diff===-1)c='eq';else if(i===diff)c='win'}return`<td class="${c} d-${KEYS[i]}">${ch.trim()}</td>`};
+  p.innerHTML=`<div class="vs"><div class="big num">${fmt(s.a)}</div>
+   <div class="big" style="color:var(--te);min-width:56px">${s.ans?s.ans:'?'}</div><div class="big num">${fmt(s.b)}</div></div>
+  <div class="row" style="justify-content:center"><span class="sub">${t('m4pick')}</span><div class="sym">${['<','=','>'].map(x=>`<button class="btn" data-sym="${x}" ${s.ans?'disabled':''}>${x}</button>`).join('')}</div></div>
+  <div class="scroll"><table class="ptable"><tr>${KEYS.map(k=>`<th class="d-${k}">${t(k)}</th>`).join('')}</tr>
+   <tr>${sa.split('').map(cell).join('')}</tr><tr>${sb.split('').map(cell).join('')}</tr></table></div>
+  <div class="row" style="justify-content:center">${s.step<3&&!s.ans?`<button class="btn" data-act="step">${t('m4show')}</button>`:''}${s.ans?`<button class="btn primary" data-act="next">${t('next')}</button>`:''}</div>
+  <div class="feedback ${s.cls}" aria-live="polite" style="text-align:center">${s.msg}</div>
+  ${s.ans?`<div class="explain">${this.explain(s.a,s.b)}<br><small>${t('m4mouth')}</small></div>`:''}
+  <div class="sub" style="font-size:1rem;text-align:center">${t('m4score',{n:s.score})}</div>`;
+  p.onclick=e=>{const b=e.target.closest('button');if(!b||b.disabled)return;
+   if(b.dataset.sym){const right=s.a>s.b?'>':s.a<s.b?'<':'=';
+    if(b.dataset.sym===right){s.ans=right;s.score++;s.msg=t('good');s.cls='good';s.step=3;yay();if(s.score>=5)complete(4)}
+    else{s.msg=t('bad');s.cls='bad';nope();s.step=Math.max(s.step,diff)}}
+   if(b.dataset.act==='step'){s.step++;tick()}
+   if(b.dataset.act==='next'){Object.assign(s,this.gen(),{msg:''})}
+   this.render(p)}}};
+
+/* 5 order */
+const PEAKS=[{en:'Ras Dashen',am:'ራስ ዳሸን',h:4550},{en:'Abune Yosef',am:'አቡነ ዮሴፍ',h:4260},{en:'Mount Guna',am:'ጉና ተራራ',h:4230},{en:'Choke Mountains',am:'ጮቄ ተራሮች',h:4100},{en:'Bahir Dar (city)',am:'ባሕር ዳር (ከተማ)',h:1800}];
+M[5]={st:null,
+ init(){this.st={round:0,items:shuffle(PEAKS),picked:[],msg:'',cls:'',rounds:0}},
+ numRound(){const th=rnd(1,8);const base=th*1000;let set=new Set();const hs=rnd(0,9);
+  while(set.size<5){const kind=rnd(0,2);let x=kind===0?base+hs*100+rnd(0,99):kind===1?base+rnd(0,999):(th+1)*1000+rnd(0,999);if(Math.random()<.15)x=rnd(100,999);set.add(x)}
+  return shuffle([...set]).map(h=>({h}))},
+ render(p){if(!this.st)this.init();const s=this.st;const max=4600;
+  const isPeaks=s.round===0;
+  const order=i=>s.picked.indexOf(i);
+  p.innerHTML=`${isPeaks?`<div class="peaks">${s.items.map((m,i)=>{const hh=Math.round(m.h/max*110);
+    return`<button class="peak ${order(i)>=0?'picked':''}" data-i="${i}" aria-label="${tt(m)} ${m.h}">
+     <span class="badge ${order(i)>=0?'':'empty'}">${order(i)>=0?order(i)+1:'0'}</span>
+     <svg viewBox="0 0 120 120" aria-hidden="true"><polygon points="10,118 60,${118-hh} 110,118" fill="var(--hu)"/>${m.h>4000?`<polygon points="${60-hh*0.12},${118-hh*0.88} 60,${118-hh} ${60+hh*0.12},${118-hh*0.88}" fill="var(--surface)"/>`:''}</svg>
+     <span class="nm">${tt(m)}</span><span class="ht num">${fmt(m.h)} m</span></button>`}).join('')}</div>
+   <small style="color:var(--ink-soft)">${t('m5note')}</small>`
+  :`<div class="sub">${t('m5r2')}</div><div class="ncards">${s.items.map((m,i)=>`<button class="ncard ${order(i)>=0?'picked':''}" data-i="${i}"><span class="badge ${order(i)>=0?'':'empty'}">${order(i)>=0?order(i)+1:'0'}</span>${fmt(m.h)}</button>`).join('')}</div>`}
+  <div class="row"><button class="btn" data-act="reset">${t('again')}</button><span class="feedback ${s.cls}" aria-live="polite">${s.msg}</span></div>
+  ${s.picked.length===s.items.length&&s.cls==='good'?`<div class="explain num" style="font-size:1.3rem">${s.picked.map(i=>fmt(s.items[i].h)).join(' &lt; ')}</div>${s.rounds<3?`<button class="btn primary" data-act="next">${t('next')}</button>`:''}`:''}
+  <div class="sub" style="font-size:1rem">${t('m5rounds',{n:s.rounds})}</div>`;
+  p.onclick=e=>{const b=e.target.closest('button');if(!b)return;
+   if(b.dataset.act==='reset'){s.picked=[];s.msg='';this.render(p);return}
+   if(b.dataset.act==='next'){s.round++;s.items=this.numRound();s.picked=[];s.msg='';this.render(p);return}
+   if(b.dataset.i!==undefined){const i=+b.dataset.i;if(s.picked.includes(i)||s.cls==='good'&&s.picked.length===s.items.length)return;tick();s.picked.push(i);s.msg='';s.cls='';
+    if(s.picked.length===s.items.length){const hs=s.picked.map(j=>s.items[j].h);const ok=hs.every((h,j)=>j===0||h>=hs[j-1]);
+     if(ok){s.msg=t('m5ok');s.cls='good';s.rounds++;yay();if(s.rounds>=3)complete(5)}else{s.msg=t('m5no');s.cls='bad';nope()}}
+    this.render(p)}}}};
+
+/* 6 Ethiopic numerals */
+M[6]={st:null,
+ init(){this.st={rounds:0,sel:null,ok:[],shake:null};this.newRound()},
+ newRound(){const s=this.st;const nums=shuffle([1,2,3,4,5,6,7,8,9,10]).slice(0,5);s.left=shuffle(nums);s.right=shuffle(nums);s.useWords=s.rounds===1;s.ok=[];s.sel=null},
+ render(p){if(!this.st)this.init();const s=this.st;
+  p.innerHTML=`<div class="geez-strip">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<div class="gz"><span class="g">${GEEZ[n]}</span><span class="d">${n}</span><span class="w">${amWords(n)}</span></div>`).join('')}</div>
+  <div class="divider"></div>
+  <div class="sub">${t('m6match')}</div>
+  <div class="match">${s.left.map((n,i)=>`<button class="mt ${s.ok.includes(n)?'ok':''} ${s.sel===n?'sel':''} ${s.shake==='L'+n?'shake':''}" data-l="${n}" style="text-align:center">${GEEZ[n]}</button>
+   <button class="mt ${s.ok.includes(s.right[i])?'ok':''} ${s.shake==='R'+s.right[i]?'shake':''}" data-r="${s.right[i]}" style="font-family:var(--display);text-align:center;${s.useWords?'font-size:1.15rem':''}">${s.useWords?words(s.right[i]):s.right[i]}</button>`).join('')}</div>
+  <div class="sub" style="font-size:1rem">${t('m6rounds',{n:s.rounds})}</div>`;
+  p.onclick=e=>{const b=e.target.closest('button');if(!b)return;s.shake=null;
+   if(b.dataset.l){s.sel=+b.dataset.l;tick()}
+   else if(b.dataset.r&&s.sel!==null){const r=+b.dataset.r;if(r===s.sel){s.ok.push(r);s.sel=null;yay();
+     if(s.ok.length===5){s.rounds++;if(s.rounds>=3)complete(6);this.render(p);setTimeout(()=>{this.newRound();this.render(p)},700);return}}
+    else{s.shake='R'+r;nope()}}
+   this.render(p)}}};
+
+/* 7 rounding */
+M[7]={st:null,
+ init(){this.st={score:0,k:0};this.gen()},
+ gen(){const s=this.st;const u=[10,100,1000][s.k%3];let n;do{n=u===10?rnd(11,999):u===100?rnd(101,9899):rnd(1001,9899)}while(n%u===0||n%u===u/2&&Math.random()<.5);
+  s.u=u;s.n=n;s.lo=Math.floor(n/u)*u;s.hi=s.lo+u;s.ans=null;s.msg='';s.cls=''},
+ render(p){if(!this.st)this.init();const s=this.st;const W=700,L=50,R=650,y=120;const x=v=>L+(v-s.lo)/s.u*(R-L);
+  const r=(s.n-s.lo)>=s.u/2?s.hi:s.lo;const uName=t({10:'teS',100:'huS',1000:'thS'}[s.u]);
+  const dig=String(s.n).padStart(4,'0')[{10:3,100:2,1000:1}[s.u]];
+  let ticks='';for(let i=0;i<=10;i++){const v=s.lo+i*s.u/10;const X=x(v);ticks+=`<line x1="${X}" y1="${y-(i%5?8:16)}" x2="${X}" y2="${y+(i%5?8:16)}" stroke="var(--ink-soft)" stroke-width="${i%5?2:3}"/>`}
+  const ballX=s.ans!==null?x(s.ans):x(s.n);
+  p.innerHTML=`<div class="big" style="font-size:clamp(1.4rem,4.5vw,2rem)">${t('m7ask',{n:fmt(s.n),u:uName})}</div>
+  <div class="nl scroll"><svg viewBox="0 0 ${W} 200" role="img" aria-label="number line from ${s.lo} to ${s.hi}">
+   <path d="M${L} ${y} Q${(L+R)/2} ${y-70} ${R} ${y}" fill="none" stroke="var(--te)" stroke-width="3" stroke-dasharray="6 6"/>
+   <line x1="${L-20}" y1="${y}" x2="${R+20}" y2="${y}" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>${ticks}
+   <text x="${L}" y="${y+48}" text-anchor="middle" font-size="26" font-weight="800">${fmt(s.lo)}</text>
+   <text x="${R}" y="${y+48}" text-anchor="middle" font-size="26" font-weight="800">${fmt(s.hi)}</text>
+   <text x="${x(s.lo+s.u/2)}" y="${y+44}" text-anchor="middle" font-size="18" fill="var(--ink-soft)">${fmt(s.lo+s.u/2)}</text>
+   <g style="transition:transform .6s cubic-bezier(.5,1.6,.5,1);transform:translateX(${ballX-x(s.n)}px)">
+    <circle cx="${x(s.n)}" cy="${y-22}" r="16" fill="var(--on)"/><text x="${x(s.n)}" y="${y-48}" text-anchor="middle" font-size="22" font-weight="800">${fmt(s.n)}</text></g>
+  </svg></div>
+  <div class="row" style="justify-content:center">${[s.lo,s.hi].map(v=>`<button class="btn" data-v="${v}" ${s.ans!==null?'disabled':''} style="font-size:1.4rem">${fmt(v)}</button>`).join('')}</div>
+  <div class="feedback ${s.cls}" aria-live="polite" style="text-align:center">${s.msg}</div>
+  ${s.ans!==null?`<div class="explain">${t('m7why',{d:dig,n:fmt(s.n),r:fmt(r)})}</div><div><button class="btn primary" data-act="next">${t('next')}</button></div>`:''}
+  <div class="explain" style="background:var(--te-soft)">${t('m7rule')}</div>
+  <div class="sub" style="font-size:1rem">${t('m7score',{n:s.score})}</div>`;
+  p.onclick=e=>{const b=e.target.closest('button');if(!b||b.disabled)return;
+   if(b.dataset.v){const v=+b.dataset.v;if(v===r){s.ans=v;s.score++;s.k++;s.msg=t('good');s.cls='good';yay();if(s.score>=6)complete(7)}else{s.msg=t('bad');s.cls='bad';nope()}}
+   if(b.dataset.act==='next')this.gen();
+   this.render(p)}}};
+
+/* 8 thinker */
+M[8]={st:{i:0,picked:null,right:0},
+ render(p){const s=this.st;if(s.i>=PUZ.length){p.innerHTML=`<div class="explain big" style="font-size:1.4rem">${t('missionDone')}</div><button class="btn" data-act="restart">${t('again')}</button>`;
+   p.onclick=e=>{if(e.target.closest('[data-act=restart]')){s.i=0;s.picked=null;this.render(p)}};return}
+  const q=PUZ[s.i];const solved=s.picked===q.a;
+  p.innerHTML=`<div class="sub" style="font-size:1rem">${t('m8count',{i:s.i+1,n:PUZ.length})}</div>
+  <div class="q">${tt(q.q)}</div>
+  <div class="opts">${q.o.map((o,j)=>`<button class="opt ${s.picked===j?(j===q.a?'right':'wrong'):''}" data-j="${j}" ${solved?'disabled':''}>${o}</button>`).join('')}</div>
+  <div class="feedback ${s.picked===null?'':solved?'good':'bad'}" aria-live="polite">${s.picked===null?'':solved?t('good'):t('bad')}</div>
+  ${solved?`<div class="explain">${tt(q.e)}</div><div><button class="btn primary" data-act="next">${t('next')}</button></div>`:''}`;
+  p.onclick=e=>{const b=e.target.closest('button');if(!b||b.disabled)return;
+   if(b.dataset.j!==undefined){s.picked=+b.dataset.j;if(s.picked===q.a)yay();else nope()}
+   if(b.dataset.act==='next'){s.i++;s.picked=null;if(s.i>=PUZ.length)complete(8)}
+   this.render(p)}}};
+
+
+/* 9 take-home notes */
+const NT={big:{en:'Every digit has a house. Its value depends on its house: thousands, hundreds, tens or ones.',am:'እያንዳንዱ ሆሄ ቤት አለው። ዋጋው በቤቱ ይወሰናል፦ ሺህ፣ መቶ፣ አስር ወይም አንድ።'},
+ pts:[{en:'10 ones = 1 ten, 10 tens = 1 hundred, 10 hundreds = 1 thousand, 10 thousands = 10,000.',am:'10 አንዶች = 1 አስር፣ 10 አስሮች = 1 መቶ፣ 10 መቶዎች = 1 ሺህ፣ 10 ሺህዎች = 10,000።'},
+  {en:'Expanded form: 3,291 = 3,000 + 200 + 90 + 1.',am:'በመተንተን፦ 3,291 = 3,000 + 200 + 90 + 1።'},
+  {en:'To compare: more digits means bigger. Same digits? Compare from the left; the first different house decides.',am:'ለማወዳደር፦ ብዙ ሆሄ ያለው ይበልጣል። እኩል ሆሄ ከሆነ ከግራ አወዳድሩ፤ መጀመሪያ የሚለያየው ቤት ይወስናል።'},
+  {en:'Rounding: look at the digit to the right. 5 or more → up; 4 or less → down.',am:'ማጠጋጋት፦ በቀኝ ያለውን ሆሄ እዩ። 5 ወይም በላይ → ወደ ላይ፤ 4 ወይም በታች → ወደ ታች።'},
+  {en:'Ethiopic numerals ፩ ፪ ፫ ፬ ፭ ፮ ፯ ፰ ፱ ፲ have no zero.',am:'የኢትዮጵያ ቁጥሮች ፩ ፪ ፫ ፬ ፭ ፮ ፯ ፰ ፱ ፲ ዜሮ የላቸውም።'}],
+ rem:{en:'The open mouth of < or > always faces the bigger number.',am:'የ< ወይም > ክፍት አፍ ሁልጊዜ ወደ ትልቁ ቁጥር ይመለከታል።'},
+ exam:[[{en:'Value of 7 in 7,094?',am:'በ7,094 ውስጥ የ7 ዋጋ?'},'7,000'],[{en:'Write 6,075 in words.',am:'6,075ን በፊደል ጻፉ።'},{en:'six thousand seventy-five',am:'ስድስት ሺህ ሰባ አምስት'}],[{en:'Round 3,789 to the nearest hundred.',am:'3,789ን ወደ አቅራብ መቶ አጠጋጉ።'},'3,800'],[{en:'Order: 1,801 · 1,799 · 9,906',am:'አስቀምጡ፦ 1,801 · 1,799 · 9,906'},'1,799 < 1,801 < 9,906'],[{en:'Write 8 in Ethiopic numerals.',am:'8ን በኢትዮጵያ ቁጥር ጻፉ።'},'፰']],
+ inv:{t:{en:'Price tag inventor',am:'የዋጋ መለያ ፈጣሪ'},x:{en:'Shops need clear prices. Make price tags for a pretend shop and help a shopkeeper think fast.',am:'ሱቆች ግልጽ ዋጋ ያስፈልጋቸዋል። ለሙከራ ሱቅ የዋጋ መለያዎችን ሥሩ፤ ባለሱቁ ቶሎ እንዲያስብ እርዱት።'},
+  s:[{en:'Choose 8 items and give each a price between 100 and 9,999 birr.',am:'8 ዕቃዎችን ምረጡ፤ ከ100 እስከ 9,999 ብር ዋጋ ስጡ።'},{en:'Write each price in digits and in words.',am:'እያንዳንዱን ዋጋ በአሃዝና በፊደል ጻፉ።'},{en:'Order the items from cheapest to most expensive.',am:'ዕቃዎቹን ከርካሹ ወደ ውዱ አስቀምጡ።'},{en:'Round each price to the nearest 100 for quick shopping. Who would use this?',am:'ለፈጣን ግብይት እያንዳንዱን ዋጋ ወደ አቅራብ መቶ አጠጋጉ። ይህን ማን ይጠቀምበታል?'}]}};
+M[9]={st:{open:{},steps:{}},render(p){const s=this.st;const box='padding:14px 16px;border-radius:16px;border:2px solid var(--line);background:var(--surface)';
+ p.innerHTML=`<div class="explain"><b>${S.lang==='am'?'ዋና ሐሳብ':'Big idea'}</b><div style="font-family:var(--display);font-weight:700;font-size:1.25rem;margin-top:6px">${t2(NT.big)}</div></div>
+ <div style="${box}"><div class="sub">${S.lang==='am'?'ቁልፍ ነጥቦች':'Key points'}</div><ol style="margin:6px 0 0;padding-left:22px;display:grid;gap:6px">${NT.pts.map(x=>`<li>${t2(x)}</li>`).join('')}</ol></div>
+ <div style="padding:14px 16px;border-radius:16px;background:var(--te-soft);border:2px dashed var(--sun)"><b>${S.lang==='am'?'አስታውሱ':'Remember'}:</b> ${t2(NT.rem)}</div>
+ <div style="${box}"><div class="sub">${S.lang==='am'?'ለፈተና ዝግጁ ናችሁ? ራሳችሁን ፈትሹ':'Exam ready? Check yourself'}</div>${NT.exam.map((q,i)=>`<div style="display:grid;gap:6px;padding:8px 0;border-bottom:1px solid var(--line)"><span>${i+1}. ${t2(q[0])}</span><button class="btn" data-ans="${i}" style="justify-self:start;font-size:.98rem;padding:6px 14px">${s.open[i]?t2(q[1]):(S.lang==='am'?'መልሱን አሳይ':'Show answer')}</button></div>`).join('')}</div>
+ <div style="padding:14px 16px;border-radius:16px;background:var(--hu-soft);border:2px solid var(--hu)"><div class="sub">${S.lang==='am'?'የወጣት ፈጣሪ ፈተና':'Young innovator challenge'}: ${t2(NT.inv.t)}</div><p style="margin:6px 0">${t2(NT.inv.x)}</p>
+  <ul style="list-style:none;margin:0;padding:0;display:grid;gap:8px">${NT.inv.s.map((x,i)=>`<li style="display:flex;gap:10px"><button data-step="${i}" aria-pressed="${!!s.steps[i]}" style="flex:none;width:30px;height:30px;border-radius:8px;border:2px solid var(--hu);background:${s.steps[i]?'var(--hu)':'var(--surface)'};color:#fff;font-weight:800">${s.steps[i]?'✓':''}</button><span>${t2(x)}</span></li>`).join('')}</ul></div>
+ <div class="row"><button class="btn primary" data-act="got">${S.lang==='am'?'ይህን ምዕራፍ ማስረዳት እችላለሁ':'I can explain this chapter'}</button></div>`;
+ p.onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.ans!==undefined)s.open[b.dataset.ans]=!s.open[b.dataset.ans];if(b.dataset.step!==undefined)s.steps[b.dataset.step]=!s.steps[b.dataset.step];if(b.dataset.act==='got')complete(9);tick();this.render(p)}}};
+const t2=o=>typeof o==='string'?o:(o[S.lang]??o.en);
+
+/* ---------- chrome ---------- */
+function renderChrome(){
+ document.documentElement.lang=S.lang==='am'?'am':'en';
+ document.querySelectorAll('[data-t]').forEach(el=>el.textContent=t(el.dataset.t));
+ $('#lang-am').setAttribute('aria-pressed',S.lang==='am');$('#lang-en').setAttribute('aria-pressed',S.lang==='en');
+ $('#sound-btn').textContent=S.sound?t('soundOn'):t('soundOff');
+ const n=MIS.filter(m=>S.done[m]).length;$('#stars').textContent=n;
+ $('#map').innerHTML=MIS.map(m=>`<button class="chip ${S.done[m]?'done':''}" data-m="${m}" aria-current="${S.cur===m}"><span class="n">${S.done[m]?'★':m}</span><span class="lbl">${t('m'+m)}</span></button>`).join('');
+ const w=$('#winner');
+ if(n===9){w.innerHTML=`<div class="winner"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="${starPoints(50,54,46,22)}" fill="#F4B400" stroke="#C98F00" stroke-width="3" stroke-linejoin="round"/><circle cx="41" cy="52" r="5" fill="#1B2A4A"/><circle cx="59" cy="52" r="5" fill="#1B2A4A"/><path d="M40 62 Q50 74 60 62" stroke="#1B2A4A" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg><div><h2>${t('winTitle')}</h2><p style="margin:0">${t('winText')}</p></div></div>`}else w.innerHTML='';
+}
+function renderMission(){
+ $('#m-title').textContent=S.cur+'. '+t('m'+S.cur);$('#m-tip').textContent=t('m'+S.cur+'tip');
+ M[S.cur].render($('#panel'));
+}
+function renderAll(){renderChrome();renderMission()}
+
+$('#map').addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(!b)return;S.cur=+b.dataset.m;tick();try{history.replaceState(null,'','#m'+S.cur)}catch(_){}renderAll()});
+document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click',()=>{S.lang=b.dataset.lang;store.set('g3-lang',S.lang);renderAll()}));
+$('#sound-btn').addEventListener('click',()=>{S.sound=!S.sound;store.set('g3-sound',S.sound);renderChrome();tick()});
+let resetArm=false;
+$('#reset-btn').addEventListener('click',e=>{if(!resetArm){resetArm=true;e.target.textContent=t('resetAsk');setTimeout(()=>{resetArm=false;renderChrome()},3000);return}
+ resetArm=false;S.done={};store.set('g3-done-math-1',S.done);M[2].st=null;M[4].st=null;M[5].st=null;M[6].st=null;M[7].st=null;M[8].st={i:0,picked:null};M[1].st={pick:[],found:[],msg:'',cls:''};M[3].st={c:[1,2,5,4],mode:'free',target:0,solved:0,msg:'',cls:''};renderAll()});
+const h=(location.hash||'').match(/^#m([1-8])$/);if(h)S.cur=+h[1];
+renderAll();
+</script>
+<script src="author.js"></script></body></html>

@@ -1,0 +1,60 @@
+"""Assemble the AMBKidsJoy (Grade 3) site into ./dist.
+hub.html  -> main page (published as the artifact page) and dist/home.html (standalone copy for in-site links)
+units/*.js -> dist/<id>.html wrappers
+math-1 is adapted from the Number Explorers page."""
+import os, re, shutil, glob, sys
+
+SRC = os.path.dirname(os.path.abspath(__file__))
+DIST = os.path.join(SRC, 'dist')
+MATH_SRC = sys.argv[1] if len(sys.argv) > 1 else None
+os.makedirs(os.path.join(DIST, 'units'), exist_ok=True)
+
+FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
+         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
+         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;600;700&display=swap">')
+HEAD = '<!doctype html><html lang="am"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">'
+
+for f in ['style.css', 'engine.js', 'icons.js', 'author.js']:
+    shutil.copy(os.path.join(SRC, f), os.path.join(DIST, f))
+for f in glob.glob(os.path.join(SRC, 'units', '*.js')):
+    shutil.copy(f, os.path.join(DIST, 'units', os.path.basename(f)))
+
+# hub: main page + standalone home.html (mission counts computed from unit files)
+hub = open(os.path.join(SRC, 'hub.html'), encoding='utf-8').read()
+import json
+counts = {'math-1': 9}
+for f in glob.glob(os.path.join(SRC, 'units', '*.js')):
+    uid = os.path.basename(f)[:-3]
+    counts[uid] = len(re.findall(r"type:'(?:quiz|match|sort|order|tapwords|spell|custom|notes|exam|drill)'", open(f, encoding='utf-8').read()))
+hub = hub.replace('/*UNITS*/{}', json.dumps(counts, sort_keys=True))
+hub = hub.replace('</script>\n', '</script>\n<script src="author.js"></script>\n', 1) if '<script src="author.js">' not in hub else hub
+open(os.path.join(DIST, 'hub.html'), 'w', encoding='utf-8').write(hub)
+head, body = hub.split('<div class="wrap" id="app">', 1)
+open(os.path.join(DIST, 'home.html'), 'w', encoding='utf-8').write(
+    HEAD + head + '</head><body><div class="wrap" id="app">' + body + '</body></html>')
+
+TITLES = {'amharic-1': 'ጤና · Amharic', 'english-1': 'My School · English', 'env-1': 'Where Is Our Zone?',
+          'moral-1': 'Respecting Humanity', 'health-1': 'Basic Movement Skills', 'art-1': 'Notes, Colours & Drama',
+          'math-2': 'Adding and Subtracting', 'amharic-2': 'ጉርብትና · Amharic', 'english-2': 'Months of the Year', 'env-2': 'Understanding Science', 'moral-2': 'Respecting Others', 'health-2': 'Rhythmic Movements', 'art-2': 'Arts Practice'}
+AUTO = {}
+for f in glob.glob(os.path.join(SRC, 'units', '*.js')):
+    m = re.search(r"title:\{en:'([^']+)'", open(f, encoding='utf-8').read())
+    if m: AUTO[os.path.basename(f)[:-3]] = m.group(1)
+for f in sorted(glob.glob(os.path.join(SRC, 'units', '*.js'))):
+    uid = os.path.basename(f)[:-3]
+    html = (HEAD + f'<title>{TITLES.get(uid, AUTO.get(uid, uid))} · AMBKidsJoy</title>' + FONTS + '<link rel="stylesheet" href="style.css"></head><body>'
+            '<script src="icons.js"></script><script src="engine.js"></script>'
+            f'<script src="units/{uid}.js"></script><script src="author.js"></script></body></html>')
+    open(os.path.join(DIST, uid + '.html'), 'w', encoding='utf-8').write(html)
+
+if MATH_SRC:
+    m = open(MATH_SRC, encoding='utf-8').read()
+    m = m.replace("'ne-lang'", "'g3-lang'").replace("'ne-done'", "'g3-done-math-1'").replace("'ne-sound'", "'g3-sound'")
+    m = m.replace('<div class="tools">', '<div class="tools">\n      <a class="pill" href="home.html" style="background:var(--accent);color:#fff;border-color:transparent;text-decoration:none" data-t="home"></a>', 1)
+    m = m.replace(" title:{en:'Number Explorers'", " home:{en:'← All subjects',am:'← ሁሉም ትምህርቶች'},\n title:{en:'Number Explorers'", 1)
+    m = m.replace('<title>Number Explorers</title>', '<title>Number Explorers · AMBKidsJoy</title>')
+    head, body = m.split('<div class="wrap">', 1)
+    open(os.path.join(DIST, 'math-1.html'), 'w', encoding='utf-8').write(
+        HEAD + head + '</head><body style="margin:0"><div class="wrap">' + body.replace('</body>', '<script src="author.js"></script></body>') + ('' if '</body>' in body else '<script src="author.js"></script>') + '</body></html>')
+shutil.copy(os.path.join(DIST, 'home.html'), os.path.join(DIST, 'index.html'))
+print('built', sorted(os.listdir(DIST)))
