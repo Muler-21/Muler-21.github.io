@@ -13,9 +13,9 @@ const CONFIG = {
 
 /* url: link to the running app. live:false shows "Soon" and no button. */
 const APPS = [
-  { icon:"🌡️", title:"AdaptOmics: climate, phenotype and omics explorer", tag:"Climate & Omics", color:"#14c9a4", live:true,
-    desc:"Heat-stress risk for any location, phenotype response to climate from your own records, genome-climate association across populations, and live gene lookup (Ensembl, UniProt, STRING, Europe PMC). Free, no keys, data stays in your browser.",
-    url:"apps/adaptomics/" }
+  { icon:"🌡️", title:"AdaptFit: will it thrive here?", tag:"Climate & Genomics", color:"#14c9a4", live:true,
+    desc:"For farmers, breeders and planners. Pick places and a livestock type or crop, get a Good / Watch / Risky verdict from 35 years of climate, test warming and tolerance, and print a one-page brief. Phenotype, genome and gene tools included for researchers. Free, no keys.",
+    url:"apps/adaptfit/" }
 ];
 
 const POSTS = [];

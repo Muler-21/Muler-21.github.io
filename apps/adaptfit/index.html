@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AdaptFit | Will it thrive here?</title>
+<meta name="description" content="Free browser tool that tells farmers, breeders and planners whether a livestock breed or crop will thrive in a place, now and as it warms.">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<style>
+:root{--bg:#0b0f17;--bg2:#121a26;--card:#141a23;--line:#232c3a;--text:#f2f5f9;--muted:#9aa6b6;--accent:#14c9a4;--accent2:#12a8b8;--on:#0b0f17;--ok:#22c55e;--warn:#eab308;--mod:#f97316;--bad:#ef4444;--dang:#a855f7}
+:root[data-theme="light"]{--bg:#f5f7fa;--bg2:#e8eef4;--card:#fff;--line:#d8dfe8;--text:#101828;--muted:#52606f;--accent:#0a8f74;--accent2:#0b7f8c;--on:#fff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:15px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text)}
+h1,h2,h3,.logo{font-family:Georgia,"Times New Roman",serif}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+header.top{border-bottom:1px solid var(--line);background:var(--bg2)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;height:56px}
+.logo{font-size:1.15rem;font-weight:700;color:var(--text)}.logo span{color:var(--accent)}
+.icon-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--text);cursor:pointer}
+.hero{padding:30px 0 18px}
+h1{font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.2;margin-bottom:8px}
+.lead{color:var(--muted);max-width:760px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin:18px 0 22px}
+.tabs button{background:none;border:0;color:var(--muted);padding:10px 14px;cursor:pointer;font:600 .88rem system-ui;border-bottom:2px solid transparent}
+.tabs button[aria-selected="true"]{color:var(--accent);border-color:var(--accent)}
+.panel{display:none;padding-bottom:50px}.panel.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:16px}
+.card h3{font-size:1rem;margin-bottom:8px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+label{font-size:.78rem;color:var(--muted);display:block}
+input,select,textarea{padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:inherit;font-size:.9rem}
+input[type=number]{width:110px}input[type=text]{min-width:220px}
+textarea{width:100%;min-height:90px;font:12px/1.4 ui-monospace,Menlo,Consolas,monospace}
+button.btn{padding:8px 16px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:var(--on);font-weight:600;cursor:pointer;font-size:.88rem}
+button.btn.ghost{background:transparent;color:var(--accent)}
+button.btn:disabled{opacity:.5;cursor:wait}
+.note{font-size:.8rem;color:var(--muted)}
+.warn{border-left:3px solid var(--warn);background:color-mix(in srgb,var(--warn) 10%,var(--card));padding:8px 12px;border-radius:6px;font-size:.82rem;margin:10px 0}
+.err{border-left:3px solid var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--card));padding:8px 12px;border-radius:6px;font-size:.82rem;margin:10px 0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:14px 0}
+.stat{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.stat b{display:block;font:700 1.35rem Georgia,serif;color:var(--accent)}.stat small{color:var(--muted);font-size:.74rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:800px){.grid2{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:.82rem}
+th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--muted);font-weight:600;font-size:.74rem}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.click{cursor:pointer}tr.click:hover{background:var(--bg2)}
+.tablewrap{overflow-x:auto}
+svg.chart{width:100%;height:auto;display:block}
+svg text{fill:var(--muted);font:11px system-ui}
+.badge{display:inline-block;padding:1px 8px;border-radius:99px;font-size:.72rem;font-weight:700;color:#0b0f17}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.chip{border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:99px;padding:3px 12px;font-size:.8rem;cursor:pointer}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.74rem;color:var(--muted);margin-top:6px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px}
+ul.plain{list-style:none}ul.plain li{padding:6px 0;border-bottom:1px solid var(--line);font-size:.85rem}
+.sr{position:absolute;left:-9999px}
+
+/* ---- decide ---- */
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:6px 0 12px;flex-wrap:wrap}
+.seg button{background:var(--bg);border:0;color:var(--muted);padding:8px 14px;cursor:pointer;font:600 .84rem system-ui}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--on)}
+.vcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin:12px 0}
+.vcard{border:1px solid var(--line);border-left:6px solid var(--c);border-radius:10px;background:var(--bg);padding:12px 14px}
+.vcard h4{font:700 1rem Georgia,serif;margin-bottom:4px}
+.vcard .big{font:700 1.7rem Georgia,serif;color:var(--c);line-height:1.1}
+.vcard small{color:var(--muted);font-size:.76rem;display:block}
+.verdict{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.74rem;font-weight:800;background:var(--c);color:#0b0f17;margin-bottom:6px}
+.headline{font:700 1.2rem/1.35 Georgia,serif;margin:4px 0 10px}
+.sliders{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:10px 0}
+.sliders input[type=range]{width:100%;padding:0;accent-color:var(--accent)}
+.sliders output{font-weight:700;color:var(--accent)}
+.say{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:.9rem}
+.say p+p{margin-top:8px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.limits{border-left:3px solid var(--line);padding:6px 12px;font-size:.78rem;color:var(--muted);margin-top:14px}
+.print-only{display:none}
+@media print{
+  :root,:root[data-theme="light"]{--bg:#fff;--bg2:#fff;--card:#fff;--text:#111;--muted:#444;--line:#bbb;--accent:#0a7a63;--accent2:#0b6f7c;--on:#fff;--ok:#15803d;--warn:#a16207;--bad:#b91c1c}
+  body{background:#fff;color:#111}
+  .no-print,header.top,.tabs,.hero,footer,#decideCtl,#placeCard,.actions,.panel:not(#tab-decide),.seg{display:none!important}
+  .panel#tab-decide{display:block!important}
+  .print-only{display:block!important}
+  .card{border:1px solid #bbb;break-inside:avoid}
+  .vcard{break-inside:avoid}
+  a{color:#111}
+}
+footer{border-top:1px solid var(--line);padding:18px 0;color:var(--muted);font-size:.78rem}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="logo" href="../../">Muler<span>.</span> <span style="color:var(--muted);font-weight:400;font-size:.85rem">/ applications</span></a>
+  <button class="icon-btn" id="theme" aria-label="Toggle light and dark theme">☀</button>
+</div></header>
+
+<main class="wrap">
+  <div class="hero">
+    <h1>AdaptFit: will it thrive here?</h1>
+    <p class="lead">Pick places and a livestock type or crop. Get a clear verdict, test what changes it, and take a one-page brief to your next meeting. Climate, phenotype and genome tools sit behind it for researchers. Free, no sign-up, no keys. Uploaded files stay in your browser.</p>
+  </div>
+
+  <div class="card" id="placeCard">
+    <div class="row">
+      <div><label for="q">Place (search)</label><input type="text" id="q" placeholder="e.g. Debre Markos, Campobasso, Nairobi"></div>
+      <button class="btn ghost" id="search">Search</button>
+      <button class="btn ghost" id="geo">Use my location</button>
+      <div><label for="lat">Latitude</label><input type="number" id="lat" step="0.01" value="9.01"></div>
+      <div><label for="lon">Longitude</label><input type="number" id="lon" step="0.01" value="38.75"></div>
+      <div><label for="thr" title="THI above this value is treated as heat stress in the research tabs">THI stress level (research tabs)</label><input type="number" id="thr" step="1" value="72"></div>
+    </div>
+    <div id="places" class="chips"></div>
+    <div class="row" style="margin-top:8px"><button class="btn ghost" id="addPlace">+ Add this place to my list</button><span class="note">Up to 5 places can be compared on the Decide tab.</span></div>
+    <div id="myPlaces" class="chips" aria-live="polite"></div>
+    <p class="note" id="placeNote">Default: Addis Ababa. Search or type coordinates, then add the place to your list.</p>
+  </div>
+
+  <div class="tabs" role="tablist" aria-label="Tools">
+    <button role="tab" aria-selected="true" data-tab="decide">Decide</button>
+    <button role="tab" aria-selected="false" data-tab="climate">Climate detail</button>
+    <button role="tab" aria-selected="false" data-tab="pheno">Phenotype × climate</button>
+    <button role="tab" aria-selected="false" data-tab="gea">Genome × climate</button>
+    <button role="tab" aria-selected="false" data-tab="omics">Genes and omics</button>
+    <button role="tab" aria-selected="false" data-tab="about">Methods and sources</button>
+  </div>
+
+  <!-- DECIDE -->
+  <section class="panel on" id="tab-decide">
+    <div class="card no-print" id="decideCtl">
+      <h3>1. What are you deciding about?</h3>
+      <div class="row">
+        <div><label for="sys">Livestock or crop</label>
+          <select id="sys">
+            <optgroup label="Livestock (heat index, THI)"><option value="cattle">Cattle</option><option value="livestock">Other livestock (set your own THI)</option></optgroup>
+            <optgroup label="Crops (hot days, Tmax)"><option value="maize">Maize</option><option value="wheat">Wheat</option><option value="sorghum">Sorghum</option><option value="chickpea">Chickpea</option><option value="crop">Other crop (set your own Tmax)</option></optgroup>
+          </select></div>
+        <div><label for="dthr" id="dthrL">Stress starts at THI</label><input type="number" id="dthr" step="1" value="72"></div>
+        <div><label for="sstart">Season starts</label><select id="sstart"></select></div>
+        <div><label for="slen">Season length</label><select id="slen"></select></div>
+      </div>
+      <p class="note" id="sysNote" style="margin-top:6px"></p>
+      <details style="margin-top:8px"><summary class="note" style="cursor:pointer">Verdict bands (advanced)</summary><div class="row" style="margin-top:8px"><div><label for="bwatch">Watch from (% of season days beyond threshold)</label><input type="number" id="bwatch" value="10" min="0" max="100"></div><div><label for="brisky">Risky from (%)</label><input type="number" id="brisky" value="30" min="0" max="100"></div></div></details>
+      <h3 style="margin-top:14px">2. Which places?</h3>
+      <p class="note">Use the place box above, then press "Add this place to my list". Add up to 5.</p>
+      <div class="row" style="margin-top:10px"><button class="btn" id="runDecide">Get the verdict</button><button class="btn ghost" id="tryEx">Try an example</button><span class="note" id="decideStatus"></span></div>
+    </div>
+    <div class="card no-print" id="whatif" hidden>
+      <h3>3. What would change the answer?</h3>
+      <div class="sliders">
+        <div><label for="warm">If it warms by (°C): <output id="warmV">0</output></label><input type="range" id="warm" min="0" max="4" step="0.5" value="0"></div>
+        <div><label for="tol">If the animal or variety tolerates more (<span id="tolL">THI units</span>): <output id="tolV">0</output></label><input type="range" id="tol" min="0" max="12" step="1" value="0"></div>
+      </div>
+      <label>Show me what matters to a…</label>
+      <div class="seg" id="aud" role="group" aria-label="Audience"><button data-a="farm" aria-pressed="true">Farmer or extension worker</button><button data-a="breed" aria-pressed="false">Breeder or researcher</button><button data-a="plan" aria-pressed="false">Planner or funder</button></div>
+    </div>
+    <div id="decideOut"></div>
+  </section>
+
+  <!-- 1 CLIMATE -->
+  <section class="panel" id="tab-climate">
+    <div class="card">
+      <div class="row"><button class="btn" id="runClimate">Analyse this location</button><span class="note" id="climStatus"></span></div>
+      <div id="climOut"></div>
+    </div>
+  </section>
+
+  <!-- 2 PHENOTYPE -->
+  <section class="panel" id="tab-pheno">
+    <div class="card">
+      <h3>Research tool: does the trait drop when it gets hot?</h3>
+      <p class="note">Upload a CSV with one row per record: a date and a trait value, plus optionally latitude and longitude (or a site name) and a group such as breed. The app looks up the daily climate for each site and date, then fits trait against THI.</p>
+      <div class="row" style="margin-top:10px">
+        <div><label for="pfile">CSV file</label><input type="file" id="pfile" accept=".csv,.tsv,.txt"></div>
+        <button class="btn ghost" id="pdemo">Load demo data</button>
+      </div>
+      <label for="ptext" style="margin-top:10px">…or paste data</label>
+      <textarea id="ptext" spellcheck="false" placeholder="date,lat,lon,breed,milk_kg&#10;2023-03-02,9.01,38.75,Holstein,18.4"></textarea>
+      <div class="row" id="pmap" style="margin-top:10px"></div>
+      <div class="row" style="margin-top:10px"><button class="btn" id="prun">Run analysis</button><span class="note" id="pstatus"></span></div>
+    </div>
+    <div id="pout"></div>
+  </section>
+
+  <!-- 3 GEA -->
+  <section class="panel" id="tab-gea">
+    <div class="card">
+      <h3>Research tool: which variants track climate across populations?</h3>
+      <p class="note">Upload a CSV with one row per population: <b>population, lat, lon</b>, then one column per variant containing the allele frequency (0 to 1). The app pulls 2001–2020 climate for each population and ranks variant–climate correlations (Spearman).</p>
+      <div class="row" style="margin-top:10px">
+        <div><label for="gfile">CSV file</label><input type="file" id="gfile" accept=".csv,.tsv,.txt"></div>
+        <button class="btn ghost" id="gdemo">Load demo data</button>
+      </div>
+      <label for="gtext" style="margin-top:10px">…or paste data</label>
+      <textarea id="gtext" spellcheck="false" placeholder="population,lat,lon,snp1,snp2&#10;PopA,9.0,38.7,0.21,0.80"></textarea>
+      <div class="row" style="margin-top:10px"><button class="btn" id="grun">Run analysis</button><span class="note" id="gstatus"></span></div>
+    </div>
+    <div id="gout"></div>
+  </section>
+
+  <!-- 4 OMICS -->
+  <section class="panel" id="tab-omics">
+    <div class="card">
+      <h3>Research tool: look up a gene</h3>
+      <div class="row">
+        <div><label for="sp">Species</label>
+          <select id="sp">
+            <option value="bos_taurus|9913|cattle">Cattle (Bos taurus)</option>
+            <option value="ovis_aries|9940|sheep">Sheep (Ovis aries)</option>
+            <option value="capra_hircus|9925|goat">Goat (Capra hircus)</option>
+            <option value="gallus_gallus|9031|chicken">Chicken (Gallus gallus)</option>
+            <option value="sus_scrofa|9823|pig">Pig (Sus scrofa)</option>
+            <option value="homo_sapiens|9606|human">Human (Homo sapiens)</option>
+          </select></div>
+        <div><label for="gene">Gene symbol</label><input type="text" id="gene" placeholder="e.g. HSPA1A" style="min-width:160px"></div>
+        <button class="btn" id="grunGene">Look up</button>
+      </div>
+      <p class="note" style="margin-top:10px">Starter candidate lists from the literature. They are not exhaustive; use the papers panel to check the evidence in your species.</p>
+      <div id="panels"></div>
+    </div>
+    <div id="oout"></div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="panel" id="tab-about">
+    <div class="card">
+      <h3>How it works</h3>
+      <ul class="plain">
+        <li><b>Decide verdict:</b> for each place, the share of days in your season at or above the stress threshold (livestock: daily mean THI; crops: daily maximum temperature), averaged over the latest 15 years. Good, Watch and Risky use bands you can change. "Change" compares with the first 15 years of the record, and "bad year" is the 80th percentile of yearly values. The sowing scan repeats this for each possible start month. The warming slider adds the same number of degrees to every day, and the tolerance slider raises the threshold. Neither is a climate-model projection.</li>
+        <li><b>THI</b> (temperature–humidity index, NRC 1971): THI = (1.8·T + 32) − (0.55 − 0.0055·RH)·(1.8·T − 26), T in °C, RH in %. Common cattle categories: below 72 no stress, 72–78 mild, 79–88 moderate, 89–98 severe, 99 and above dangerous. Thresholds differ by breed, species and production level, so the stress threshold is adjustable.</li>
+        <li><b>Typical thresholds</b> in the presets (cattle THI 72; maize 35 °C, wheat 30 °C, sorghum 38 °C, chickpea 35 °C at sensitive stages) are commonly reported literature values and differ by variety, breed and stage. Set your own for local decisions.</li>
+        <li><b>Daily and historical THI</b> use daily mean temperature and mean humidity. This smooths out afternoon peaks, so treat day counts as a comparative index, not an exact count of hours above a limit. The forecast uses hourly values.</li>
+        <li><b>Phenotype × climate</b>: ordinary least squares of trait on THI, overall and per group, with separate slopes below and above the threshold. It does not control for stage of lactation, feeding, management or repeated measures on the same animal. Use it to explore, then confirm with a mixed model.</li>
+        <li><b>Genome × climate</b>: Spearman correlation between allele frequency and each climate variable, with Benjamini–Hochberg q-values. It ignores population structure, which can create false signals. Treat results as candidates to follow up with methods such as LFMM or BayPass. Fewer than about 10 populations gives unreliable p-values.</li>
+        <li><b>Candidate gene lists</b> are starting points drawn from published work. They are not a substitute for a literature review.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Privacy</h3>
+      <p class="note">Files you upload are processed in your browser and are never sent to this site. To fetch climate, the app sends coordinates and date ranges to Open-Meteo, and gene symbols to Ensembl, UniProt, STRING and Europe PMC. Nothing else leaves your device.</p>
+    </div>
+    <div class="card">
+      <h3>Data sources</h3>
+      <ul class="plain">
+        <li><a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> forecasts and ERA5 reanalysis history (Copernicus/ECMWF), free for non-commercial use with attribution.</li>
+        <li><a href="https://www.ensembl.org/" target="_blank" rel="noopener">Ensembl</a> genes and orthologues, <a href="https://www.uniprot.org/" target="_blank" rel="noopener">UniProt</a> protein function, <a href="https://string-db.org/" target="_blank" rel="noopener">STRING</a> interaction partners, <a href="https://europepmc.org/" target="_blank" rel="noopener">Europe PMC</a> literature.</li>
+      </ul>
+      <p class="note" style="margin-top:8px">Built by Mulusew Kassa Bitew. Research and education use. Not veterinary or management advice.</p>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a> (contains modified Copernicus ERA5 data).</div></footer>
+
+<script>
+'use strict';
+/* =========================== CORE (stats, THI, CSV) =========================== */
+const Core = (() => {
+  const thi = (T, RH) => (1.8*T + 32) - (0.55 - 0.0055*RH) * (1.8*T - 26);
+  const thiClass = v => v < 72 ? ['No stress','var(--ok)'] : v < 79 ? ['Mild','var(--warn)'] : v < 89 ? ['Moderate','var(--mod)'] : v < 99 ? ['Severe','var(--bad)'] : ['Dangerous','var(--dang)'];
+  const mean = a => a.reduce((s,x)=>s+x,0)/a.length;
+  const finite = a => a.filter(x => Number.isFinite(x));
+
+  function lgamma(x){const c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];let y=x,t=x+5.5;t-=(x+.5)*Math.log(t);let s=1.000000000190015;for(let j=0;j<6;j++)s+=c[j]/++y;return -t+Math.log(2.5066282746310005*s/x)}
+  function betacf(a,b,x){const MAXIT=200,EPS=3e-12,FPMIN=1e-300;let qab=a+b,qap=a+1,qam=a-1,c=1,d=1-qab*x/qap;if(Math.abs(d)<FPMIN)d=FPMIN;d=1/d;let h=d;for(let m=1;m<=MAXIT;m++){let m2=2*m,aa=m*(b-m)*x/((qam+m2)*(a+m2));d=1+aa*d;if(Math.abs(d)<FPMIN)d=FPMIN;c=1+aa/c;if(Math.abs(c)<FPMIN)c=FPMIN;d=1/d;h*=d*c;aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));d=1+aa*d;if(Math.abs(d)<FPMIN)d=FPMIN;c=1+aa/c;if(Math.abs(c)<FPMIN)c=FPMIN;d=1/d;const del=d*c;h*=del;if(Math.abs(del-1)<EPS)break}return h}
+  function betai(a,b,x){if(x<=0)return 0;if(x>=1)return 1;const bt=Math.exp(lgamma(a+b)-lgamma(a)-lgamma(b)+a*Math.log(x)+b*Math.log(1-x));return x<(a+1)/(a+b+2)?bt*betacf(a,b,x)/a:1-bt*betacf(b,a,1-x)/b}
+  const pFromT = (t, df) => df > 0 ? betai(df/2, .5, df/(df+t*t)) : NaN;   // two-sided
+
+  function ranks(a){const idx=a.map((v,i)=>[v,i]).sort((x,y)=>x[0]-y[0]);const r=new Array(a.length);let i=0;while(i<idx.length){let j=i;while(j+1<idx.length&&idx[j+1][0]===idx[i][0])j++;const avg=(i+j)/2+1;for(let k=i;k<=j;k++)r[idx[k][1]]=avg;i=j+1}return r}
+  function pearson(x,y){const n=x.length,mx=mean(x),my=mean(y);let sxy=0,sxx=0,syy=0;for(let i=0;i<n;i++){sxy+=(x[i]-mx)*(y[i]-my);sxx+=(x[i]-mx)**2;syy+=(y[i]-my)**2}return sxx&&syy?sxy/Math.sqrt(sxx*syy):NaN}
+  function spearman(x,y){const pairs=x.map((v,i)=>[v,y[i]]).filter(p=>Number.isFinite(p[0])&&Number.isFinite(p[1]));const n=pairs.length;if(n<4)return{rho:NaN,p:NaN,n};const rho=pearson(ranks(pairs.map(p=>p[0])),ranks(pairs.map(p=>p[1])));if(!Number.isFinite(rho))return{rho:NaN,p:NaN,n};const t=rho*Math.sqrt((n-2)/Math.max(1e-12,1-rho*rho));return{rho,p:Math.abs(rho)>=1?0:pFromT(t,n-2),n}}
+  function bh(ps){const m=ps.length,ord=ps.map((p,i)=>[p,i]).sort((a,b)=>a[0]-b[0]);const q=new Array(m);let prev=1;for(let k=m-1;k>=0;k--){const v=Math.min(prev,ord[k][0]*m/(k+1));q[ord[k][1]]=v;prev=v}return q}
+  function ols(x,y){const n=x.length;if(n<3)return null;const mx=mean(x),my=mean(y);let sxx=0,sxy=0,syy=0;for(let i=0;i<n;i++){sxx+=(x[i]-mx)**2;sxy+=(x[i]-mx)*(y[i]-my);syy+=(y[i]-my)**2}if(!sxx)return null;const b=sxy/sxx,a=my-b*mx;let sse=0;for(let i=0;i<n;i++)sse+=(y[i]-a-b*x[i])**2;const df=n-2,se=df>0?Math.sqrt(sse/df/sxx):NaN;const p=df>0&&se>0?pFromT(b/se,df):NaN;return{n,a,b,se,p,r2:syy?1-sse/syy:NaN}}
+  function csv(text){text=text.replace(/^﻿/,'').trim();if(!text)return{head:[],rows:[]};const first=text.split(/\r?\n/)[0];const d=[['\t',(first.match(/\t/g)||[]).length],[';',(first.match(/;/g)||[]).length],[',',(first.match(/,/g)||[]).length]].sort((a,b)=>b[1]-a[1])[0][0];const rows=[];let row=[],cur='',q=false;for(let i=0;i<text.length;i++){const c=text[i];if(q){if(c==='"'){if(text[i+1]==='"'){cur+='"';i++}else q=false}else cur+=c}else if(c==='"')q=true;else if(c===d){row.push(cur);cur=''}else if(c==='\n'||c==='\r'){if(c==='\r'&&text[i+1]==='\n')i++;row.push(cur);rows.push(row);row=[];cur=''}else cur+=c}row.push(cur);rows.push(row);const head=rows.shift().map(s=>s.trim());return{head,rows:rows.filter(r=>r.some(x=>x.trim()!==''))}}
+  function isoDate(s){s=String(s).trim();let m=s.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})/);if(m)return`${m[1]}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}`;m=s.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{4})/);if(m)return`${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;return null}
+  return{thi,thiClass,mean,finite,pFromT,spearman,bh,ols,csv,isoDate,ranks};
+})();
+window.__core = Core;
+
+/* =========================== HELPERS =========================== */
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const f1 = v => Number.isFinite(v) ? v.toFixed(1) : '–';
+const f2 = v => Number.isFinite(v) ? v.toFixed(2) : '–';
+const fp = v => !Number.isFinite(v) ? '–' : v < 0.001 ? v.toExponential(1) : v.toFixed(3);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const state = {lat: 9.01, lon: 38.75};
+
+async function getJSON(url, tries = 3) {
+  let last;
+  for (let i = 0; i < tries; i++) {
+    try {
+      const r = await fetch(url);
+      if (r.ok) return await r.json();
+      let reason = ''; try { const j = await r.json(); reason = j.reason || j.error || ''; } catch {}
+      last = new Error(`HTTP ${r.status}${reason ? ': ' + reason : ''}`); last.status = r.status;
+      if (r.status !== 429 && r.status < 500) throw last;
+    } catch (e) { last = e; if (e.status && e.status !== 429 && e.status < 500) throw e; }
+    await sleep(1500 * (i + 1));
+  }
+  throw last;
+}
+const setBusy = (btn, on) => { btn.disabled = on; };
+
+/* theme + tabs */
+const themeBtn = $('theme');
+const syncTheme = () => themeBtn.textContent = document.documentElement.dataset.theme === 'light' ? '☾' : '☀';
+syncTheme();
+themeBtn.onclick = () => { const r = document.documentElement; r.dataset.theme = r.dataset.theme === 'light' ? 'dark' : 'light'; try { localStorage.setItem('theme', r.dataset.theme) } catch {} syncTheme(); };
+document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.tabs button').forEach(x => x.setAttribute('aria-selected', x === b));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('on', p.id === 'tab-' + b.dataset.tab));
+});
+
+/* =========================== CHARTS (inline SVG) =========================== */
+function niceTicks(lo, hi, n = 5) {
+  if (lo === hi) { lo -= 1; hi += 1; }
+  const step0 = (hi - lo) / n, mag = 10 ** Math.floor(Math.log10(step0)), r = step0 / mag;
+  const step = (r < 1.5 ? 1 : r < 3 ? 2 : r < 7 ? 5 : 10) * mag;
+  const a = Math.floor(lo / step) * step, b = Math.ceil(hi / step) * step, t = [];
+  for (let v = a; v <= b + step / 2; v += step) t.push(+v.toFixed(10));
+  return t;
+}
+function chart({kind, labels = [], series = [], points = [], lines = [], xLabel = '', yLabel = '', hline = null, vline = null, title = ''}) {
+  const W = 640, H = 300, m = {l: 52, r: 14, t: 14, b: 44}, iw = W - m.l - m.r, ih = H - m.t - m.b;
+  let xs = [], ys = [];
+  if (kind === 'scatter') { points.forEach(p => { xs.push(p.x); ys.push(p.y); }); lines.forEach(l => { xs.push(l.x1, l.x2); ys.push(l.y1, l.y2); }); }
+  else series.forEach(s => s.y.forEach(v => { if (Number.isFinite(v)) ys.push(v); }));
+  if (hline != null) ys.push(hline);
+  let xmin, xmax;
+  if (kind === 'scatter') { xmin = Math.min(...xs); xmax = Math.max(...xs); if (vline != null) { xmin = Math.min(xmin, vline); xmax = Math.max(xmax, vline); } }
+  else { xmin = 0; xmax = labels.length - 1; }
+  if (kind === 'bars') ys.push(0);
+  const yt = niceTicks(Math.min(...ys), Math.max(...ys)), ymin = yt[0], ymax = yt[yt.length - 1];
+  const xt = kind === 'scatter' ? niceTicks(xmin, xmax) : null;
+  const xa = kind === 'scatter' ? xt[0] : 0, xb = kind === 'scatter' ? xt[xt.length - 1] : 1;
+  const sx = v => m.l + (kind === 'scatter' ? (v - xa) / (xb - xa) : (kind === 'bars' ? (v + .5) / labels.length : (labels.length > 1 ? v / (labels.length - 1) : .5))) * iw;
+  const sy = v => m.t + (1 - (v - ymin) / (ymax - ymin)) * ih;
+  let g = '';
+  yt.forEach(v => { g += `<line x1="${m.l}" x2="${W - m.r}" y1="${sy(v)}" y2="${sy(v)}" stroke="var(--line)"/><text x="${m.l - 6}" y="${sy(v) + 4}" text-anchor="end">${+v.toFixed(2)}</text>`; });
+  if (kind === 'scatter') xt.forEach(v => { g += `<text x="${sx(v)}" y="${H - m.b + 16}" text-anchor="middle">${+v.toFixed(2)}</text>`; });
+  else { const every = Math.max(1, Math.ceil(labels.length / 12)); labels.forEach((l, i) => { if (i % every === 0) g += `<text x="${sx(i)}" y="${H - m.b + 16}" text-anchor="middle">${esc(l)}</text>`; }); }
+  if (kind === 'bars') {
+    const bw = Math.max(3, iw / labels.length * .7);
+    series[0].y.forEach((v, i) => { if (!Number.isFinite(v)) return; const c = series[0].colors ? series[0].colors[i] : series[0].color; g += `<rect x="${sx(i) - bw / 2}" y="${Math.min(sy(v), sy(0))}" width="${bw}" height="${Math.abs(sy(v) - sy(0))}" fill="${c}"><title>${esc(labels[i])}: ${f1(v)}</title></rect>`; });
+  } else if (kind === 'lines') {
+    series.forEach(s => { let d = ''; s.y.forEach((v, i) => { if (Number.isFinite(v)) d += (d ? 'L' : 'M') + sx(i).toFixed(1) + ' ' + sy(v).toFixed(1); }); g += `<path d="${d}" fill="none" stroke="${s.color}" stroke-width="2"${s.dash ? ' stroke-dasharray="5 4"' : ''}/>`; });
+  } else {
+    points.forEach(p => { g += `<circle cx="${sx(p.x).toFixed(1)}" cy="${sy(p.y).toFixed(1)}" r="3.2" fill="${p.c}" fill-opacity=".65"/>`; });
+    lines.forEach(l => { g += `<line x1="${sx(l.x1)}" y1="${sy(l.y1)}" x2="${sx(l.x2)}" y2="${sy(l.y2)}" stroke="${l.c}" stroke-width="2.2"/>`; });
+  }
+  if (hline != null) g += `<line x1="${m.l}" x2="${W - m.r}" y1="${sy(hline)}" y2="${sy(hline)}" stroke="var(--warn)" stroke-dasharray="4 4"/>`;
+  if (vline != null && kind === 'scatter') g += `<line y1="${m.t}" y2="${H - m.b}" x1="${sx(vline)}" x2="${sx(vline)}" stroke="var(--warn)" stroke-dasharray="4 4"/>`;
+  g += `<text x="${m.l + iw / 2}" y="${H - 6}" text-anchor="middle">${esc(xLabel)}</text><text transform="translate(12 ${m.t + ih / 2}) rotate(-90)" text-anchor="middle">${esc(yLabel)}</text>`;
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(title || yLabel + ' chart')}">${g}</svg>`;
+}
+const legend = items => `<div class="legend">${items.map(([c, t]) => `<span><i style="background:${c}"></i>${esc(t)}</span>`).join('')}</div>`;
+
+/* =========================== PLACE =========================== */
+function setPlace(lat, lon, name) {
+  state.lat = +lat; state.lon = +lon; state.name = name || '';
+  $('lat').value = (+lat).toFixed(2); $('lon').value = (+lon).toFixed(2);
+  $('placeNote').textContent = name ? `Selected: ${name} (${(+lat).toFixed(2)}, ${(+lon).toFixed(2)})` : 'Coordinates set.';
+}
+$('lat').onchange = $('lon').onchange = () => { state.lat = +$('lat').value; state.lon = +$('lon').value; state.name = ''; };
+$('search').onclick = async () => {
+  const q = $('q').value.trim(); if (!q) return;
+  $('places').innerHTML = '<span class="note">Searching…</span>';
+  try {
+    const j = await getJSON(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=6&language=en&format=json`);
+    const r = j.results || [];
+    $('places').innerHTML = r.length ? r.map((p, i) => `<button class="chip" data-i="${i}">${esc(p.name)}${p.admin1 ? ', ' + esc(p.admin1) : ''}, ${esc(p.country || '')}</button>`).join('') : '<span class="note">No match. Enter coordinates instead.</span>';
+    $('places').querySelectorAll('button').forEach(b => b.onclick = () => { const p = r[+b.dataset.i]; setPlace(p.latitude, p.longitude, `${p.name}, ${p.country || ''}`); $('places').innerHTML = ''; });
+  } catch (e) { $('places').innerHTML = `<div class="err">Place search failed (${esc(e.message)}). Enter coordinates manually.</div>`; }
+};
+$('q').addEventListener('keydown', e => { if (e.key === 'Enter') $('search').click(); });
+$('geo').onclick = () => {
+  if (!navigator.geolocation) { $('placeNote').textContent = 'Location is not available in this browser.'; return; }
+  navigator.geolocation.getCurrentPosition(p => setPlace(p.coords.latitude, p.coords.longitude, 'your location'), () => { $('placeNote').textContent = 'Location permission was denied. Search for a place instead.'; });
+};
+
+/* =========================== CLIMATE DATA =========================== */
+const dailyCache = new Map();
+const LEVELS = [
+  'temperature_2m_mean,temperature_2m_max,relative_humidity_2m_mean,precipitation_sum,et0_fao_evapotranspiration',
+  'temperature_2m_mean,temperature_2m_max,relative_humidity_2m_mean,precipitation_sum',
+  'temperature_2m_max,temperature_2m_min,precipitation_sum'
+];
+let level = 0;   // moves down if the service rejects a variable, so later calls skip the failing request
+/* returns {time[], tmean[], rh[], tmax[], precip[], et0|null, rhAssumed} */
+async function getDaily(lat, lon, start, end) {
+  const key = [lat.toFixed(2), lon.toFixed(2), start, end].join('|');
+  if (dailyCache.has(key)) return dailyCache.get(key);
+  const base = `https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lon}&start_date=${start}&end_date=${end}&timezone=auto`;
+  let out;
+  for (;;) {
+    try {
+      const j = await getJSON(base + '&daily=' + LEVELS[level]), d = j.daily;
+      if (!d || !d.time) throw new Error('empty response');
+      out = level === 2 ? {time: d.time, tmean: d.temperature_2m_max.map((v, i) => (v + d.temperature_2m_min[i]) / 2), rh: d.time.map(() => 60), tmax: d.temperature_2m_max, precip: d.precipitation_sum, et0: null, rhAssumed: true}
+                        : {time: d.time, tmean: d.temperature_2m_mean, rh: d.relative_humidity_2m_mean, tmax: d.temperature_2m_max, precip: d.precipitation_sum, et0: level === 0 ? d.et0_fao_evapotranspiration : null, rhAssumed: false};
+      break;
+    } catch (e) {
+      if (level < LEVELS.length - 1 && e.status === 400 && /initialize|variable|invalid/i.test(e.message)) { level++; continue; }
+      throw e;
+    }
+  }
+  out.thi = out.time.map((_, i) => Number.isFinite(out.tmean[i]) && Number.isFinite(out.rh[i]) ? Core.thi(out.tmean[i], out.rh[i]) : NaN);
+  dailyCache.set(key, out);
+  return out;
+}
+const rhNote = '<div class="warn">Humidity data was not available for this request, so THI uses an assumed relative humidity of 60%. Treat absolute THI values with caution.</div>';
+
+/* =========================== TAB 1: CLIMATE =========================== */
+$('runClimate').onclick = async () => {
+  const btn = $('runClimate'); const lat = +$('lat').value, lon = +$('lon').value, thr = +$('thr').value;
+  if (!Number.isFinite(lat) || !Number.isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180) { $('climOut').innerHTML = '<div class="err">Enter valid coordinates.</div>'; return; }
+  setBusy(btn, true); $('climStatus').textContent = 'Fetching forecast and 35 years of history…'; $('climOut').innerHTML = '';
+  const yEnd = new Date().getFullYear() - 1, yStart = yEnd - 34;
+  const [fc, hist] = await Promise.allSettled([
+    getJSON(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relative_humidity_2m&forecast_days=7&timezone=auto`),
+    getDaily(lat, lon, `${yStart}-01-01`, `${yEnd}-12-31`)
+  ]);
+  let html = '';
+  /* forecast */
+  if (fc.status === 'fulfilled' && fc.value.hourly) {
+    const h = fc.value.hourly, byDay = {};
+    h.time.forEach((t, i) => { const T = h.temperature_2m[i], RH = h.relative_humidity_2m[i]; if (!Number.isFinite(T) || !Number.isFinite(RH)) return; const d = t.slice(0, 10); (byDay[d] = byDay[d] || []).push(Core.thi(T, RH)); });
+    const days = Object.keys(byDay), mx = days.map(d => Math.max(...byDay[d])), hrs = days.map(d => byDay[d].filter(v => v >= thr).length);
+    html += `<h3>Next 7 days</h3>${chart({kind: 'bars', labels: days.map(d => d.slice(5)), series: [{y: mx, colors: mx.map(v => Core.thiClass(v)[1])}], yLabel: 'Daily maximum THI', xLabel: 'Date (local)', hline: thr, title: 'Forecast daily maximum THI'})}
+      ${legend([['var(--ok)', 'No stress'], ['var(--warn)', 'Mild'], ['var(--mod)', 'Moderate'], ['var(--bad)', 'Severe'], ['var(--dang)', 'Dangerous']])}
+      <div class="tablewrap"><table><thead><tr><th>Date</th><th class="n">Max THI</th><th>Category</th><th class="n">Hours at or above ${thr}</th></tr></thead><tbody>${days.map((d, i) => { const c = Core.thiClass(mx[i]); return `<tr><td>${d}</td><td class="n">${f1(mx[i])}</td><td><span class="badge" style="background:${c[1]}">${c[0]}</span></td><td class="n">${hrs[i]}</td></tr>`; }).join('')}</tbody></table></div>`;
+  } else html += `<div class="err">Forecast could not be loaded (${esc(fc.reason && fc.reason.message || 'unknown error')}).</div>`;
+  /* history */
+  if (hist.status === 'fulfilled') {
+    const d = hist.value, years = [], yr = {};
+    d.time.forEach((t, i) => { const y = +t.slice(0, 4); (yr[y] = yr[y] || {t: [], p: 0, th: [], mx: []}); if (Number.isFinite(d.tmean[i])) yr[y].t.push(d.tmean[i]); if (Number.isFinite(d.precip[i])) yr[y].p += d.precip[i]; if (Number.isFinite(d.thi[i])) yr[y].th.push(d.thi[i]); if (Number.isFinite(d.tmax[i])) yr[y].mx.push(d.tmax[i]); });
+    Object.keys(yr).forEach(y => years.push(+y)); years.sort((a, b) => a - b);
+    const mat = years.map(y => Core.mean(yr[y].t)), ap = years.map(y => yr[y].p), mthi = years.map(y => Core.mean(yr[y].th)), sd = years.map(y => yr[y].th.filter(v => v >= thr).length), hot = years.map(y => yr[y].mx.filter(v => v >= 35).length);
+    const tr = Core.ols(years, sd), trT = Core.ols(years, mat);
+    const mon = Array.from({length: 12}, () => []); d.time.forEach((t, i) => { if (Number.isFinite(d.thi[i])) mon[+t.slice(5, 7) - 1].push(d.thi[i]); });
+    const monMean = mon.map(a => a.length ? Core.mean(a) : NaN), monStress = mon.map(a => a.length ? 100 * a.filter(v => v >= thr).length / a.length : NaN);
+    html += `<h3 style="margin-top:22px">${years[0]}–${years[years.length - 1]} climate history</h3>${d.rhAssumed ? rhNote : ''}
+      <div class="stats">
+        <div class="stat"><b>${f1(Core.mean(mat))} °C</b><small>Mean annual temperature</small></div>
+        <div class="stat"><b>${Math.round(Core.mean(ap))} mm</b><small>Mean annual rainfall</small></div>
+        <div class="stat"><b>${f1(Core.mean(mthi))}</b><small>Mean daily THI</small></div>
+        <div class="stat"><b>${Math.round(Core.mean(sd))} days</b><small>Per year at or above THI ${thr}</small></div>
+        <div class="stat"><b>${tr ? (tr.b * 10 >= 0 ? '+' : '') + f1(tr.b * 10) : '–'}</b><small>Change in stress days per decade${tr ? ' (p=' + fp(tr.p) + ')' : ''}</small></div>
+        <div class="stat"><b>${trT ? (trT.b * 10 >= 0 ? '+' : '') + f2(trT.b * 10) + ' °C' : '–'}</b><small>Warming per decade${trT ? ' (p=' + fp(trT.p) + ')' : ''}</small></div>
+      </div>
+      <div class="grid2"><div><h3>Heat-stress days per year</h3>${chart({kind: 'lines', labels: years.map(String), series: [{name: 'Stress days', y: sd, color: 'var(--bad)'}, {name: 'Days with Tmax ≥ 35 °C', y: hot, color: 'var(--accent2)', dash: true}], yLabel: 'Days', xLabel: 'Year', title: 'Heat stress days per year'})}${legend([['var(--bad)', `Mean THI ≥ ${thr}`], ['var(--accent2)', 'Tmax ≥ 35 °C']])}</div>
+      <div><h3>Seasonal pattern (percent of days in stress)</h3>${chart({kind: 'bars', labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'], series: [{y: monStress, color: 'var(--accent)'}], yLabel: '% of days', xLabel: 'Month', title: 'Monthly share of heat stress days'})}</div></div>
+      <p class="note">Mean-THI days use daily mean temperature and humidity, so they are a comparative index rather than a count of peak-hour exposure. Peak afternoon values are higher.</p>`;
+  } else html += `<div class="err" style="margin-top:14px">Climate history could not be loaded (${esc(hist.reason && hist.reason.message || 'unknown error')}). Try again in a minute.</div>`;
+  $('climOut').innerHTML = html; $('climStatus').textContent = ''; setBusy(btn, false);
+};
+
+/* =========================== TAB 2: PHENOTYPE × CLIMATE =========================== */
+let pData = null;
+const GROUP_COLORS = ['#14c9a4', '#f59e0b', '#a855f7', '#3b82f6', '#ef4444', '#eab308', '#ec4899', '#10b981'];
+function guess(head, names) { const i = head.findIndex(h => names.some(n => h.toLowerCase().replace(/[^a-z]/g, '') === n)); return i; }
+function selectHTML(id, label, head, sel, optional) { return `<div><label for="${id}">${label}</label><select id="${id}">${optional ? '<option value="-1">(none)</option>' : ''}${head.map((h, i) => `<option value="${i}" ${i === sel ? 'selected' : ''}>${esc(h)}</option>`).join('')}</select></div>`; }
+function loadPheno(text) {
+  const p = Core.csv(text); if (p.head.length < 2 || !p.rows.length) { $('pmap').innerHTML = '<div class="err">Could not read the data. Check that it has a header row.</div>'; pData = null; return; }
+  pData = p; const h = p.head;
+  const iDate = guess(h, ['date', 'day', 'recorddate', 'testdate', 'sampledate']), iLat = guess(h, ['lat', 'latitude']), iLon = guess(h, ['lon', 'lng', 'long', 'longitude']), iSite = guess(h, ['site', 'farm', 'location', 'herd', 'place']), iGrp = guess(h, ['breed', 'group', 'genotype', 'line', 'population']);
+  const numeric = h.map((_, i) => p.rows.filter(r => Number.isFinite(parseFloat(r[i]))).length / p.rows.length > .8);
+  const iTrait = h.findIndex((x, i) => numeric[i] && i !== iLat && i !== iLon && i !== iDate && i !== iGrp);
+  $('pmap').innerHTML = selectHTML('cDate', 'Date column', h, Math.max(iDate, 0)) + selectHTML('cTrait', 'Trait column', h, Math.max(iTrait, 0)) + selectHTML('cLat', 'Latitude', h, iLat, true) + selectHTML('cLon', 'Longitude', h, iLon, true) + selectHTML('cSite', 'Site name (if no coordinates)', h, iSite, true) + selectHTML('cGrp', 'Group (breed etc.)', h, iGrp, true) +
+    `<div><label for="cLag">THI averaged over</label><select id="cLag"><option value="0">same day</option><option value="1">day and 1 day before</option><option value="2" selected>day and 2 days before</option><option value="3">day and 3 days before</option></select></div>`;
+  $('pstatus').textContent = `${p.rows.length} rows loaded.`;
+}
+$('pfile').onchange = e => { const f = e.target.files[0]; if (f) f.text().then(t => { pDemo = false; $('ptext').value = t.length > 200000 ? t.slice(0, 200000) : t; loadPheno(t); }); };
+$('ptext').oninput = () => { pDemo = false; loadPheno($('ptext').value); };
+let pDemo = false;
+$('pdemo').onclick = () => {
+  /* DEMO data: synthetic records at two hot sites. Trait values are generated from the real climate with a built-in heat effect when you run the analysis. */
+  let s = 12345; const rnd = () => (s = (s * 1664525 + 1013904223) % 4294967296) / 4294967296;
+  const sites = [[11.79, 41.0], [12.0, 8.52]], breeds = ['HighGrade', 'LocalZebu'];
+  const rows = ['date,lat,lon,breed,milk_kg'];
+  for (let k = 0; k < 240; k++) {
+    const site = sites[k % 2], br = breeds[(k >> 1) % 2], day = Math.floor(rnd() * 700), d = new Date(Date.UTC(2023, 0, 1) + day * 864e5);
+    rows.push(`${d.toISOString().slice(0, 10)},${site[0]},${site[1]},${br},0`);
+  }
+  $('ptext').value = rows.join('\n'); loadPheno($('ptext').value); pDemo = true;
+  $('pstatus').textContent = 'DEMO ONLY: synthetic animals. Milk values are generated from the real climate with an invented heat effect (steeper in HighGrade), only to show what results look like.';
+};
+$('prun').onclick = async () => {
+  if (!pData) { $('pstatus').textContent = 'Load data first.'; return; }
+  const btn = $('prun'), thr = +$('thr').value, lag = +$('cLag').value;
+  const c = id => +$(id).value, iDate = c('cDate'), iTrait = c('cTrait'), iLat = c('cLat'), iLon = c('cLon'), iSite = c('cSite'), iGrp = c('cGrp');
+  setBusy(btn, true); $('pout').innerHTML = ''; const msgs = [];
+  try {
+    /* build records */
+    let recs = [], badDate = 0, badTrait = 0;
+    for (const r of pData.rows) {
+      const date = Core.isoDate(r[iDate]), y = parseFloat(String(r[iTrait]).replace(',', '.'));
+      if (!date) { badDate++; continue; } if (!Number.isFinite(y)) { badTrait++; continue; }
+      recs.push({date, y, g: iGrp >= 0 ? (r[iGrp] || 'NA').trim() : 'All', lat: iLat >= 0 ? parseFloat(r[iLat]) : NaN, lon: iLon >= 0 ? parseFloat(r[iLon]) : NaN, site: iSite >= 0 ? (r[iSite] || '').trim() : ''});
+    }
+    if (badDate || badTrait) msgs.push(`${badDate} rows skipped for unreadable dates and ${badTrait} for non-numeric trait values. Dates are read as YYYY-MM-DD or DD/MM/YYYY.`);
+    /* resolve sites */
+    if (iLat < 0 || iLon < 0) {
+      if (iSite >= 0) {
+        const names = [...new Set(recs.map(r => r.site).filter(Boolean))].slice(0, 25), res = {};
+        $('pstatus').textContent = 'Finding site coordinates…';
+        for (const n of names) { try { const j = await getJSON(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(n)}&count=1&language=en&format=json`); if (j.results && j.results[0]) res[n] = j.results[0]; } catch {} }
+        recs.forEach(r => { const p = res[r.site]; if (p) { r.lat = p.latitude; r.lon = p.longitude; } });
+        msgs.push('Site names were matched to the first geocoder result. Check: ' + names.map(n => res[n] ? `${esc(n)} → ${esc(res[n].name)}, ${esc(res[n].country || '')}` : `${esc(n)} → not found`).join('; ') + '.');
+      } else { recs.forEach(r => { r.lat = +$('lat').value; r.lon = +$('lon').value; }); msgs.push(`No coordinates in the data, so all records use the selected location (${(+$('lat').value).toFixed(2)}, ${(+$('lon').value).toFixed(2)}).`); }
+    }
+    recs = recs.filter(r => Number.isFinite(r.lat) && Number.isFinite(r.lon));
+    if (recs.length < 10) throw new Error('Fewer than 10 usable records with a date, trait value and location.');
+    /* climate per site */
+    const siteKey = r => r.lat.toFixed(1) + ',' + r.lon.toFixed(1), sites = {};
+    recs.forEach(r => { const k = siteKey(r); (sites[k] = sites[k] || {lat: r.lat, lon: r.lon, min: r.date, max: r.date}); if (r.date < sites[k].min) sites[k].min = r.date; if (r.date > sites[k].max) sites[k].max = r.date; });
+    const keys = Object.keys(sites); if (keys.length > 25) throw new Error(`${keys.length} distinct sites found. The limit is 25 per run; round coordinates or split the file.`);
+    const today = new Date(Date.now() - 6 * 864e5).toISOString().slice(0, 10); let rhAssumed = false, i = 0;
+    for (const k of keys) {
+      i++; $('pstatus').textContent = `Fetching climate for site ${i} of ${keys.length}…`;
+      const s = sites[k], start = new Date(Date.parse(s.min) - 5 * 864e5).toISOString().slice(0, 10), end = s.max > today ? today : s.max;
+      s.data = await getDaily(s.lat, s.lon, start, end); rhAssumed = rhAssumed || s.data.rhAssumed; s.idx = new Map(s.data.time.map((t, j) => [t, j]));
+      await sleep(250);
+    }
+    if (rhAssumed) msgs.push('Humidity was unavailable for some sites, so THI uses an assumed 60% relative humidity there.');
+    let noClim = 0;
+    recs.forEach(r => {
+      const s = sites[siteKey(r)], j = s.idx.get(r.date); if (j === undefined) { r.t = NaN; noClim++; return; }
+      const v = []; for (let l = 0; l <= lag; l++) { const x = s.data.thi[j - l]; if (Number.isFinite(x)) v.push(x); } r.t = v.length === lag + 1 ? Core.mean(v) : NaN;
+      if (!Number.isFinite(r.t)) noClim++;
+    });
+    if (noClim) msgs.push(`${noClim} records had no climate data (dates after the available archive or at the start of a window) and were left out.`);
+    if (pDemo) { let z = 99; const rn = () => (z = (z * 1664525 + 1013904223) % 4294967296) / 4294967296; recs.forEach(r => { if (Number.isFinite(r.t)) r.y = (r.g === 'HighGrade' ? 18 : 7) - (r.g === 'HighGrade' ? 0.45 : 0.1) * Math.max(0, r.t - 72) + (rn() - .5) * 3; }); msgs.push('Demo data: trait values were generated with an invented heat effect. Do not interpret them biologically.'); }
+    const use = recs.filter(r => Number.isFinite(r.t)); if (use.length < 10) throw new Error('Too few records matched to climate data.');
+    /* stats per group */
+    const groups = [...new Set(use.map(r => r.g))].sort(), colour = Object.fromEntries(groups.map((g, k) => [g, GROUP_COLORS[k % GROUP_COLORS.length]]));
+    const all = use.map(r => r.t), xmin = Math.min(...all), xmax = Math.max(...all);
+    const rowsHtml = [], lines = [];
+    const fit = (arr, label, col) => {
+      const f = Core.ols(arr.map(r => r.t), arr.map(r => r.y)), lo = arr.filter(r => r.t < thr), hi = arr.filter(r => r.t >= thr), fl = lo.length >= 5 ? Core.ols(lo.map(r => r.t), lo.map(r => r.y)) : null, fh = hi.length >= 5 ? Core.ols(hi.map(r => r.t), hi.map(r => r.y)) : null;
+      if (f) lines.push({x1: xmin, y1: f.a + f.b * xmin, x2: xmax, y2: f.a + f.b * xmax, c: col});
+      const sl = (m, n) => m ? `${f2(m.b)} (p=${fp(m.p)})` : `n=${n}, too few`;
+      rowsHtml.push(`<tr><td><i style="display:inline-block;width:10px;height:10px;background:${col};border-radius:2px;margin-right:6px"></i>${esc(label)}</td><td class="n">${arr.length}</td><td class="n">${f ? f2(f.b) : '–'}</td><td class="n">${f ? fp(f.p) : '–'}</td><td class="n">${f ? f2(f.r2) : '–'}</td><td class="n">${sl(fl, lo.length)}</td><td class="n">${sl(fh, hi.length)}</td></tr>`);
+    };
+    if (groups.length > 1) groups.forEach(g => fit(use.filter(r => r.g === g), g, colour[g])); else fit(use, groups[0], colour[groups[0]]);
+    $('pout').innerHTML = `<div class="card"><h3>Trait against THI</h3>${msgs.map(m => `<div class="warn">${m}</div>`).join('')}
+      ${chart({kind: 'scatter', points: use.map(r => ({x: r.t, y: r.y, c: colour[r.g]})), lines, vline: thr, xLabel: `THI (day${lag ? ' and previous ' + lag : ''})`, yLabel: $('cTrait').selectedOptions[0].text, title: 'Trait versus THI'})}
+      ${groups.length > 1 ? legend(groups.map(g => [colour[g], g])) : ''}
+      <div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Group</th><th class="n">n</th><th class="n">Slope per THI unit</th><th class="n">p</th><th class="n">R²</th><th class="n">Slope below ${thr}</th><th class="n">Slope at or above ${thr}</th></tr></thead><tbody>${rowsHtml.join('')}</tbody></table></div>
+      <p class="note" style="margin-top:8px">A more negative slope above the threshold means the trait falls faster as heat stress rises, which indicates higher heat sensitivity. Comparing groups by eye is only suggestive; fit a model with animal, herd and stage effects before drawing conclusions.</p></div>`;
+    $('pstatus').textContent = `${use.length} records analysed.`;
+  } catch (e) { $('pout').innerHTML = `<div class="err">${esc(e.message)}</div>`; $('pstatus').textContent = ''; }
+  setBusy(btn, false);
+};
+
+/* =========================== TAB 3: GENOME × CLIMATE =========================== */
+const CLIM_VARS = [['MAT', 'Mean annual temperature (°C)'], ['AP', 'Annual rainfall (mm)'], ['THI', 'Mean daily THI'], ['SDAYS', 'Share of days at or above stress THI (%)'], ['TX95', 'Hot-day temperature, 95th percentile of Tmax (°C)']];
+let gGroups = null;
+$('gfile').onchange = e => { const f = e.target.files[0]; if (f) f.text().then(t => { $('gtext').value = t.length > 300000 ? t.slice(0, 300000) : t; $('gstatus').textContent = 'File loaded.'; }); };
+$('gdemo').onclick = () => {
+  /* DEMO data: synthetic allele frequencies at real-world coordinates */
+  let s = 777; const rnd = () => (s = (s * 1664525 + 1013904223) % 4294967296) / 4294967296;
+  const pops = [['Addis', 9.03, 38.75], ['Bahir', 11.6, 37.4], ['Mekelle', 13.5, 39.5], ['Nairobi', -1.29, 36.82], ['Kano', 12.0, 8.5], ['Bamako', 12.65, -8.0], ['Dakar', 14.7, -17.45], ['Tunis', 36.8, 10.18], ['Rome', 41.9, 12.5], ['Campobasso', 41.56, 14.67], ['Lyon', 45.75, 4.85], ['Cairo', 30.04, 31.24], ['Windhoek', -22.56, 17.08], ['Gaborone', -24.65, 25.9]];
+  const rows = ['population,lat,lon,DEMO_SNP1,DEMO_SNP2,DEMO_SNP3,DEMO_SNP4'];
+  pops.forEach(p => { const warm = 1 - Math.min(1, Math.abs(p[1]) / 45); rows.push([p[0], p[1], p[2], (0.15 + .7 * warm + (rnd() - .5) * .08).toFixed(3), (0.9 - .6 * warm + (rnd() - .5) * .08).toFixed(3), rnd().toFixed(3), rnd().toFixed(3)].join(',')); });
+  $('gtext').value = rows.join('\n'); $('gstatus').textContent = 'DEMO ONLY: synthetic allele frequencies with two planted climate signals. Not real data.';
+};
+$('grun').onclick = async () => {
+  const btn = $('grun'), thr = +$('thr').value; setBusy(btn, true); $('gout').innerHTML = '';
+  try {
+    const p = Core.csv($('gtext').value); if (p.head.length < 4 || p.rows.length < 4) throw new Error('Need a header row, at least 4 populations and at least one variant column.');
+    const h = p.head.map(x => x.trim()), iP = h.findIndex(x => /^(pop|population|breed|name|id)/i.test(x)), iLat = h.findIndex(x => /^lat/i.test(x)), iLon = h.findIndex(x => /^(lon|lng|long)/i.test(x));
+    if (iLat < 0 || iLon < 0) throw new Error('Columns named lat and lon are required.');
+    const snpIdx = h.map((x, i) => i).filter(i => i !== iP && i !== iLat && i !== iLon);
+    let pops = p.rows.map((r, k) => ({name: iP >= 0 ? r[iP] : 'Pop' + (k + 1), lat: parseFloat(r[iLat]), lon: parseFloat(r[iLon]), r})).filter(o => Number.isFinite(o.lat) && Number.isFinite(o.lon));
+    if (pops.length > 30) throw new Error('The limit is 30 populations per run.'); if (snpIdx.length > 5000) throw new Error('The limit is 5000 variants per run.');
+    const warnings = []; if (pops.length < 10) warnings.push(`Only ${pops.length} populations. P-values are unreliable below about 10; use the ranking only as a guide.`);
+    let rhA = false;
+    for (let k = 0; k < pops.length; k++) {
+      $('gstatus').textContent = `Fetching climate for population ${k + 1} of ${pops.length}…`;
+      const d = await getDaily(pops[k].lat, pops[k].lon, '2001-01-01', '2020-12-31'); rhA = rhA || d.rhAssumed;
+      const yrs = new Set(d.time.map(t => t.slice(0, 4))).size, tx = Core.finite(d.tmax).sort((a, b) => a - b), ok = Core.finite(d.thi);
+      pops[k].c = {MAT: Core.mean(Core.finite(d.tmean)), AP: d.precip.reduce((s, v) => s + (Number.isFinite(v) ? v : 0), 0) / yrs, THI: Core.mean(ok), SDAYS: 100 * ok.filter(v => v >= thr).length / ok.length, TX95: tx[Math.floor(.95 * (tx.length - 1))]};
+      await sleep(250);
+    }
+    if (rhA) warnings.push('Humidity was unavailable for some populations, so THI-based variables assume 60% relative humidity.');
+    const res = [];
+    snpIdx.forEach(i => { const f = pops.map(o => parseFloat(String(o.r[i]).replace(',', '.'))); if (Core.finite(f).length < 4 || new Set(f).size < 2) return; CLIM_VARS.forEach(([k]) => { const s = Core.spearman(f, pops.map(o => o.c[k])); if (Number.isFinite(s.p)) res.push({snp: h[i], v: k, rho: s.rho, p: s.p, n: s.n, f}); }); });
+    if (!res.length) throw new Error('No variant had usable, variable frequencies.');
+    const q = Core.bh(res.map(r => r.p)); res.forEach((r, i) => r.q = q[i]); res.sort((a, b) => a.p - b.p);
+    gGroups = {pops, res};
+    $('gout').innerHTML = `<div class="card"><h3>Climate at each population (2001–2020)</h3><div class="tablewrap"><table><thead><tr><th>Population</th><th class="n">MAT °C</th><th class="n">Rain mm</th><th class="n">THI</th><th class="n">Stress days %</th><th class="n">Tx95 °C</th></tr></thead><tbody>${pops.map(o => `<tr><td>${esc(o.name)}</td><td class="n">${f1(o.c.MAT)}</td><td class="n">${Math.round(o.c.AP)}</td><td class="n">${f1(o.c.THI)}</td><td class="n">${f1(o.c.SDAYS)}</td><td class="n">${f1(o.c.TX95)}</td></tr>`).join('')}</tbody></table></div></div>
+      <div class="card"><h3>Top variant–climate associations</h3>${warnings.map(w => `<div class="warn">${w}</div>`).join('')}<p class="note">Click a row to plot it. ${res.length} tests; q is the Benjamini–Hochberg adjusted p-value. Population structure is not corrected, so shared ancestry can inflate signals.</p>
+      <div class="tablewrap"><table><thead><tr><th>Variant</th><th>Climate variable</th><th class="n">Spearman ρ</th><th class="n">p</th><th class="n">q</th></tr></thead><tbody>${res.slice(0, 25).map((r, i) => `<tr class="click" data-i="${i}"><td>${esc(r.snp)}</td><td>${esc(CLIM_VARS.find(v => v[0] === r.v)[1])}</td><td class="n">${f2(r.rho)}</td><td class="n">${fp(r.p)}</td><td class="n">${fp(r.q)}</td></tr>`).join('')}</tbody></table></div><div id="gplot"></div>
+      <p class="note" style="margin-top:8px">Next step: look the strongest candidates up in the Gene and omics tab, then confirm with a structure-aware method.</p></div>`;
+    const plot = i => { const r = res[i], xs = pops.map(o => o.c[r.v]), pts = pops.map((o, k) => ({x: xs[k], y: r.f[k], c: 'var(--accent)'})).filter(pt => Number.isFinite(pt.y)), m = Core.ols(pts.map(a => a.x), pts.map(a => a.y)), xa = Math.min(...pts.map(a => a.x)), xb = Math.max(...pts.map(a => a.x)); $('gplot').innerHTML = `<h3 style="margin-top:14px">${esc(r.snp)} against ${esc(CLIM_VARS.find(v => v[0] === r.v)[1])}</h3>` + chart({kind: 'scatter', points: pts, lines: m ? [{x1: xa, y1: m.a + m.b * xa, x2: xb, y2: m.a + m.b * xb, c: 'var(--accent2)'}] : [], xLabel: CLIM_VARS.find(v => v[0] === r.v)[1], yLabel: 'Allele frequency', title: 'Allele frequency versus climate'}); };
+    $('gout').querySelectorAll('tr.click').forEach(tr => tr.onclick = () => plot(+tr.dataset.i)); plot(0);
+    $('gstatus').textContent = `${snpIdx.length} variants and ${pops.length} populations analysed.`;
+  } catch (e) { $('gout').innerHTML = `<div class="err">${esc(e.message)}</div>`; $('gstatus').textContent = ''; }
+  setBusy(btn, false);
+};
+
+/* =========================== TAB 4: OMICS =========================== */
+const PANELS = {
+  'Heat stress and thermotolerance': [['HSPA1A', 'Heat shock protein 70, a molecular chaperone induced by heat'], ['HSPB1', 'Small heat shock protein (HSP27)'], ['HSP90AA1', 'Heat shock protein 90 alpha, stress response chaperone'], ['HSF1', 'Heat shock transcription factor that controls the heat-shock response'], ['PRLR', 'Prolactin receptor; a truncating variant causes the slick short-hair coat and heat tolerance in some cattle'], ['ATP1A1', 'Na+/K+ ATPase subunit, a candidate in heat tolerance and selection scans']],
+  'Altitude and hypoxia': [['EPAS1', 'HIF-2 alpha, oxygen-sensing transcription factor'], ['EGLN1', 'Prolyl hydroxylase that regulates HIF proteins'], ['HIF1A', 'HIF-1 alpha, master regulator of the hypoxia response']],
+  'Coat and pigmentation': [['MC1R', 'Melanocortin receptor 1, coat colour']],
+  'Immunity and disease': [['BOLA-DRB3', 'Bovine MHC class II gene, linked to disease and tick resistance studies'], ['TLR4', 'Toll-like receptor 4, innate immunity'], ['IFNG', 'Interferon gamma, immune signalling']]
+};
+$('panels').innerHTML = Object.entries(PANELS).map(([t, g]) => `<h3 style="margin-top:12px;font-size:.9rem">${esc(t)}</h3><div class="chips">${g.map(([s, d]) => `<button class="chip" data-g="${esc(s)}" title="${esc(d)}">${esc(s)}</button>`).join('')}</div>`).join('');
+$('panels').querySelectorAll('.chip').forEach(b => b.onclick = () => { $('gene').value = b.dataset.g; $('grunGene').click(); });
+$('gene').addEventListener('keydown', e => { if (e.key === 'Enter') $('grunGene').click(); });
+const card = (title, body) => `<div class="card"><h3>${title}</h3>${body}</div>`;
+$('grunGene').onclick = async () => {
+  const sym = $('gene').value.trim().replace(/[^A-Za-z0-9._-]/g, ''); if (!sym) return;
+  const [sp, tax, common] = $('sp').value.split('|'), btn = $('grunGene'); setBusy(btn, true);
+  $('oout').innerHTML = `<div class="card"><p class="note">Looking up ${esc(sym)}…</p></div>`;
+  const links = `<p class="note">Open directly: <a href="https://www.ensembl.org/${sp}/Search/Results?q=${encodeURIComponent(sym)}" target="_blank" rel="noopener">Ensembl</a> · <a href="https://www.uniprot.org/uniprotkb?query=${encodeURIComponent(sym)}%20AND%20organism_id:${tax}" target="_blank" rel="noopener">UniProt</a> · <a href="https://string-db.org/cgi/network?identifiers=${encodeURIComponent(sym)}&species=${tax}" target="_blank" rel="noopener">STRING</a> · <a href="https://europepmc.org/search?query=${encodeURIComponent(sym + ' ' + common)}" target="_blank" rel="noopener">Europe PMC</a></p>`;
+  const [ens, uni, str, pub] = await Promise.allSettled([
+    (async () => { const g = await getJSON(`https://rest.ensembl.org/lookup/symbol/${sp}/${encodeURIComponent(sym)}?content-type=application/json`, 1); let human = null;
+      if (sp !== 'homo_sapiens') { try { const h = await getJSON(`https://rest.ensembl.org/homology/id/${sp}/${g.id}?type=orthologues;target_species=homo_sapiens;content-type=application/json`, 1); const o = h.data && h.data[0] && h.data[0].homologies && h.data[0].homologies[0]; if (o) { let name = o.target.id; try { const t = await getJSON(`https://rest.ensembl.org/lookup/id/${o.target.id}?content-type=application/json`, 1); name = t.display_name || name; } catch {} human = {id: o.target.id, name, ident: o.target.perc_id}; } } catch {} }
+      return {g, human}; })(),
+    (async () => { let j = await getJSON(`https://rest.uniprot.org/uniprotkb/search?query=${encodeURIComponent(`gene_exact:${sym} AND organism_id:${tax}`)}&fields=accession,gene_names,protein_name,cc_function&format=json&size=1`, 1); if (!j.results || !j.results.length) j = await getJSON(`https://rest.uniprot.org/uniprotkb/search?query=${encodeURIComponent(`${sym} AND organism_id:${tax}`)}&fields=accession,gene_names,protein_name,cc_function&format=json&size=1`, 1); return j.results && j.results[0]; })(),
+    getJSON(`https://string-db.org/api/json/interaction_partners?identifiers=${encodeURIComponent(sym)}&species=${tax}&limit=8&caller_identity=muler-21.github.io`, 1),
+    getJSON(`https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=${encodeURIComponent(`${sym} AND ${common} AND (heat stress OR climate OR adaptation OR "selection signature" OR resilience)`)}&format=json&pageSize=8&resultType=lite`, 1)
+  ]);
+  const fail = (r, name) => `<div class="err">${name} could not be loaded (${esc(r.reason && r.reason.message || 'unknown error')}). The symbol may differ in this species, or the service may be busy. Use the direct links below.</div>`;
+  let out = '';
+  out += card('Gene (Ensembl)', ens.status === 'fulfilled' ? `<p><b>${esc(ens.value.g.display_name || sym)}</b> · <a href="https://www.ensembl.org/${sp}/Gene/Summary?g=${esc(ens.value.g.id)}" target="_blank" rel="noopener">${esc(ens.value.g.id)}</a></p><p class="note">${esc((ens.value.g.description || '').replace(/\s*\[.*\]$/, ''))}</p><ul class="plain"><li>Location: chromosome ${esc(ens.value.g.seq_region_name)}:${(+ens.value.g.start).toLocaleString()}–${(+ens.value.g.end).toLocaleString()} (${ens.value.g.strand > 0 ? '+' : '−'} strand), assembly ${esc(ens.value.g.assembly_name || '')}</li><li>Type: ${esc(ens.value.g.biotype || '')}</li>${ens.value.human ? `<li>Human ortholog: <b>${esc(ens.value.human.name)}</b> (${esc(ens.value.human.id)}), ${f1(ens.value.human.ident)}% identity</li>` : sp !== 'homo_sapiens' ? '<li>Human ortholog: none returned</li>' : ''}</ul>` : fail(ens, 'Ensembl'));
+  out += card('Protein function (UniProt)', uni.status === 'fulfilled' && uni.value ? (() => { const u = uni.value, rn = u.proteinDescription && (u.proteinDescription.recommendedName || (u.proteinDescription.submissionNames || [])[0]), fn = (u.comments || []).find(c => c.commentType === 'FUNCTION'); return `<p><b>${esc(rn && rn.fullName ? rn.fullName.value : sym)}</b> · <a href="https://www.uniprot.org/uniprotkb/${esc(u.primaryAccession)}" target="_blank" rel="noopener">${esc(u.primaryAccession)}</a> <span class="note">(${esc(u.entryType || '')})</span></p><p class="note" style="margin-top:6px">${fn ? esc(fn.texts[0].value) : 'No function annotation for this entry.'}</p>`; })() : uni.status === 'fulfilled' ? '<p class="note">No UniProt entry found for this symbol and species.</p>' : fail(uni, 'UniProt'));
+  out += card('Interaction partners (STRING)', str.status === 'fulfilled' ? (str.value.length ? `<div class="tablewrap"><table><thead><tr><th>Partner</th><th class="n">Combined score</th></tr></thead><tbody>${str.value.map(r => `<tr><td>${esc(r.preferredName_B)}</td><td class="n">${f2(r.score)}</td></tr>`).join('')}</tbody></table></div><p class="note" style="margin-top:6px">Higher scores mean stronger combined evidence (text mining, experiments, co-expression, databases). Partners are a lead for pathway analysis, not proof of function.</p>` : '<p class="note">No partners returned.</p>') : fail(str, 'STRING'));
+  out += card('Papers (Europe PMC)', pub.status === 'fulfilled' ? ((pub.value.resultList && pub.value.resultList.result || []).length ? `<ul class="plain">${pub.value.resultList.result.map(r => `<li><a href="https://europepmc.org/article/${esc(r.source)}/${esc(r.id)}" target="_blank" rel="noopener">${esc(r.title)}</a><br><span class="note">${esc(r.authorString || '')} · ${esc(r.journalTitle || '')} ${esc(r.pubYear || '')}</span></li>`).join('')}</ul><p class="note" style="margin-top:6px">Search: gene + species + heat stress, climate, adaptation, selection signature or resilience. Read the papers before relying on a candidate.</p>` : '<p class="note">No matching papers found.</p>') : fail(pub, 'Europe PMC'));
+  $('oout').innerHTML = out + links; setBusy(btn, false);
+};
+
+/* =========================== DECIDE =========================== */
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const SYSTEMS = {
+  cattle:    {label: 'Cattle', kind: 'livestock', unit: 'THI', thr: 72, start: 1, len: 12, watch: 10, risky: 30, tolMax: 12, note: 'THI 72 is a widely used onset of heat stress for dairy cattle (NRC). Heat-adapted breeds tolerate more, so adjust it to your breed. This is a typical literature value, not a rule for every animal.'},
+  livestock: {label: 'Livestock', kind: 'livestock', unit: 'THI', thr: 75, start: 1, len: 12, watch: 10, risky: 30, tolMax: 12, note: 'Set the THI at which your animals start to show heat stress. Published thresholds vary by species, breed and production level.'},
+  maize:     {label: 'Maize', kind: 'crop', unit: '°C', thr: 35, start: 6, len: 4, watch: 5, risky: 15, tolMax: 6, note: 'Heat damage to maize is commonly reported above about 35 °C around flowering. Set your own sowing month and season length. Typical literature value, not a rule for every variety.'},
+  wheat:     {label: 'Wheat', kind: 'crop', unit: '°C', thr: 30, start: 11, len: 6, watch: 5, risky: 15, tolMax: 6, note: 'Wheat yield is commonly reported to suffer above about 30 °C around flowering and grain filling. Set your own sowing month and season length. Typical literature value.'},
+  sorghum:   {label: 'Sorghum', kind: 'crop', unit: '°C', thr: 38, start: 6, len: 4, watch: 5, risky: 15, tolMax: 6, note: 'Sorghum tolerates heat better than most cereals; stress is commonly reported above roughly 38 °C. Set your own season. Typical literature value.'},
+  chickpea:  {label: 'Chickpea', kind: 'crop', unit: '°C', thr: 35, start: 10, len: 5, watch: 5, risky: 15, tolMax: 6, note: 'Chickpea flowering and pod set are commonly reported to suffer above about 35 °C. Set your own sowing month and season length. Typical literature value.'},
+  crop:      {label: 'Crop', kind: 'crop', unit: '°C', thr: 35, start: 6, len: 4, watch: 5, risky: 15, tolMax: 6, note: 'Set the daily maximum temperature above which your crop is damaged at its sensitive stage.'}
+};
+const D = {places: [], focus: null, aud: 'farm'};
+$('sstart').innerHTML = MONTHS.map((m, i) => `<option value="${i + 1}">${m}</option>`).join('');
+$('slen').innerHTML = Array.from({length: 12}, (_, i) => `<option value="${i + 1}">${i + 1} month${i ? 's' : ''}</option>`).join('');
+
+function applyPreset(key) {
+  const S = SYSTEMS[key];
+  $('dthr').value = S.thr; $('sstart').value = S.start; $('slen').value = S.len; $('bwatch').value = S.watch; $('brisky').value = S.risky;
+  $('dthrL').textContent = S.kind === 'livestock' ? 'Stress starts at THI' : 'Damage starts at daily max (°C)';
+  $('sysNote').textContent = S.note; $('tol').max = S.tolMax;
+  if (+$('tol').value > S.tolMax) $('tol').value = S.tolMax;
+  $('tolL').textContent = S.kind === 'livestock' ? 'THI units' : '°C';
+}
+const cfgNow = () => { const S = SYSTEMS[$('sys').value]; return {sys: $('sys').value, label: S.label, kind: S.kind, unit: S.unit, thr: +$('dthr').value, start: +$('sstart').value, len: +$('slen').value, watch: +$('bwatch').value, risky: +$('brisky').value, delta: +$('warm').value, tol: +$('tol').value}; };
+const thrText = c => c.kind === 'livestock' ? `THI ${c.thr + c.tol}` : `${c.thr + c.tol} °C`;
+const pct = v => Number.isFinite(v) ? v.toFixed(v < 10 ? 1 : 0) + '%' : '–';
+
+/* one value per day, one row per season-year */
+function seasonYears(d, c, startOverride) {
+  const start = startOverride || c.start, wraps = start + c.len - 1 > 12, thrEff = c.thr + c.tol, Y = {};
+  let lastSY = null, run = 0, dry = 0;
+  for (let i = 0; i < d.time.length; i++) {
+    const m = +d.time[i].slice(5, 7); if ((m - start + 12) % 12 >= c.len) continue;
+    const y = +d.time[i].slice(0, 4), sy = wraps && m < start ? y - 1 : y;
+    if (sy !== lastSY) { run = 0; dry = 0; lastSY = sy; }
+    const r = Y[sy] || (Y[sy] = {y: sy, n: 0, s: 0, maxrun: 0, maxdry: 0, rain: 0, et: 0, etn: 0});
+    const v = c.kind === 'livestock' ? Core.thi(d.tmean[i] + c.delta, d.rh[i]) : d.tmax[i] + c.delta;
+    if (!Number.isFinite(v)) continue;
+    r.n++; if (v >= thrEff) { r.s++; run++; if (run > r.maxrun) r.maxrun = run; } else run = 0;
+    const p = d.precip[i]; if (Number.isFinite(p)) { r.rain += p; if (p < 1) { dry++; if (dry > r.maxdry) r.maxdry = dry; } else dry = 0; }
+    if (d.et0) { const e = d.et0[i]; if (Number.isFinite(e)) { r.et += e; r.etn++; } }
+  }
+  const need = 0.8 * c.len * 30.4;
+  return Object.values(Y).filter(r => r.n >= need).sort((a, b) => a.y - b.y).map(r => ({...r, share: 100 * r.s / r.n, bal: r.etn >= 0.9 * r.n ? r.rain - r.et : NaN}));
+}
+const quant = (a, p) => { const b = a.filter(Number.isFinite).sort((x, y) => x - y); return b.length ? b[Math.min(b.length - 1, Math.floor(p * (b.length - 1) + .5))] : NaN; };
+function summarize(d, c) {
+  const yrs = seasonYears(d, c); if (yrs.length < 8) return null;
+  const rec = yrs.slice(-15), early = yrs.slice(0, 15), recent = Core.mean(rec.map(r => r.share)), earlyM = Core.mean(early.map(r => r.share)), tr = Core.ols(yrs.map(r => r.y), yrs.map(r => r.share));
+  return {yrs, recent, early: earlyM, change: recent - earlyM, p80: quant(rec.map(r => r.share), .8), slope: tr ? tr.b * 10 : NaN, slopeP: tr ? tr.p : NaN, days: Core.mean(rec.map(r => r.s)), run: quant(rec.map(r => r.maxrun), .5), rain: quant(rec.map(r => r.rain), .5), dry: quant(rec.map(r => r.maxdry), .5), bal: quant(rec.map(r => r.bal), .5), recSpan: [rec[0].y, rec[rec.length - 1].y], earlySpan: [early[0].y, early[early.length - 1].y], verdict: recent >= c.risky ? 'Risky' : recent >= c.watch ? 'Watch' : 'Good'};
+}
+const verdictOf = (share, c) => share >= c.risky ? 'Risky' : share >= c.watch ? 'Watch' : 'Good';
+const VCOL = {Good: 'var(--ok)', Watch: 'var(--warn)', Risky: 'var(--bad)'};
+function startScan(d, c, len) { return Array.from({length: 12}, (_, i) => { const rec = seasonYears(d, {...c, len: len || c.len}, i + 1).slice(-15); return rec.length ? Core.mean(rec.map(r => r.share)) : NaN; }); }
+const spanTxt = s => s[0] === s[1] ? String(s[0]) : `${s[0]}–${s[1]}`;
+const list3 = a => a.length === 0 ? '' : a.length === 1 ? a[0] : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+
+/* place list */
+function renderPlaces() {
+  $('myPlaces').innerHTML = D.places.length ? D.places.map((p, i) => `<span class="chip" style="cursor:default">${esc(p.name)} <button class="chip" data-rm="${i}" aria-label="Remove ${esc(p.name)}" style="border:0;padding:0 4px;color:var(--bad)">×</button></span>`).join('') : '<span class="note">No places yet.</span>';
+  $('myPlaces').querySelectorAll('[data-rm]').forEach(b => b.onclick = () => { D.places.splice(+b.dataset.rm, 1); renderPlaces(); if (D.places.some(p => p.data)) renderDecide(); else $('decideOut').innerHTML = ''; });
+}
+function addCurrentPlace() {
+  const lat = +$('lat').value, lon = +$('lon').value;
+  if (!Number.isFinite(lat) || !Number.isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180) { $('placeNote').textContent = 'Enter valid coordinates first.'; return false; }
+  if (D.places.length >= 5) { $('placeNote').textContent = 'Five places is the limit. Remove one first.'; return false; }
+  if (D.places.some(p => Math.abs(p.lat - lat) < .005 && Math.abs(p.lon - lon) < .005)) return true;
+  D.places.push({name: state.name || `${lat.toFixed(2)}, ${lon.toFixed(2)}`, lat, lon, data: null, err: null}); renderPlaces(); return true;
+}
+$('addPlace').onclick = addCurrentPlace;
+$('tryEx').onclick = () => {
+  D.places = [['Addis Ababa', 9.03, 38.74], ['Debre Markos', 10.34, 37.72], ['Semera (Afar lowlands)', 11.79, 41.0]].map(p => ({name: p[0], lat: p[1], lon: p[2], data: null, err: null}));
+  $('sys').value = 'maize'; applyPreset('maize'); renderPlaces(); $('runDecide').click();
+};
+
+/* run */
+$('runDecide').onclick = async () => {
+  if (!D.places.length && !addCurrentPlace()) return;
+  const btn = $('runDecide'); setBusy(btn, true);
+  const yEnd = new Date().getFullYear() - 1, yStart = yEnd - 34; let k = 0;
+  for (const p of D.places) {
+    k++; if (p.data) continue; $('decideStatus').textContent = `Fetching 35 years of climate for place ${k} of ${D.places.length}…`;
+    try { p.data = await getDaily(p.lat, p.lon, `${yStart}-01-01`, `${yEnd}-12-31`); p.err = null; } catch (e) { p.err = e.message; }
+    await sleep(200);
+  }
+  $('decideStatus').textContent = ''; $('whatif').hidden = false; renderDecide(); setBusy(btn, false);
+  $('decideOut').scrollIntoView({behavior: 'smooth', block: 'start'});
+};
+
+/* render */
+let rafId = 0; const scheduleRender = () => { if (!D.places.some(p => p.data)) return; cancelAnimationFrame(rafId); rafId = requestAnimationFrame(renderDecide); };
+function renderDecide() {
+  const c = cfgNow(), S = SYSTEMS[c.sys], out = $('decideOut'), isL = c.kind === 'livestock';
+  const res = D.places.map(p => ({p, s: p.data ? summarize(p.data, c) : null}));
+  const ok = res.filter(r => r.s).sort((a, b) => b.s.recent - a.s.recent), bad = res.filter(r => !r.s);
+  if (!ok.length) { out.innerHTML = bad.map(r => `<div class="err">${esc(r.p.name)}: ${esc(r.p.err || 'not enough usable climate data for this season')}</div>`).join('') || ''; return; }
+  const focus = ok.find(r => r.p.name === D.focus) || ok[0]; D.focus = focus.p.name;
+  const counts = {Good: 0, Watch: 0, Risky: 0}; ok.forEach(r => counts[r.s.verdict]++);
+  const worst = ok[0], s0 = worst.s, n = ok.length, scen = [c.delta > 0 ? `+${c.delta} °C warming` : '', c.tol > 0 ? `tolerance +${c.tol} ${isL ? 'THI' : '°C'}` : ''].filter(Boolean).join(', ');
+  const headline = `Among ${n} place${n > 1 ? 's' : ''} for ${S.label.toLowerCase()}${scen ? ` under ${scen}` : ' at today\u2019s climate'}: ${counts.Risky} Risky, ${counts.Watch} Watch, ${counts.Good} Good. Highest exposure is ${worst.p.name}, with ${pct(s0.recent)} of season days at or above ${thrText(c)}.`;
+  const seasonTxt = c.len === 12 ? 'all year' : `${MONTHS[c.start - 1]} to ${MONTHS[(c.start + c.len - 2) % 12]}`;
+
+  /* audience text */
+  const F = focus.s, fd = focus.p.data; let say = '';
+  if (D.aud === 'farm') {
+    if (isL) {
+      const mon = startScan(fd, c, 1), idx = mon.map((v, i) => [v, i]).filter(x => Number.isFinite(x[0])).sort((a, b) => b[0] - a[0]);
+      say = `<p><b>${esc(focus.p.name)}:</b> animals are at or above ${thrText(c)} on about ${Math.round(F.days)} days a year (${pct(F.recent)} of the season). The hottest months are ${list3(idx.slice(0, 3).map(x => MONTHS[x[1]]))}; the coolest are ${list3(idx.slice(-3).reverse().map(x => MONTHS[x[1]]))}.</p><p>Options to discuss with your vet or extension officer: shade and clean drinking water, moving feeding and work to cooler hours, planning breeding, calving and transport for cooler months, and breeds or crosses with higher heat tolerance over the longer term.</p>`;
+    } else {
+      const scan = startScan(fd, c), cur = scan[c.start - 1], bi = scan.reduce((b, v, i) => Number.isFinite(v) && (b < 0 || v < scan[b]) ? i : b, -1);
+      say = `<p><b>${esc(focus.p.name)}:</b> ` + (bi >= 0 && cur - scan[bi] >= 1 ? `sowing in <b>${MONTHS[bi]}</b> gives the lowest heat exposure: ${pct(scan[bi])} of season days at or above ${thrText(c)}, compared with ${pct(cur)} for your ${MONTHS[c.start - 1]} sowing.` : `your ${MONTHS[c.start - 1]} sowing is already close to the lowest heat exposure (${pct(cur)} of season days at or above ${thrText(c)}).`) + ` A typical ${c.len}-month season brings about ${Math.round(F.rain)} mm of rain, with a longest dry spell of ${Math.round(F.dry)} days${Number.isFinite(F.bal) ? ` and a rainfall minus crop-water-demand balance of ${Math.round(F.bal)} mm` : ''}.</p><p>Options to discuss with your agronomist: sowing date, heat- and drought-tolerant varieties, and soil moisture conservation such as mulch or water harvesting. Heat is not the only risk: check frost, pests and market timing locally.</p>`;
+    }
+  } else if (D.aud === 'breed') {
+    say = `<p><b>${esc(focus.p.name)}:</b> heat exposure moved by <b>${F.change >= 0 ? '+' : '−'}${Math.abs(F.change).toFixed(1)} percentage points</b> between ${spanTxt(F.earlySpan)} and ${spanTxt(F.recSpan)}${Number.isFinite(F.slopeP) && F.slopeP < .05 ? ' (a clear trend)' : ' (not a clear trend statistically)'}. In a bad year (1 in 5) it reaches ${pct(F.p80)} of the season. Treat this as the selection environment.</p><p>Next steps for research: measure how your own ${isL ? 'animals' : 'lines'} respond (<button class="chip" data-go="pheno">Phenotype × climate</button>), look for variants that track climate across populations (<button class="chip" data-go="gea">Genome × climate</button>), and check evidence for candidate genes (<button class="chip" data-go="omics">Genes and omics</button>).</p>`;
+  } else {
+    const steps = [0, 1, 2, 3].map(w => { const k = {Good: 0, Watch: 0, Risky: 0}; D.places.forEach(p => { if (!p.data) return; const sm = summarize(p.data, {...c, delta: w}); if (sm) k[sm.verdict]++; }); return {w, k}; });
+    say = `<p><b>Where to act first:</b> ${list3(ok.filter(r => r.s.verdict !== 'Good').slice(0, 3).map(r => `${esc(r.p.name)} (${pct(r.s.recent)})`)) || 'no place is above the Watch level today'}. Places are ranked below by share of season days beyond the threshold.</p><div class="tablewrap"><table><thead><tr><th>If it warms by</th><th class="n">Good</th><th class="n">Watch</th><th class="n">Risky</th></tr></thead><tbody>${steps.map(x => `<tr><td>+${x.w} °C</td><td class="n">${x.k.Good}</td><td class="n">${x.k.Watch}</td><td class="n">${x.k.Risky}</td></tr>`).join('')}</tbody></table></div><p class="note">Uniform temperature shift applied to the recent record, not a climate-model projection. Use it to see which places tip over first.</p>`;
+  }
+  $('aud').querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.a === D.aud));
+
+  /* cards */
+  const cards = ok.map(r => { const s = r.s; return `<div class="vcard" style="--c:${VCOL[s.verdict]}"><span class="verdict">${s.verdict}</span><h4>${esc(r.p.name)}</h4><div class="big">${pct(s.recent)}</div><small>of ${seasonTxt} days at or above ${thrText(c)} (about ${Math.round(s.days)} days per season)</small><small>Change vs ${spanTxt(s.earlySpan)}: ${s.change >= 0 ? '+' : '−'}${Math.abs(s.change).toFixed(1)} points</small><small>Bad year (1 in 5): ${pct(s.p80)}</small>${s.run >= 1 ? `<small>Typical longest hot spell: ${Math.round(s.run)} days</small>` : ''}</div>`; }).join('') + bad.map(r => `<div class="vcard" style="--c:var(--muted)"><h4>${esc(r.p.name)}</h4><small>${esc(r.p.err || 'Not enough usable climate data for this season.')}</small></div>`).join('');
+
+  /* trend chart */
+  const allY = [...new Set(ok.flatMap(r => r.s.yrs.map(y => y.y)))].sort((a, b) => a - b);
+  const trend = chart({kind: 'lines', labels: allY.map(String), series: ok.map((r, i) => ({y: allY.map(y => { const f = r.s.yrs.find(z => z.y === y); return f ? f.share : NaN; }), color: GROUP_COLORS[i % 8]})), yLabel: `% of season days beyond ${thrText(c)}`, xLabel: 'Season year', hline: c.risky, title: 'Heat exposure by year'});
+  const trendLegend = legend(ok.map((r, i) => [GROUP_COLORS[i % 8], r.p.name]));
+
+  /* scan chart for focus */
+  const scan = startScan(fd, c, isL ? 1 : undefined);
+  const scanChart = chart({kind: 'bars', labels: MONTHS, series: [{y: scan, colors: scan.map(v => VCOL[verdictOf(v, c)])}], yLabel: '% of days beyond threshold', xLabel: isL ? 'Month' : `Sowing month (${c.len}-month season)`, hline: c.risky, title: isL ? 'Heat exposure by month' : 'Heat exposure by sowing month'});
+
+  /* water */
+  const water = !isL ? `<h3 style="margin-top:18px">Water in a typical season</h3><div class="tablewrap"><table><thead><tr><th>Place</th><th class="n">Rain (mm)</th><th class="n">Longest dry spell (days)</th><th class="n">Rain minus crop-water demand (mm)</th></tr></thead><tbody>${ok.map(r => `<tr><td>${esc(r.p.name)}</td><td class="n">${Math.round(r.s.rain)}</td><td class="n">${Math.round(r.s.dry)}</td><td class="n">${Number.isFinite(r.s.bal) ? Math.round(r.s.bal) : 'n/a'}</td></tr>`).join('')}</tbody></table></div><p class="note">Typical (median) season over the last 15 years. A dry spell is consecutive days under 1 mm. Water demand is reference evapotranspiration, which approximates but does not equal your crop's use.</p>` : '';
+
+  const rh = ok.some(r => r.p.data.rhAssumed) ? rhNote : '';
+  out.innerHTML = `<div class="print-only"><h2>AdaptFit decision brief</h2><p>${new Date().toISOString().slice(0, 10)} · ${esc(S.label)} · ${seasonTxt} · stress at ${thrText(c)}${scen ? ' · scenario: ' + scen : ''}</p></div>
+  <div class="card"><div class="headline">${headline}</div>${rh}
+    <div class="vcards">${cards}</div>
+    <p class="note">Good, Watch and Risky mean: below ${c.watch}%, ${c.watch}–${c.risky}%, and ${c.risky}% or more of season days beyond the threshold, averaged over ${spanTxt(s0.recSpan)}. Change the bands under "Verdict bands" if your stakeholders use other limits.</p></div>
+  <div class="card"><h3>What this means for you</h3>
+    <div class="row no-print" style="margin-bottom:8px"><div><label for="focusSel">Look closer at</label><select id="focusSel">${ok.map(r => `<option ${r.p.name === focus.p.name ? 'selected' : ''}>${esc(r.p.name)}</option>`).join('')}</select></div></div>
+    <div class="say">${say}</div></div>
+  <div class="card"><div class="grid2"><div><h3>${isL ? 'Which months are hottest' : 'When to sow'} at ${esc(focus.p.name)}</h3>${scanChart}<p class="note">Dashed line = Risky level. Bars show the recent share of days beyond the threshold.</p></div>
+    <div><h3>Heat exposure over time</h3>${trend}${trendLegend}<p class="note">Each line is one place. Dashed line = Risky level.</p></div></div>${water}</div>
+  <div class="card"><h3>Take it with you</h3><div class="actions no-print"><button class="btn" id="bPrint">Print or save as PDF</button><button class="btn ghost" id="bLink">Copy share link</button><button class="btn ghost" id="bCsv">Download CSV</button></div><span class="note" id="actMsg"></span>
+    <div class="limits"><b>What this does not tell you.</b> It measures climate exposure, not animal or crop performance. Climate data is ERA5 reanalysis on a grid of about 25 km, so local altitude, shade and microclimate differ. Thresholds are typical literature values, not rules for every breed or variety. Warming scenarios shift temperature uniformly and are not model projections. Feed, water supply, pests, disease and markets are not included. Use it to start the conversation and to compare places, then confirm locally.</div></div>`;
+  $('focusSel').onchange = e => { D.focus = e.target.value; renderDecide(); };
+  out.querySelectorAll('[data-go]').forEach(b => b.onclick = () => document.querySelector(`.tabs [data-tab=${b.dataset.go}]`).click());
+}
+$('aud').onclick = e => { const b = e.target.closest('button'); if (b) { D.aud = b.dataset.a; scheduleRender(); } };
+
+/* controls */
+$('sys').onchange = () => { applyPreset($('sys').value); scheduleRender(); };
+['dthr', 'sstart', 'slen', 'bwatch', 'brisky'].forEach(id => $(id).addEventListener('input', scheduleRender));
+['warm', 'tol'].forEach(id => $(id).addEventListener('input', () => { $(id + 'V').textContent = $(id).value; scheduleRender(); }));
+
+/* take away: print, link, CSV */
+function stateHash() { const o = {v: 1, sys: $('sys').value, thr: +$('dthr').value, st: +$('sstart').value, ln: +$('slen').value, bw: +$('bwatch').value, br: +$('brisky').value, w: +$('warm').value, t: +$('tol').value, a: D.aud, pl: D.places.map(p => [p.name, +p.lat.toFixed(3), +p.lon.toFixed(3)])}; return '#s=' + btoa(unescape(encodeURIComponent(JSON.stringify(o)))); }
+$('decideOut').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return; const msg = t => { const m = $('actMsg'); if (m) m.textContent = t; };
+  if (b.id === 'bPrint') window.print();
+  if (b.id === 'bLink') { const url = location.href.split('#')[0] + stateHash(); history.replaceState(null, '', url); (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(() => msg('Link copied. Anyone who opens it sees the same places and settings.'), () => msg('Copy the address from your browser bar; it now contains your settings.')); }
+  if (b.id === 'bCsv') {
+    const c = cfgNow(), rows = [['place', 'lat', 'lon', 'system', 'threshold', 'season', 'warming_C', 'tolerance_shift', 'recent_pct_days_beyond', 'earlier_pct', 'change_points', 'bad_year_pct', 'trend_points_per_decade', 'verdict', 'median_rain_mm', 'median_longest_dry_days', 'median_water_balance_mm']];
+    D.places.forEach(p => { const s = p.data ? summarize(p.data, c) : null; if (s) rows.push([p.name, p.lat, p.lon, c.label, thrText({...c, tol: 0}), `${MONTHS[c.start - 1]}+${c.len}m`, c.delta, c.tol, s.recent.toFixed(2), s.early.toFixed(2), s.change.toFixed(2), s.p80.toFixed(2), s.slope.toFixed(2), s.verdict, Math.round(s.rain), Math.round(s.dry), Number.isFinite(s.bal) ? Math.round(s.bal) : '']); });
+    const csvText = rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n'), a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([csvText], {type: 'text/csv'})); a.download = 'adaptfit-results.csv'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  }
+});
+/* restore from share link */
+(function restore() {
+  applyPreset($('sys').value);
+  const m = location.hash.match(/^#s=(.+)$/); if (!m) return;
+  try {
+    const o = JSON.parse(decodeURIComponent(escape(atob(m[1])))); if (o.v !== 1 || !SYSTEMS[o.sys]) return;
+    $('sys').value = o.sys; applyPreset(o.sys); $('dthr').value = o.thr; $('sstart').value = o.st; $('slen').value = o.ln; $('bwatch').value = o.bw; $('brisky').value = o.br; $('warm').value = o.w; $('tol').value = o.t; $('warmV').textContent = o.w; $('tolV').textContent = o.t; D.aud = o.a || 'farm';
+    D.places = (o.pl || []).slice(0, 5).filter(p => Number.isFinite(+p[1]) && Number.isFinite(+p[2])).map(p => ({name: String(p[0]).slice(0, 60), lat: +p[1], lon: +p[2], data: null, err: null})); renderPlaces();
+    if (D.places.length) setTimeout(() => $('runDecide').click(), 50);
+  } catch {}
+})();
+renderPlaces();
+window.__dev = {seasonYears, summarize, cfgNow, D};
+</script>
+</body>
+</html>
