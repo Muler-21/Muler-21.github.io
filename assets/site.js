@@ -14,7 +14,7 @@ const CONFIG = {
 /* url: link to the running app. live:false shows "Soon" and no button. */
 const APPS = [
   { icon:"🌡️", title:"AdaptFit: will it thrive here?", tag:"Climate & Genomics", color:"#14c9a4", live:true,
-    desc:"For farmers, breeders and planners. Pick places and a livestock type or crop, get a Good / Watch / Risky verdict from 35 years of climate, test warming and tolerance, and print a one-page brief. Phenotype, genome and gene tools included for researchers. Free, no keys.",
+    desc:"For farmers, breeders and planners. Pick places and a livestock type or crop, get a Good / Watch / Risky verdict from 35 years of climate, test warming and tolerance, and print a one-page brief. Adds climate-model projections, country context, research partners and mapped services for innovators. Phenotype, genome and gene tools for researchers. Open data, no keys.",
     url:"apps/adaptfit/" }
 ];
 

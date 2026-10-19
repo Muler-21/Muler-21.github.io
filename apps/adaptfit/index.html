@@ -152,11 +152,12 @@ footer{border-top:1px solid var(--line);padding:18px 0;color:var(--muted);font-s
     <div class="card no-print" id="whatif" hidden>
       <h3>3. What would change the answer?</h3>
       <div class="sliders">
+        <div><label for="wsrc">Warming source</label><select id="wsrc"><option value="slider">My own slider (uniform shift)</option><option value="model">Climate-model projection to about 2043</option></select></div>
         <div><label for="warm">If it warms by (°C): <output id="warmV">0</output></label><input type="range" id="warm" min="0" max="4" step="0.5" value="0"></div>
         <div><label for="tol">If the animal or variety tolerates more (<span id="tolL">THI units</span>): <output id="tolV">0</output></label><input type="range" id="tol" min="0" max="12" step="1" value="0"></div>
       </div>
       <label>Show me what matters to a…</label>
-      <div class="seg" id="aud" role="group" aria-label="Audience"><button data-a="farm" aria-pressed="true">Farmer or extension worker</button><button data-a="breed" aria-pressed="false">Breeder or researcher</button><button data-a="plan" aria-pressed="false">Planner or funder</button></div>
+      <div class="seg" id="aud" role="group" aria-label="Audience"><button data-a="farm" aria-pressed="true">Farmer or extension worker</button><button data-a="breed" aria-pressed="false">Breeder or researcher</button><button data-a="plan" aria-pressed="false">Planner or funder</button><button data-a="biz" aria-pressed="false">Innovator or entrepreneur</button></div>
     </div>
     <div id="decideOut"></div>
   </section>
@@ -244,17 +245,14 @@ footer{border-top:1px solid var(--line);padding:18px 0;color:var(--muted);font-s
       <p class="note">Files you upload are processed in your browser and are never sent to this site. To fetch climate, the app sends coordinates and date ranges to Open-Meteo, and gene symbols to Ensembl, UniProt, STRING and Europe PMC. Nothing else leaves your device.</p>
     </div>
     <div class="card">
-      <h3>Data sources</h3>
-      <ul class="plain">
-        <li><a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> forecasts and ERA5 reanalysis history (Copernicus/ECMWF), free for non-commercial use with attribution.</li>
-        <li><a href="https://www.ensembl.org/" target="_blank" rel="noopener">Ensembl</a> genes and orthologues, <a href="https://www.uniprot.org/" target="_blank" rel="noopener">UniProt</a> protein function, <a href="https://string-db.org/" target="_blank" rel="noopener">STRING</a> interaction partners, <a href="https://europepmc.org/" target="_blank" rel="noopener">Europe PMC</a> literature.</li>
-      </ul>
-      <p class="note" style="margin-top:8px">Built by Mulusew Kassa Bitew. Research and education use. Not veterinary or management advice.</p>
+      <h3>Data sources and terms</h3>
+      <div id="srcList"></div>
+      <p class="note" style="margin-top:8px">Built by Mulusew Kassa Bitew. Research and education use. Not veterinary, agronomic or investment advice.</p>
     </div>
   </section>
 </main>
 
-<footer><div class="wrap">Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a> (contains modified Copernicus ERA5 data).</div></footer>
+<footer><div class="wrap">Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a> (contains modified Copernicus ERA5 data). Also: World Bank, OpenAlex, OpenStreetMap contributors, Ensembl, UniProt, STRING, Europe PMC.</div></footer>
 
 <script>
 'use strict';
@@ -361,12 +359,12 @@ function chart({kind, labels = [], series = [], points = [], lines = [], xLabel 
 const legend = items => `<div class="legend">${items.map(([c, t]) => `<span><i style="background:${c}"></i>${esc(t)}</span>`).join('')}</div>`;
 
 /* =========================== PLACE =========================== */
-function setPlace(lat, lon, name) {
-  state.lat = +lat; state.lon = +lon; state.name = name || '';
+function setPlace(lat, lon, name, cc) {
+  state.lat = +lat; state.lon = +lon; state.name = name || ''; state.cc = cc || '';
   $('lat').value = (+lat).toFixed(2); $('lon').value = (+lon).toFixed(2);
   $('placeNote').textContent = name ? `Selected: ${name} (${(+lat).toFixed(2)}, ${(+lon).toFixed(2)})` : 'Coordinates set.';
 }
-$('lat').onchange = $('lon').onchange = () => { state.lat = +$('lat').value; state.lon = +$('lon').value; state.name = ''; };
+$('lat').onchange = $('lon').onchange = () => { state.lat = +$('lat').value; state.lon = +$('lon').value; state.name = ''; state.cc = ''; };
 $('search').onclick = async () => {
   const q = $('q').value.trim(); if (!q) return;
   $('places').innerHTML = '<span class="note">Searching…</span>';
@@ -374,7 +372,7 @@ $('search').onclick = async () => {
     const j = await getJSON(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=6&language=en&format=json`);
     const r = j.results || [];
     $('places').innerHTML = r.length ? r.map((p, i) => `<button class="chip" data-i="${i}">${esc(p.name)}${p.admin1 ? ', ' + esc(p.admin1) : ''}, ${esc(p.country || '')}</button>`).join('') : '<span class="note">No match. Enter coordinates instead.</span>';
-    $('places').querySelectorAll('button').forEach(b => b.onclick = () => { const p = r[+b.dataset.i]; setPlace(p.latitude, p.longitude, `${p.name}, ${p.country || ''}`); $('places').innerHTML = ''; });
+    $('places').querySelectorAll('button').forEach(b => b.onclick = () => { const p = r[+b.dataset.i]; setPlace(p.latitude, p.longitude, `${p.name}, ${p.country || ''}`, p.country_code || ''); $('places').innerHTML = ''; });
   } catch (e) { $('places').innerHTML = `<div class="err">Place search failed (${esc(e.message)}). Enter coordinates manually.</div>`; }
 };
 $('q').addEventListener('keydown', e => { if (e.key === 'Enter') $('search').click(); });
@@ -641,15 +639,15 @@ $('grunGene').onclick = async () => {
 /* =========================== DECIDE =========================== */
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const SYSTEMS = {
-  cattle:    {label: 'Cattle', kind: 'livestock', unit: 'THI', thr: 72, start: 1, len: 12, watch: 10, risky: 30, tolMax: 12, note: 'THI 72 is a widely used onset of heat stress for dairy cattle (NRC). Heat-adapted breeds tolerate more, so adjust it to your breed. This is a typical literature value, not a rule for every animal.'},
-  livestock: {label: 'Livestock', kind: 'livestock', unit: 'THI', thr: 75, start: 1, len: 12, watch: 10, risky: 30, tolMax: 12, note: 'Set the THI at which your animals start to show heat stress. Published thresholds vary by species, breed and production level.'},
-  maize:     {label: 'Maize', kind: 'crop', unit: '°C', thr: 35, start: 6, len: 4, watch: 5, risky: 15, tolMax: 6, note: 'Heat damage to maize is commonly reported above about 35 °C around flowering. Set your own sowing month and season length. Typical literature value, not a rule for every variety.'},
-  wheat:     {label: 'Wheat', kind: 'crop', unit: '°C', thr: 30, start: 11, len: 6, watch: 5, risky: 15, tolMax: 6, note: 'Wheat yield is commonly reported to suffer above about 30 °C around flowering and grain filling. Set your own sowing month and season length. Typical literature value.'},
-  sorghum:   {label: 'Sorghum', kind: 'crop', unit: '°C', thr: 38, start: 6, len: 4, watch: 5, risky: 15, tolMax: 6, note: 'Sorghum tolerates heat better than most cereals; stress is commonly reported above roughly 38 °C. Set your own season. Typical literature value.'},
-  chickpea:  {label: 'Chickpea', kind: 'crop', unit: '°C', thr: 35, start: 10, len: 5, watch: 5, risky: 15, tolMax: 6, note: 'Chickpea flowering and pod set are commonly reported to suffer above about 35 °C. Set your own sowing month and season length. Typical literature value.'},
-  crop:      {label: 'Crop', kind: 'crop', unit: '°C', thr: 35, start: 6, len: 4, watch: 5, risky: 15, tolMax: 6, note: 'Set the daily maximum temperature above which your crop is damaged at its sensitive stage.'}
+  cattle:    {label: 'Cattle', kind: 'livestock', unit: 'THI', thr: 72, start: 1, len: 12, watch: 10, risky: 30, tolMax: 12, q: 'heat stress cattle', note: 'THI 72 is a widely used onset of heat stress for dairy cattle (NRC). Heat-adapted breeds tolerate more, so adjust it to your breed. This is a typical literature value, not a rule for every animal.'},
+  livestock: {label: 'Livestock', kind: 'livestock', unit: 'THI', thr: 75, start: 1, len: 12, watch: 10, risky: 30, tolMax: 12, q: 'heat stress livestock', note: 'Set the THI at which your animals start to show heat stress. Published thresholds vary by species, breed and production level.'},
+  maize:     {label: 'Maize', kind: 'crop', unit: '°C', thr: 35, start: 6, len: 4, watch: 5, risky: 15, tolMax: 6, q: 'maize heat stress', note: 'Heat damage to maize is commonly reported above about 35 °C around flowering. Set your own sowing month and season length. Typical literature value, not a rule for every variety.'},
+  wheat:     {label: 'Wheat', kind: 'crop', unit: '°C', thr: 30, start: 11, len: 6, watch: 5, risky: 15, tolMax: 6, q: 'wheat heat stress', note: 'Wheat yield is commonly reported to suffer above about 30 °C around flowering and grain filling. Set your own sowing month and season length. Typical literature value.'},
+  sorghum:   {label: 'Sorghum', kind: 'crop', unit: '°C', thr: 38, start: 6, len: 4, watch: 5, risky: 15, tolMax: 6, q: 'sorghum heat drought', note: 'Sorghum tolerates heat better than most cereals; stress is commonly reported above roughly 38 °C. Set your own season. Typical literature value.'},
+  chickpea:  {label: 'Chickpea', kind: 'crop', unit: '°C', thr: 35, start: 10, len: 5, watch: 5, risky: 15, tolMax: 6, q: 'chickpea heat stress', note: 'Chickpea flowering and pod set are commonly reported to suffer above about 35 °C. Set your own sowing month and season length. Typical literature value.'},
+  crop:      {label: 'Crop', kind: 'crop', unit: '°C', thr: 35, start: 6, len: 4, watch: 5, risky: 15, tolMax: 6, q: 'crop heat stress', note: 'Set the daily maximum temperature above which your crop is damaged at its sensitive stage.'}
 };
-const D = {places: [], focus: null, aud: 'farm'};
+const D = {places: [], focus: null, aud: 'farm', ctx: {wb: {}, oa: {}, osm: {}, cc: {}}, layer: {}};
 $('sstart').innerHTML = MONTHS.map((m, i) => `<option value="${i + 1}">${m}</option>`).join('');
 $('slen').innerHTML = Array.from({length: 12}, (_, i) => `<option value="${i + 1}">${i + 1} month${i ? 's' : ''}</option>`).join('');
 
@@ -661,7 +659,8 @@ function applyPreset(key) {
   if (+$('tol').value > S.tolMax) $('tol').value = S.tolMax;
   $('tolL').textContent = S.kind === 'livestock' ? 'THI units' : '°C';
 }
-const cfgNow = () => { const S = SYSTEMS[$('sys').value]; return {sys: $('sys').value, label: S.label, kind: S.kind, unit: S.unit, thr: +$('dthr').value, start: +$('sstart').value, len: +$('slen').value, watch: +$('bwatch').value, risky: +$('brisky').value, delta: +$('warm').value, tol: +$('tol').value}; };
+const cfgNow = () => { const S = SYSTEMS[$('sys').value]; return {sys: $('sys').value, label: S.label, kind: S.kind, unit: S.unit, q: S.q, thr: +$('dthr').value, start: +$('sstart').value, len: +$('slen').value, watch: +$('bwatch').value, risky: +$('brisky').value, delta: +$('warm').value, tol: +$('tol').value, src: $('wsrc').value}; };
+const pcfg = (p, c) => c.src === 'model' ? (p.proj ? {...c, dT: p.proj.dT, dTx: p.proj.dTx, delta: 0} : {...c, dT: null, dTx: null, delta: 0}) : {...c, dT: null, dTx: null};
 const thrText = c => c.kind === 'livestock' ? `THI ${c.thr + c.tol}` : `${c.thr + c.tol} °C`;
 const pct = v => Number.isFinite(v) ? v.toFixed(v < 10 ? 1 : 0) + '%' : '–';
 
@@ -674,7 +673,8 @@ function seasonYears(d, c, startOverride) {
     const y = +d.time[i].slice(0, 4), sy = wraps && m < start ? y - 1 : y;
     if (sy !== lastSY) { run = 0; dry = 0; lastSY = sy; }
     const r = Y[sy] || (Y[sy] = {y: sy, n: 0, s: 0, maxrun: 0, maxdry: 0, rain: 0, et: 0, etn: 0});
-    const v = c.kind === 'livestock' ? Core.thi(d.tmean[i] + c.delta, d.rh[i]) : d.tmax[i] + c.delta;
+    const dm = c.dT ? c.dT[m - 1] : c.delta, dx = c.dTx ? c.dTx[m - 1] : c.delta;
+    const v = c.kind === 'livestock' ? Core.thi(d.tmean[i] + dm, d.rh[i]) : d.tmax[i] + dx;
     if (!Number.isFinite(v)) continue;
     r.n++; if (v >= thrEff) { r.s++; run++; if (run > r.maxrun) r.maxrun = run; } else run = 0;
     const p = d.precip[i]; if (Number.isFinite(p)) { r.rain += p; if (p < 1) { dry++; if (dry > r.maxdry) r.maxdry = dry; } else dry = 0; }
@@ -694,8 +694,85 @@ const VCOL = {Good: 'var(--ok)', Watch: 'var(--warn)', Risky: 'var(--bad)'};
 function startScan(d, c, len) { return Array.from({length: 12}, (_, i) => { const rec = seasonYears(d, {...c, len: len || c.len}, i + 1).slice(-15); return rec.length ? Core.mean(rec.map(r => r.share)) : NaN; }); }
 const spanTxt = s => s[0] === s[1] ? String(s[0]) : `${s[0]}–${s[1]}`;
 const list3 = a => a.length === 0 ? '' : a.length === 1 ? a[0] : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+const enc = encodeURIComponent;
 
-/* place list */
+/* ---------- layer: climate-model projection (Open-Meteo Climate API, CMIP6 HighResMIP) ---------- */
+const PROJ_MODELS = ['EC_Earth3P_HR', 'MRI_AGCM3_2_S', 'CMCC_CM2_VHR4', 'MPI_ESM1_2_XR', 'FGOALS_f3_H'];
+async function getProjection(p) {
+  if (p.proj || p.projErr) return;
+  let lastErr = 'no model returned complete data';
+  for (const m of PROJ_MODELS) {
+    try {
+      const j = await getJSON(`https://climate-api.open-meteo.com/v1/climate?latitude=${p.lat}&longitude=${p.lon}&start_date=1991-01-01&end_date=2050-12-31&models=${m}&daily=temperature_2m_mean,temperature_2m_max,precipitation_sum`, 1), d = j.daily;
+      if (!d || !d.time) continue;
+      const pick = n => { const k = Object.keys(d).find(x => x === n || x.startsWith(n + '_')); return k ? d[k] : null; };
+      const tm = pick('temperature_2m_mean'), tx = pick('temperature_2m_max'), pr = pick('precipitation_sum'); if (!tm || !tx) continue;
+      const acc = () => Array.from({length: 12}, () => ({s: 0, n: 0})), A = {tm0: acc(), tm1: acc(), tx0: acc(), tx1: acc(), pr0: acc(), pr1: acc()};
+      d.time.forEach((t, i) => { const y = +t.slice(0, 4), mo = +t.slice(5, 7) - 1, ph = y >= 1991 && y <= 2005 ? 0 : y >= 2036 && y <= 2050 ? 1 : -1; if (ph < 0) return; [['tm', tm], ['tx', tx], ['pr', pr]].forEach(([k, arr]) => { if (arr && Number.isFinite(arr[i])) { A[k + ph][mo].s += arr[i]; A[k + ph][mo].n++; } }); });
+      const mm = k => A[k].map(o => o.n > 300 ? o.s / o.n : NaN);
+      const dT = mm('tm1').map((v, i) => v - mm('tm0')[i]), dTx = mm('tx1').map((v, i) => v - mm('tx0')[i]);
+      if (dT.some(v => !Number.isFinite(v)) || dTx.some(v => !Number.isFinite(v))) { lastErr = 'incomplete temperature series'; continue; }
+      const rainChange = pr ? (A.pr1.reduce((s, o) => s + o.s, 0) / Math.max(1, A.pr1.reduce((s, o) => s + o.n, 0))) / (A.pr0.reduce((s, o) => s + o.s, 0) / Math.max(1, A.pr0.reduce((s, o) => s + o.n, 0))) - 1 : NaN;
+      p.proj = {model: m, dT, dTx, annual: Core.mean(dT), rain: rainChange}; return;
+    } catch (e) { lastErr = e.message; if (e.status === 429) break; }
+  }
+  p.projErr = lastErr;
+}
+async function ensureProj() {
+  if ($('wsrc').value !== 'model') return;
+  for (const p of D.places) { if (p.proj || p.projErr) continue; $('decideStatus').textContent = `Fetching climate-model projection for ${p.name}…`; await getProjection(p); await sleep(200); }
+  $('decideStatus').textContent = '';
+}
+
+/* ---------- layer: country context (World Bank) ---------- */
+const WB = [['NV.AGR.TOTL.ZS', 'Agriculture share of GDP', '%'], ['SL.AGR.EMPL.ZS', 'Employment in agriculture', '%'], ['SP.RUR.TOTL.ZS', 'Rural population', '%'], ['NY.GDP.PCAP.CD', 'GDP per person', 'US$'], ['IT.CEL.SETS.P2', 'Mobile subscriptions', 'per 100 people'], ['EG.ELC.ACCS.ZS', 'Access to electricity', '%'], ['FX.OWN.TOTL.ZS', 'Adults with a bank or mobile-money account', '%']];
+async function getCC(p) {
+  if (p.cc) return p.cc;
+  const k = p.lat.toFixed(1) + ',' + p.lon.toFixed(1); if (D.ctx.cc[k]) return (p.cc = D.ctx.cc[k]);
+  try { const j = await getJSON(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${p.lat}&lon=${p.lon}&zoom=3&accept-language=en`, 1); const cc = j.address && j.address.country_code ? j.address.country_code.toUpperCase() : ''; D.ctx.cc[k] = cc; p.cc = cc; } catch { p.cc = ''; }
+  return p.cc;
+}
+async function loadWB(cc) {
+  if (D.ctx.wb[cc]) return;
+  const rows = await Promise.all(WB.map(async ([id]) => { try { const j = await getJSON(`https://api.worldbank.org/v2/country/${cc}/indicator/${id}?format=json&mrnev=1`, 1), r = j[1] && j[1][0]; return r && r.value != null ? {v: +r.value, y: r.date, country: r.country && r.country.value} : null; } catch { return null; } }));
+  D.ctx.wb[cc] = {name: (rows.find(r => r) || {}).country || cc, rows};
+}
+
+/* ---------- layer: research and partners (OpenAlex) ---------- */
+async function loadOA(cc, q) {
+  const key = cc + '|' + q; if (D.ctx.oa[key]) return;
+  const base = `https://api.openalex.org/works?search=${enc(q)}&filter=institutions.country_code:${cc}`;
+  const [g, w] = await Promise.allSettled([getJSON(base + '&group_by=institutions.id&per-page=8', 1), getJSON(base + '&sort=cited_by_count:desc&per-page=5&select=id,title,publication_year,cited_by_count,doi', 1)]);
+  D.ctx.oa[key] = {inst: g.status === 'fulfilled' ? (g.value.group_by || (Array.isArray(g.value) ? g.value : [])).slice(0, 8) : null, total: w.status === 'fulfilled' && w.value.meta ? w.value.meta.count : NaN, works: w.status === 'fulfilled' ? (w.value.results || []) : null, err: g.status === 'rejected' && w.status === 'rejected' ? (g.reason && g.reason.message) : ''};
+}
+
+/* ---------- layer: services nearby (OpenStreetMap via Overpass) ---------- */
+const OVERPASS = ['https://overpass-api.de/api/interpreter', 'https://overpass.kumi.systems/api/interpreter'];
+async function loadOSM(p) {
+  if (D.ctx.osm[p.name]) return;
+  const Q = [['Veterinary clinics', '["amenity"="veterinary"]'], ['Markets', '["amenity"="marketplace"]'], ['Farm supply shops', '["shop"="agrarian"]']], res = [];
+  for (const [label, tag] of Q) {
+    const q = `[out:json][timeout:25];nwr${tag}(around:25000,${p.lat},${p.lon});out count;`; let n = NaN;
+    for (const host of OVERPASS) { try { const j = await getJSON(`${host}?data=${enc(q)}`, 1), t = j.elements && j.elements[0] && j.elements[0].tags; n = t ? +t.total : 0; break; } catch {} }
+    res.push({label, n}); await sleep(600);
+  }
+  D.ctx.osm[p.name] = res;
+}
+
+/* ---------- source registry ---------- */
+const SOURCES = [
+  {id: 'era5', name: 'Open-Meteo, ERA5 reanalysis and forecast', use: 'Daily climate since 1991, 7-day forecast, place search', terms: 'Free for non-commercial use with attribution. Commercial use needs an Open-Meteo licence.', url: 'https://open-meteo.com/', live: () => D.places.some(p => p.data)},
+  {id: 'cmip', name: 'Open-Meteo Climate API, CMIP6 HighResMIP models', use: 'Mid-century warming by month (one model, high-emission-like pathway)', terms: 'Same terms as above. Model data CC BY 4.0.', url: 'https://open-meteo.com/en/docs/climate-api', live: () => D.places.some(p => p.proj), failed: () => D.places.some(p => p.projErr)},
+  {id: 'wb', name: 'World Bank Open Data', use: 'Country context: agriculture, rural population, mobile, electricity, finance', terms: 'CC BY 4.0', url: 'https://data.worldbank.org/', live: () => Object.keys(D.ctx.wb).length > 0},
+  {id: 'oa', name: 'OpenAlex', use: 'Research output and leading institutions by country and topic', terms: 'CC0', url: 'https://openalex.org/', live: () => Object.keys(D.ctx.oa).length > 0},
+  {id: 'osm', name: 'OpenStreetMap via Overpass', use: 'Mapped veterinary clinics, markets and farm-supply shops', terms: 'ODbL. Map coverage varies by region.', url: 'https://www.openstreetmap.org/', live: () => Object.keys(D.ctx.osm).length > 0},
+  {id: 'ens', name: 'Ensembl, UniProt, STRING, Europe PMC', use: 'Genes, proteins, interaction partners and papers (Genes and omics tab)', terms: 'Open access; see each provider for terms', url: 'https://www.ensembl.org/', live: () => null},
+  {id: 'soon', name: 'Not connected yet', use: 'Soil (SoilGrids), crop prices (FAOSTAT, WFP), biodiversity (GBIF), breed registries (FAO DAD-IS needs a login), regional climate-service data', terms: 'Planned or limited by access terms', url: '', live: () => null}
+];
+const sourcesHTML = () => `<div class="tablewrap"><table><thead><tr><th>Source</th><th>What it adds</th><th>Terms</th><th>This session</th></tr></thead><tbody>${SOURCES.map(s => { const l = s.live(), f = s.failed && s.failed(); return `<tr><td>${s.url ? `<a href="${s.url}" target="_blank" rel="noopener">${esc(s.name)}</a>` : esc(s.name)}</td><td>${esc(s.use)}</td><td>${esc(s.terms)}</td><td>${f ? '<b style="color:var(--bad)">failed for some places</b>' : l === true ? '<b style="color:var(--ok)">used</b>' : l === false ? 'not used yet' : '–'}</td></tr>`; }).join('')}</tbody></table></div>`;
+if ($('srcList')) $('srcList').innerHTML = sourcesHTML();
+
+/* ---------- place list ---------- */
 function renderPlaces() {
   $('myPlaces').innerHTML = D.places.length ? D.places.map((p, i) => `<span class="chip" style="cursor:default">${esc(p.name)} <button class="chip" data-rm="${i}" aria-label="Remove ${esc(p.name)}" style="border:0;padding:0 4px;color:var(--bad)">×</button></span>`).join('') : '<span class="note">No places yet.</span>';
   $('myPlaces').querySelectorAll('[data-rm]').forEach(b => b.onclick = () => { D.places.splice(+b.dataset.rm, 1); renderPlaces(); if (D.places.some(p => p.data)) renderDecide(); else $('decideOut').innerHTML = ''; });
@@ -705,15 +782,15 @@ function addCurrentPlace() {
   if (!Number.isFinite(lat) || !Number.isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180) { $('placeNote').textContent = 'Enter valid coordinates first.'; return false; }
   if (D.places.length >= 5) { $('placeNote').textContent = 'Five places is the limit. Remove one first.'; return false; }
   if (D.places.some(p => Math.abs(p.lat - lat) < .005 && Math.abs(p.lon - lon) < .005)) return true;
-  D.places.push({name: state.name || `${lat.toFixed(2)}, ${lon.toFixed(2)}`, lat, lon, data: null, err: null}); renderPlaces(); return true;
+  D.places.push({name: state.name || `${lat.toFixed(2)}, ${lon.toFixed(2)}`, lat, lon, cc: state.cc || '', data: null, err: null}); renderPlaces(); return true;
 }
 $('addPlace').onclick = addCurrentPlace;
 $('tryEx').onclick = () => {
-  D.places = [['Addis Ababa', 9.03, 38.74], ['Debre Markos', 10.34, 37.72], ['Semera (Afar lowlands)', 11.79, 41.0]].map(p => ({name: p[0], lat: p[1], lon: p[2], data: null, err: null}));
+  D.places = [['Addis Ababa', 9.03, 38.74], ['Debre Markos', 10.34, 37.72], ['Semera (Afar lowlands)', 11.79, 41.0]].map(p => ({name: p[0], lat: p[1], lon: p[2], cc: 'ET', data: null, err: null}));
   $('sys').value = 'maize'; applyPreset('maize'); renderPlaces(); $('runDecide').click();
 };
 
-/* run */
+/* ---------- run ---------- */
 $('runDecide').onclick = async () => {
   if (!D.places.length && !addCurrentPlace()) return;
   const btn = $('runDecide'); setBusy(btn, true);
@@ -723,55 +800,72 @@ $('runDecide').onclick = async () => {
     try { p.data = await getDaily(p.lat, p.lon, `${yStart}-01-01`, `${yEnd}-12-31`); p.err = null; } catch (e) { p.err = e.message; }
     await sleep(200);
   }
+  await ensureProj();
   $('decideStatus').textContent = ''; $('whatif').hidden = false; renderDecide(); setBusy(btn, false);
   $('decideOut').scrollIntoView({behavior: 'smooth', block: 'start'});
 };
 
-/* render */
+/* ---------- render ---------- */
 let rafId = 0; const scheduleRender = () => { if (!D.places.some(p => p.data)) return; cancelAnimationFrame(rafId); rafId = requestAnimationFrame(renderDecide); };
+function contextHTML(ok, focus, c) {
+  const ccs = [...new Set(ok.map(r => r.p.cc).filter(Boolean))].slice(0, 3), fcc = focus.p.cc, key = fcc ? fcc + '|' + c.q : '';
+  let h = `<div class="actions no-print"><button class="btn ghost" data-act="wb">Load country context</button><button class="btn ghost" data-act="oa">Find research partners</button><button class="btn ghost" data-act="osm">Check services near ${esc(focus.p.name)}</button></div><span class="note" id="ctxMsg"></span>`;
+  const wbs = ccs.filter(cc => D.ctx.wb[cc]);
+  if (wbs.length) h += `<h3 style="margin-top:14px">Country context (World Bank)</h3><div class="tablewrap"><table><thead><tr><th>Indicator</th>${wbs.map(cc => `<th class="n">${esc(D.ctx.wb[cc].name)}</th>`).join('')}</tr></thead><tbody>${WB.map(([id, label, u], i) => `<tr><td>${esc(label)} <span class="note">(${esc(u)})</span></td>${wbs.map(cc => { const r = D.ctx.wb[cc].rows[i]; return `<td class="n">${r ? (r.v >= 1000 ? Math.round(r.v).toLocaleString() : r.v.toFixed(1)) + ` <span class="note">${esc(r.y)}</span>` : 'n/a'}</td>`; }).join('')}</tr>`).join('')}</tbody></table></div><p class="note">Latest available year shown. Country averages hide large differences between regions.</p>`;
+  const oa = key && D.ctx.oa[key];
+  if (oa) h += `<h3 style="margin-top:14px">Research and possible partners${fcc ? ' in ' + esc(fcc) : ''}: "${esc(c.q)}" (OpenAlex)</h3>` + (oa.inst && oa.inst.length ? `<p class="note">${Number.isFinite(oa.total) ? Number(oa.total).toLocaleString() + ' works. ' : ''}Institutions with the most works on this topic:</p><ul class="plain">${oa.inst.map(i => `<li><a href="${esc(i.key)}" target="_blank" rel="noopener">${esc(i.key_display_name)}</a> <span class="note">${i.count} works</span></li>`).join('')}</ul>` : `<div class="err">Could not load institutions${oa.err ? ' (' + esc(oa.err) + ')' : ''}.</div>`) + (oa.works && oa.works.length ? `<p class="note" style="margin-top:8px">Most cited works:</p><ul class="plain">${oa.works.map(w => `<li><a href="${w.doi ? esc(w.doi) : esc(w.id)}" target="_blank" rel="noopener">${esc(w.title || 'Untitled')}</a> <span class="note">${esc(w.publication_year)} · ${w.cited_by_count} citations</span></li>`).join('')}</ul>` : '');
+  const osm = D.ctx.osm[focus.p.name];
+  if (osm) h += `<h3 style="margin-top:14px">Mapped services within 25 km of ${esc(focus.p.name)} (OpenStreetMap)</h3><div class="stats">${osm.map(o => `<div class="stat"><b>${Number.isFinite(o.n) ? o.n : 'n/a'}</b><small>${esc(o.label)}</small></div>`).join('')}</div><p class="note">OpenStreetMap is volunteer-mapped. A low count can mean unmapped rather than absent, especially in rural areas. Confirm on the ground.</p>`;
+  return h;
+}
 function renderDecide() {
-  const c = cfgNow(), S = SYSTEMS[c.sys], out = $('decideOut'), isL = c.kind === 'livestock';
-  const res = D.places.map(p => ({p, s: p.data ? summarize(p.data, c) : null}));
+  const c = cfgNow(), S = SYSTEMS[c.sys], out = $('decideOut'), isL = c.kind === 'livestock', model = c.src === 'model';
+  const res = D.places.map(p => ({p, s: p.data ? summarize(p.data, pcfg(p, c)) : null}));
   const ok = res.filter(r => r.s).sort((a, b) => b.s.recent - a.s.recent), bad = res.filter(r => !r.s);
   if (!ok.length) { out.innerHTML = bad.map(r => `<div class="err">${esc(r.p.name)}: ${esc(r.p.err || 'not enough usable climate data for this season')}</div>`).join('') || ''; return; }
   const focus = ok.find(r => r.p.name === D.focus) || ok[0]; D.focus = focus.p.name;
   const counts = {Good: 0, Watch: 0, Risky: 0}; ok.forEach(r => counts[r.s.verdict]++);
-  const worst = ok[0], s0 = worst.s, n = ok.length, scen = [c.delta > 0 ? `+${c.delta} °C warming` : '', c.tol > 0 ? `tolerance +${c.tol} ${isL ? 'THI' : '°C'}` : ''].filter(Boolean).join(', ');
-  const headline = `Among ${n} place${n > 1 ? 's' : ''} for ${S.label.toLowerCase()}${scen ? ` under ${scen}` : ' at today\u2019s climate'}: ${counts.Risky} Risky, ${counts.Watch} Watch, ${counts.Good} Good. Highest exposure is ${worst.p.name}, with ${pct(s0.recent)} of season days at or above ${thrText(c)}.`;
+  const worst = ok[0], s0 = worst.s, n = ok.length, fc = pcfg(focus.p, c);
+  const scen = [model ? 'a climate-model projection to about 2043' : c.delta > 0 ? `+${c.delta} °C warming` : '', c.tol > 0 ? `tolerance +${c.tol} ${isL ? 'THI' : '°C'}` : ''].filter(Boolean).join(', ');
+  const headline = `Among ${n} place${n > 1 ? 's' : ''} for ${S.label.toLowerCase()}${scen ? ` under ${scen}` : ' at today’s climate'}: ${counts.Risky} Risky, ${counts.Watch} Watch, ${counts.Good} Good. Highest exposure is ${worst.p.name}, with ${pct(s0.recent)} of season days at or above ${thrText(c)}.`;
   const seasonTxt = c.len === 12 ? 'all year' : `${MONTHS[c.start - 1]} to ${MONTHS[(c.start + c.len - 2) % 12]}`;
-
-  /* audience text */
   const F = focus.s, fd = focus.p.data; let say = '';
+  const fcx = focus.p.cc && D.ctx.wb[focus.p.cc], wbv = i => fcx && fcx.rows[i] ? fcx.rows[i] : null;
   if (D.aud === 'farm') {
     if (isL) {
-      const mon = startScan(fd, c, 1), idx = mon.map((v, i) => [v, i]).filter(x => Number.isFinite(x[0])).sort((a, b) => b[0] - a[0]);
+      const mon = startScan(fd, fc, 1), idx = mon.map((v, i) => [v, i]).filter(x => Number.isFinite(x[0])).sort((a, b) => b[0] - a[0]);
       say = `<p><b>${esc(focus.p.name)}:</b> animals are at or above ${thrText(c)} on about ${Math.round(F.days)} days a year (${pct(F.recent)} of the season). The hottest months are ${list3(idx.slice(0, 3).map(x => MONTHS[x[1]]))}; the coolest are ${list3(idx.slice(-3).reverse().map(x => MONTHS[x[1]]))}.</p><p>Options to discuss with your vet or extension officer: shade and clean drinking water, moving feeding and work to cooler hours, planning breeding, calving and transport for cooler months, and breeds or crosses with higher heat tolerance over the longer term.</p>`;
     } else {
-      const scan = startScan(fd, c), cur = scan[c.start - 1], bi = scan.reduce((b, v, i) => Number.isFinite(v) && (b < 0 || v < scan[b]) ? i : b, -1);
-      say = `<p><b>${esc(focus.p.name)}:</b> ` + (bi >= 0 && cur - scan[bi] >= 1 ? `sowing in <b>${MONTHS[bi]}</b> gives the lowest heat exposure: ${pct(scan[bi])} of season days at or above ${thrText(c)}, compared with ${pct(cur)} for your ${MONTHS[c.start - 1]} sowing.` : `your ${MONTHS[c.start - 1]} sowing is already close to the lowest heat exposure (${pct(cur)} of season days at or above ${thrText(c)}).`) + ` A typical ${c.len}-month season brings about ${Math.round(F.rain)} mm of rain, with a longest dry spell of ${Math.round(F.dry)} days${Number.isFinite(F.bal) ? ` and a rainfall minus crop-water-demand balance of ${Math.round(F.bal)} mm` : ''}.</p><p>Options to discuss with your agronomist: sowing date, heat- and drought-tolerant varieties, and soil moisture conservation such as mulch or water harvesting. Heat is not the only risk: check frost, pests and market timing locally.</p>`;
+      const scan = startScan(fd, fc), cur = scan[c.start - 1], bi = scan.reduce((b, v, i) => Number.isFinite(v) && (b < 0 || v < scan[b]) ? i : b, -1);
+      say = `<p><b>${esc(focus.p.name)}:</b> ` + (bi >= 0 && cur - scan[bi] >= 1 ? `sowing in <b>${MONTHS[bi]}</b> gives the lowest heat exposure: ${pct(scan[bi])} of season days at or above ${thrText(c)}, compared with ${pct(cur)} for your ${MONTHS[c.start - 1]} sowing.` : `your ${MONTHS[c.start - 1]} sowing is already close to the lowest heat exposure (${pct(cur)} of season days at or above ${thrText(c)}).`) + ` A typical ${c.len}-month season brings about ${Math.round(F.rain)} mm of rain (recent record), with a longest dry spell of ${Math.round(F.dry)} days${Number.isFinite(F.bal) ? ` and a rainfall minus crop-water-demand balance of ${Math.round(F.bal)} mm` : ''}.</p><p>Options to discuss with your agronomist: sowing date, heat- and drought-tolerant varieties, and soil moisture conservation such as mulch or water harvesting. Heat is not the only risk: check frost, pests and market timing locally.</p>`;
     }
   } else if (D.aud === 'breed') {
-    say = `<p><b>${esc(focus.p.name)}:</b> heat exposure moved by <b>${F.change >= 0 ? '+' : '−'}${Math.abs(F.change).toFixed(1)} percentage points</b> between ${spanTxt(F.earlySpan)} and ${spanTxt(F.recSpan)}${Number.isFinite(F.slopeP) && F.slopeP < .05 ? ' (a clear trend)' : ' (not a clear trend statistically)'}. In a bad year (1 in 5) it reaches ${pct(F.p80)} of the season. Treat this as the selection environment.</p><p>Next steps for research: measure how your own ${isL ? 'animals' : 'lines'} respond (<button class="chip" data-go="pheno">Phenotype × climate</button>), look for variants that track climate across populations (<button class="chip" data-go="gea">Genome × climate</button>), and check evidence for candidate genes (<button class="chip" data-go="omics">Genes and omics</button>).</p>`;
+    say = `<p><b>${esc(focus.p.name)}:</b> heat exposure moved by <b>${F.change >= 0 ? '+' : '−'}${Math.abs(F.change).toFixed(1)} percentage points</b> between ${spanTxt(F.earlySpan)} and ${spanTxt(F.recSpan)}${Number.isFinite(F.slopeP) && F.slopeP < .05 ? ' (a clear trend)' : ' (not a clear trend statistically)'}. In a bad year (1 in 5) it reaches ${pct(F.p80)} of the season. Treat this as the selection environment.</p><p>Next steps for research: measure how your own ${isL ? 'animals' : 'lines'} respond (<button class="chip" data-go="pheno">Phenotype × climate</button>), look for variants that track climate across populations (<button class="chip" data-go="gea">Genome × climate</button>), and check evidence for candidate genes (<button class="chip" data-go="omics">Genes and omics</button>). Use "Find research partners" below to see who already works on this in the country.</p>`;
+  } else if (D.aud === 'plan') {
+    const steps = [0, 1, 2, 3].map(w => { const k = {Good: 0, Watch: 0, Risky: 0}; D.places.forEach(p => { if (!p.data) return; const sm = summarize(p.data, {...c, delta: w, dT: null, dTx: null}); if (sm) k[sm.verdict]++; }); return {w, k}; });
+    say = `<p><b>Where to act first:</b> ${list3(ok.filter(r => r.s.verdict !== 'Good').slice(0, 3).map(r => `${esc(r.p.name)} (${pct(r.s.recent)})`)) || 'no place is above the Watch level today'}. Places are ranked below by share of season days beyond the threshold.</p><div class="tablewrap"><table><thead><tr><th>If it warms by</th><th class="n">Good</th><th class="n">Watch</th><th class="n">Risky</th></tr></thead><tbody>${steps.map(x => `<tr><td>+${x.w} °C</td><td class="n">${x.k.Good}</td><td class="n">${x.k.Watch}</td><td class="n">${x.k.Risky}</td></tr>`).join('')}</tbody></table></div><p class="note">Uniform temperature shift applied to the recent record. Switch "warming source" to the climate-model projection for a month-by-month, place-specific estimate.</p>`;
   } else {
-    const steps = [0, 1, 2, 3].map(w => { const k = {Good: 0, Watch: 0, Risky: 0}; D.places.forEach(p => { if (!p.data) return; const sm = summarize(p.data, {...c, delta: w}); if (sm) k[sm.verdict]++; }); return {w, k}; });
-    say = `<p><b>Where to act first:</b> ${list3(ok.filter(r => r.s.verdict !== 'Good').slice(0, 3).map(r => `${esc(r.p.name)} (${pct(r.s.recent)})`)) || 'no place is above the Watch level today'}. Places are ranked below by share of season days beyond the threshold.</p><div class="tablewrap"><table><thead><tr><th>If it warms by</th><th class="n">Good</th><th class="n">Watch</th><th class="n">Risky</th></tr></thead><tbody>${steps.map(x => `<tr><td>+${x.w} °C</td><td class="n">${x.k.Good}</td><td class="n">${x.k.Watch}</td><td class="n">${x.k.Risky}</td></tr>`).join('')}</tbody></table></div><p class="note">Uniform temperature shift applied to the recent record, not a climate-model projection. Use it to see which places tip over first.</p>`;
+    const hot = ok.filter(r => r.s.verdict !== 'Good'), rising = hot.filter(r => r.s.change >= 2).length, oaK = focus.p.cc ? focus.p.cc + '|' + c.q : '', oa = oaK && D.ctx.oa[oaK], osm = D.ctx.osm[focus.p.name];
+    const f = (i, u, t) => { const r = wbv(i); return r ? `${t} ${r.v.toFixed(0)}${u} (${r.y})` : ''; };
+    const ctxBits = [f(4, '', 'mobile subscriptions per 100 people:'), f(6, '%', 'adults with an account:'), f(1, '%', 'employment in agriculture:'), f(5, '%', 'access to electricity:')].filter(Boolean);
+    say = `<p><b>Demand signal.</b> ${hot.length ? `${list3(hot.slice(0, 3).map(r => `${esc(r.p.name)} (${pct(r.s.recent)})`))} ${hot.length === 1 ? 'is' : 'are'} at Watch or Risky heat exposure for ${S.label.toLowerCase()}${rising ? `, and exposure is rising by 2 points or more in ${rising} of them` : ''}. That is where heat-resilience products and services are most likely to be needed.` : 'No place shows meaningful heat exposure today for this system, so heat is not the lead problem here. Test other stress factors or other places.'}</p>`
+      + `<p><b>Market context.</b> ${ctxBits.length ? esc(focus.p.cc) + ' ' + ctxBits.join('; ') + '.' : 'Load country context below to add the macro picture (mobile reach, financial access, electricity, farm employment).'}</p>`
+      + `<p><b>Services nearby.</b> ${osm ? `${osm.map(o => `${Number.isFinite(o.n) ? o.n : 'n/a'} ${o.label.toLowerCase()}`).join(', ')} mapped within 25 km of ${esc(focus.p.name)}. Low counts may mean unmapped, so verify locally; a verified gap is a candidate opportunity.` : 'Use "Check services" below to see mapped vets, markets and farm-supply shops near the selected place.'}</p>`
+      + `<p><b>Partners.</b> ${oa && oa.inst && oa.inst.length ? `Leading institutions on "${esc(c.q)}" in ${esc(focus.p.cc)}: ${list3(oa.inst.slice(0, 3).map(i => esc(i.key_display_name)))}.` : 'Use "Find research partners" below to see which institutions already work on this topic in the country.'}</p>`
+      + `<p><b>Questions worth testing with customers</b> (starting points, not recommendations): ${isL ? 'heat-tolerant genetics and breeding services; shade, cooling and water systems; an SMS early warning based on the 7-day heat index; climate-indexed insurance.' : 'heat- and drought-tolerant seed supply; sowing-date advice by SMS; irrigation and water harvesting; post-harvest storage and market linkages.'}</p>`
+      + `<p class="note">Licensing: the climate data here is free for non-commercial use. A commercial product needs a commercial licence from the provider or another data source. Prices and soil data are not connected yet.</p>`;
   }
   $('aud').querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.a === D.aud));
+  $('warm').disabled = model; $('warmV').textContent = model ? 'model' : $('warm').value;
 
-  /* cards */
-  const cards = ok.map(r => { const s = r.s; return `<div class="vcard" style="--c:${VCOL[s.verdict]}"><span class="verdict">${s.verdict}</span><h4>${esc(r.p.name)}</h4><div class="big">${pct(s.recent)}</div><small>of ${seasonTxt} days at or above ${thrText(c)} (about ${Math.round(s.days)} days per season)</small><small>Change vs ${spanTxt(s.earlySpan)}: ${s.change >= 0 ? '+' : '−'}${Math.abs(s.change).toFixed(1)} points</small><small>Bad year (1 in 5): ${pct(s.p80)}</small>${s.run >= 1 ? `<small>Typical longest hot spell: ${Math.round(s.run)} days</small>` : ''}</div>`; }).join('') + bad.map(r => `<div class="vcard" style="--c:var(--muted)"><h4>${esc(r.p.name)}</h4><small>${esc(r.p.err || 'Not enough usable climate data for this season.')}</small></div>`).join('');
+  const cards = ok.map(r => { const s = r.s, pj = r.p.proj; return `<div class="vcard" style="--c:${VCOL[s.verdict]}"><span class="verdict">${s.verdict}</span><h4>${esc(r.p.name)}</h4><div class="big">${pct(s.recent)}</div><small>of ${seasonTxt} days at or above ${thrText(c)} (about ${Math.round(s.days)} days per season)</small><small>Change vs ${spanTxt(s.earlySpan)}: ${s.change >= 0 ? '+' : '−'}${Math.abs(s.change).toFixed(1)} points</small><small>Bad year (1 in 5): ${pct(s.p80)}</small>${s.run >= 1 ? `<small>Typical longest hot spell: ${Math.round(s.run)} days</small>` : ''}${model ? (pj ? `<small>Projected warming by 2036–2050: +${pj.annual.toFixed(1)} °C (${esc(pj.model)})</small>` : `<small>Projection unavailable${r.p.projErr ? ' (' + esc(r.p.projErr) + ')' : ''}; today's climate shown.</small>`) : ''}</div>`; }).join('') + bad.map(r => `<div class="vcard" style="--c:var(--muted)"><h4>${esc(r.p.name)}</h4><small>${esc(r.p.err || 'Not enough usable climate data for this season.')}</small></div>`).join('');
 
-  /* trend chart */
   const allY = [...new Set(ok.flatMap(r => r.s.yrs.map(y => y.y)))].sort((a, b) => a - b);
   const trend = chart({kind: 'lines', labels: allY.map(String), series: ok.map((r, i) => ({y: allY.map(y => { const f = r.s.yrs.find(z => z.y === y); return f ? f.share : NaN; }), color: GROUP_COLORS[i % 8]})), yLabel: `% of season days beyond ${thrText(c)}`, xLabel: 'Season year', hline: c.risky, title: 'Heat exposure by year'});
   const trendLegend = legend(ok.map((r, i) => [GROUP_COLORS[i % 8], r.p.name]));
-
-  /* scan chart for focus */
-  const scan = startScan(fd, c, isL ? 1 : undefined);
+  const scan = startScan(fd, fc, isL ? 1 : undefined);
   const scanChart = chart({kind: 'bars', labels: MONTHS, series: [{y: scan, colors: scan.map(v => VCOL[verdictOf(v, c)])}], yLabel: '% of days beyond threshold', xLabel: isL ? 'Month' : `Sowing month (${c.len}-month season)`, hline: c.risky, title: isL ? 'Heat exposure by month' : 'Heat exposure by sowing month'});
-
-  /* water */
-  const water = !isL ? `<h3 style="margin-top:18px">Water in a typical season</h3><div class="tablewrap"><table><thead><tr><th>Place</th><th class="n">Rain (mm)</th><th class="n">Longest dry spell (days)</th><th class="n">Rain minus crop-water demand (mm)</th></tr></thead><tbody>${ok.map(r => `<tr><td>${esc(r.p.name)}</td><td class="n">${Math.round(r.s.rain)}</td><td class="n">${Math.round(r.s.dry)}</td><td class="n">${Number.isFinite(r.s.bal) ? Math.round(r.s.bal) : 'n/a'}</td></tr>`).join('')}</tbody></table></div><p class="note">Typical (median) season over the last 15 years. A dry spell is consecutive days under 1 mm. Water demand is reference evapotranspiration, which approximates but does not equal your crop's use.</p>` : '';
+  const water = !isL ? `<h3 style="margin-top:18px">Water in a typical season</h3><div class="tablewrap"><table><thead><tr><th>Place</th><th class="n">Rain (mm)</th><th class="n">Longest dry spell (days)</th><th class="n">Rain minus crop-water demand (mm)</th>${model ? '<th class="n">Projected rain change</th>' : ''}</tr></thead><tbody>${ok.map(r => `<tr><td>${esc(r.p.name)}</td><td class="n">${Math.round(r.s.rain)}</td><td class="n">${Math.round(r.s.dry)}</td><td class="n">${Number.isFinite(r.s.bal) ? Math.round(r.s.bal) : 'n/a'}</td>${model ? `<td class="n">${r.p.proj && Number.isFinite(r.p.proj.rain) ? (r.p.proj.rain >= 0 ? '+' : '−') + Math.abs(r.p.proj.rain * 100).toFixed(0) + '%' : 'n/a'}</td>` : ''}</tr>`).join('')}</tbody></table></div><p class="note">Typical (median) season over the last 15 years of record${model ? '; the projected rain change is the model difference between 2036–2050 and 1991–2005 and is uncertain' : ''}. A dry spell is consecutive days under 1 mm. Water demand is reference evapotranspiration, which approximates but does not equal your crop's use.</p>` : '';
 
   const rh = ok.some(r => r.p.data.rhAssumed) ? rhNote : '';
   out.innerHTML = `<div class="print-only"><h2>AdaptFit decision brief</h2><p>${new Date().toISOString().slice(0, 10)} · ${esc(S.label)} · ${seasonTxt} · stress at ${thrText(c)}${scen ? ' · scenario: ' + scen : ''}</p></div>
@@ -783,27 +877,40 @@ function renderDecide() {
     <div class="say">${say}</div></div>
   <div class="card"><div class="grid2"><div><h3>${isL ? 'Which months are hottest' : 'When to sow'} at ${esc(focus.p.name)}</h3>${scanChart}<p class="note">Dashed line = Risky level. Bars show the recent share of days beyond the threshold.</p></div>
     <div><h3>Heat exposure over time</h3>${trend}${trendLegend}<p class="note">Each line is one place. Dashed line = Risky level.</p></div></div>${water}</div>
+  <div class="card"><h3>Beyond climate: context, partners and services</h3><p class="note">Open datasets that change who should act and where. Each loads when you ask, so nothing is requested until then.</p>${contextHTML(ok, focus, c)}</div>
   <div class="card"><h3>Take it with you</h3><div class="actions no-print"><button class="btn" id="bPrint">Print or save as PDF</button><button class="btn ghost" id="bLink">Copy share link</button><button class="btn ghost" id="bCsv">Download CSV</button></div><span class="note" id="actMsg"></span>
-    <div class="limits"><b>What this does not tell you.</b> It measures climate exposure, not animal or crop performance. Climate data is ERA5 reanalysis on a grid of about 25 km, so local altitude, shade and microclimate differ. Thresholds are typical literature values, not rules for every breed or variety. Warming scenarios shift temperature uniformly and are not model projections. Feed, water supply, pests, disease and markets are not included. Use it to start the conversation and to compare places, then confirm locally.</div></div>`;
+    <div class="limits"><b>What this does not tell you.</b> It measures climate exposure, not animal or crop performance. Climate data is ERA5 reanalysis on a grid of about 25 km, so local altitude, shade and microclimate differ. Thresholds are typical literature values, not rules for every breed or variety. Projections use one climate model under a high-emission-like pathway and are one plausible future, not a forecast. Feed, water supply, pests, disease, prices and markets are not modelled. Use it to start the conversation and compare places, then confirm locally.</div>
+    <h3 style="margin-top:16px">Where the numbers come from</h3>${sourcesHTML()}</div>`;
   $('focusSel').onchange = e => { D.focus = e.target.value; renderDecide(); };
   out.querySelectorAll('[data-go]').forEach(b => b.onclick = () => document.querySelector(`.tabs [data-tab=${b.dataset.go}]`).click());
 }
 $('aud').onclick = e => { const b = e.target.closest('button'); if (b) { D.aud = b.dataset.a; scheduleRender(); } };
 
-/* controls */
+/* ---------- controls ---------- */
 $('sys').onchange = () => { applyPreset($('sys').value); scheduleRender(); };
 ['dthr', 'sstart', 'slen', 'bwatch', 'brisky'].forEach(id => $(id).addEventListener('input', scheduleRender));
 ['warm', 'tol'].forEach(id => $(id).addEventListener('input', () => { $(id + 'V').textContent = $(id).value; scheduleRender(); }));
+$('wsrc').onchange = async () => { await ensureProj(); scheduleRender(); };
 
-/* take away: print, link, CSV */
-function stateHash() { const o = {v: 1, sys: $('sys').value, thr: +$('dthr').value, st: +$('sstart').value, ln: +$('slen').value, bw: +$('bwatch').value, br: +$('brisky').value, w: +$('warm').value, t: +$('tol').value, a: D.aud, pl: D.places.map(p => [p.name, +p.lat.toFixed(3), +p.lon.toFixed(3)])}; return '#s=' + btoa(unescape(encodeURIComponent(JSON.stringify(o)))); }
-$('decideOut').addEventListener('click', e => {
-  const b = e.target.closest('button'); if (!b) return; const msg = t => { const m = $('actMsg'); if (m) m.textContent = t; };
+/* ---------- take away: print, link, CSV, and context loaders ---------- */
+function stateHash() { const o = {v: 2, sys: $('sys').value, thr: +$('dthr').value, st: +$('sstart').value, ln: +$('slen').value, bw: +$('bwatch').value, br: +$('brisky').value, w: +$('warm').value, t: +$('tol').value, ws: $('wsrc').value, a: D.aud, pl: D.places.map(p => [p.name, +p.lat.toFixed(3), +p.lon.toFixed(3), p.cc || ''])}; return '#s=' + btoa(unescape(encodeURIComponent(JSON.stringify(o)))); }
+$('decideOut').addEventListener('click', async e => {
+  const b = e.target.closest('button'); if (!b) return; const msg = t => { const m = $('actMsg') || $('ctxMsg'); if (m) m.textContent = t; };
+  if (b.dataset.act) {
+    const c = cfgNow(), ok = D.places.filter(p => p.data), focus = ok.find(p => p.name === D.focus) || ok[0]; if (!focus) return;
+    b.disabled = true; const m = $('ctxMsg'); if (m) m.textContent = 'Loading…';
+    try {
+      if (b.dataset.act === 'wb') { for (const p of ok.slice(0, 3)) { const cc = await getCC(p); if (cc) await loadWB(cc); } }
+      if (b.dataset.act === 'oa') { const cc = await getCC(focus); if (cc) await loadOA(cc, c.q); else msg('Could not work out the country for this place.'); }
+      if (b.dataset.act === 'osm') await loadOSM(focus);
+    } catch (err) { msg('Could not load: ' + err.message); }
+    renderDecide(); return;
+  }
   if (b.id === 'bPrint') window.print();
   if (b.id === 'bLink') { const url = location.href.split('#')[0] + stateHash(); history.replaceState(null, '', url); (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(() => msg('Link copied. Anyone who opens it sees the same places and settings.'), () => msg('Copy the address from your browser bar; it now contains your settings.')); }
   if (b.id === 'bCsv') {
-    const c = cfgNow(), rows = [['place', 'lat', 'lon', 'system', 'threshold', 'season', 'warming_C', 'tolerance_shift', 'recent_pct_days_beyond', 'earlier_pct', 'change_points', 'bad_year_pct', 'trend_points_per_decade', 'verdict', 'median_rain_mm', 'median_longest_dry_days', 'median_water_balance_mm']];
-    D.places.forEach(p => { const s = p.data ? summarize(p.data, c) : null; if (s) rows.push([p.name, p.lat, p.lon, c.label, thrText({...c, tol: 0}), `${MONTHS[c.start - 1]}+${c.len}m`, c.delta, c.tol, s.recent.toFixed(2), s.early.toFixed(2), s.change.toFixed(2), s.p80.toFixed(2), s.slope.toFixed(2), s.verdict, Math.round(s.rain), Math.round(s.dry), Number.isFinite(s.bal) ? Math.round(s.bal) : '']); });
+    const c = cfgNow(), rows = [['place', 'lat', 'lon', 'system', 'threshold', 'season', 'warming_source', 'warming_C', 'tolerance_shift', 'recent_pct_days_beyond', 'earlier_pct', 'change_points', 'bad_year_pct', 'trend_points_per_decade', 'verdict', 'median_rain_mm', 'median_longest_dry_days', 'median_water_balance_mm', 'projected_warming_C', 'projection_model']];
+    D.places.forEach(p => { const s = p.data ? summarize(p.data, pcfg(p, c)) : null; if (s) rows.push([p.name, p.lat, p.lon, c.label, thrText({...c, tol: 0}), `${MONTHS[c.start - 1]}+${c.len}m`, c.src, c.src === 'model' ? '' : c.delta, c.tol, s.recent.toFixed(2), s.early.toFixed(2), s.change.toFixed(2), s.p80.toFixed(2), s.slope.toFixed(2), s.verdict, Math.round(s.rain), Math.round(s.dry), Number.isFinite(s.bal) ? Math.round(s.bal) : '', p.proj ? p.proj.annual.toFixed(2) : '', p.proj ? p.proj.model : '']); });
     const csvText = rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n'), a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([csvText], {type: 'text/csv'})); a.download = 'adaptfit-results.csv'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
   }
@@ -813,14 +920,14 @@ $('decideOut').addEventListener('click', e => {
   applyPreset($('sys').value);
   const m = location.hash.match(/^#s=(.+)$/); if (!m) return;
   try {
-    const o = JSON.parse(decodeURIComponent(escape(atob(m[1])))); if (o.v !== 1 || !SYSTEMS[o.sys]) return;
-    $('sys').value = o.sys; applyPreset(o.sys); $('dthr').value = o.thr; $('sstart').value = o.st; $('slen').value = o.ln; $('bwatch').value = o.bw; $('brisky').value = o.br; $('warm').value = o.w; $('tol').value = o.t; $('warmV').textContent = o.w; $('tolV').textContent = o.t; D.aud = o.a || 'farm';
-    D.places = (o.pl || []).slice(0, 5).filter(p => Number.isFinite(+p[1]) && Number.isFinite(+p[2])).map(p => ({name: String(p[0]).slice(0, 60), lat: +p[1], lon: +p[2], data: null, err: null})); renderPlaces();
+    const o = JSON.parse(decodeURIComponent(escape(atob(m[1])))); if (!(o.v === 1 || o.v === 2) || !SYSTEMS[o.sys]) return;
+    $('sys').value = o.sys; applyPreset(o.sys); $('dthr').value = o.thr; $('sstart').value = o.st; $('slen').value = o.ln; $('bwatch').value = o.bw; $('brisky').value = o.br; $('warm').value = o.w; $('tol').value = o.t; $('warmV').textContent = o.w; $('tolV').textContent = o.t; $('wsrc').value = o.ws === 'model' ? 'model' : 'slider'; D.aud = ['farm', 'breed', 'plan', 'biz'].includes(o.a) ? o.a : 'farm';
+    D.places = (o.pl || []).slice(0, 5).filter(p => Number.isFinite(+p[1]) && Number.isFinite(+p[2])).map(p => ({name: String(p[0]).slice(0, 60), lat: +p[1], lon: +p[2], cc: /^[A-Z]{2}$/.test(p[3] || '') ? p[3] : '', data: null, err: null})); renderPlaces();
     if (D.places.length) setTimeout(() => $('runDecide').click(), 50);
   } catch {}
 })();
 renderPlaces();
-window.__dev = {seasonYears, summarize, cfgNow, D};
+window.__dev = {seasonYears, summarize, cfgNow, D, getProjection};
 </script>
 </body>
 </html>
