@@ -13,9 +13,9 @@ const CONFIG = {
 
 /* url: link to the running app. live:false shows "Soon" and no button. */
 const APPS = [
-  { icon:"🤖", title:"AI Genomics MVP", tag:"Genomics", color:"#14c9a4", live:true,
-    desc:"Streamlit app that summarizes research papers and helps interpret genomic data.",
-    url:"https://github.com/Muler-21/ai-genomics-mvp" }
+  { icon:"🌡️", title:"AdaptOmics: climate, phenotype and omics explorer", tag:"Climate & Omics", color:"#14c9a4", live:true,
+    desc:"Heat-stress risk for any location, phenotype response to climate from your own records, genome-climate association across populations, and live gene lookup (Ensembl, UniProt, STRING, Europe PMC). Free, no keys, data stays in your browser.",
+    url:"apps/adaptomics/" }
 ];
 
 const POSTS = [];
