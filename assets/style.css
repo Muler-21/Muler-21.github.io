@@ -138,3 +138,9 @@ section[id]{scroll-margin-top:60px}
 .statbar i{display:block;height:100%;background:var(--accent)}
 .toolgroup{margin-bottom:14px}
 .toolgroup h3{font:700 .7rem system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+
+.follow{margin-top:18px;font-size:.85rem;color:var(--muted)}
+.follow a{margin-left:12px;color:var(--accent);font-weight:600}
+.follow a:hover,.social a:hover{text-decoration:underline}
+.social{display:flex;gap:16px}
+.social a{color:var(--accent)}

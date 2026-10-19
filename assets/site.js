@@ -5,6 +5,9 @@ const CONFIG = {
   email: "myhoby3@gmail.com",           // shown publicly; change if you prefer another address
   orcid: "https://orcid.org/0000-0001-6223-0037",
   github: "https://github.com/Muler-21",
+  facebook: "https://www.facebook.com/mlo.kmo.btwo",
+  youtube: "https://www.youtube.com/@Edu-Sc21",
+  tiktok: "https://www.tiktok.com/@mulusew_kb",
   location: "Campobasso, Italy"
 };
 
@@ -47,6 +50,7 @@ document.getElementById('foot').outerHTML = `
 <footer><div class="wrap">
   <a class="logo" href="#home">${esc(CONFIG.short)}<span>.</span></a>
   <nav aria-label="Footer">${NAV.map(([k,h,t])=>`<a href="${h}">${t}</a>`).join('')}</nav>
+  <span class="social"><a href="${CONFIG.facebook}" target="_blank" rel="noopener">Facebook</a><a href="${CONFIG.youtube}" target="_blank" rel="noopener">YouTube</a><a href="${CONFIG.tiktok}" target="_blank" rel="noopener">TikTok</a></span>
   <span>© ${new Date().getFullYear()} ${esc(CONFIG.name)}</span>
 </div></footer>`;
 
