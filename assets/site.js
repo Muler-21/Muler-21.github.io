@@ -12,25 +12,14 @@ const CONFIG = {
 const APPS = [
   { icon:"🤖", title:"AI Genomics MVP", tag:"Genomics", color:"#14c9a4", live:true,
     desc:"Streamlit app that summarizes research papers and helps interpret genomic data.",
-    url:"https://github.com/Muler-21/ai-genomics-mvp" },
-  { icon:"🧬", title:"Genomic Prediction Explorer (GBLUP)", tag:"Quantitative Genetics", color:"#1ea7e8", live:false,
-    desc:"Planned: compare GBLUP and Bayesian genomic prediction on your own SNP data.", url:"" },
-  { icon:"📈", title:"Selection Signature Viewer", tag:"Population Genomics", color:"#a855f7", live:false,
-    desc:"Planned: browse selection scans and candidate regions along the genome.", url:"" },
-  { icon:"🌍", title:"Genome–Environment Association Map", tag:"Climate", color:"#ef4444", live:false,
-    desc:"Planned: link allele frequencies to climate variables across populations.", url:"" }
+    url:"https://github.com/Muler-21/ai-genomics-mvp" }
 ];
 
-const POSTS = [
-  { date:"Planned", title:"What ABC-RF can and cannot tell you about admixture timing", tag:"Methods",
-    desc:"A practical walk-through of using Approximate Bayesian Computation with Random Forest for demographic inference.", url:"" },
-  { date:"Planned", title:"Reading selection signatures in African cattle", tag:"Genomics",
-    desc:"How selection scans connect to environmental resilience, and where interpretation gets tricky.", url:"" }
-];
+const POSTS = [];
 
 const PATH = [
-  { cc:"IT", place:"University of Molise", role:"Research Fellow, multi-omic adaptive response in ruminants", yr:"2026 – now", now:true },
-  { cc:"ET", place:"ILRI, Addis Ababa", role:"Research Fellow, African cattle genomics", yr:"2024 – 25" },
+  { cc:"IT", place:"University of Molise", role:"Postdoctoral Research Fellow (MultiOmics): multi-omic adaptive response in ruminants", yr:"2026 – now", now:true },
+  { cc:"ET", place:"ILRI, Addis Ababa", role:"Research Fellow: African cattle genomics, admixture and adaptation", yr:"2024 – 25" },
   { cc:"IT", place:"University of Molise", role:"PhD, Agricultural Technologies and Biotechnologies", yr:"2022 – 26" },
   { cc:"ET", place:"Debre Markos University", role:"Lecturer and researcher", yr:"2014 – 22" },
   { cc:"NL", place:"Wageningen University & Research", role:"MSc, Plant Breeding and Genetic Resources", yr:"2012 – 14" },
@@ -41,14 +30,14 @@ const PATH = [
 /* ================= SHARED LAYOUT ================= */
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const page = document.body.dataset.page;
-const NAV = [["home","index.html","Home"],["about","about.html","About"],["research","research.html","Research"],
-             ["apps","applications.html","Applications"],["blog","blog.html","Blog"],["contact","contact.html","Contact"]];
+const NAV = [["home","#home","Home"],["about","#about","About"],["research","#research","Research"],
+             ["apps","#applications","Applications"],["contact","#contact","Contact"]];
 
 document.getElementById('nav').outerHTML = `
 <header class="nav"><div class="wrap">
-  <a class="logo" href="index.html">${esc(CONFIG.short)}<span>.</span></a>
+  <a class="logo" href="#home">${esc(CONFIG.short)}<span>.</span></a>
   <nav class="links" id="links" aria-label="Main">
-    ${NAV.map(([k,h,t])=>`<a href="${h}" ${k===page?'class="active" aria-current="page"':''}>${t}</a>`).join('')}
+    ${NAV.map(([k,h,t])=>`<a href="${h}" data-k="${k}">${t}</a>`).join('')}
   </nav>
   <span><button class="icon-btn" id="theme" aria-label="Toggle light and dark theme">☀</button>
   <button class="icon-btn" id="menu" aria-label="Open menu" aria-expanded="false">☰</button></span>
@@ -56,7 +45,7 @@ document.getElementById('nav').outerHTML = `
 
 document.getElementById('foot').outerHTML = `
 <footer><div class="wrap">
-  <a class="logo" href="index.html">${esc(CONFIG.short)}<span>.</span></a>
+  <a class="logo" href="#home">${esc(CONFIG.short)}<span>.</span></a>
   <nav aria-label="Footer">${NAV.map(([k,h,t])=>`<a href="${h}">${t}</a>`).join('')}</nav>
   <span>© ${new Date().getFullYear()} ${esc(CONFIG.name)}</span>
 </div></footer>`;
@@ -113,3 +102,13 @@ if (form) form.onsubmit = e => {
   const d = new FormData(form);
   location.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent(d.get('subject')||'Message from your website')}&body=${encodeURIComponent((d.get('message')||'')+'\n\n— '+(d.get('name')||''))}`;
 };
+
+/* nav: close mobile menu on click + highlight current section while scrolling */
+links.addEventListener('click', e => { if (e.target.closest('a')) { links.classList.remove('open'); menu.setAttribute('aria-expanded', false) } });
+const spy = [...document.querySelectorAll('[data-nav]')];
+const setActive = () => {
+  let cur = spy.length ? spy[0].dataset.nav : '';
+  spy.forEach(s => { if (s.getBoundingClientRect().top < 140) cur = s.dataset.nav });
+  document.querySelectorAll('.links a').forEach(a => a.classList.toggle('active', a.dataset.k === cur));
+};
+addEventListener('scroll', setActive, { passive:true }); setActive();

@@ -1,58 +1,210 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mulusew Kassa Bitew | Livestock Genomics</title><meta name="description" content="Researcher in livestock genomics, population genetics and machine learning, University of Molise.">
+<title>Mulusew Kassa Bitew | Livestock Genomics</title>
+<meta name="description" content="Researcher in livestock genomics, population genetics and machine learning, University of Molise.">
 <link rel="stylesheet" href="assets/style.css">
 <script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 </head><body data-page="home"><div id="nav"></div>
 <main>
-<section class="hero"><div class="wrap">
+
+<!-- HOME -->
+<section class="hero" id="home" data-nav="home" style="padding:56px 0 64px"><div class="wrap" style="display:grid;grid-template-columns:1fr 230px;gap:40px;align-items:center">
   <div>
     <span class="pill">LIVESTOCK GENOMICS</span>
     <h1>Mulusew Kassa <em>Bitew</em></h1>
-    <p class="role">PhD · Research Fellow, University of Molise, Italy</p>
-    <p class="lead">I study how livestock adapt to their environments, using population genomics, genotype–environment analysis and machine learning to support climate-resilient breeding in Africa and beyond.</p>
-    <div class="cta"><a class="btn solid" href="applications.html">Explore applications</a><a class="btn" href="research.html">Read my research</a></div>
+    <p class="role">PhD · Postdoctoral Research Fellow (MultiOmics) · University of Molise, Italy</p>
+    <p class="lead"><i>Genomics × Adaptation × Machine learning: bridging biology and computation for climate-smart livestock.</i></p>
+    <div class="cta"><a class="btn solid" href="#applications">Explore applications</a><a class="btn" href="#research">Read my research</a><a class="btn" href="#contact">Get in touch</a></div>
   </div>
   <div class="photo" aria-label="Portrait"><img src="assets/photo.jpg" alt="Mulusew Kassa Bitew" onerror="var p=this.parentNode;this.remove();p.append('MK')"></div>
 </div></section>
 
-<section><div class="wrap">
+<!-- ABOUT -->
+<section id="about" data-nav="about"><div class="wrap">
+  <span class="pill">ABOUT ME</span>
+  <h2>Genomics, <em>adaptation</em> and teaching</h2>
+  <p class="sub">Researcher and academic with more than 15 years of experience in university teaching, research and supervision across genetics, breeding, biotechnology and agricultural biochemistry. PhD from the University of Molise with an International Doctor Label.</p>
+  <div class="about-grid">
+    <div class="stack">
+      <div class="card accent">
+        <h3>Population &amp; Evolutionary Genomics</h3>
+        <p>Studying how African cattle populations formed and adapted, through <span class="hl">population structure</span>, <span class="hl">admixture and migration</span>, <span class="hl">selection signatures</span> and <span class="hl">genome–environment association</span>.</p>
+        <div class="chips"><span class="chip">GWAS</span><span class="chip">Phylogenomics</span><span class="chip">Genetic diversity</span><span class="chip">Whole-genome sequencing</span></div>
+      </div>
+      <div class="card accent" style="--c:#1ea7e8">
+        <h3>Machine Learning for Demographic Inference</h3>
+        <p>Using <span class="hl">ABC-RF</span> (Approximate Bayesian Computation with Random Forest) to reconstruct demographic history, admixture timing and migration from genomic data.</p>
+        <div class="chips"><span class="chip">ABC-RF</span><span class="chip">Bayesian approaches</span><span class="chip">Demographic history</span></div>
+      </div>
+      <div class="card accent" style="--c:#f5a524">
+        <h3>Quantitative Genetics &amp; Breeding</h3>
+        <p>Genomic prediction with <span class="hl">BLUP / GBLUP</span>, <span class="hl">genotype × environment</span> analysis and breeding applications for crops and livestock.</p>
+        <div class="chips"><span class="chip">Genomic prediction</span><span class="chip">G×E</span><span class="chip">Environmental association</span></div>
+      </div>
+      <div class="quote">Linking genomics, environment and machine learning to make livestock breeding smarter and more sustainable.</div>
+    </div>
+    <div class="stack">
+      <div class="card glance">
+        <div><small>Location</small><b>Campobasso, Italy</b></div>
+        <div><small>Institute</small><b>University of Molise</b></div>
+        <div><small>Background</small><b>Ethiopia · Netherlands · Italy</b></div>
+        <div><small>Focus</small><b>Multi-omic adaptive response in ruminants</b></div>
+        <div><small>Languages</small><b>Amharic · English · Italian (A1)</b></div>
+        <div><small>ORCID</small><b><a data-link="orcid" href="#" target="_blank" rel="noopener" style="color:var(--accent)">0000-0001-6223-0037</a></b></div>
+      </div>
+      <div class="open-note">● Open to collaboration on livestock genomics and climate-resilient breeding</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- JOURNEY -->
+<section class="alt" id="journey" data-nav="about"><div class="wrap">
+  <span class="pill">CAREER PATH</span>
+  <h2>Research <em>journey</em></h2>
+  <p class="sub">From crop breeding in Ethiopia and the Netherlands to livestock genomics in Italy and at ILRI.</p>
+  <div class="path" id="path"></div>
   <div class="stats">
-    <div class="stat"><div class="num">15+</div><small>Years in teaching and research</small></div>
-    <div class="stat"><div class="num">3</div><small>Countries worked and studied in</small></div>
-    <div class="stat"><div class="num">2</div><small>First-author papers, 2026</small></div>
-    <div class="stat"><div class="num">2</div><small>ISAG bursary awards</small></div>
-    <div class="stat"><div class="num" id="appcount">0</div><small>Live applications</small></div>
+    <div class="stat"><div class="num">15+</div><small>Years of teaching and research</small><div class="statbar"><i style="width:100%"></i></div></div>
+    <div class="stat"><div class="num">3</div><small>Countries: Ethiopia, Netherlands, Italy</small><div class="statbar"><i style="width:100%"></i></div></div>
+    <div class="stat"><div class="num">2</div><small>First-author papers in 2026</small><div class="statbar"><i style="width:100%"></i></div></div>
+    <div class="stat"><div class="num">2</div><small>ISAG bursary awards (2023, 2025)</small><div class="statbar"><i style="width:100%"></i></div></div>
   </div>
 </div></section>
 
-<section class="alt"><div class="wrap">
-  <span class="pill">CURRENT FOCUS</span>
-  <h2>Multi-omic adaptive response in <em>ruminants</em></h2>
-  <p class="sub">Since October 2026 at the University of Molise, I apply livestock genomics, population genetics and quantitative analysis to understand how ruminants respond and adapt at the molecular level, with reproducible R, Python, Bash and HPC workflows.</p>
+<!-- EXPERIENCE -->
+<section id="experience" data-nav="about"><div class="wrap">
+  <span class="pill">EXPERIENCE</span>
+  <h2>Research &amp; professional <em>experience</em></h2>
+  <div class="grid" style="margin-top:20px">
+    <div class="topcard"><h3>Postdoctoral Research Fellow (MultiOmics)</h3><p><b>University of Molise, Campobasso, Italy</b> · Oct 2026 – present<br>Multi-omic adaptive response in ruminants. Livestock genomics, population genetics, adaptive evolution and quantitative analysis, with reproducible R, Python, Bash, Linux and HPC workflows.</p></div>
+    <div class="topcard" style="--c:#1ea7e8"><h3>Research Fellow</h3><p><b>International Livestock Research Institute (ILRI), Addis Ababa, Ethiopia</b> · Nov 2024 – Apr 2025<br>Genomic diversity and population structure of African cattle; admixture and migration inference; ABC-RF demographic reconstruction; integration of genomic and environmental data to study adaptation and resilience.</p></div>
+    <div class="topcard" style="--c:#a855f7"><h3>Doctoral Researcher</h3><p><b>University of Molise, Italy</b> · 2022 – 2026<br>Population genomics of African cattle; GWAS and selection signatures; demographic history with machine learning; scalable bioinformatics pipelines; genomic regions linked to environmental adaptation.</p></div>
+    <div class="topcard" style="--c:#f5a524"><h3>Lecturer / Researcher</h3><p><b>Debre Markos University, Ethiopia</b> · 2014 – 2022<br>Taught Genetics, Plant Breeding, Biostatistics, Biotechnology and Agricultural Biochemistry; supervised MSc and BSc students; research on crop breeding, genetic diversity and disease resistance.</p></div>
+    <div class="topcard" style="--c:#ef4444"><h3>Lecturer</h3><p><b>Mekelle University, Ethiopia</b> · 2010 – 2012<br>Teaching and research in plant science, genetics and crop production.</p></div>
+  </div>
+</div></section>
+
+<!-- EDUCATION -->
+<section id="education" data-nav="about"><div class="wrap">
+  <span class="pill">EDUCATION</span>
+  <h2>Academic <em>training</em></h2>
+  <div class="grid" style="margin-top:20px">
+    <div class="topcard"><h3>PhD, Agricultural Technologies and Biotechnologies</h3><p><b>University of Molise, Italy</b> · 2022 – May 2026<br>Thesis: <i>Unscrambling the Genomic History and Adaptive Footprint of African Cattle</i>. Supervisors: Prof. Fabio Pilla and Prof. Gabriele Senczuk. International Doctor Label.</p></div>
+    <div class="topcard" style="--c:#1ea7e8"><h3>MSc, Plant Breeding and Genetic Resources</h3><p><b>Wageningen University &amp; Research, The Netherlands</b> · 2012 – 2014<br>Phytophthora infestans recognition in potato (SCR74), tomato resistance to Tuta absoluta, plant–pathogen interactions and effector biology.</p></div>
+    <div class="topcard" style="--c:#f5a524"><h3>BSc, Plant Science and Protection</h3><p><b>Aksum University, Ethiopia</b> · 2008 – 2010</p></div>
+  </div>
+</div></section>
+
+<!-- SKILLS -->
+<section class="alt" id="skills" data-nav="about"><div class="wrap two">
+  <div>
+    <span class="pill">EXPERTISE</span>
+    <h2>Skills &amp; <em>methods</em></h2>
+    <div class="card" style="margin-top:14px">
+      <div class="toolgroup"><h3>Population &amp; evolutionary genomics</h3><div class="chips"><span class="chip">Population structure</span><span class="chip">Genetic diversity</span><span class="chip">Admixture and migration</span><span class="chip">Demographic history</span><span class="chip">Selection signatures</span><span class="chip">Phylogenomics</span></div></div>
+      <div class="toolgroup"><h3>Quantitative genetics &amp; breeding</h3><div class="chips"><span class="chip">GWAS</span><span class="chip">Genomic prediction</span><span class="chip">BLUP</span><span class="chip">GBLUP</span><span class="chip">Bayesian approaches</span><span class="chip">G×E analysis</span><span class="chip">Environmental association</span></div></div>
+      <div class="toolgroup" style="margin:0"><h3>Bioinformatics &amp; genomic data</h3><div class="chips"><span class="chip">SNP array analysis</span><span class="chip">Whole-genome sequence analysis</span><span class="chip">Variant calling</span><span class="chip">Variant filtering and annotation</span><span class="chip">Genome–environment association</span><span class="chip">Large-scale data integration</span></div></div>
+    </div>
+  </div>
+  <div>
+    <span class="pill">TOOLBOX</span>
+    <h2>Software &amp; <em>lab</em></h2>
+    <div class="card" style="margin-top:14px">
+      <div class="toolgroup"><h3>Programming &amp; computing</h3><div class="chips"><span class="chip">R</span><span class="chip">Python</span><span class="chip">Bash</span><span class="chip">Linux</span><span class="chip">HPC</span><span class="chip">Workflow automation</span><span class="chip">Reproducible pipelines</span></div></div>
+      <div class="toolgroup"><h3>Molecular &amp; experimental</h3><div class="chips"><span class="chip">DNA extraction</span><span class="chip">PCR</span><span class="chip">Genotyping</span><span class="chip">Molecular markers</span><span class="chip">Plant–pathogen assays</span><span class="chip">Greenhouse trials</span><span class="chip">Field trials</span></div></div>
+      <div class="toolgroup" style="margin:0"><h3>Teaching &amp; supervision</h3><div class="chips"><span class="chip">Genetics</span><span class="chip">Plant Breeding</span><span class="chip">Biotechnology</span><span class="chip">Biostatistics</span><span class="chip">Agricultural Biochemistry</span><span class="chip">MSc and BSc supervision</span></div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- RESEARCH -->
+<section id="research" data-nav="research"><div class="wrap">
+  <span class="pill">RESEARCH</span>
+  <h2>Research <em>interests</em></h2>
+  <p class="sub"><i>Spanning genomics, computation and climate-driven agriculture.</i></p>
   <div class="grid">
-    <div class="card accent"><h3>Thesis</h3><p>Unscrambling the Genomic History and Adaptive Footprint of African Cattle (PhD, May 2026).</p></div>
-    <div class="card accent" style="--c:#1ea7e8"><h3>Demographic history</h3><p>Admixture, migration and demographic reconstruction with ABC-RF machine learning.</p></div>
-    <div class="card accent" style="--c:#f5a524"><h3>Environmental adaptation</h3><p>GWAS, selection signatures and genome–environment association in indigenous cattle.</p></div>
+    <div class="topcard"><h3>Population and evolutionary genomics</h3><p>Population structure, admixture and demographic history of African cattle.</p></div>
+    <div class="topcard" style="--c:#1ea7e8"><h3>Environmental adaptation</h3><p>Genotype–environment interactions, climate resilience and stress responses.</p></div>
+    <div class="topcard" style="--c:#a855f7"><h3>Multi-omics integration</h3><p>Combining genomic and environmental data to understand adaptive responses in ruminants.</p></div>
+    <div class="topcard" style="--c:#f5a524"><h3>Selection and GWAS</h3><p>Selection signature detection and genome-wide association for adaptive traits.</p></div>
+    <div class="topcard" style="--c:#ef4444"><h3>Machine learning</h3><p>ABC-RF for demographic inference, admixture timing and migration.</p></div>
+    <div class="topcard" style="--c:#14c9a4"><h3>Sustainable breeding</h3><p>Bioinformatics and quantitative tools for climate-smart breeding of ruminants.</p></div>
+  </div>
+
+  <div class="focus focus-wrap" style="margin-top:34px">
+    <div>
+      <span class="pill">CURRENT FOCUS</span>
+      <h2>Multi-omic adaptive response in <em>ruminants</em></h2>
+      <p class="muted">Postdoctoral Research Fellow (MultiOmics) at the University of Molise since October 2026. Contributing livestock genomics, population genetics, adaptive evolution and quantitative analysis to the study of how ruminants respond to their environment, with reproducible R, Python, Bash and HPC workflows and careful biological interpretation of complex genomic evidence.</p>
+    </div>
+    <div>
+      <div class="mini"><b>Genomics</b><span>Population and adaptive genomics</span></div>
+      <div class="mini"><b>Environment</b><span>Genotype–environment interaction</span></div>
+      <div class="mini"><b>Computation</b><span>R · Python · Bash · HPC</span></div>
+    </div>
+  </div>
+
+  <div class="two" style="margin-top:44px">
+    <div>
+      <span class="pill">PUBLICATIONS</span>
+      <h2>Selected <em>papers</em></h2>
+      <div class="card" style="margin-top:14px">
+        <div class="pub"><b>Unscrambling the history of African indicine cattle genomes</b><span>Bitew, M.K. et al. · iScience · 2026 · first author</span></div>
+        <div class="pub"><b>Genomic evidence of positive selection highlights functional divergence associated with environmental resilience in Central and West African indigenous cattle</b><span>Bitew, M.K. et al. · Scientific Reports · 2026 · first author</span></div>
+        <div class="pub"><b>Genome-wide association study of resistance to gastrointestinal nematodes in dairy sheep breeds</b><span>Persichilli, C. et al. · 2025</span></div>
+        <div class="pub"><b>Genotype-by-environment interaction and yield stability of Kabuli chickpea</b><span>Eskezia, A., Nakachew, K., Tadesse, M. &amp; Kassa, M. · 2025</span></div>
+        <div class="pub"><b>Genetic parameters and selection of durum wheat advanced lines</b><span>Kuru, B., Menzir, A. &amp; Kassa, M. · 2025</span></div>
+        <div class="pub"><b>Divergent evolution of SCR74 effectors in oomycetes</b><span>Lin, X. et al. · mBio · 2020</span></div>
+      </div>
+      <p style="margin-top:16px"><a class="btn" data-link="orcid" href="#" target="_blank" rel="noopener">Full record on ORCID</a></p>
+    </div>
+    <div>
+      <span class="pill">RECOGNITION</span>
+      <h2>Talks, awards &amp; <em>training</em></h2>
+      <div class="card" style="margin-top:14px"><h3>Conference presentations</h3>
+        <ul class="clean"><li><b>ISAG 2025:</b> ABC-RF admixture timing in African cattle</li><li><b>ISAG 2023:</b> Population structure of African cattle</li></ul></div>
+      <div class="card" style="margin-top:14px"><h3>Awards and grants</h3>
+        <ul class="clean"><li><b>ISAG Bursary Award</b> · 2023 and 2025</li><li><b>Africa-UniNet Research Project</b> · 2021–2022</li><li><b>Principal Investigator,</b> Striga Resistance and Seed Multiplication Project · 2018–2020</li></ul></div>
+      <div class="card" style="margin-top:14px"><h3>Professional training</h3>
+        <ul class="clean"><li><b>Ontario Summer School in Genomics</b> · 2024 (RNA-seq, metagenomics, long-read sequencing, AI tools for genomics)</li><li>Wageningen University genomics training programmes</li><li>ILRI genomics and bioinformatics training programmes</li></ul></div>
+    </div>
   </div>
 </div></section>
 
-<section><div class="wrap">
+<!-- APPLICATIONS -->
+<section class="alt" id="applications" data-nav="apps"><div class="wrap">
   <span class="pill">TOOLS</span>
-  <h2>Featured <em>applications</em></h2>
-  <p class="sub">Web-based tools that make genomic analysis easier to use.</p>
-  <div class="grid" id="featured"></div>
-  <p style="margin-top:22px"><a class="btn" href="applications.html">All applications</a></p>
+  <h2>Interactive <em>Applications</em></h2>
+  <p class="sub">Web-based tools for genomic data analysis and visualization, built to make complex analyses accessible to researchers and breeding programme managers. <b style="color:var(--accent)"><span id="appcount">0</span> live</b></p>
+  <div class="filters" id="filters" role="group" aria-label="Filter by category"></div>
+  <div class="grid" id="apps"></div>
 </div></section>
 
-<section class="alt"><div class="wrap">
-  <span class="pill">PUBLICATIONS</span>
-  <h2>Recent first-author <em>papers</em></h2>
-  <div class="card" style="margin-top:14px">
-    <div class="pub"><b>Unscrambling the history of African indicine cattle genomes</b><span>Bitew, M.K. et al. · iScience · 2026</span></div>
-    <div class="pub"><b>Genomic evidence of positive selection highlights functional divergence associated with environmental resilience in Central and West African indigenous cattle</b><span>Bitew, M.K. et al. · Scientific Reports · 2026</span></div>
+<!-- CONTACT -->
+<section class="alt" id="contact" data-nav="contact"><div class="wrap">
+  <span class="pill">CONTACT</span>
+  <h2>Let's <em>collaborate</em></h2>
+  <p class="sub">Open to collaboration on livestock genomics, adaptation and climate-resilient breeding.</p>
+  <div class="two">
+    <div class="card accent"><h3>Send a message</h3>
+      <form id="contact-form" style="margin-top:12px">
+        <label>Your name<input name="name" required autocomplete="name"></label>
+        <label>Subject<input name="subject"></label>
+        <label>Message<textarea name="message" required></textarea></label>
+        <button class="btn" type="submit">Open in my email app</button>
+      </form></div>
+    <div class="card"><h3>Elsewhere</h3>
+      <ul class="clean">
+        <li><b>Email:</b> <a data-email="text" href="#" style="color:var(--accent)"></a></li>
+        <li><b>ORCID:</b> <a data-link="orcid" href="#" target="_blank" rel="noopener" style="color:var(--accent)">0000-0001-6223-0037</a></li>
+        <li><b>GitHub:</b> <a data-link="github" href="#" target="_blank" rel="noopener" style="color:var(--accent)">Muler-21</a></li>
+        <li><b>Location:</b> Campobasso, Italy</li>
+      </ul></div>
   </div>
-  <p style="margin-top:18px"><a class="btn" href="research.html">Full research record</a></p>
 </div></section>
+
 </main>
-<div id="foot"></div><script src="assets/site.js"></script></body></html>
+<div id="foot"></div>
+<script src="assets/site.js"></script>
+<style>@media(max-width:760px){#home .wrap{grid-template-columns:1fr!important}#home .photo{order:-1;width:140px;height:140px}}</style>
+</body></html>
