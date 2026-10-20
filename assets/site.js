@@ -15,7 +15,10 @@ const CONFIG = {
 const APPS = [
   { icon:"🌡️", title:"AdaptFit: will it thrive here?", tag:"Climate & Genomics", color:"#14c9a4", live:true,
     desc:"For farmers, breeders and planners. Pick places and a livestock type or crop, get a Good / Watch / Risky verdict from 35 years of climate, test warming and tolerance, and print a one-page brief. Adds climate-model projections, country context, research partners and mapped services for innovators. Phenotype, genome and gene tools for researchers. Open data, no keys.",
-    url:"apps/adaptfit/" }
+    url:"apps/adaptfit/" },
+  { icon:"⭐", title:"AMBKidsJoy: Learning Hub, Grades 1 to 8", tag:"Education", color:"#F4B400", live:true,
+    desc:"Free, bilingual (Amharic and English) interactive lessons for children, with Kokeb the star as guide. Grade 3 is ready now: 7 subjects, 54 chapters, a one-picture summary per chapter, experiments, exam practice and Young Innovator challenges. Other grades and Joyful English (Grades 1 to 8) are coming. Works on phones and offline.",
+    url:"AMBKidsJoy/" }
 ];
 
 const POSTS = [];
