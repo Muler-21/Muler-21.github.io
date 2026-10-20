@@ -1,7 +1,7 @@
 /* AMBKidsJoy — author & channel card, added to the bottom of every page. */
 (function(){
 const YT='https://www.youtube.com/@kidseducation9276';
-const GH='https://github.com/Muler-21';
+const GH='https://muler-21.github.io/';
 const T={
  by:{en:'Created by',am:'አዘጋጅ'},
  name:'Mulusew Kassa Bitew (PhD)',

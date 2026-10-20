@@ -69,3 +69,11 @@ if MATH_SRC:
         HEAD + head + '</head><body style="margin:0"><div class="wrap">' + body.replace('</body>', '<script src="author.js"></script></body>') + ('' if '</body>' in body else '<script src="author.js"></script>') + '</body></html>')
 shutil.copy(os.path.join(DIST, 'home.html'), os.path.join(DIST, 'index.html'))
 print('built', sorted(os.listdir(DIST)))
+
+# cache-busting: make browsers fetch fresh scripts/styles after each update
+import re as _re, glob as _glob, time as _time
+_V = _time.strftime('%Y%m%d%H%M')
+for _f in _glob.glob(os.path.join(DIST, '*.html')):
+    _s = open(_f, encoding='utf-8').read()
+    _s = _re.sub(r'((?:src|href)=")((?:units/)?[\w-]+\.(?:js|css))(")', lambda m: m.group(1) + m.group(2) + '?v=' + _V + m.group(3), _s)
+    open(_f, 'w', encoding='utf-8').write(_s)
