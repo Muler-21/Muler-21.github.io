@@ -1,0 +1,46 @@
+/* 1ኛ ክፍል አካባቢ ሳይንስ · ምዕራፍ 2 · ማህበራዊ አካባቢ */
+(function(){
+Unit.start({id:'g1-env-2',grade:1,subject:'env',subjectName:{en:'Environmental Science',am:'አካባቢ ሳይንስ'},chapter:{en:'Chapter 2',am:'ምዕራፍ 2'},
+ title:{en:'Our social environment',am:'ማህበራዊ አካባቢ'},
+ footer:{en:'Built on the Grade 1 Environmental Science student book, Chapter 2: family roles, basic needs, our school, working together and school rules.',am:'በ1ኛ ክፍል የአካባቢ ሳይንስ መጽሐፍ ምዕራፍ 2 ላይ የተመሰረተ፦ የቤተሰብ ሚና፣ መሠረታዊ ፍላጎቶች፣ ትምህርት ቤታችን፣ በጋራ መሥራትና የትምህርት ቤት ሕግ።'},
+ missions:[
+ {title:{en:'Who is in a family?',am:'የቤተሰብ አባላት'},type:'quiz',shuffle:true,
+  tip:{en:'A family lives together and helps each other: mother, father, children, grandparents.',am:'ቤተሰብ አብሮ ይኖራል፤ ይረዳዳል፦ እናት፣ አባት፣ ልጆች፣ አያቶች።'},
+  items:[{fig:'<div class="cnt" style="--per:5"><span class="emo">👨</span><span class="emo">👩</span><span class="emo">👧</span><span class="emo">👦</span><span class="emo">👶</span></div>',q:{en:'How many family members are in the picture?',am:'በሥዕሉ ውስጥ ስንት የቤተሰብ አባላት አሉ?'},o:['5','4','3','6'],a:0},
+   {q:{en:'Your father\'s mother is your…',am:'የአባታችሁ እናት…'},o:[{en:'grandmother',am:'አያት'},{en:'sister',am:'እህት'},{en:'aunt',am:'አክስት'}],a:0},
+   {q:{en:'Which is NOT a family member?',am:'የቤተሰብ አባል ያልሆነው?'},o:[{en:'🪑 a chair',am:'🪑 ወንበር'},{en:'👵 grandmother',am:'👵 አያት'},{en:'👦 brother',am:'👦 ወንድም'}],a:0}]},
+ {title:{en:'Everyone helps',am:'ሁሉም ያግዛል'},type:'sort',
+  tip:{en:'In a good family, men and women, boys and girls all share the work. What can a child do?',am:'በጥሩ ቤተሰብ ውስጥ ወንዶችም ሴቶችም፣ ወንድ ልጆችም ሴት ልጆችም ሥራ ይጋራሉ። ልጅ ምን ማድረግ ይችላል?'},
+  buckets:[{en:'🧒 A child can help',am:'🧒 ልጅ ሊያግዝ ይችላል'},{en:'🧑 For adults only',am:'🧑 ለትልልቆች ብቻ'}],
+  items:[{t:{en:'Sweep the floor',am:'ቤት መጥረግ'},b:0},{t:{en:'Fetch a cup of water',am:'ውኃ በኩባያ ማምጣት'},b:0},{t:{en:'Water the plants',am:'ተክሎችን ማጠጣት'},b:0},{t:{en:'Tidy my books',am:'መጻሕፍቴን ማስተካከል'},b:0},{t:{en:'Drive a car',am:'መኪና መንዳት'},b:1},{t:{en:'Use a sharp axe',am:'ስለታም መጥረቢያ መጠቀም'},b:1}]},
+ {title:{en:'What we need to live',am:'ለመኖር የሚያስፈልጉን'},type:'match',
+  tip:{en:'People need food, shelter (a house) and clothes to live.',am:'ሰዎች ለመኖር ምግብ፣ መጠለያ (ቤት) እና ልብስ ያስፈልጋቸዋል።'},
+  rounds:[[[{en:'🍞 Food',am:'🍞 ምግብ'},{en:'gives energy, stops hunger',am:'ጉልበት ይሰጣል፤ ረሃብን ያስወግዳል'}],[{en:'🏠 Shelter',am:'🏠 መጠለያ'},{en:'protects from rain and wild animals',am:'ከዝናብና ከአውሬ ይከላከላል'}],[{en:'👕 Clothes',am:'👕 ልብስ'},{en:'cover the body, keep us warm',am:'ሰውነትን ይሸፍናል፤ ከብርድ ይከላከላል'}]]]},
+ {title:{en:'Things at our school',am:'በትምህርት ቤታችን ያሉ ነገሮች'},type:'sort',
+  tip:{en:'Our school has classrooms, a library, toilets, a playground, trees and flowers.',am:'ትምህርት ቤታችን የመማሪያ ክፍሎች፣ ቤተ መጻሕፍት፣ መጸዳጃ ቤት፣ የመጫወቻ ሜዳ፣ ዛፎችና አበቦች አሉት።'},
+  buckets:[{en:'🏫 At school',am:'🏫 በትምህርት ቤት'},{en:'🏠 At home',am:'🏠 በቤት'}],
+  items:[{t:{en:'📚 Library',am:'📚 ቤተ መጻሕፍት'},b:0},{t:{en:'🧑‍🏫 Blackboard',am:'🧑‍🏫 ጥቁር ሰሌዳ'},b:0},{t:{en:'🚩 Flag pole',am:'🚩 የሰንደቅ ዓላማ መስቀያ'},b:0},{t:{en:'⚽ Football field',am:'⚽ የእግር ኳስ ሜዳ'},b:0},{t:{en:'🛏️ My bed',am:'🛏️ አልጋዬ'},b:1},{t:{en:'🍳 Kitchen',am:'🍳 ማዕድ ቤት'},b:1}]},
+ {title:{en:'School rules',am:'የትምህርት ቤት ሕግና ደንብ'},type:'sort',
+  tip:{en:'Rules help everyone learn and play safely.',am:'ሕግና ደንብ ሁሉም በደህና እንዲማርና እንዲጫወት ይረዳሉ።'},
+  buckets:[{en:'👍 Follows the rules',am:'👍 ሕግ ያከብራል'},{en:'👎 Breaks the rules',am:'👎 ሕግ ይጥሳል'}],
+  items:[{t:{en:'Come on time',am:'አለማርፈድ'},b:0},{t:{en:'Do homework',am:'የቤት ሥራ መሥራት'},b:0},{t:{en:'Wear the uniform',am:'ዩኒፎርም መልበስ'},b:0},{t:{en:'Raise your hand to answer',am:'እጅ አውጥቶ መመለስ'},b:0},{t:{en:'Jump over the fence',am:'በአጥር መዝለል'},b:1},{t:{en:'Cut the school plants',am:'የትምህርት ቤት አትክልቶችን መቁረጥ'},b:1},{t:{en:'Fight with friends',am:'ከጓደኛ ጋር መጣላት'},b:1}]},
+ {title:{en:'Better together',am:'በጋራ የተሻለ'},type:'quiz',
+  tip:{en:'Studying and playing together is fun, and we learn more!',am:'በጋራ ማጥናትና መጫወት ያስደስታል፤ የበለጠም እንማራለን!'},
+  items:[{q:{en:'Your group has a big job. What is best?',am:'ቡድናችሁ ትልቅ ሥራ አለው። የተሻለው ምንድን ነው?'},o:[{en:'Share the work and help each other',am:'ሥራውን ተካፍሎ መረዳዳት'},{en:'One child does everything',am:'አንድ ልጅ ሁሉንም ይሠራል'}],a:0},
+   {q:{en:'A new child is alone at break. You…',am:'አዲስ ልጅ በእረፍት ብቻውን ነው። እናንተ…'},o:[{en:'invite them to play',am:'አብሮ እንዲጫወት ትጋብዛላችሁ'},{en:'laugh at them',am:'ትስቁበታላችሁ'}],a:0}]},
+ {type:'exam',items:[
+  {q:{en:'Which do people need to live?',am:'ሰዎች ለመኖር የሚያስፈልጋቸው?'},o:[{en:'Food, shelter, clothes',am:'ምግብ፣ መጠለያ፣ ልብስ'},{en:'Toys only',am:'መጫወቻ ብቻ'}],a:0},
+  {q:{en:'Clothes help us to…',am:'ልብስ የሚጠቅመን…'},o:[{en:'keep warm',am:'ከብርድ ለመከላከል'},{en:'cook food',am:'ምግብ ለማብሰል'}],a:0},
+  {q:{en:'Which follows school rules?',am:'የትምህርት ቤትን ሕግ የሚያከብረው?'},o:[{en:'Coming on time',am:'በሰዓቱ መምጣት'},{en:'Jumping the fence',am:'በአጥር መዝለል'}],a:0},
+  {q:{en:'Who can sweep the house?',am:'ቤት መጥረግ የሚችለው ማን ነው?'},o:[{en:'Boys and girls, everyone',am:'ወንድም ሴትም፣ ሁሉም'},{en:'Only mothers',am:'እናቶች ብቻ'}],a:0},
+  {q:{en:'Where do we borrow books at school?',am:'በትምህርት ቤት መጽሐፍ የምንዋሰው የት ነው?'},o:[{en:'Library',am:'ቤተ መጻሕፍት'},{en:'Toilet',am:'መጸዳጃ ቤት'}],a:0}]},
+ {type:'notes',notes:{
+  big:{en:'We live with others: our family, school and community. Everyone needs food, shelter and clothes, and we work together and follow rules.',am:'ከሌሎች ጋር እንኖራለን፦ ቤተሰብ፣ ትምህርት ቤትና ማህበረሰብ። ሁሉም ምግብ፣ መጠለያና ልብስ ያስፈልገዋል፤ በጋራ እንሠራለን፣ ሕግ እናከብራለን።'},
+  points:[{en:'Family members: mother, father, children, grandparents. Everyone shares the work.',am:'የቤተሰብ አባላት፦ እናት፣ አባት፣ ልጆች፣ አያቶች። ሁሉም ሥራ ይጋራል።'},{en:'Basic needs: food, shelter and clothes.',am:'መሠረታዊ ፍላጎቶች፦ ምግብ፣ መጠለያና ልብስ።'},{en:'Our school has classrooms, a library, toilets, a field, trees.',am:'ትምህርት ቤታችን የመማሪያ ክፍል፣ ቤተ መጻሕፍት፣ መጸዳጃ ቤት፣ ሜዳና ዛፎች አሉት።'},{en:'Working and playing together is better.',am:'በጋራ መሥራትና መጫወት የተሻለ ነው።'},{en:'Follow school rules: be on time, do homework, respect others.',am:'የትምህርት ቤት ሕግ አክብሩ፦ በሰዓቱ መገኘት፣ የቤት ሥራ መሥራት፣ ሌሎችን ማክበር።'}],
+  words:[['መጠለያ',{en:'shelter',am:'የምንኖርበት ቤት'}],['ሚና',{en:'role / job',am:'የሥራ ድርሻ'}],['ደንብ',{en:'rule',am:'መከበር ያለበት ሥርዓት'}]],
+  remember:{en:'Many hands make light work.',am:'ድር ቢያብር አንበሳ ያስር።'},
+  exam:[[{en:'Name 3 basic needs',am:'3 መሠረታዊ ፍላጎቶችን ጥቀሱ'},'ምግብ፣ መጠለያ፣ ልብስ'],[{en:'What is your job at home?',am:'በቤት ውስጥ የእናንተ ሥራ ድርሻ ምንድን ነው?'},{en:'e.g. sweeping, fetching water',am:'ለምሳሌ ቤት መጥረግ፣ ውኃ ማምጣት'}],[{en:'Name 2 school rules',am:'2 የትምህርት ቤት ደንቦችን ጥቀሱ'},'አለማርፈድ፣ ዩኒፎርም መልበስ']],
+  innovate:{title:{en:'Family job wheel',am:'የቤተሰብ የሥራ መሽከርከሪያ'},text:{en:'Make a wheel that shares home jobs fairly between everyone in the family, girls and boys alike.',am:'የቤት ሥራዎችን ለሁሉም የቤተሰብ አባላት፣ ለሴትም ለወንድም ልጆች በፍትሐዊነት የሚያከፋፍል መሽከርከሪያ ሥሩ።'},
+   steps:[{en:'Draw a big circle and cut it into parts.',am:'ትልቅ ክብ ሳሉና በክፍሎች ከፋፍሉት።'},{en:'Write a job in each part: sweep, water plants…',am:'በእያንዳንዱ ክፍል ሥራ ጻፉ፦ መጥረግ፣ ተክል ማጠጣት…'},{en:'Write family names on a smaller circle on top.',am:'በላዩ ላይ ባለ ትንሽ ክብ የቤተሰብ ስሞችን ጻፉ።'},{en:'Turn it every week so jobs are shared.',am:'ሥራ እንዲከፋፈል በየሳምንቱ አዙሩት።'}]}}}
+ ]});
+})();

@@ -177,3 +177,32 @@ footer button{text-decoration:underline;color:var(--ink-soft)}
 @keyframes g3fall{from{transform:translateY(-6px);opacity:0}30%{opacity:1}to{transform:translateY(40px);opacity:0}}
 @media (prefers-reduced-motion: reduce){.drop{animation:none}}
 .zband:hover{filter:brightness(1.05)}
+
+/* ---------- Grade 1: bigger, picture-first ---------- */
+.emo{font-family:"Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif;font-size:2.4rem;line-height:1;display:inline-block}
+.opt .emo{font-size:2.6rem;flex:none}
+.cnt{display:grid;grid-template-columns:repeat(var(--per,5),auto);gap:6px 10px;justify-content:center;padding:12px 16px;border-radius:18px;background:var(--surface-2)}
+.cnt .emo{font-size:clamp(1.8rem,7vw,2.6rem)}
+.bigq{font-family:var(--display);font-weight:800;font-size:clamp(2.2rem,9vw,3.4rem);text-align:center;letter-spacing:1px}
+body[data-grade="1"] .qt{font-size:1.35rem}
+body[data-grade="1"] .opt{font-size:1.4rem;justify-content:center;text-align:center;min-height:64px}
+body[data-grade="1"] .bubble p{font-size:1.05rem}
+.trace-wrap{display:flex;gap:16px;align-items:center;justify-content:center;flex-wrap:wrap}
+.trace-model{font-family:var(--display);font-weight:800;font-size:5rem;line-height:1;color:var(--accent);min-width:90px;text-align:center}
+.trace-box{width:min(300px,78vw);aspect-ratio:1;border-radius:22px;background:var(--surface);border:3px dashed var(--accent);overflow:hidden}
+canvas.trace{width:100%;height:100%;touch-action:none;display:block;cursor:crosshair}
+
+.cnt .emo.gone{opacity:.28;filter:grayscale(1);position:relative}
+.cnt .emo.gone::after{content:"";position:absolute;left:-4px;right:-4px;top:50%;height:4px;background:var(--bad);transform:rotate(-30deg);border-radius:2px}
+.eqfig{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center}
+.eqfig .op{font-family:var(--display);font-weight:800;font-size:2.4rem;color:var(--accent)}
+.cmp{display:grid;gap:8px;width:min(560px,100%)}
+.cmp>div{display:grid;grid-template-columns:34px 1fr;align-items:center;gap:8px}
+.cmp b{font-family:var(--display);font-size:1.4rem;color:var(--accent);text-align:center}
+.cmp .cnt{justify-content:start}
+.vcol{font-family:var(--display);font-weight:800;font-size:2.6rem;line-height:1.15;text-align:right;display:inline-grid;padding:10px 22px;border-radius:16px;background:var(--surface-2)}
+.vcol .ln{border-top:4px solid var(--ink);margin-top:4px}
+body[data-grade="1"] .tile{font-size:1.45rem;min-width:52px;min-height:52px}
+.cmp .cnt,.cnt.wrap{display:flex;flex-wrap:wrap;justify-content:flex-start}
+.cnt.wrap{justify-content:center}
+@media (max-width:480px){.cnt{gap:4px 6px;padding:10px}.cnt .emo{font-size:1.7rem}}

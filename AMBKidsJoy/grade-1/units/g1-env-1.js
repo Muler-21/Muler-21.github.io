@@ -1,0 +1,53 @@
+/* 1ኛ ክፍል አካባቢ ሳይንስ · ምዕራፍ 1 · ሳይንስን መረዳት */
+(function(){
+const E=e=>`<span class="emo" style="font-size:3.2rem">${e}</span>`;
+Unit.start({id:'g1-env-1',grade:1,subject:'env',subjectName:{en:'Environmental Science',am:'አካባቢ ሳይንስ'},chapter:{en:'Chapter 1',am:'ምዕራፍ 1'},
+ title:{en:'Understanding science: my body',am:'ሳይንስን መረዳት'},
+ footer:{en:'Built on the Grade 1 Environmental Science student book, Chapter 1: body parts, the five senses, safety, personal hygiene and light.',am:'በ1ኛ ክፍል የአካባቢ ሳይንስ መጽሐፍ ምዕራፍ 1 ላይ የተመሰረተ፦ የሰውነት ክፍሎች፣ የስሜት አካላት፣ ጥንቃቄ፣ የግል ንጽህናና ብርሃን።'},
+ missions:[
+ {title:{en:'Parts of my body',am:'የሰውነቴ ክፍሎች'},type:'match',
+  tip:{en:'Touch each part of your body as you name it: head, eyes, ears, nose, mouth, hands, legs.',am:'እያንዳንዱን የሰውነታችሁን ክፍል እየነካችሁ ስሙን በሉ፦ ራስ፣ ዓይን፣ ጆሮ፣ አፍንጫ፣ አፍ፣ እጅ፣ እግር።'},
+  rounds:[[['👁️',{en:'eye',am:'ዓይን'}],['👂',{en:'ear',am:'ጆሮ'}],['👃',{en:'nose',am:'አፍንጫ'}],['👄',{en:'mouth',am:'አፍ'}]],[['✋',{en:'hand',am:'እጅ'}],['🦶',{en:'foot',am:'እግር'}],['💇',{en:'hair',am:'ፀጉር'}],['🦷',{en:'teeth',am:'ጥርስ'}]]]},
+ {title:{en:'Five senses',am:'አምስቱ የስሜት አካላት'},type:'match',
+  tip:{en:'We have five sense organs: eyes see, ears hear, nose smells, tongue tastes, skin feels.',am:'አምስት የስሜት አካላት አሉን፦ ዓይን ያያል፣ ጆሮ ይሰማል፣ አፍንጫ ያሸታል፣ ምላስ ይቀምሳል፣ ቆዳ ይዳስሳል።'},
+  rounds:[[[{en:'👁️ Eyes',am:'👁️ ዓይን'},{en:'to see',am:'ለማየት'}],[{en:'👂 Ears',am:'👂 ጆሮ'},{en:'to hear',am:'ለመስማት'}],[{en:'👃 Nose',am:'👃 አፍንጫ'},{en:'to smell',am:'ለማሽተት'}],[{en:'👅 Tongue',am:'👅 ምላስ'},{en:'to taste',am:'ለመቅመስ'}],[{en:'🖐️ Skin',am:'🖐️ ቆዳ'},{en:'to feel hot, cold, soft',am:'ሙቀት፣ ቅዝቃዜ፣ ልስላሴ ለመዳሰስ'}]]]},
+ {title:{en:'Which sense?',am:'የትኛው የስሜት አካል?'},type:'quiz',shuffle:true,
+  tip:{en:'Think: which body part tells you about it?',am:'አስቡ፦ ስለሱ የሚነግራችሁ የትኛው የሰውነት ክፍል ነው?'},
+  items:[{fig:E('☕'),q:{en:'Mother is roasting coffee. You know it from the smell. Which sense?',am:'እናት ቡና እየቆላች ነው። በሽታው ታውቃላችሁ። የትኛው የስሜት አካል?'},o:[{en:'👃 Nose',am:'👃 አፍንጫ'},{en:'👂 Ears',am:'👂 ጆሮ'},{en:'👅 Tongue',am:'👅 ምላስ'}],a:0},
+   {fig:E('✈️'),q:{en:'An aeroplane flies. You see it and…',am:'አውሮፕላን ይበራል። ታዩታላችሁ፤ እንዲሁም…'},o:[{en:'👂 hear it',am:'👂 ትሰሙታላችሁ'},{en:'👅 taste it',am:'👅 ትቀምሱታላችሁ'}],a:0},
+   {fig:E('🐓'),q:{en:'A rooster crows. Which sense hears it?',am:'አውራ ዶሮ ይጮሃል። የሚሰማው የትኛው ነው?'},o:[{en:'👂 Ears',am:'👂 ጆሮ'},{en:'👁️ Eyes',am:'👁️ ዓይን'}],a:0},
+   {fig:E('🍋'),q:{en:'A girl sees, smells, touches and tastes a lemon. How many senses does she use?',am:'አንዲት ልጅ ሎሚ ታያለች፣ ታሸታለች፣ ትዳስሳለች፣ ትቀምሳለች። ስንት የስሜት አካላትን ተጠቀመች?'},o:['4','1','2'],a:0,e:{en:'Senses work together!',am:'የስሜት አካላት አብረው ይሠራሉ!'}}]},
+ {title:{en:'Safe or harmful?',am:'ደህና ነው ወይስ ጎጂ?'},type:'sort',
+  tip:{en:'Some actions can hurt our body. Choose safe actions!',am:'አንዳንድ ድርጊቶች ሰውነታችንን ሊጎዱ ይችላሉ። ደህና ድርጊቶችን ምረጡ!'},
+  buckets:[{en:'✅ Safe',am:'✅ ደህና'},{en:'⚠️ Harmful',am:'⚠️ ጎጂ'}],
+  items:[{t:{en:'Read in the shade',am:'በጥላ ሥር ማንበብ'},b:0},{t:{en:'Blow on hot tea before drinking',am:'ትኩስ ሻይን አቀዝቅዞ መጠጣት'},b:0},{t:{en:'Wear shoes',am:'ጫማ ማድረግ'},b:0},
+   {t:{en:'Touch fire',am:'እሳት መንካት'},b:1},{t:{en:'Put a sharp stick in your ear',am:'ሹል እንጨት ጆሮ ውስጥ ማስገባት'},b:1},{t:{en:'Jump from a high place',am:'ከከፍታ ቦታ መዝለል'},b:1},{t:{en:'Read in strong sunlight',am:'በኃይለኛ ፀሐይ ላይ ማንበብ'},b:1}]},
+ {title:{en:'Clean me, healthy others',am:'ንጹህ እኔ፣ ጤናማ ሌሎች'},type:'quiz',
+  tip:{en:'Keeping clean protects you AND your friends.',am:'ንጹህ መሆን እናንተንም ጓደኞቻችሁንም ይጠብቃል።'},
+  items:[{q:{en:'You have a cold and need to sneeze. What do you do?',am:'ጉንፋን ይዟችሁ ማስነጠስ አስፈለጋችሁ። ምን ታደርጋላችሁ?'},o:[{en:'Cover mouth and nose with my elbow',am:'አፍና አፍንጫዬን በክርኔ እሸፍናለሁ'},{en:'Sneeze on my friend',am:'ጓደኛዬ ላይ አስነጥሳለሁ'}],a:0},
+   {q:{en:'Which child keeps clean?',am:'ንጽህናውን የጠበቀው ልጅ የትኛው ነው?'},o:[{en:'😊 Washed face, combed hair',am:'😊 ፊቱን የታጠበ፣ ፀጉሩን ያበጠረ'},{en:'😣 Dirty face',am:'😣 የቆሸሸ ፊት'}],a:0},
+   {q:{en:'Where should we go to the toilet?',am:'የት መጸዳዳት አለብን?'},o:[{en:'🚻 In a latrine',am:'🚻 በመጸዳጃ ቤት'},{en:'In the open field',am:'በሜዳ ላይ'}],a:0}]},
+ {title:{en:'Sources of light',am:'የብርሃን ምንጮች'},type:'sort',
+  tip:{en:'Light helps us see. Some things make their own light.',am:'ብርሃን እንድናይ ይረዳናል። አንዳንድ ነገሮች የራሳቸውን ብርሃን ይሠራሉ።'},
+  buckets:[{en:'💡 Gives light',am:'💡 ብርሃን ይሰጣል'},{en:'🚫 No own light',am:'🚫 የራሱ ብርሃን የለውም'}],
+  items:[{t:{en:'☀️ Sun',am:'☀️ ፀሐይ'},b:0},{t:{en:'🔥 Fire',am:'🔥 እሳት'},b:0},{t:{en:'🕯️ Candle',am:'🕯️ ሻማ'},b:0},{t:{en:'🔦 Torch',am:'🔦 ባትሪ'},b:0},{t:{en:'🪨 Stone',am:'🪨 ድንጋይ'},b:1},{t:{en:'📘 Book',am:'📘 መጽሐፍ'},b:1},{t:{en:'🪑 Chair',am:'🪑 ወንበር'},b:1}]},
+ {title:{en:'Day or night animals',am:'የቀንና የሌሊት እንስሳት'},type:'sort',
+  tip:{en:'Most animals move in daylight. Some move in the dark.',am:'አብዛኞቹ እንስሳት በቀን ብርሃን ይንቀሳቀሳሉ። አንዳንዶቹ በጨለማ ይንቀሳቀሳሉ።'},
+  buckets:[{en:'☀️ Day',am:'☀️ ቀን'},{en:'🌙 Night',am:'🌙 ሌሊት'}],
+  items:[{t:{en:'🐓 Hen',am:'🐓 ዶሮ'},b:0},{t:{en:'🐄 Cow',am:'🐄 ላም'},b:0},{t:{en:'🐝 Bee',am:'🐝 ንብ'},b:0},{t:{en:'🦉 Owl',am:'🦉 ጉጉት'},b:1},{t:{en:'🦇 Bat',am:'🦇 የሌሊት ወፍ'},b:1}]},
+ {type:'exam',items:[
+  {q:{en:'How many sense organs do we have?',am:'ስንት የስሜት አካላት አሉን?'},o:['5','2','10'],a:0},
+  {q:{en:'We taste with our…',am:'የምንቀምሰው በ…'},o:[{en:'tongue',am:'ምላስ'},{en:'ear',am:'ጆሮ'}],a:0},
+  {q:{en:'Which is harmful?',am:'ጎጂው የትኛው ነው?'},o:[{en:'Touching fire',am:'እሳት መንካት'},{en:'Washing hands',am:'እጅ መታጠብ'}],a:0},
+  {q:{en:'Which gives its own light?',am:'የራሱን ብርሃን የሚሰጠው?'},o:[{en:'☀️ Sun',am:'☀️ ፀሐይ'},{en:'🪨 Stone',am:'🪨 ድንጋይ'}],a:0},
+  {q:{en:'When sneezing we…',am:'ስናስነጥስ…'},o:[{en:'cover our mouth and nose',am:'አፍና አፍንጫችንን እንሸፍናለን'},{en:'face our friends',am:'ወደ ጓደኞቻችን እንዞራለን'}],a:0}]},
+ {type:'notes',notes:{
+  big:{en:'Scientists observe with their senses. We know our body, keep it safe and clean, and use light to see.',am:'ሳይንቲስቶች በስሜት አካሎቻቸው ይመለከታሉ። ሰውነታችንን እናውቃለን፣ ከጉዳት እንጠብቀዋለን፣ ንጹህ እናደርገዋለን፤ ለማየት ብርሃን እንጠቀማለን።'},
+  points:[{en:'Outer body parts: head, eyes, ears, nose, mouth, hands, legs.',am:'ውጫዊ የሰውነት ክፍሎች፦ ራስ፣ ዓይን፣ ጆሮ፣ አፍንጫ፣ አፍ፣ እጅ፣ እግር።'},{en:'Five senses: see, hear, smell, taste, touch. They work together.',am:'አምስቱ ስሜቶች፦ ማየት፣ መስማት፣ ማሽተት፣ መቅመስ፣ መዳሰስ። አብረው ይሠራሉ።'},{en:'Fire, sharp things, heights and strong sun can hurt us.',am:'እሳት፣ ሹል ነገሮች፣ ከፍታና ኃይለኛ ፀሐይ ሊጎዱን ይችላሉ።'},{en:'Keep clean, use a latrine, cover your mouth when you sneeze.',am:'ንጹህ ሁኑ፣ መጸዳጃ ቤት ተጠቀሙ፣ ስታስነጥሱ አፋችሁን ሸፍኑ።'},{en:'Light sources: sun, fire, candle, lamp. Light helps us see.',am:'የብርሃን ምንጮች፦ ፀሐይ፣ እሳት፣ ሻማ፣ መብራት። ብርሃን እንድናይ ይረዳናል።'}],
+  words:[['የስሜት አካላት',{en:'sense organs',am:'ዓይን፣ ጆሮ፣ አፍንጫ፣ ምላስ፣ ቆዳ'}],['ንጽህና',{en:'hygiene',am:'ንጹህ መሆን'}],['ብርሃን',{en:'light',am:'እንድናይ የሚረዳ'}]],
+  remember:{en:'Use your senses like a scientist: look, listen, smell, touch (taste only safe food!).',am:'የስሜት አካሎቻችሁን እንደ ሳይንቲስት ተጠቀሙ፦ ተመልከቱ፣ አዳምጡ፣ አሽቱ፣ ዳስሱ (የሚቀመሰው ደህና ምግብ ብቻ!)።'},
+  exam:[[{en:'Name the 5 senses',am:'5ቱን የስሜት አካላት ጥቀሱ'},'ዓይን፣ ጆሮ፣ አፍንጫ፣ ምላስ፣ ቆዳ'],[{en:'Name 3 light sources',am:'3 የብርሃን ምንጮችን ጥቀሱ'},'ፀሐይ፣ እሳት፣ ሻማ'],[{en:'Name 2 dangers to the body',am:'2 ለሰውነት አደገኛ ነገሮችን ጥቀሱ'},'እሳት፣ ሹል ነገር']],
+  innovate:{title:{en:'Mystery sense box',am:'የስሜት አካላት እንቆቅልሽ ሳጥን'},text:{en:'Make a box with a hole. Friends put a hand in and guess the object by touch only. Then try smell (lemon, coffee) with closed eyes.',am:'ቀዳዳ ያለው ሳጥን ሥሩ። ጓደኞች እጃቸውን አስገብተው በመዳሰስ ብቻ ዕቃውን ይገምታሉ። ከዚያ ዓይናቸውን ጨፍነው በማሽተት (ሎሚ፣ ቡና) ሞክሩ።'},
+   steps:[{en:'Cut a hand-sized hole in a box.',am:'በሳጥን ላይ እጅ የሚያስገባ ቀዳዳ ቁረጡ።'},{en:'Put in safe objects: stone, cotton, spoon.',am:'ደህና ዕቃዎችን አስገቡ፦ ድንጋይ፣ ጥጥ፣ ማንኪያ።'},{en:'Friends guess by touch.',am:'ጓደኞች በመዳሰስ ይገምታሉ።'},{en:'Count correct guesses: which sense helped most?',am:'ትክክለኛ ግምቶችን ቁጠሩ፦ ብዙ የረዳው የትኛው ስሜት ነው?'}]}}}
+ ]});
+})();

@@ -1,0 +1,48 @@
+/* 1ኛ ክፍል አካባቢ ሳይንስ · ምዕራፍ 4 · ተፈጥሯዊ አካባቢ */
+(function(){
+Unit.start({id:'g1-env-4',grade:1,subject:'env',subjectName:{en:'Environmental Science',am:'አካባቢ ሳይንስ'},chapter:{en:'Chapter 4',am:'ምዕራፍ 4'},
+ title:{en:'Our natural environment',am:'ተፈጥሯዊ አካባቢ'},
+ footer:{en:'Built on the Grade 1 Environmental Science student book, Chapter 4: weather, seasons, living and non-living things, animals, plants and keeping our surroundings clean.',am:'በ1ኛ ክፍል የአካባቢ ሳይንስ መጽሐፍ ምዕራፍ 4 ላይ የተመሰረተ፦ የአየር ጠባይ፣ ወቅቶች፣ ሕይወት ያላቸውና የሌላቸው ነገሮች፣ እንስሳት፣ እጽዋትና የአካባቢ ንጽህና።'},
+ missions:[
+ {title:{en:'Today\'s weather',am:'የዛሬው የአየር ጠባይ'},type:'match',
+  tip:{en:'Weather changes within a day: sunny, rainy, windy, cloudy, cold or hot.',am:'የአየር ጠባይ በአንድ ቀን ውስጥ ይለዋወጣል፦ ፀሐያማ፣ ዝናባማ፣ ነፋሻማ፣ ደመናማ፣ ቀዝቃዛ ወይም ሞቃት።'},
+  rounds:[[['☀️',{en:'sunny',am:'ፀሐያማ'}],['🌧️',{en:'rainy',am:'ዝናባማ'}],['🌬️',{en:'windy',am:'ነፋሻማ'}],['☁️',{en:'cloudy',am:'ደመናማ'}]]]},
+ {title:{en:'Kiremt or Bega?',am:'ክረምት ወይስ በጋ?'},type:'sort',
+  tip:{en:'Kiremt is the rainy season: plants are green and we see rainbows. Bega is the dry season: many plants dry and drop leaves.',am:'ክረምት የዝናብ ወቅት ነው፦ ተክሎች ያረንጓዴሉ፣ ቀስተ ደመና ይታያል። በጋ ደረቅ ወቅት ነው፦ ብዙ ተክሎች ይደርቃሉ፣ ቅጠላቸውን ያረግፋሉ።'},
+  buckets:[{en:'🌧️ Kiremt (rainy)',am:'🌧️ ክረምት'},{en:'☀️ Bega (dry)',am:'☀️ በጋ'}],
+  items:[{t:{en:'🌈 Rainbows appear',am:'🌈 ቀስተ ደመና ይታያል'},b:0},{t:{en:'🌿 Fields are green',am:'🌿 ማሳዎች ያረንጓዴሉ'},b:0},{t:{en:'☔ We carry umbrellas',am:'☔ ጃንጥላ እንይዛለን'},b:0},{t:{en:'🍂 Leaves dry and fall',am:'🍂 ቅጠሎች ደርቀው ይረግፋሉ'},b:1},{t:{en:'🌾 Harvest time',am:'🌾 የመከር ጊዜ'},b:1},{t:{en:'💨 Dusty roads',am:'💨 አቧራማ መንገድ'},b:1}]},
+ {title:{en:'Living or non-living?',am:'ሕይወት ያለው ወይስ የሌለው?'},type:'sort',
+  tip:{en:'Living things eat, breathe, grow, have young and die. Non-living things cannot.',am:'ሕይወት ያላቸው ነገሮች ይመገባሉ፣ ይተነፍሳሉ፣ ያድጋሉ፣ ይራባሉ፣ ይሞታሉ። ሕይወት የሌላቸው አይችሉም።'},
+  buckets:[{en:'🌱 Living',am:'🌱 ሕይወት ያለው'},{en:'🪨 Non-living',am:'🪨 ሕይወት የሌለው'}],
+  items:[{t:{en:'🐄 Cow',am:'🐄 ላም'},b:0},{t:{en:'🌳 Tree',am:'🌳 ዛፍ'},b:0},{t:{en:'🦋 Butterfly',am:'🦋 ቢራቢሮ'},b:0},{t:{en:'🧒 Child',am:'🧒 ልጅ'},b:0},{t:{en:'🪨 Stone',am:'🪨 ድንጋይ'},b:1},{t:{en:'🚗 Car',am:'🚗 መኪና'},b:1},{t:{en:'🧸 Toy',am:'🧸 አሻንጉሊት'},b:1}]},
+ {title:{en:'Home or wild animal?',am:'የቤት ወይስ የዱር እንስሳ?'},type:'sort',
+  tip:{en:'Domestic animals live with people. Wild animals live in forests and fields on their own.',am:'የቤት እንስሳት ከሰዎች ጋር ይኖራሉ። የዱር እንስሳት በጫካና በሜዳ ለብቻቸው ይኖራሉ።'},
+  buckets:[{en:'🏠 Domestic',am:'🏠 የቤት'},{en:'🌳 Wild',am:'🌳 የዱር'}],
+  items:[{t:{en:'🐕 Dog',am:'🐕 ውሻ'},b:0},{t:{en:'🐪 Camel',am:'🐪 ግመል'},b:0},{t:{en:'🐓 Hen',am:'🐓 ዶሮ'},b:0},{t:{en:'🦁 Lion',am:'🦁 አንበሳ'},b:1},{t:{en:'🦉 Owl',am:'🦉 ጉጉት'},b:1},{t:{en:'🐸 Frog',am:'🐸 እንቁራሪት'},b:1},{t:{en:'🐘 Elephant',am:'🐘 ዝሆን'},b:1}]},
+ {title:{en:'Eggs or babies?',am:'እንቁላል ወይስ ልጅ?'},type:'sort',
+  tip:{en:'Some animals lay eggs. Others give birth to babies and feed them milk. Feathers or fur can help you guess!',am:'አንዳንድ እንስሳት እንቁላል ይጥላሉ። ሌሎች ልጅ ይወልዳሉ፤ ወተት ያጠባሉ። ላባ ወይም ፀጉር ለመገመት ይረዳችኋል!'},
+  buckets:[{en:'🥚 Lays eggs',am:'🥚 እንቁላል ይጥላል'},{en:'🍼 Gives birth',am:'🍼 ልጅ ይወልዳል'}],
+  items:[{t:{en:'🐓 Hen',am:'🐓 ዶሮ'},b:0},{t:{en:'🕊️ Dove',am:'🕊️ እርግብ'},b:0},{t:{en:'🐍 Snake',am:'🐍 እባብ'},b:0},{t:{en:'🪰 Fly',am:'🪰 ዝንብ'},b:0},{t:{en:'🐄 Cow',am:'🐄 ላም'},b:1},{t:{en:'🐕 Dog',am:'🐕 ውሻ'},b:1},{t:{en:'🐐 Goat',am:'🐐 ፍየል'},b:1}]},
+ {title:{en:'Plants help us',am:'እጽዋት ይጠቅሙናል'},type:'match',
+  tip:{en:'Plants give us food, wood for houses and furniture, cotton for clothes, medicine and beauty.',am:'እጽዋት ምግብ፣ ለቤትና ለዕቃ እንጨት፣ ለልብስ ጥጥ፣ መድኃኒትና ውበት ይሰጡናል።'},
+  rounds:[[[{en:'🌽 Maize, teff, tomato',am:'🌽 በቆሎ፣ ጤፍ፣ ቲማቲም'},{en:'Food',am:'ምግብ'}],[{en:'🪵 Eucalyptus, acacia',am:'🪵 ባህርዛፍ፣ ግራር'},{en:'Wood for houses and chairs',am:'ለቤትና ለወንበር እንጨት'}],[{en:'☁️ Cotton',am:'☁️ ጥጥ'},{en:'Clothes (traditional dress)',am:'ልብስ (የባህል ቀሚስ)'}],[{en:'🌿 Damakese, aloe (ሬት)',am:'🌿 ዳማከሴ፣ እሬት'},{en:'Medicine',am:'መድኃኒት'}]]]},
+ {title:{en:'Rots or not?',am:'ይበሰብሳል ወይስ አይበሰብስም?'},type:'sort',
+  tip:{en:'Food peels and leaves rot and can become compost. Plastic and tins do not rot: reuse them!',am:'የምግብ ልጣጭና ቅጠል ይበሰብሳሉ፤ ማዳበሪያ ይሆናሉ። ፕላስቲክና ጣሳ አይበሰብሱም፦ መልሳችሁ ተጠቀሙባቸው!'},
+  buckets:[{en:'🍂 Rots',am:'🍂 የሚበሰብስ'},{en:'🧴 Does not rot',am:'🧴 የማይበሰብስ'}],
+  items:[{t:{en:'🍌 Banana peel',am:'🍌 የሙዝ ልጣጭ'},b:0},{t:{en:'🍃 Dry leaves',am:'🍃 ደረቅ ቅጠል'},b:0},{t:{en:'🥔 Potato skin',am:'🥔 የድንች ልጣጭ'},b:0},{t:{en:'🧴 Plastic bottle',am:'🧴 የፕላስቲክ ጠርሙስ'},b:1},{t:{en:'🥫 Tin can',am:'🥫 ጣሳ'},b:1},{t:{en:'🛍️ Plastic bag',am:'🛍️ ፌስታል'},b:1}]},
+ {type:'exam',items:[
+  {q:{en:'Which is living?',am:'ሕይወት ያለው የትኛው ነው?'},o:[{en:'🌳 Tree',am:'🌳 ዛፍ'},{en:'🪨 Stone',am:'🪨 ድንጋይ'}],a:0},
+  {q:{en:'Kiremt is the…',am:'ክረምት…'},o:[{en:'rainy season',am:'የዝናብ ወቅት ነው'},{en:'dry season',am:'ደረቅ ወቅት ነው'}],a:0},
+  {q:{en:'Which animal lays eggs?',am:'እንቁላል የሚጥለው እንስሳ?'},o:[{en:'🐓 Hen',am:'🐓 ዶሮ'},{en:'🐄 Cow',am:'🐄 ላም'}],a:0},
+  {q:{en:'Which is a wild animal?',am:'የዱር እንስሳ የትኛው ነው?'},o:[{en:'🦁 Lion',am:'🦁 አንበሳ'},{en:'🐕 Dog',am:'🐕 ውሻ'}],a:0},
+  {q:{en:'Trachoma is prevented by…',am:'ትራኮማን የምንከላከለው…'},o:[{en:'washing the face daily',am:'በየቀኑ ፊትን በመታጠብ'},{en:'playing in dust',am:'በአቧራ በመጫወት'}],a:0}]},
+ {type:'notes',notes:{
+  big:{en:'Nature is all around us: weather and seasons, living things (plants and animals) and non-living things. We keep it clean.',am:'ተፈጥሮ በዙሪያችን ናት፦ የአየር ጠባይና ወቅቶች፣ ሕይወት ያላቸው (እጽዋትና እንስሳት) እና ሕይወት የሌላቸው ነገሮች። እናጸዳታለን።'},
+  points:[{en:'Weather changes daily: sun, rain, wind, cloud. Kiremt is rainy, Bega is dry.',am:'የአየር ጠባይ በየቀኑ ይለዋወጣል፦ ፀሐይ፣ ዝናብ፣ ነፋስ፣ ደመና። ክረምት ዝናባማ፣ በጋ ደረቅ ነው።'},{en:'Living things eat, breathe, grow, reproduce and die.',am:'ሕይወት ያላቸው ነገሮች ይመገባሉ፣ ይተነፍሳሉ፣ ያድጋሉ፣ ይራባሉ፣ ይሞታሉ።'},{en:'Animals: domestic or wild; lay eggs or give birth.',am:'እንስሳት፦ የቤት ወይም የዱር፤ እንቁላል የሚጥሉ ወይም የሚወልዱ።'},{en:'Plants give food, wood, cotton, medicine and beauty.',am:'እጽዋት ምግብ፣ እንጨት፣ ጥጥ፣ መድኃኒትና ውበት ይሰጣሉ።'},{en:'Keep body and surroundings clean: wash, use latrines, sort waste.',am:'ሰውነትንና አካባቢን አጽዱ፦ ታጠቡ፣ መጸዳጃ ቤት ተጠቀሙ፣ ቆሻሻን ለዩ።'}],
+  words:[['የአየር ጠባይ',{en:'weather',am:'በ24 ሰዓት የሚለዋወጥ'}],['ወቅት',{en:'season',am:'ክረምት፣ በጋ'}],['ሕይወት ያለው',{en:'living',am:'የሚመገብ፣ የሚያድግ'}]],
+  remember:{en:'If it eats, breathes and grows, it is living!',am:'ከተመገበ፣ ከተነፈሰና ካደገ ሕይወት አለው!'},
+  exam:[[{en:'Name 3 living and 3 non-living things',am:'3 ሕይወት ያላቸውንና 3 የሌላቸውን ጥቀሱ'},'ዛፍ፣ ላም፣ ልጅ / ድንጋይ፣ መኪና፣ ወንበር'],[{en:'Name 2 uses of plants',am:'2 የእጽዋት ጥቅሞችን ጥቀሱ'},'ምግብ፣ እንጨት'],[{en:'What is Bega like?',am:'በጋ ምን ይመስላል?'},'ደረቅ፣ ፀሐያማ']],
+  innovate:{title:{en:'School compost corner',am:'የትምህርት ቤት ማዳበሪያ ጥግ'},text:{en:'Turn rotting waste into rich soil for the school garden, and sell or share the vegetables!',am:'የሚበሰብስ ቆሻሻን ለትምህርት ቤቱ የአትክልት ቦታ ለም አፈር አድርጉ፤ አትክልቱን ሽጡ ወይም አጋሩ!'},
+   steps:[{en:'Dig a small pit with an adult.',am:'ከትልቅ ሰው ጋር ትንሽ ጉድጓድ ቆፍሩ።'},{en:'Put in peels and dry leaves only (no plastic).',am:'ልጣጭና ደረቅ ቅጠል ብቻ አስገቡ (ፕላስቲክ የለም)።'},{en:'Cover with soil and add a little water each week.',am:'በአፈር ሸፍኑ፤ በየሳምንቱ ትንሽ ውኃ ጨምሩ።'},{en:'After some weeks, use it to grow vegetables.',am:'ከጥቂት ሳምንታት በኋላ አትክልት ለማብቀል ተጠቀሙበት።'}]}}}
+ ]});
+})();

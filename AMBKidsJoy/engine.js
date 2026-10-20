@@ -170,7 +170,7 @@ T.spell={init(m,st){st.i=0;this.word(m,st)},
   const W=m.words[st.i];const done=st.filled.length===W.blanks.length;
   let bi=0;const shown=W.w.split('').map((ch,k)=>{if(W.blanks.includes(k)){const f=st.filled[bi++];return`<span class="blank">${f??''}</span>`}return`<span class="letter">${esc(ch)}</span>`}).join('');
   p.innerHTML=`${W.fig?`<div class="qfig">${W.fig}</div>`:''}
-  <div class="row center">${sayBtn(W.w,m.lang||'en-US')}<span class="sub">${esc(tx(W.hint))}</span></div>
+  <div class="row center">${/[\u1200-\u137F]/.test(W.w)?'':sayBtn(W.w,m.lang||'en-US')}<span class="sub">${esc(tx(W.hint))}</span></div>
   <div class="row center" aria-live="polite">${shown}</div>
   <div class="sub small center">${tx(UI.spellHelp)}</div>
   <div class="tiles" style="justify-content:center">${st.letters.map(l=>`<button class="tile" data-l="${esc(l)}" ${done?'disabled':''} style="font-size:1.6rem;min-width:54px">${esc(l)}</button>`).join('')}</div>
@@ -179,7 +179,7 @@ T.spell={init(m,st){st.i=0;this.word(m,st)},
   <div class="progress">${tx(UI.item,{i:st.i+1,n:m.words.length})}</div>`;
   p.onclick=e=>{const b=e.target.closest('button');if(!b||b.disabled||b.dataset.say)return;
    if(b.dataset.l!==undefined){const need=W.w[W.blanks[st.filled.length]];
-    if(b.dataset.l===need){st.filled.push(need);S.tick();if(st.filled.length===W.blanks.length){st.msg=tx(UI.good);st.cls='good';S.yay();say(W.w,m.lang||'en-US')}else{st.msg='';st.cls=''}}
+    if(b.dataset.l===need){st.filled.push(need);S.tick();if(st.filled.length===W.blanks.length){st.msg=tx(UI.good);st.cls='good';S.yay();if(!/[\u1200-\u137F]/.test(W.w))say(W.w,m.lang||'en-US')}else{st.msg='';st.cls=''}}
     else{st.msg=tx(UI.bad);st.cls='bad';S.nope()}}
    if(b.dataset.act==='next'){st.i++;if(st.i>=m.words.length)api.complete();else this.word(m,st)}
    api.rerender()}}};
@@ -203,6 +203,50 @@ T.drill={init(m,st){st.n=0;st.cur=m.gen();st.picked=null},
 function numOpts(ans,deltas){const set=new Set([ans]);for(const d of deltas){if(set.size>=4)break;const v=ans+d;if(v>=0)set.add(v)}let k=1;while(set.size<4){set.add(ans+k*7);k++}
  const o=shuffle([...set]);return{o:o.map(v=>v.toLocaleString('en-US')),a:o.indexOf(ans)}}
 
+/* trace: children trace a letter or numeral with a finger; m.items = ['ሀ','1','a',…]; m.say = speak each item (lang) */
+T.trace={init(m,st){st.i=0;st.ok=false;st.msg='';st.cls=''},
+ render(m,p,api,st){
+  if(st.i>=m.items.length){p.innerHTML=`<div class="explain">${tx(UI.allDone)}</div><div><button class="btn" data-act="restart">${tx(UI.playAgain)}</button></div>`;
+   p.onclick=e=>{if(e.target.closest('[data-act=restart]')){this.init(m,st);api.rerender()}};return}
+  const g=m.items[st.i];const isEth=/[ሀ-፿]/.test(g);
+  p.innerHTML=`<div class="progress">${tx({en:'{i} of {n}',am:'{i} ከ{n}'},{i:st.i+1,n:m.items.length})}</div>
+   <div class="trace-wrap"><div class="trace-model" aria-hidden="true">${esc(g)}</div>
+    <div class="trace-box"><canvas class="trace" width="300" height="300" aria-label="${esc(tx({en:'Trace here with your finger',am:'እዚህ በጣታችሁ ተከትላችሁ ጻፉ'}))}"></canvas></div></div>
+   <div class="row" style="justify-content:center">${m.say?sayBtn(m.sayText?m.sayText[st.i]:g,m.say):''}
+    <button class="btn" data-act="clear">${tx(UI.clear)}</button>${st.ok?`<button class="btn primary" data-act="next">${tx(UI.next)}</button>`:''}</div>
+   <div class="feedback center ${st.cls}" aria-live="polite">${st.msg}</div>`;
+  const cv=p.querySelector('canvas.trace');const ctx=cv.getContext('2d');const W=300;
+  const font=`${isEth?'700':'800'} ${isEth?200:(g.length>1?160:240)}px ${isEth?'"Noto Sans Ethiopic"':'"Baloo 2"'},sans-serif`;
+  const mask=document.createElement('canvas');mask.width=mask.height=W;const mk=mask.getContext('2d');
+  const drawn=document.createElement('canvas');drawn.width=drawn.height=W;const dk=drawn.getContext('2d');const covc=document.createElement('canvas');covc.width=covc.height=W;const ck=covc.getContext('2d');let dots=[];
+  let samples=[],halo=null;
+  function prep(){mk.clearRect(0,0,W,W);mk.font=font;mk.textAlign='center';mk.textBaseline='middle';mk.fillStyle='#000';mk.fillText(g,W/2,W/2+(isEth?8:14));
+   const d=mk.getImageData(0,0,W,W).data;samples=[];for(let y=0;y<W;y+=5)for(let x=0;x<W;x+=5)if(d[(y*W+x)*4+3]>128)samples.push([x,y]);dots=[];for(let y=4;y<W;y+=11)for(let x=4;x<W;x+=11)if(d[(y*W+x)*4+3]>128)dots.push([x,y]);
+   mk.lineWidth=44;mk.strokeStyle='#000';mk.lineJoin='round';mk.strokeText(g,W/2,W/2+(isEth?8:14));halo=mk.getImageData(0,0,W,W).data;paint()}
+  function paint(){ctx.clearRect(0,0,W,W);const cs=getComputedStyle(document.body);
+   ctx.font=font;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=cs.getPropertyValue('--surface-2')||'#E7EEF8';ctx.fillText(g,W/2,W/2+(isEth?8:14));
+   ctx.fillStyle=cs.getPropertyValue('--ink-soft')||'#4F5F7E';for(const [x,y] of dots){ctx.beginPath();ctx.arc(x,y,2.6,0,7);ctx.fill()}
+   ctx.drawImage(drawn,0,0)}
+  function check(final){const c=ck.getImageData(0,0,W,W).data,d=dk.getImageData(0,0,W,W).data;let hit=0;for(const [x,y] of samples)if(c[(y*W+x)*4+3]>0)hit++;
+   let ink=0,out=0;for(let y=0;y<W;y+=4)for(let x=0;x<W;x+=4){const k=(y*W+x)*4+3;if(d[k]>0){ink++;if(halo[k]===0)out++}}
+   const cov=samples.length?hit/samples.length:0;
+   if(cov>=.72&&(!ink||out/ink<.4)){st.ok=true;st.msg=tx(UI.good);st.cls='good';S.yay();if(m.say)say(m.sayText?m.sayText[st.i]:g,m.say);if(st.i===m.items.length-1)api.complete();api.rerender();return}
+   if(final){st.msg=out/ink>=.4?tx({en:'Stay on the dotted letter!',am:'በነጥቦቹ ላይ ብቻ ጻፉ!'}):tx({en:'Keep going: cover the whole shape.',am:'ቀጥሉ፦ ቅርጹን በሙሉ ሸፍኑ።'});st.cls='bad';p.querySelector('.feedback').textContent=st.msg;p.querySelector('.feedback').className='feedback center bad'}}
+  let down=false,last=null;const pos=e=>{const r=cv.getBoundingClientRect();return[(e.clientX-r.left)*W/r.width,(e.clientY-r.top)*W/r.height]};
+  const lw=20;function seg(a,b){for(const [k,c,w] of [[dk,'#E59A00',lw],[ck,'#000',46]]){k.strokeStyle=k===dk?(getComputedStyle(document.body).getPropertyValue('--accent')||c):c;k.lineWidth=w;k.lineCap='round';k.lineJoin='round';k.beginPath();k.moveTo(a[0],a[1]);k.lineTo(b[0],b[1]);k.stroke()}paint()}
+  if(!st.ok){cv.onpointerdown=e=>{e.preventDefault();down=true;try{cv.setPointerCapture(e.pointerId)}catch(_){}last=pos(e);seg(last,last)};
+   cv.onpointermove=e=>{if(!down)return;e.preventDefault();const q=pos(e);seg(last,q);last=q};
+   cv.onpointerup=cv.onpointercancel=()=>{if(!down)return;down=false;check(false)}}
+  else{dk.font=font;dk.textAlign='center';dk.textBaseline='middle';dk.fillStyle=getComputedStyle(document.body).getPropertyValue('--accent');dk.fillText(g,W/2,W/2+(isEth?8:14))}
+  window.__traceAuto=()=>{if(st.ok)return;for(const [x,y] of samples){dk.fillStyle=ck.fillStyle='#E59A00';dk.fillRect(x-3,y-3,7,7);ck.fillRect(x-3,y-3,7,7)}check(true)};
+  const go=()=>prep();(document.fonts&&document.fonts.load?document.fonts.load(font,g).then(go,go):go());
+  p.onclick=e=>{const b=e.target.closest('button');if(!b||b.dataset.say)return;
+   if(b.dataset.act==='clear'){dk.clearRect(0,0,W,W);ck.clearRect(0,0,W,W);st.msg='';st.cls='';paint();p.querySelector('.feedback').textContent=''}
+   if(b.dataset.act==='next'){st.i++;st.ok=false;st.msg='';st.cls='';api.rerender()}}}};
+
+/* Grade 1 picture helpers: emoji pictures that work on every phone */
+const emo=(e,label)=>({svg:`<span class="emo" aria-hidden="true">${e}</span>`,label});
+const objs=(n,e,per)=>`<div class="cnt" style="--per:${per||5}">${Array.from({length:n},()=>`<span class="emo">${e}</span>`).join('')}</div>`;
 T.custom={init(m,st){m.init&&m.init(st)},render(m,p,api,st){m.render(p,api,st)}};
 T.summary={init(m,st){},render(m,p,api,st){if(!window.AMBSummary){p.textContent='';return}
  AMBSummary.render(p,m.d,{lang:G.lang,st,tick:S.tick,yay:S.yay,done:()=>api.complete(),rerender:()=>api.rerender()})}};
@@ -237,7 +281,7 @@ const Unit={start(cfg){
  cfg.missions.forEach(m=>{if(m.type==='notes'){m.title=m.title||UI.notesTitle;m.tip=m.tip||UI.notesTip}if(m.type==='exam'){m.type='quiz';m.title=m.title||UI.examTitle;m.tip=m.tip||UI.examTip}});
  const KEY='g3-done-'+cfg.id;let done=store.get(KEY,{});const N=cfg.missions.length;let cur=1;
  const states=cfg.missions.map(()=>null);
- document.body.dataset.subject=cfg.subject;
+ document.body.dataset.subject=cfg.subject;document.body.dataset.grade=cfg.grade||3;
  document.body.insertAdjacentHTML('afterbegin',`<div class="wrap">
   <header class="top">
    <a class="brand" href="home.html"><svg viewBox="0 0 100 100" aria-hidden="true">${KOKEB}</svg><div><h1 id="u-title"></h1><p id="u-sub"></p></div></a>
@@ -276,5 +320,5 @@ const Unit={start(cfg){
  const h=(location.hash||'').match(/^#m(\d+)$/);if(h&&+h[1]>=1&&+h[1]<=N)cur=+h[1];
  all();
 }};
-window.Unit=Unit;window.G3={tx,say,sayBtn,S,store,G,KOKEB,STAR,shuffle,rnd,esc,numOpts};
+window.Unit=Unit;window.G3={tx,say,sayBtn,S,store,G,KOKEB,STAR,shuffle,rnd,esc,numOpts,emo,objs};
 })();

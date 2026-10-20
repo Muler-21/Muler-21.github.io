@@ -2,9 +2,13 @@
 
 **AMBKidsJoy** is a free, bilingual (Amharic / English) interactive learning hub for children from Grade 1 to Grade 8.
 
-**Available now: Grade 3.** It covers all seven subjects of the Grade 3 curriculum of the Amhara Region, Ethiopia: **54 chapters** with nearly 400 activities. Kokeb, a friendly star, guides children through games, experiments and stories.
+**Available now: Grade 1 and Grade 3.**
 
-**Coming next:** the other grades (1, 2 and 4 to 8) and *Joyful English · Grades 1 to 8*, a simple, clear guide to listening, speaking, reading and writing English. Every chapter opens with a one-picture summary and a guide for teachers and parents.
+**Grade 1** (folder `grade-1/`): Mathematics (10 chapters), Amharic (10), English (8 units), Environmental Science (5) and Health & PE (6): 39 chapters with finger-tracing of letters and numbers, counting games, listening (spoken English words), picture matching and movement challenges. Moral Education and Arts come when the books are added.
+
+**Grade 3**: It covers all seven subjects of the Grade 3 curriculum of the Amhara Region, Ethiopia: **54 chapters** with nearly 400 activities. Kokeb, a friendly star, guides children through games, experiments and stories.
+
+**Coming next:** the other grades (2 and 4 to 8) and *Joyful English · Grades 1 to 8*, a simple, clear guide to listening, speaking, reading and writing English. Every chapter opens with a one-picture summary and a guide for teachers and parents.
 
 ▶ **Open the platform:** https://muler-21.github.io/AMBKidsJoy/  
 ▶ **YouTube lessons:** https://www.youtube.com/@kidseducation9276
@@ -68,3 +72,7 @@ Teachers and parents: please report any mistake, especially in the Amharic text,
 ## Licence
 
 © 2026 Mulusew Kassa Bitew. Shared under the **Creative Commons Attribution-NonCommercial-ShareAlike 4.0** licence (CC BY-NC-SA 4.0). You may use, copy and adapt AMBKidsJoy for free, non-commercial education if you credit the author and share your changes under the same licence. See `LICENSE`.
+
+
+### Grade 1 sources
+AMBKidsJoy Grade 1 follows the chapters of these Grade 1 student books: Mathematics, Amharic, Environmental Science, and Health & Physical Education (© ANRS Education Bureau, 2015 E.C.); English for Ethiopia, Student's Book Grade 1 (FDRE Ministry of Education). The activities, stories and drawings are new, written for AMBKidsJoy to support (not replace) the textbooks.

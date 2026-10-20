@@ -3,7 +3,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;600;700&display=swap">
-<link rel="stylesheet" href="style.css?v=202610202247">
+<link rel="stylesheet" href="style.css?v=202610210002">
 <style>
 .hero{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;padding:clamp(18px,3vw,28px);border-radius:28px;background:var(--surface);border:2px solid var(--line)}
 .hero>svg{width:clamp(76px,14vw,120px);height:auto}
@@ -124,8 +124,10 @@ const T={
  teacher:{en:'For teachers and parents: each chapter follows the student textbook of the Amhara Region Education Bureau. Stars are saved on this device only. Use the language button to switch every page between Amharic and English.',am:'ለመምህራንና ለወላጆች፦ እያንዳንዱ ምዕራፍ የአማራ ክልል ትምህርት ቢሮ የ3ኛ ክፍል መጽሐፍን ይከተላል። ኮከቦች የሚቀመጡት በዚህ መሣሪያ ላይ ብቻ ነው። እያንዳንዱን ገጽ በአማርኛና በእንግሊዝኛ ለመቀያየር የቋንቋ ቁልፉን ተጠቀሙ።'}
 };
 const UNITS={"amharic-1": 10, "amharic-10": 7, "amharic-2": 10, "amharic-3": 8, "amharic-4": 8, "amharic-5": 8, "amharic-6": 7, "amharic-7": 8, "amharic-8": 7, "amharic-9": 7, "art-1": 10, "art-2": 12, "art-3": 8, "art-4": 8, "art-5": 9, "english-1": 10, "english-10": 7, "english-2": 10, "english-3": 9, "english-4": 8, "english-5": 8, "english-6": 8, "english-7": 8, "english-8": 8, "english-9": 7, "env-1": 9, "env-2": 12, "env-3": 11, "env-4": 10, "env-5": 9, "health-1": 8, "health-2": 8, "health-3": 8, "health-4": 7, "health-5": 8, "health-6": 8, "math-1": 9, "math-10": 7, "math-11": 7, "math-12": 8, "math-2": 11, "math-3": 8, "math-4": 8, "math-5": 8, "math-6": 8, "math-7": 8, "math-8": 7, "math-9": 7, "moral-1": 10, "moral-2": 9, "moral-3": 9, "moral-4": 8, "moral-5": 9, "moral-6": 8};
+const GR=/*GR*/3,PFX=/*PFX*/'',ROOT=/*ROOT*/'';const AVAIL={1:'grade-1/',3:''};
+/*GRADEDATA*/
 SUBJECTS.forEach(s=>s.chs.forEach((c,i)=>{const id=s.key+'-'+(i+1);if(UNITS[id]){c[1]=id+'.html';c[2]=UNITS[id]}else{c.length=1}}));
-const doneCount=(file,n)=>{const id=file.replace('.html','');const d=store.get('g3-done-'+id,{});return Math.min(n,Object.keys(d).filter(k=>d[k]).length)};
+const doneCount=(file,n)=>{const id=file.replace('.html','');const d=store.get('g3-done-'+PFX+id,{});return Math.min(n,Object.keys(d).filter(k=>d[k]).length)};
 function render(){
  document.documentElement.lang=lang;
  let got=0,tot=0,ready=0,all=0;SUBJECTS.forEach(s=>s.chs.forEach(c=>{all++;if(c[1]){ready++;tot+=c[2];got+=doneCount(c[1],c[2])}}));
@@ -134,9 +136,9 @@ function render(){
  <section class="hero">${KOKEB}<div><h1>AMBKidsJoy</h1><span class="kicker">${esc(tx(T.kicker))}</span><p>${esc(tx(T.tag))}</p>
   <div class="meter"><span class="pill"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="${starPoints(50,52,46,20)}" fill="#F4B400" stroke="#C98F00" stroke-width="4"/></svg><span class="num">${got}</span>/${tot}</span><div class="bar" aria-label="${esc(tx(T.stars))}"><div style="width:${tot?got/tot*100:0}%"></div></div><span class="small" style="color:var(--ink-soft)">${esc(tx(T.ready).replace('{a}',ready).replace('{b}',all))}</span></div></div></section>
  <section aria-labelledby="pick-h"><h2 id="pick-h" style="font-size:1.5rem;margin-bottom:10px">${esc(tx(T.pick))}</h2>
- <div class="grades">${[1,2,3,4,5,6,7,8].map(g=>g===3?`<a class="gr" href="#grade-3"><span class="l">${esc(tx(T.grade))}</span><span class="n">${g}</span><span class="l">${esc(tx(T.open))} →</span></a>`:`<span class="gr" aria-disabled="true"><span class="l">${esc(tx(T.grade))}</span><span class="n">${g}</span><span class="l">${esc(tx(T.soon))}</span></span>`).join('')}</div></section>
+ <div class="grades">${[1,2,3,4,5,6,7,8].map(g=>AVAIL[g]!==undefined?`<a class="gr" href="${g===GR?'':ROOT+AVAIL[g]+'home.html'}#grade-${g}"><span class="l">${esc(tx(T.grade))}</span><span class="n">${g}</span><span class="l">${esc(tx(T.open))} →</span></a>`:`<span class="gr" aria-disabled="true"><span class="l">${esc(tx(T.grade))}</span><span class="n">${g}</span><span class="l">${esc(tx(T.soon))}</span></span>`).join('')}</div></section>
  <section class="eng"><span class="ic">ABC</span><div><h2>${esc(tx(T.eng))}</h2><p>${esc(tx(T.engSub))}</p></div><span class="soon">${esc(tx(T.soon))}</span></section>
- <div class="gh" id="grade-3"><h2>${esc(tx(T.g3))}</h2><span>${esc(tx(T.g3sub))}</span></div>
+ <div class="gh" id="grade-${GR}"><h2>${esc(tx(T.g3))}</h2><span>${esc(tx(T.g3sub))}</span></div>
  <div class="subjects">${SUBJECTS.map(s=>`<article class="subj" data-subj="${s.key}"><header><span class="ic">${s.mark}</span><div><h2>${esc(tx(s.name))}</h2><p>${s.chs.length} ${esc(tx(T.chapter))}</p></div></header>
   <ol class="chs">${s.chs.map((c,i)=>c[1]?`<li><a class="ch" href="${c[1]}"><span class="no">${i+1}</span><span class="nm">${esc(tx(c[0]))}</span><span class="st">★ ${doneCount(c[1],c[2])}/${c[2]}</span></a></li>`
    :`<li><span class="ch soon"><span class="no">${i+1}</span><span class="nm">${esc(tx(c[0]))}</span><span class="st">${esc(tx(T.soon))}</span></span></li>`).join('')}</ol></article>`).join('')}</div>
@@ -153,5 +155,5 @@ render();
 window.addEventListener('pageshow',render);
 })();
 </script>
-<script src="author.js?v=202610202247"></script>
+<script src="author.js?v=202610210002"></script>
 </body></html>
