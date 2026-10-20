@@ -112,6 +112,13 @@ Unit.start({
   tip:{en:'Waste comes from our daily life. Solid waste: paper, plastic bags, peels. Liquid waste: dirty water and urine. Liquid waste smells, breeds flies and mosquitoes, and can pollute rivers. Sort each kind.',am:'ቆሻሻ ከዕለት ተዕለት ኑሯችን ይፈጠራል። ደረቅ ቆሻሻ፦ ወረቀት፣ ፌስታል፣ ልጣጭ። ፈሳሽ ቆሻሻ፦ እጣቢና ሽንት። ፈሳሽ ቆሻሻ መጥፎ ሽታ ያመጣል፣ ዝንብና ትንኝ ያራባል፣ ወንዝን ይበክላል። እያንዳንዱን መድቡ።'},
   buckets:[{en:'Solid waste',am:'ደረቅ ቆሻሻ'},{en:'Liquid waste',am:'ፈሳሽ ቆሻሻ'}],
   items:[{t:{en:'Plastic bag',am:'ፌስታል'},b:0},{t:{en:'Banana and orange peels',am:'የሙዝና የብርቱካን ልጣጭ'},b:0},{t:{en:'Torn paper',am:'የተቀደደ ወረቀት'},b:0},{t:{en:'Dirty dish water',am:'የዕቃ እጣቢ'},b:1},{t:{en:'Factory waste water',am:'የፋብሪካ ፍሳሽ'},b:1},{t:{en:'Broken bottle',am:'የተሰበረ ጠርሙስ'},b:0},{t:{en:'Toilet waste water',am:'የመጸዳጃ ቤት ፍሳሽ'},b:1}]},
+ {title:{en:'Elements or controls?',am:'የአየር ንብረት ንጥረ ነገሮች ወይስ ወሳኞች?'},type:'sort',
+  tip:{en:'Elements of weather and climate are what we measure: temperature, rainfall, wind, humidity, sunshine. Controls are what decide the climate of a place: altitude (height), distance from the equator, distance from the sea, mountains and vegetation.',am:'የአየር ጠባይና የአየር ንብረት ንጥረ ነገሮች የምንለካቸው ናቸው፦ ሙቀት፣ ዝናብ፣ ነፋስ፣ እርጥበት፣ የፀሐይ ብርሃን። ወሳኞች ደግሞ የአንድን ቦታ የአየር ንብረት የሚወስኑ ናቸው፦ ከፍታ፣ ከወገብ መስመር ያለ ርቀት፣ ከባሕር ያለ ርቀት፣ ተራራዎችና የዕፅዋት ሽፋን።'},
+  buckets:[{en:'Element (we measure it)',am:'ንጥረ ነገር (እንለካዋለን)'},{en:'Control (it decides climate)',am:'ወሳኝ (የአየር ንብረትን ይወስናል)'}],
+  items:[
+   {t:{en:'Temperature',am:'ሙቀት'},b:0},{t:{en:'Rainfall',am:'ዝናብ'},b:0},{t:{en:'Wind',am:'ነፋስ'},b:0},{t:{en:'Humidity (water in the air)',am:'እርጥበት'},b:0},{t:{en:'Sunshine',am:'የፀሐይ ብርሃን'},b:0},
+   {t:{en:'Altitude (height above the sea)',am:'ከፍታ (ከባሕር ወለል በላይ)'},b:1},{t:{en:'Distance from the equator',am:'ከወገብ መስመር ያለ ርቀት'},b:1},{t:{en:'Distance from the sea',am:'ከባሕር ያለ ርቀት'},b:1},{t:{en:'Forests and vegetation',am:'ደንና የዕፅዋት ሽፋን'},b:1}
+  ]},
  {type:'exam',items:[
    {q:{en:'The condition of the air that changes within 24 hours is called…',am:'በ24 ሰዓት ውስጥ የሚለዋወጥ የአየር ሁኔታ ምን ይባላል?'},o:[{en:'weather',am:'የአየር ጠባይ'},{en:'climate',am:'የአየር ንብረት'},{en:'mineral',am:'ማዕድን'}],a:0},
    {q:{en:'At what time of day is it usually hottest?',am:'በቀን ውስጥ በአብዛኛው በጣም የሚሞቀው መቼ ነው?'},o:[{en:'Midday',am:'እኩለ ቀን'},{en:'Early morning',am:'ማለዳ'},{en:'Midnight',am:'እኩለ ሌሊት'}],a:0},

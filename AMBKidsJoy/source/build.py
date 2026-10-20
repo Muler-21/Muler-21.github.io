@@ -14,7 +14,7 @@ FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;600;700&display=swap">')
 HEAD = '<!doctype html><html lang="am"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">'
 
-for f in ['style.css', 'engine.js', 'icons.js', 'author.js']:
+for f in ['style.css', 'engine.js', 'icons.js', 'author.js', 'summaries.js', 'summary.js']:
     shutil.copy(os.path.join(SRC, f), os.path.join(DIST, f))
 for f in glob.glob(os.path.join(SRC, 'units', '*.js')):
     shutil.copy(f, os.path.join(DIST, 'units', os.path.basename(f)))
@@ -26,6 +26,9 @@ counts = {'math-1': 9}
 for f in glob.glob(os.path.join(SRC, 'units', '*.js')):
     uid = os.path.basename(f)[:-3]
     counts[uid] = len(re.findall(r"type:'(?:quiz|match|sort|order|tapwords|spell|custom|notes|exam|drill)'", open(f, encoding='utf-8').read()))
+SUMS = set(re.findall(r"^'([a-z]+-\d+)':", open(os.path.join(SRC, 'summaries.js'), encoding='utf-8').read(), re.M))
+for uid in counts:
+    if uid in SUMS and uid != 'math-1': counts[uid] += 1
 hub = hub.replace('/*UNITS*/{}', json.dumps(counts, sort_keys=True))
 hub = hub.replace('</script>\n', '</script>\n<script src="author.js"></script>\n', 1) if '<script src="author.js">' not in hub else hub
 open(os.path.join(DIST, 'hub.html'), 'w', encoding='utf-8').write(hub)
@@ -43,7 +46,7 @@ for f in glob.glob(os.path.join(SRC, 'units', '*.js')):
 for f in sorted(glob.glob(os.path.join(SRC, 'units', '*.js'))):
     uid = os.path.basename(f)[:-3]
     html = (HEAD + f'<title>{TITLES.get(uid, AUTO.get(uid, uid))} · AMBKidsJoy</title>' + FONTS + '<link rel="stylesheet" href="style.css"></head><body>'
-            '<script src="icons.js"></script><script src="engine.js"></script>'
+            '<script src="icons.js"></script><script src="summaries.js"></script><script src="summary.js"></script><script src="engine.js"></script>'
             f'<script src="units/{uid}.js"></script><script src="author.js"></script></body></html>')
     open(os.path.join(DIST, uid + '.html'), 'w', encoding='utf-8').write(html)
 
@@ -53,6 +56,14 @@ if MATH_SRC:
     m = m.replace('<div class="tools">', '<div class="tools">\n      <a class="pill" href="home.html" style="background:var(--accent);color:#fff;border-color:transparent;text-decoration:none" data-t="home"></a>', 1)
     m = m.replace(" title:{en:'Number Explorers'", " home:{en:'← All subjects',am:'← ሁሉም ትምህርቶች'},\n title:{en:'Number Explorers'", 1)
     m = m.replace('<title>Number Explorers</title>', '<title>Number Explorers · AMBKidsJoy</title>')
+    m = m.replace('<nav class="map" id="map"', '<section class="board" style="gap:14px"><h2 id="amb-sum-h" style="font-size:1.45rem"></h2><div class="panel" id="amb-summary"></div></section>\n  <nav class="map" id="map"', 1)
+    SUMJS = ('<script src="summaries.js"></script><script src="summary.js"></script><script>(function(){const el=document.getElementById("amb-summary");const st={};'
+             'const d=Object.assign({},AMB_SUMMARY["math-1"],{title:{en:"Numbers up to 10,000",am:"እስከ 10,000 ያሉ ቁጥሮች"}});'
+             'const lang=()=>document.documentElement.lang==="en"?"en":"am";'
+             'function r(){document.getElementById("amb-sum-h").textContent=lang()==="en"?"Start here: the chapter in one picture":"ከዚህ ጀምሩ፦ ምዕራፉ በአንድ ስዕል";'
+             'AMBSummary.render(el,d,{lang:lang(),st,tick(){},yay(){},done(){},rerender:r})}'
+             'r();new MutationObserver(r).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});addEventListener("resize",r)})();</script>')
+    m = m.replace('</body>', SUMJS + '</body>', 1) if '</body>' in m else m + SUMJS
     head, body = m.split('<div class="wrap">', 1)
     open(os.path.join(DIST, 'math-1.html'), 'w', encoding='utf-8').write(
         HEAD + head + '</head><body style="margin:0"><div class="wrap">' + body.replace('</body>', '<script src="author.js"></script></body>') + ('' if '</body>' in body else '<script src="author.js"></script>') + '</body></html>')

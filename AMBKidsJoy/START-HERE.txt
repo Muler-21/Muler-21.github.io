@@ -1,0 +1,17 @@
+AMBKidsJoy — Grade 3 learning platform / የ3ኛ ክፍል የመማሪያ መድረክ
+by Mulusew Kassa Bitew (PhD)
+
+HOW TO USE (no internet needed):
+1. Unzip this file.
+2. Open the folder "AMBKidsJoy".
+3. Double-click "index.html". It opens in your web browser (Chrome, Edge, Firefox).
+4. Choose a subject and a chapter. Use the አማርኛ / English button to switch language.
+
+አጠቃቀም (ኢንተርኔት አያስፈልግም)፦
+1. ፋይሉን ይክፈቱ (Unzip)።
+2. "AMBKidsJoy" የሚለውን ፎልደር ይክፈቱ።
+3. "index.html" ላይ ሁለት ጊዜ ይጫኑ፤ በብራውዘር ይከፈታል።
+4. ትምህርትና ምዕራፍ ይምረጡ። ቋንቋ ለመቀየር የአማርኛ / English ቁልፍን ይጠቀሙ።
+
+Online: https://muler-21.github.io/AMBKidsJoy/
+YouTube: https://www.youtube.com/@kidseducation9276

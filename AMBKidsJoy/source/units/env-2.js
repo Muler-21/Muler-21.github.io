@@ -99,9 +99,33 @@ Unit.start({
    {q:{en:'Lemma eats only injera every day. What is the problem?',am:'ለማ በየቀኑ እንጀራ ብቻ ይበላል። ችግሩ ምንድን ነው?'},o:[{en:'No problem at all',am:'ምንም ችግር የለም'},{en:'He is missing other food groups his body needs',am:'ሰውነቱ የሚፈልጋቸውን ሌሎች የምግብ ምድቦች አያገኝም'},{en:'Injera is not food',am:'እንጀራ ምግብ አይደለም'},{en:'He eats too little teff',am:'በጣም ትንሽ ጤፍ ይበላል'}],a:1},
    {q:{en:'When ice melts into water, is a new substance made?',am:'በረዶ ቀልጦ ውኃ ሲሆን አዲስ ቁስ ይፈጠራል?'},o:[{en:'Yes',am:'አዎ'},{en:'No, it is still water. This is a physical change.',am:'አይደለም፤ አሁንም ውኃ ነው። ይህ አካላዊ ለውጥ ነው።'}],a:1}
   ]},
+ {title:{en:'Keep my body clean',am:'የግል ንጽህና'},type:'sort',
+  tip:{en:'Personal hygiene means keeping our own body clean: face, hands, body, hair, teeth and nails. Wash hands with soap (or ash) before and after eating, after the toilet and after touching animals.',am:'የግል ንጽህና ማለት የራሳችንን ሰውነት ንጹህ ማድረግ ነው፦ ፊት፣ እጅ፣ ገላ፣ ፀጉር፣ ጥርስና ጥፍር። ከምግብ በፊትና በኋላ፣ ከመጸዳጃ ቤት በኋላና እንስሳትን ከነካን በኋላ እጃችንን በሳሙና (ወይም በአመድ) እንታጠብ።'},
+  buckets:[{en:'Healthy habit',am:'ጤናማ ልማድ'},{en:'Brings disease',am:'በሽታ ያመጣል'}],
+  items:[
+   {t:{en:'Washing my face every morning and evening',am:'ጠዋትና ማታ ፊቴን መታጠብ'},b:0},
+   {t:{en:'Washing hands with soap or ash after the toilet',am:'ከመጸዳጃ ቤት በኋላ በሳሙና ወይም በአመድ እጅ መታጠብ'},b:0},
+   {t:{en:'Cutting my nails short',am:'ጥፍሬን ማሳጠር'},b:0},
+   {t:{en:'Washing my hair and body often',am:'ፀጉሬንና ገላዬን ዘወትር መታጠብ'},b:0},
+   {t:{en:'Brushing my teeth after eating',am:'ከምግብ በኋላ ጥርሴን መቦረሽ'},b:0},
+   {t:{en:'Eating without washing hands after playing with animals',am:'ከእንስሳት ጋር ተጫውቶ እጅ ሳይታጠቡ መብላት'},b:1},
+   {t:{en:'Going to the toilet in the open field',am:'በሜዳ ላይ መጸዳዳት'},b:1},
+   {t:{en:'Letting flies sit on a dirty face',am:'ዝንቦች በቆሸሸ ፊት ላይ እንዲያርፉ መተው'},b:1},
+   {t:{en:'Biting long, dirty nails',am:'ረጅምና ቆሻሻ ጥፍር መንከስ'},b:1}
+  ]},
+ {title:{en:'Dirt diseases',am:'በንጽህና ጉድለት የሚመጡ በሽታዎች'},type:'match',
+  tip:{en:'Many diseases come from dirt: germs travel by dirty hands, flies, dirty water and food. Match each disease with how it spreads or how we stop it.',am:'ብዙ በሽታዎች ከቆሻሻ ይመጣሉ፦ ጀርሞች በቆሸሸ እጅ፣ በዝንብ፣ በቆሸሸ ውኃና ምግብ ይተላለፋሉ። እያንዳንዱን በሽታ ከሚተላለፍበት ወይም ከምንከላከልበት መንገድ ጋር አዛምዱ።'},
+  rounds:[
+   [[{en:'Trachoma',am:'ትራኮማ'},{en:'Flies on a dirty face → wash face daily',am:'ዝንብ በቆሸሸ ፊት → በየቀኑ ፊትን መታጠብ'}],
+    [{en:'Cholera',am:'ኮሌራ'},{en:'Dirty water → boil or treat water',am:'ቆሻሻ ውኃ → ውኃ ማፍላት ወይም ማከም'}],
+    [{en:'Ascaris (worms)',am:'ወስፋት'},{en:'Dirty hands, soil → wash hands, wear shoes',am:'ቆሻሻ እጅ፣ አፈር → እጅ መታጠብ፣ ጫማ ማድረግ'}]],
+   [[{en:'Typhoid',am:'ታይፎይድ'},{en:'Dirty food → cover and cook food',am:'ቆሻሻ ምግብ → ምግብ መሸፈንና በደንብ ማብሰል'}],
+    [{en:'Amoeba',am:'አሜባ'},{en:'Open-field toilet → use a latrine',am:'በሜዳ መጸዳዳት → መጸዳጃ ቤት መጠቀም'}],
+    [{en:'Typhus',am:'ታይፈስ'},{en:'Lice in dirty clothes → wash clothes and body',am:'ቅማል በቆሸሸ ልብስ → ልብስና ገላ ማጠብ'}]]
+  ]},
  {type:'notes',notes:{
  big:{en:'Healthy bodies need food from all four groups, clean habits, and the sun. Everything around us is matter: solid, liquid or gas.',am:'ጤናማ ሰውነት ከአራቱም ምድቦች ምግብ፣ የንጽህና ልማድና ፀሐይ ያስፈልገዋል። በዙሪያችን ያለው ሁሉ ቁስአካል ነው፦ ጥጥር፣ ፈሳሽ ወይም ጋዝ።'},
- points:[{en:'Food comes from plants and animals.',am:'ምግብ ከእጽዋትና ከእንስሳት ይገኛል።'},{en:'Four food groups: fruits & vegetables (protect), grains & legumes (energy, building), milk products (energy, strength), meat & eggs (building).',am:'አራቱ ምድቦች፦ አትክልትና ፍራፍሬ (ይከላከላሉ)፣ ጥራጥሬ (ኃይልና ግንባታ)፣ የወተት ውጤቶች (ኃይልና ጥንካሬ)፣ ሥጋና እንቁላል (ግንባታ)።'},{en:'Contaminated food causes diarrhoea, typhoid and cholera. Cover food, use clean water, cook well.',am:'የተበከለ ምግብ ተቅማጥ፣ ታይፎይድና ኮሌራ ያመጣል። ምግብን ሸፍኑ፣ ንጹህ ውኃ ተጠቀሙ፣ በደንብ አብስሉ።'},{en:'Solids keep their shape; liquids take the container\'s shape; gases spread to fill space.',am:'ጥጥሮች ቅርጻቸውን ይጠብቃሉ፤ ፈሳሾች የመያዣቸውን ቅርጽ ይይዛሉ፤ ጋዞች ቦታውን ይሞላሉ።'},{en:'Heat: ice → water → steam. Cooling reverses it. This is a physical change.',am:'ሙቀት፦ በረዶ → ውኃ → ትነት። ማቀዝቀዝ ይገለብጠዋል። ይህ አካላዊ ለውጥ ነው።'}],
+ points:[{en:'Food comes from plants and animals.',am:'ምግብ ከእጽዋትና ከእንስሳት ይገኛል።'},{en:'Four food groups: fruits & vegetables (protect), grains & legumes (energy, building), milk products (energy, strength), meat & eggs (building).',am:'አራቱ ምድቦች፦ አትክልትና ፍራፍሬ (ይከላከላሉ)፣ ጥራጥሬ (ኃይልና ግንባታ)፣ የወተት ውጤቶች (ኃይልና ጥንካሬ)፣ ሥጋና እንቁላል (ግንባታ)።'},{en:'Contaminated food causes diarrhoea, typhoid and cholera. Cover food, use clean water, cook well.',am:'የተበከለ ምግብ ተቅማጥ፣ ታይፎይድና ኮሌራ ያመጣል። ምግብን ሸፍኑ፣ ንጹህ ውኃ ተጠቀሙ፣ በደንብ አብስሉ።'},{en:'Solids keep their shape; liquids take the container\'s shape; gases spread to fill space.',am:'ጥጥሮች ቅርጻቸውን ይጠብቃሉ፤ ፈሳሾች የመያዣቸውን ቅርጽ ይይዛሉ፤ ጋዞች ቦታውን ይሞላሉ።'},{en:'Heat: ice → water → steam. Cooling reverses it. This is a physical change.',am:'ሙቀት፦ በረዶ → ውኃ → ትነት። ማቀዝቀዝ ይገለብጠዋል። ይህ አካላዊ ለውጥ ነው።'},{en:'Personal hygiene: wash face, hands, body and hair; cut nails; wash hands with soap or ash before and after eating, after the toilet and after touching animals. This prevents trachoma, cholera, typhoid, ascaris, amoeba and typhus.',am:'የግል ንጽህና፦ ፊት፣ እጅ፣ ገላና ፀጉር መታጠብ፤ ጥፍር ማሳጠር፤ ከምግብ በፊትና በኋላ፣ ከመጸዳጃ ቤት በኋላና እንስሳትን ከነካን በኋላ በሳሙና ወይም በአመድ እጅ መታጠብ። ይህ ትራኮማን፣ ኮሌራን፣ ታይፎይድን፣ ወስፋትን፣ አሜባንና ታይፈስን ይከላከላል።'}],
  words:[['ቁስአካል',{en:'matter',am:'ቦታ የሚይዝና ክብደት ያለው ነገር'}],['ብክለት',{en:'contamination',am:'ምግብ ወይም ውኃ ጎጂ ሲሆን'}],['አካላዊ ለውጥ',{en:'physical change',am:'አዲስ ቁስ የማይፈጠርበት ለውጥ'}]],
  remember:{en:'Balanced plate = one food from each of the four groups.',am:'የተመጣጠነ ገበታ = ከአራቱ ምድቦች ከእያንዳንዱ አንድ ምግብ።'},
  exam:[[{en:'Which group protects against disease?',am:'በሽታ የሚከላከለው ምድብ?'},{en:'Fruits and vegetables',am:'አትክልትና ፍራፍሬ'}],[{en:'Is air matter?',am:'አየር ቁስአካል ነው?'},{en:'Yes: it has weight and takes up space.',am:'አዎ፤ ክብደት አለው ቦታም ይይዛል።'}],[{en:'Water + heat → ?',am:'ውኃ + ሙቀት → ?'},{en:'Steam (gas)',am:'ትነት (ጋዝ)'}],[{en:'How do we prevent trachoma?',am:'ትራኮማን እንዴት እንከላከላለን?'},{en:'Wash the face daily and use a toilet.',am:'በየቀኑ ፊትን መታጠብና መጸዳጃ ቤት መጠቀም።'}]],

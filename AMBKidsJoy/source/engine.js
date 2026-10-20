@@ -204,6 +204,8 @@ function numOpts(ans,deltas){const set=new Set([ans]);for(const d of deltas){if(
  const o=shuffle([...set]);return{o:o.map(v=>v.toLocaleString('en-US')),a:o.indexOf(ans)}}
 
 T.custom={init(m,st){m.init&&m.init(st)},render(m,p,api,st){m.render(p,api,st)}};
+T.summary={init(m,st){},render(m,p,api,st){if(!window.AMBSummary){p.textContent='';return}
+ AMBSummary.render(p,m.d,{lang:G.lang,st,tick:S.tick,yay:S.yay,done:()=>api.complete(),rerender:()=>api.rerender()})}};
 
 /* take-home notes: big idea, key points, key words, remember box, exam self-check, young innovator challenge */
 T.notes={init(m,st){st.open={};st.steps={}},
@@ -227,6 +229,11 @@ T.notes={init(m,st){st.open={};st.steps={}},
 
 /* ---------- unit shell ---------- */
 const Unit={start(cfg){
+ const SUM=(window.AMB_SUMMARY||{})[cfg.id];const NM=cfg.missions.find(m=>m.type==='notes');
+ if(SUM&&NM&&!cfg.missions.some(m=>m.type==='summary')){const N0=NM.notes;
+  cfg.missions.unshift({type:'summary',title:{en:'The chapter in one picture',am:'ምዕራፉ በአንድ ስዕል'},
+   tip:{en:'Start here! This is the whole chapter in one picture: one big idea and its branches. Tap each branch, then come back at the end to check you can explain it all.',am:'ከዚህ ጀምሩ! ይህ ምዕራፉ በሙሉ በአንድ ስዕል ነው፦ አንድ ዋና ሐሳብና ቅርንጫፎቹ። እያንዳንዱን ቅርንጫፍ ንኩ፤ በመጨረሻ ተመልሳችሁ ሁሉንም ማስረዳት እንደምትችሉ አረጋግጡ።'},
+   d:Object.assign({points:N0.points,words:N0.words,exam:N0.exam,innovate:N0.innovate,title:cfg.title},SUM)})}
  cfg.missions.forEach(m=>{if(m.type==='notes'){m.title=m.title||UI.notesTitle;m.tip=m.tip||UI.notesTip}if(m.type==='exam'){m.type='quiz';m.title=m.title||UI.examTitle;m.tip=m.tip||UI.examTip}});
  const KEY='g3-done-'+cfg.id;let done=store.get(KEY,{});const N=cfg.missions.length;let cur=1;
  const states=cfg.missions.map(()=>null);
