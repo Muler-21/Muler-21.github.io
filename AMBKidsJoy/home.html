@@ -1,4 +1,4 @@
-<!doctype html><html lang="am"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>AMBKidsJoy · Grade 3</title>
+<!doctype html><html lang="am"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>AMBKidsJoy · Learning Hub</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,6 +34,21 @@ a.ch .no{background:var(--accent);color:var(--on-accent)}
 .method div{padding:14px 16px;border-radius:16px;background:var(--surface);border:2px solid var(--line)}
 .method h3{font-size:1.1rem;margin-bottom:4px}
 .method p{margin:0;font-size:.95rem;color:var(--ink-soft)}
+.kicker{display:inline-block;margin-top:2px;font-family:var(--display);font-weight:800;font-size:clamp(1rem,2.6vw,1.25rem);color:var(--ink)}
+.kicker b{color:#C98F00}
+.grades{display:grid;grid-template-columns:repeat(8,1fr);gap:10px}
+@media (max-width:760px){.grades{grid-template-columns:repeat(4,1fr)}}
+.gr{display:grid;justify-items:center;gap:2px;padding:12px 6px;border-radius:18px;border:2px dashed var(--line);background:var(--surface);color:var(--ink-soft);text-decoration:none;text-align:center;min-width:0}
+.gr .n{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,4vw,2.2rem);line-height:1}
+.gr .l{font-size:.78rem;font-weight:700}
+a.gr{border:2px solid #C98F00;background:#F4B400;color:#1B2A4A;box-shadow:0 4px 0 #C98F00}
+a.gr:hover{transform:translateY(-2px)}
+.eng{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:16px 18px;border-radius:22px;background:var(--surface);border:2px solid var(--line);border-left:8px solid var(--plum)}
+.eng .ic{width:54px;height:54px;border-radius:16px;background:var(--plum);color:#fff;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:1.3rem}
+.eng h2{font-size:1.3rem}.eng p{margin:2px 0 0;color:var(--ink-soft);font-size:.95rem}
+.eng .soon{font-family:var(--display);font-weight:800;font-size:.85rem;padding:6px 12px;border-radius:999px;background:var(--surface-2);white-space:nowrap}
+@media (max-width:520px){.eng{grid-template-columns:auto 1fr}.eng .soon{grid-column:1/-1;justify-self:start}}
+.gh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;scroll-margin-top:16px}.gh h2{font-size:1.6rem}.gh span{color:var(--ink-soft)}
 .src{padding:16px 18px;border-radius:18px;background:var(--surface);border:2px solid var(--line)}
 .src h2{font-size:1.35rem;margin-bottom:6px}
 .src p{margin:6px 0;color:var(--ink-soft);font-size:.95rem}
@@ -76,11 +91,19 @@ const SUBJECTS=[
   [{en:'Appreciating art',am:'ሥነ ጥበባትን ማድነቅ'}],[{en:'Art and other subjects',am:'ሥነ ጥበባት ከሌሎች ትምህርቶች ጋር'}]]}
 ];
 const T={
- tag:{en:'Grade 3, all seven subjects, with Kokeb the star as your guide. Learn by thinking, playing and explaining why. Created by Dr. Mulusew Kassa Bitew.',am:'3ኛ ክፍል፣ ሰባቱም ትምህርቶች፤ መሪያችሁ ኮከብ ናት። በማሰብ፣ በመጫወትና “ለምን” ብሎ በማስረዳት ተማሩ። አዘጋጅ፦ ዶ/ር ሙሉሰው ካሳ ቢተው።'},
+ kicker:{en:'Learning Hub · Grades 1 to 8',am:'የልጆች የደስታ መማሪያ ማዕከል · ከ1ኛ እስከ 8ኛ ክፍል'},
+ tag:{en:'Interactive lessons in Amharic and English, with Kokeb the star as your guide. Learn by thinking, playing, experimenting and explaining why. Grade 3 is ready now, and more grades are on the way. Created by Dr. Mulusew Kassa Bitew.',am:'በአማርኛና በእንግሊዝኛ በይነ-ተግባራዊ ትምህርቶች፤ መሪያችሁ ኮከብ ናት። በማሰብ፣ በመጫወት፣ በመሞከርና ምክንያቱን በማስረዳት ተማሩ። 3ኛ ክፍል አሁን ዝግጁ ነው፤ ሌሎች ክፍሎችም በመንገድ ላይ ናቸው። የተዘጋጀው በዶ/ር ሙሉሰው ካሳ ቢተው።'},
+ pick:{en:'Choose your grade',am:'ክፍላችሁን ምረጡ'},
+ grade:{en:'Grade',am:'ክፍል'},
+ g3:{en:'Grade 3',am:'3ኛ ክፍል'},
+ g3sub:{en:'7 subjects · 54 chapters',am:'7 ትምህርቶች · 54 ምዕራፎች'},
+ open:{en:'Open',am:'ክፈቱ'},
+ eng:{en:'Joyful English · Grades 1 to 8',am:'እንግሊዝኛ በደስታ · ከ1ኛ እስከ 8ኛ ክፍል'},
+ engSub:{en:'A simple, clear communication guide: listen, speak, read and write English with confidence, step by step from Grade 1 to Grade 8.',am:'ቀላልና ግልጽ የመግባቢያ መመሪያ፦ ከ1ኛ እስከ 8ኛ ክፍል ደረጃ በደረጃ እንግሊዝኛን በልበ ሙሉነት ማዳመጥ፣ መናገር፣ ማንበብና መጻፍ።'},
  stars:{en:'Stars collected',am:'የተሰበሰቡ ኮከቦች'},
  soon:{en:'Coming soon',am:'በቅርቡ'},
  chapter:{en:'chapters',am:'ምዕራፎች'},
- ready:{en:'{a} of {b} chapters ready',am:'ከ{b} ምዕራፎች {a} ዝግጁ'},
+ ready:{en:'Grade 3: {a} of {b} chapters ready',am:'3ኛ ክፍል፦ ከ{b} ምዕራፎች {a} ዝግጁ'},
  how:{en:'How Kokeb teaches',am:'ኮከብ እንዴት ታስተምራለች'},
  m1:[{en:'Think first',am:'መጀመሪያ አስቡ'},{en:'Every mission starts with a question or puzzle, so children reason before they are told.',am:'እያንዳንዱ ተልዕኮ በጥያቄ ወይም በእንቆቅልሽ ይጀምራል፤ ልጆች ከመነገራቸው በፊት ያስባሉ።'}],
  m2:[{en:'Hands, picture, symbol',am:'በእጅ፣ በሥዕል፣ በምልክት'},{en:'Blocks, notes, maps and paint first, then pictures, then numbers and words.',am:'መጀመሪያ ብሎኮች፣ ኖታዎች፣ ካርታና ቀለም፤ ቀጥሎ ሥዕል፤ ከዚያ ቁጥርና ቃል።'}],
@@ -98,7 +121,7 @@ const T={
   {en:'Performing & Visual Arts, Grade 3 Student Book. © ANRS Education Bureau, 2015 E.C.',am:'ሥነ ጥበባት፣ የ3ኛ ክፍል የተማሪ መጽሐፍ። © አብክመ ትምህርት ቢሮ፣ 2015 ዓ.ም.'}],
  srcNote:{en:'The stories, questions, games, drawings and Young Innovator challenges on this platform were written and drawn new for AMBKidsJoy by Dr. Mulusew Kassa Bitew, to support (not replace) the textbooks and the teacher. AMBKidsJoy is not an official publication of the Education Bureau. Teachers: please check the Amharic text and tell us about any mistakes.',am:'በዚህ መድረክ ያሉ ታሪኮች፣ ጥያቄዎች፣ ጨዋታዎች፣ ስዕሎችና የወጣት ፈጣሪ ፈተናዎች በዶ/ር ሙሉሰው ካሳ ቢተው ለAMBKidsJoy አዲስ የተጻፉና የተሳሉ ናቸው፤ ዓላማቸው መጻሕፍቱንና መምህሩን መደገፍ እንጂ መተካት አይደለም። AMBKidsJoy የትምህርት ቢሮው ይፋዊ ኅትመት አይደለም። መምህራን፦ እባካችሁ የአማርኛውን ጽሑፍ ፈትሹ፤ ስህተት ካለ አሳውቁን።'},
  m5:[{en:'Exam-ready, innovator-minded',am:'ለፈተና ዝግጁ፣ ፈጣሪ አእምሮ'},{en:'Every chapter ends with exam practice and take-home notes, plus a Young Innovator challenge that turns learning into a real project or small business.',am:'እያንዳንዱ ምዕራፍ በፈተና ዝግጅትና በቤት ማስታወሻ ይጠናቀቃል፤ ትምህርትን ወደ እውነተኛ ፕሮጀክት ወይም ትንሽ ሥራ የሚቀይር የወጣት ፈጣሪ ፈተናም አለው።'}],
- teacher:{en:'For teachers and parents: each chapter follows the Grade 3 textbook of the Amhara Region Education Bureau. Stars are saved on this device only. Use the language button to switch every page between Amharic and English.',am:'ለመምህራንና ለወላጆች፦ እያንዳንዱ ምዕራፍ የአማራ ክልል ትምህርት ቢሮ የ3ኛ ክፍል መጽሐፍን ይከተላል። ኮከቦች የሚቀመጡት በዚህ መሣሪያ ላይ ብቻ ነው። እያንዳንዱን ገጽ በአማርኛና በእንግሊዝኛ ለመቀያየር የቋንቋ ቁልፉን ተጠቀሙ።'}
+ teacher:{en:'For teachers and parents: each chapter follows the student textbook of the Amhara Region Education Bureau. Stars are saved on this device only. Use the language button to switch every page between Amharic and English.',am:'ለመምህራንና ለወላጆች፦ እያንዳንዱ ምዕራፍ የአማራ ክልል ትምህርት ቢሮ የ3ኛ ክፍል መጽሐፍን ይከተላል። ኮከቦች የሚቀመጡት በዚህ መሣሪያ ላይ ብቻ ነው። እያንዳንዱን ገጽ በአማርኛና በእንግሊዝኛ ለመቀያየር የቋንቋ ቁልፉን ተጠቀሙ።'}
 };
 const UNITS={"amharic-1": 10, "amharic-10": 7, "amharic-2": 10, "amharic-3": 8, "amharic-4": 8, "amharic-5": 8, "amharic-6": 7, "amharic-7": 8, "amharic-8": 7, "amharic-9": 7, "art-1": 10, "art-2": 12, "art-3": 8, "art-4": 8, "art-5": 9, "english-1": 10, "english-10": 7, "english-2": 10, "english-3": 9, "english-4": 8, "english-5": 8, "english-6": 8, "english-7": 8, "english-8": 8, "english-9": 7, "env-1": 9, "env-2": 12, "env-3": 11, "env-4": 10, "env-5": 9, "health-1": 8, "health-2": 8, "health-3": 8, "health-4": 7, "health-5": 8, "health-6": 8, "math-1": 9, "math-10": 7, "math-11": 7, "math-12": 8, "math-2": 11, "math-3": 8, "math-4": 8, "math-5": 8, "math-6": 8, "math-7": 8, "math-8": 7, "math-9": 7, "moral-1": 10, "moral-2": 9, "moral-3": 9, "moral-4": 8, "moral-5": 9, "moral-6": 8};
 SUBJECTS.forEach(s=>s.chs.forEach((c,i)=>{const id=s.key+'-'+(i+1);if(UNITS[id]){c[1]=id+'.html';c[2]=UNITS[id]}else{c.length=1}}));
@@ -108,8 +131,12 @@ function render(){
  let got=0,tot=0,ready=0,all=0;SUBJECTS.forEach(s=>s.chs.forEach(c=>{all++;if(c[1]){ready++;tot+=c[2];got+=doneCount(c[1],c[2])}}));
  document.getElementById('app').innerHTML=`
  <header class="top"><span></span><div class="tools"><div class="pill lang" role="group" aria-label="Language"><button data-lang="am" aria-pressed="${lang==='am'}">አማርኛ</button><button data-lang="en" aria-pressed="${lang==='en'}">English</button></div></div></header>
- <section class="hero">${KOKEB}<div><h1>AMBKidsJoy</h1><p>${esc(tx(T.tag))}</p>
+ <section class="hero">${KOKEB}<div><h1>AMBKidsJoy</h1><span class="kicker">${esc(tx(T.kicker))}</span><p>${esc(tx(T.tag))}</p>
   <div class="meter"><span class="pill"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="${starPoints(50,52,46,20)}" fill="#F4B400" stroke="#C98F00" stroke-width="4"/></svg><span class="num">${got}</span>/${tot}</span><div class="bar" aria-label="${esc(tx(T.stars))}"><div style="width:${tot?got/tot*100:0}%"></div></div><span class="small" style="color:var(--ink-soft)">${esc(tx(T.ready).replace('{a}',ready).replace('{b}',all))}</span></div></div></section>
+ <section aria-labelledby="pick-h"><h2 id="pick-h" style="font-size:1.5rem;margin-bottom:10px">${esc(tx(T.pick))}</h2>
+ <div class="grades">${[1,2,3,4,5,6,7,8].map(g=>g===3?`<a class="gr" href="#grade-3"><span class="l">${esc(tx(T.grade))}</span><span class="n">${g}</span><span class="l">${esc(tx(T.open))} →</span></a>`:`<span class="gr" aria-disabled="true"><span class="l">${esc(tx(T.grade))}</span><span class="n">${g}</span><span class="l">${esc(tx(T.soon))}</span></span>`).join('')}</div></section>
+ <section class="eng"><span class="ic">ABC</span><div><h2>${esc(tx(T.eng))}</h2><p>${esc(tx(T.engSub))}</p></div><span class="soon">${esc(tx(T.soon))}</span></section>
+ <div class="gh" id="grade-3"><h2>${esc(tx(T.g3))}</h2><span>${esc(tx(T.g3sub))}</span></div>
  <div class="subjects">${SUBJECTS.map(s=>`<article class="subj" data-subj="${s.key}"><header><span class="ic">${s.mark}</span><div><h2>${esc(tx(s.name))}</h2><p>${s.chs.length} ${esc(tx(T.chapter))}</p></div></header>
   <ol class="chs">${s.chs.map((c,i)=>c[1]?`<li><a class="ch" href="${c[1]}"><span class="no">${i+1}</span><span class="nm">${esc(tx(c[0]))}</span><span class="st">★ ${doneCount(c[1],c[2])}/${c[2]}</span></a></li>`
    :`<li><span class="ch soon"><span class="no">${i+1}</span><span class="nm">${esc(tx(c[0]))}</span><span class="st">${esc(tx(T.soon))}</span></span></li>`).join('')}</ol></article>`).join('')}</div>

@@ -1,6 +1,10 @@
-# AMBKidsJoy — Grade 3 interactive learning platform
+# AMBKidsJoy — Learning Hub, Grades 1 to 8
 
-**AMBKidsJoy** is a free, bilingual (Amharic / English) interactive learning platform for Grade 3 children. It covers all seven subjects of the Grade 3 curriculum of the Amhara Region, Ethiopia: **54 chapters** with nearly 400 activities. Kokeb, a friendly star, guides children through games, experiments and stories.
+**AMBKidsJoy** is a free, bilingual (Amharic / English) interactive learning hub for children from Grade 1 to Grade 8.
+
+**Available now: Grade 3.** It covers all seven subjects of the Grade 3 curriculum of the Amhara Region, Ethiopia: **54 chapters** with nearly 400 activities. Kokeb, a friendly star, guides children through games, experiments and stories.
+
+**Coming next:** the other grades (1, 2 and 4 to 8) and *Joyful English · Grades 1 to 8*, a simple, clear guide to listening, speaking, reading and writing English. Every chapter opens with a one-picture summary and a guide for teachers and parents.
 
 ▶ **Open the platform:** https://muler-21.github.io/AMBKidsJoy/  
 ▶ **YouTube lessons:** https://www.youtube.com/@kidseducation9276

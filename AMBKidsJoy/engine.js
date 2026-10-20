@@ -1,4 +1,4 @@
-/* Grade 3 Learning Hub — shared unit engine.
+/* AMBKidsJoy Learning Hub (Grades 1-8) — shared unit engine.
    A unit page calls Unit.start(config). Each mission has a type:
    quiz | match | sort | order | tapwords | spell | custom
    Text values can be a plain string (same in both languages) or {en:'…', am:'…'}. */
@@ -255,7 +255,7 @@ const Unit={start(cfg){
   t:tx,say,sayBtn,S,rnd,shuffle,esc,get lang(){return G.lang},UI};
  function chrome(){
   document.documentElement.lang=G.lang;document.title=tx(cfg.title)+' · '+tx(cfg.subjectName)+' · AMBKidsJoy';
-  $('#u-title').textContent=tx(cfg.title);$('#u-sub').textContent=tx(cfg.subjectName)+' · '+tx(cfg.chapter);
+  $('#u-title').textContent=tx(cfg.title);$('#u-sub').textContent=tx({en:'Grade '+(cfg.grade||3),am:(cfg.grade||3)+'ኛ ክፍል'})+' · '+tx(cfg.subjectName)+' · '+tx(cfg.chapter);
   $('#u-home').textContent='← '+tx(UI.home);
   document.querySelectorAll('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===G.lang));
   $('#u-sound').textContent=G.sound?tx(UI.soundOn):tx(UI.soundOff);
