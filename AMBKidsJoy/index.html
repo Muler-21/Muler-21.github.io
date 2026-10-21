@@ -3,7 +3,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;600;700&display=swap">
-<link rel="stylesheet" href="style.css?v=202610210002">
+<link rel="stylesheet" href="style.css?v=202610210848">
 <style>
 .hero{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;padding:clamp(18px,3vw,28px);border-radius:28px;background:var(--surface);border:2px solid var(--line)}
 .hero>svg{width:clamp(76px,14vw,120px);height:auto}
@@ -124,7 +124,7 @@ const T={
  teacher:{en:'For teachers and parents: each chapter follows the student textbook of the Amhara Region Education Bureau. Stars are saved on this device only. Use the language button to switch every page between Amharic and English.',am:'ለመምህራንና ለወላጆች፦ እያንዳንዱ ምዕራፍ የአማራ ክልል ትምህርት ቢሮ የ3ኛ ክፍል መጽሐፍን ይከተላል። ኮከቦች የሚቀመጡት በዚህ መሣሪያ ላይ ብቻ ነው። እያንዳንዱን ገጽ በአማርኛና በእንግሊዝኛ ለመቀያየር የቋንቋ ቁልፉን ተጠቀሙ።'}
 };
 const UNITS={"amharic-1": 10, "amharic-10": 7, "amharic-2": 10, "amharic-3": 8, "amharic-4": 8, "amharic-5": 8, "amharic-6": 7, "amharic-7": 8, "amharic-8": 7, "amharic-9": 7, "art-1": 10, "art-2": 12, "art-3": 8, "art-4": 8, "art-5": 9, "english-1": 10, "english-10": 7, "english-2": 10, "english-3": 9, "english-4": 8, "english-5": 8, "english-6": 8, "english-7": 8, "english-8": 8, "english-9": 7, "env-1": 9, "env-2": 12, "env-3": 11, "env-4": 10, "env-5": 9, "health-1": 8, "health-2": 8, "health-3": 8, "health-4": 7, "health-5": 8, "health-6": 8, "math-1": 9, "math-10": 7, "math-11": 7, "math-12": 8, "math-2": 11, "math-3": 8, "math-4": 8, "math-5": 8, "math-6": 8, "math-7": 8, "math-8": 7, "math-9": 7, "moral-1": 10, "moral-2": 9, "moral-3": 9, "moral-4": 8, "moral-5": 9, "moral-6": 8};
-const GR=/*GR*/3,PFX=/*PFX*/'',ROOT=/*ROOT*/'';const AVAIL={1:'grade-1/',3:''};
+const GR=/*GR*/3,PFX=/*PFX*/'',ROOT=/*ROOT*/'';const AVAIL={1:'grade-1/',2:'grade-2/',3:''};
 /*GRADEDATA*/
 SUBJECTS.forEach(s=>s.chs.forEach((c,i)=>{const id=s.key+'-'+(i+1);if(UNITS[id]){c[1]=id+'.html';c[2]=UNITS[id]}else{c.length=1}}));
 const doneCount=(file,n)=>{const id=file.replace('.html','');const d=store.get('g3-done-'+PFX+id,{});return Math.min(n,Object.keys(d).filter(k=>d[k]).length)};
@@ -155,5 +155,5 @@ render();
 window.addEventListener('pageshow',render);
 })();
 </script>
-<script src="author.js?v=202610210002"></script>
+<script src="author.js?v=202610210848"></script>
 </body></html>

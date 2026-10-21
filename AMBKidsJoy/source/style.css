@@ -206,3 +206,12 @@ body[data-grade="1"] .tile{font-size:1.45rem;min-width:52px;min-height:52px}
 .cmp .cnt,.cnt.wrap{display:flex;flex-wrap:wrap;justify-content:flex-start}
 .cnt.wrap{justify-content:center}
 @media (max-width:480px){.cnt{gap:4px 6px;padding:10px}.cnt .emo{font-size:1.7rem}}
+
+table.pict{border-collapse:collapse;margin:0 auto;background:var(--surface)}
+table.pict th{padding:6px 10px;text-align:left;font-family:var(--display);border:2px solid var(--line);white-space:nowrap}
+table.pict td{padding:4px 8px;border:2px solid var(--line)}
+table.pict .emo{font-size:1.5rem}
+.pv{display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end;justify-content:center;max-width:520px;margin:0 auto}
+.pv .fl{width:56px;height:56px;background:var(--blue);border-radius:4px;background-image:linear-gradient(#fff6 1px,transparent 1px),linear-gradient(90deg,#fff6 1px,transparent 1px);background-size:5.6px 5.6px}
+.pv .rd{width:10px;height:56px;background:var(--green);border-radius:3px;background-image:linear-gradient(#fff8 1px,transparent 1px);background-size:10px 5.6px}
+.pv .un{width:10px;height:10px;background:var(--sun);border-radius:2px}

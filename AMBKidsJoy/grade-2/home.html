@@ -1,0 +1,195 @@
+<!doctype html><html lang="am"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Grade 2 · AMBKidsJoy</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../style.css?v=202610210848">
+<style>
+.hero{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;padding:clamp(18px,3vw,28px);border-radius:28px;background:var(--surface);border:2px solid var(--line)}
+.hero>svg{width:clamp(76px,14vw,120px);height:auto}
+@media (max-width:520px){.hero{grid-template-columns:1fr;justify-items:start}.hero>svg{width:72px}}
+.hero h1{font-size:clamp(2rem,6vw,3.2rem);font-weight:800}
+.hero p{margin:4px 0 0;color:var(--ink-soft);max-width:60ch}
+.meter{display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.bar{flex:1 1 200px;height:16px;border-radius:8px;background:var(--surface-2);overflow:hidden;max-width:360px}
+.bar>div{height:100%;background:#F4B400;border-radius:8px}
+.subjects{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+@media (max-width:420px){.subjects{grid-template-columns:1fr}}
+.subj{background:var(--surface);border:2px solid var(--line);border-radius:22px;overflow:hidden;display:grid;grid-template-rows:auto 1fr;min-width:0}
+.subj header{display:flex;gap:12px;align-items:center;padding:14px 16px;background:var(--accent-soft)}
+.subj header .ic{width:46px;height:46px;border-radius:14px;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:1.4rem;flex:none}
+.subj h2{font-size:1.25rem}
+.subj header p{margin:0;font-size:.85rem;color:var(--ink-soft)}
+.chs{list-style:none;margin:0;padding:8px;display:grid;gap:4px}
+.ch{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:12px;text-decoration:none;color:var(--ink);min-width:0}
+.ch .no{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--surface-2);font-family:var(--display);font-weight:800;font-size:.9rem}
+.ch .nm{flex:1;min-width:0;line-height:1.25}
+.ch .st{font-family:var(--display);font-weight:800;font-size:.9rem;white-space:nowrap}
+a.ch{background:var(--accent-soft);border:2px solid var(--accent)}
+a.ch:hover{transform:translateY(-1px)}
+a.ch .no{background:var(--accent);color:var(--on-accent)}
+.ch.soon{color:var(--ink-soft)}
+.ch.soon .st{font-weight:600;font-size:.78rem;opacity:.8}
+.method{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.method div{padding:14px 16px;border-radius:16px;background:var(--surface);border:2px solid var(--line)}
+.method h3{font-size:1.1rem;margin-bottom:4px}
+.method p{margin:0;font-size:.95rem;color:var(--ink-soft)}
+.kicker{display:inline-block;margin-top:2px;font-family:var(--display);font-weight:800;font-size:clamp(1rem,2.6vw,1.25rem);color:var(--ink)}
+.kicker b{color:#C98F00}
+.grades{display:grid;grid-template-columns:repeat(8,1fr);gap:10px}
+@media (max-width:760px){.grades{grid-template-columns:repeat(4,1fr)}}
+.gr{display:grid;justify-items:center;gap:2px;padding:12px 6px;border-radius:18px;border:2px dashed var(--line);background:var(--surface);color:var(--ink-soft);text-decoration:none;text-align:center;min-width:0}
+.gr .n{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,4vw,2.2rem);line-height:1}
+.gr .l{font-size:.78rem;font-weight:700}
+a.gr{border:2px solid #C98F00;background:#F4B400;color:#1B2A4A;box-shadow:0 4px 0 #C98F00}
+a.gr:hover{transform:translateY(-2px)}
+.eng{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:16px 18px;border-radius:22px;background:var(--surface);border:2px solid var(--line);border-left:8px solid var(--plum)}
+.eng .ic{width:54px;height:54px;border-radius:16px;background:var(--plum);color:#fff;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:1.3rem}
+.eng h2{font-size:1.3rem}.eng p{margin:2px 0 0;color:var(--ink-soft);font-size:.95rem}
+.eng .soon{font-family:var(--display);font-weight:800;font-size:.85rem;padding:6px 12px;border-radius:999px;background:var(--surface-2);white-space:nowrap}
+@media (max-width:520px){.eng{grid-template-columns:auto 1fr}.eng .soon{grid-column:1/-1;justify-self:start}}
+.gh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;scroll-margin-top:16px}.gh h2{font-size:1.6rem}.gh span{color:var(--ink-soft)}
+.src{padding:16px 18px;border-radius:18px;background:var(--surface);border:2px solid var(--line)}
+.src h2{font-size:1.35rem;margin-bottom:6px}
+.src p{margin:6px 0;color:var(--ink-soft);font-size:.95rem}
+.src ul{margin:6px 0 0;padding-left:20px;display:grid;gap:4px;font-size:.95rem}
+</style>
+
+</head><body><div class="wrap" id="app"></div>
+
+<script>
+(function(){
+const store={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let lang=store.get('g3-lang','am');
+const tx=o=>typeof o==='string'?o:(o[lang]??o.en);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function starPoints(cx,cy,R,r){let p=[];for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r:R;p.push((cx+rr*Math.cos(a)).toFixed(1)+','+(cy+rr*Math.sin(a)).toFixed(1))}return p.join(' ')}
+const KOKEB=`<svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="${starPoints(50,54,46,22)}" fill="#F4B400" stroke="#C98F00" stroke-width="3" stroke-linejoin="round"/><circle cx="41" cy="52" r="5" fill="#1B2A4A"/><circle cx="59" cy="52" r="5" fill="#1B2A4A"/><circle cx="43" cy="50" r="1.6" fill="#fff"/><circle cx="61" cy="50" r="1.6" fill="#fff"/><path d="M42 63 Q50 71 58 63" stroke="#1B2A4A" stroke-width="3.5" fill="none" stroke-linecap="round"/><circle cx="34" cy="62" r="4" fill="#F28B6B" opacity=".7"/><circle cx="66" cy="62" r="4" fill="#F28B6B" opacity=".7"/></svg>`;
+
+/* chapters from the Grade 3 student books; `unit` = page that exists, `n` = missions in it */
+const SUBJECTS=[
+ {key:'math',mark:'123',name:{en:'Mathematics',am:'ሒሳብ'},chs:[
+  [{en:'Numbers up to 10,000',am:'እስከ 10,000 ያሉ ቁጥሮች'},'math-1.html',9],[{en:'Adding and subtracting up to 10,000',am:'እስከ 10,000 ያሉ ቁጥሮችን መደመርና መቀነስ'},'math-2.html',8],
+  [{en:'Multiplying up to 1,000',am:'እስከ 1,000 ያሉ ቁጥሮችን ማባዛት'}],[{en:'Dividing up to 100',am:'እስከ 100 ያሉ ቁጥሮችን ማካፈል'}],
+  [{en:'Multiplying and dividing up to 10,000',am:'ማባዛትና ማካፈል እስከ 10,000'}],[{en:'Fractions',am:'ክፍልፋይ'}],[{en:'Patterns',am:'ፓተርኖች'}],[{en:'Data handling',am:'መረጃ አያያዝ'}],
+  [{en:'Geometric shapes',am:'የጂኦሜትሪ ምስሎች'}],[{en:'Length, mass and capacity',am:'ልኬት፦ ርዝመት፣ መጠነ ቁስ እና ይዘት'}],[{en:'Money',am:'ገንዘብ'}],[{en:'Time',am:'ጊዜ'}]]},
+ {key:'amharic',mark:'ሀ',name:{en:'Amharic',am:'አማርኛ'},chs:[
+  [{en:'Health',am:'ጤና'},'amharic-1.html',8],[{en:'Neighbourliness',am:'ጉርብትና'},'amharic-2.html',8],[{en:'Stories',am:'ታሪኮች'}],[{en:'Using time',am:'የጊዜ አጠቃቀም'}],[{en:'Transport',am:'መጓጓዣ'}],
+  [{en:'Good conduct',am:'ሥነምግባር'}],[{en:'Agriculture',am:'ግብርና'}],[{en:'Work',am:'ሥራ'}],[{en:'Culture',am:'ባህል'}],[{en:'Market',am:'ገበያ'}]]},
+ {key:'english',mark:'Aa',name:{en:'English',am:'እንግሊዝኛ'},chs:[
+  [{en:'My School',am:'ትምህርት ቤቴ'},'english-1.html',8],[{en:'Months of the Year',am:'የዓመቱ ወራት'},'english-2.html',8],[{en:'Traffic Signs',am:'የትራፊክ ምልክቶች'}],[{en:'Rivers',am:'ወንዞች'}],[{en:'Cash Crops',am:'ገቢ የሚያስገኙ ሰብሎች'}],
+  [{en:'Cutting Trees',am:'ዛፍ መቁረጥ'}],[{en:'The National Flag',am:'ብሔራዊ ሰንደቅ ዓላማ'}],[{en:'Clean Surrounding',am:'ንጹህ አካባቢ'}],[{en:'Respecting Each Other',am:'እርስ በርስ መከባበር'}],[{en:'Pottery',am:'የሸክላ ሥራ'}]]},
+ {key:'env',mark:'<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 5l3 7-3 7-3-7z" fill="currentColor"/></svg>',name:{en:'Environmental Science',am:'አካባቢ ሳይንስ'},chs:[
+  [{en:'Where is our zone?',am:'የዞናችን መገኛ'},'env-1.html',7],[{en:'Understanding science',am:'ሳይንስን መረዳት'},'env-2.html',8],[{en:'Natural environment',am:'ተፈጥሯዊ አካባቢ'}],[{en:'Social environment',am:'ማህበራዊ አካባቢ'}],[{en:'Important issues: road safety, children\'s rights',am:'አንገብጋቢ እና ትኩረት የሚሹ ጉዳዮች'}]]},
+ {key:'moral',mark:'<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z" fill="currentColor"/></svg>',name:{en:'Moral Education',am:'ግብረገብ'},chs:[
+  [{en:'Respecting humanity',am:'ሰብዓዊነትን ማክበር'},'moral-1.html',8],[{en:'Respecting others',am:'ሌሎችን ማክበር'},'moral-2.html',7],[{en:'Equality',am:'እኩልነት'}],[{en:'Healthy social life',am:'ጤናማ ማህበራዊ ህይወት'}],[{en:'Cooperation and teamwork',am:'ትብብር እና የቡድን ስራ'}],[{en:'Cultural diversity',am:'የባህል ብዝሃነት'}]]},
+ {key:'health',mark:'<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="14" cy="4.5" r="2" fill="currentColor"/><path d="M7 21l3-6 3 2v4M10 15l1-6 4 3 3-1M11 9L7 11"/></svg>',name:{en:'Health & Physical Education',am:'ጤናና ሰውነት ማጎልመሻ'},chs:[
+  [{en:'Basic movement skills',am:'መሠረታዊ የእንቅስቃሴ ክህሎት'},'health-1.html',6],[{en:'Rhythmic movements',am:'የምት እንቅስቃሴዎች'},'health-2.html',6],[{en:'Games for teamwork and feelings',am:'ማህበራዊ ግንኙነትንና ስሜትን የሚያዳብሩ ጨዋታዎች'}],
+  [{en:'Health and fitness',am:'ጤናና የአካል ብቃት እንቅስቃሴ'}],[{en:'Basic gymnastics',am:'መሠረታዊ ጅምናስቲክስ'}],[{en:'Ethiopian traditional dances and games',am:'የኢትዮጵያ ባህላዊ ጭፈራዎችና ጨዋታዎች'}]]},
+ {key:'art',mark:'<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l10-2v13"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="16.5" cy="16" r="2.5" fill="currentColor"/></svg>',name:{en:'Performing & Visual Arts',am:'ሥነ ጥበባት'},chs:[
+  [{en:'Notes, colours and drama',am:'ሥነ ጥበባትን መለየት እና መግለፅ'},'art-1.html',8],[{en:'Arts practice',am:'የሥነ ጥበባት የተግባር ልምምድ'},'art-2.html',8],[{en:'Expressing culture through art',am:'ባህልን በሥነ ጥበባት መግለፅ'}],
+  [{en:'Appreciating art',am:'ሥነ ጥበባትን ማድነቅ'}],[{en:'Art and other subjects',am:'ሥነ ጥበባት ከሌሎች ትምህርቶች ጋር'}]]}
+];
+const T={
+ kicker:{en:'Learning Hub · Grades 1 to 8',am:'የልጆች የደስታ መማሪያ ማዕከል · ከ1ኛ እስከ 8ኛ ክፍል'},
+ tag:{en:'Interactive lessons in Amharic and English, with Kokeb the star as your guide. Learn by thinking, playing, experimenting and explaining why. Grade 3 is ready now, and more grades are on the way. Created by Dr. Mulusew Kassa Bitew.',am:'በአማርኛና በእንግሊዝኛ በይነ-ተግባራዊ ትምህርቶች፤ መሪያችሁ ኮከብ ናት። በማሰብ፣ በመጫወት፣ በመሞከርና ምክንያቱን በማስረዳት ተማሩ። 3ኛ ክፍል አሁን ዝግጁ ነው፤ ሌሎች ክፍሎችም በመንገድ ላይ ናቸው። የተዘጋጀው በዶ/ር ሙሉሰው ካሳ ቢተው።'},
+ pick:{en:'Choose your grade',am:'ክፍላችሁን ምረጡ'},
+ grade:{en:'Grade',am:'ክፍል'},
+ g3:{en:'Grade 3',am:'3ኛ ክፍል'},
+ g3sub:{en:'7 subjects · 54 chapters',am:'7 ትምህርቶች · 54 ምዕራፎች'},
+ open:{en:'Open',am:'ክፈቱ'},
+ eng:{en:'Joyful English · Grades 1 to 8',am:'እንግሊዝኛ በደስታ · ከ1ኛ እስከ 8ኛ ክፍል'},
+ engSub:{en:'A simple, clear communication guide: listen, speak, read and write English with confidence, step by step from Grade 1 to Grade 8.',am:'ቀላልና ግልጽ የመግባቢያ መመሪያ፦ ከ1ኛ እስከ 8ኛ ክፍል ደረጃ በደረጃ እንግሊዝኛን በልበ ሙሉነት ማዳመጥ፣ መናገር፣ ማንበብና መጻፍ።'},
+ stars:{en:'Stars collected',am:'የተሰበሰቡ ኮከቦች'},
+ soon:{en:'Coming soon',am:'በቅርቡ'},
+ chapter:{en:'chapters',am:'ምዕራፎች'},
+ ready:{en:'Grade 3: {a} of {b} chapters ready',am:'3ኛ ክፍል፦ ከ{b} ምዕራፎች {a} ዝግጁ'},
+ how:{en:'How Kokeb teaches',am:'ኮከብ እንዴት ታስተምራለች'},
+ m1:[{en:'Think first',am:'መጀመሪያ አስቡ'},{en:'Every mission starts with a question or puzzle, so children reason before they are told.',am:'እያንዳንዱ ተልዕኮ በጥያቄ ወይም በእንቆቅልሽ ይጀምራል፤ ልጆች ከመነገራቸው በፊት ያስባሉ።'}],
+ m2:[{en:'Hands, picture, symbol',am:'በእጅ፣ በሥዕል፣ በምልክት'},{en:'Blocks, notes, maps and paint first, then pictures, then numbers and words.',am:'መጀመሪያ ብሎኮች፣ ኖታዎች፣ ካርታና ቀለም፤ ቀጥሎ ሥዕል፤ ከዚያ ቁጥርና ቃል።'}],
+ m3:[{en:'Always the reason',am:'ሁልጊዜ ምክንያት'},{en:'Every answer comes with a "why", and mistakes are part of learning.',am:'እያንዳንዱ መልስ “ለምን” አለው፤ ስህተትም የመማር አካል ነው።'}],
+ m4:[{en:'Real Ethiopian life',am:'እውነተኛ የኢትዮጵያ ሕይወት'},{en:'Birr, markets, mountains, our zones and our own numerals.',am:'ብር፣ ገበያ፣ ተራሮች፣ ዞኖቻችንና የራሳችን ቁጥሮች።'}],
+ src:{en:'Sources and acknowledgement',am:'ምንጮችና ምስጋና'},
+ srcIntro:{en:'AMBKidsJoy follows the chapters and learning goals of these Grade 3 student books. We thank their authors, editors, illustrators and the Amhara National Regional State Education Bureau, which holds the copyright of the books.',am:'AMBKidsJoy የእነዚህን የ3ኛ ክፍል የተማሪ መጻሕፍት ምዕራፎችና የመማር ዓላማዎች ይከተላል። ደራሲዎቻቸውን፣ አርታኢዎቻቸውን፣ ሠዓሊዎቻቸውንና የመጻሕፍቱ የቅጂ መብት ባለቤት የሆነውን የአማራ ብሔራዊ ክልላዊ መንግሥት ትምህርት ቢሮን እናመሰግናለን።'},
+ books:[
+  {en:'Mathematics, Grade 3 Student Book. © ANRS Education Bureau, 2015 E.C.',am:'ሒሳብ፣ የ3ኛ ክፍል የተማሪ መጽሐፍ። © አብክመ ትምህርት ቢሮ፣ 2015 ዓ.ም.'},
+  {en:'Amharic, Grade 3 Student Book. © ANRS Education Bureau, 2015 E.C.',am:'አማርኛ፣ የ3ኛ ክፍል የተማሪ መጽሐፍ። © አብክመ ትምህርት ቢሮ፣ 2015 ዓ.ም.'},
+  {en:'English, Grade 3 Student\'s Book.',am:'እንግሊዝኛ፣ የ3ኛ ክፍል የተማሪ መጽሐፍ (Grade 3 English Student\'s Book)።'},
+  {en:'Environmental Science, Grade 3 Student Book. © ANRS Education Bureau, 2015 E.C.',am:'አካባቢ ሳይንስ፣ የ3ኛ ክፍል የተማሪ መጽሐፍ። © አብክመ ትምህርት ቢሮ፣ 2015 ዓ.ም.'},
+  {en:'Moral Education, Grade 3 Student Book. English edition by the FDRE Ministry of Education; Amharic translation © ANRS Education Bureau, 2016 E.C.',am:'ግብረገብ፣ የ3ኛ ክፍል የተማሪ መጽሐፍ። የእንግሊዝኛ ቅጂ በኢፌዴሪ ትምህርት ሚኒስቴር፤ የአማርኛ ትርጉም © አብክመ ትምህርት ቢሮ፣ 2016 ዓ.ም.'},
+  {en:'Health & Physical Education, Grade 3 Student Book. © ANRS Education Bureau, 2015 E.C.',am:'ጤናና ሰውነት ማጎልመሻ፣ የ3ኛ ክፍል የተማሪ መጽሐፍ። © አብክመ ትምህርት ቢሮ፣ 2015 ዓ.ም.'},
+  {en:'Performing & Visual Arts, Grade 3 Student Book. © ANRS Education Bureau, 2015 E.C.',am:'ሥነ ጥበባት፣ የ3ኛ ክፍል የተማሪ መጽሐፍ። © አብክመ ትምህርት ቢሮ፣ 2015 ዓ.ም.'}],
+ srcNote:{en:'The stories, questions, games, drawings and Young Innovator challenges on this platform were written and drawn new for AMBKidsJoy by Dr. Mulusew Kassa Bitew, to support (not replace) the textbooks and the teacher. AMBKidsJoy is not an official publication of the Education Bureau. Teachers: please check the Amharic text and tell us about any mistakes.',am:'በዚህ መድረክ ያሉ ታሪኮች፣ ጥያቄዎች፣ ጨዋታዎች፣ ስዕሎችና የወጣት ፈጣሪ ፈተናዎች በዶ/ር ሙሉሰው ካሳ ቢተው ለAMBKidsJoy አዲስ የተጻፉና የተሳሉ ናቸው፤ ዓላማቸው መጻሕፍቱንና መምህሩን መደገፍ እንጂ መተካት አይደለም። AMBKidsJoy የትምህርት ቢሮው ይፋዊ ኅትመት አይደለም። መምህራን፦ እባካችሁ የአማርኛውን ጽሑፍ ፈትሹ፤ ስህተት ካለ አሳውቁን።'},
+ m5:[{en:'Exam-ready, innovator-minded',am:'ለፈተና ዝግጁ፣ ፈጣሪ አእምሮ'},{en:'Every chapter ends with exam practice and take-home notes, plus a Young Innovator challenge that turns learning into a real project or small business.',am:'እያንዳንዱ ምዕራፍ በፈተና ዝግጅትና በቤት ማስታወሻ ይጠናቀቃል፤ ትምህርትን ወደ እውነተኛ ፕሮጀክት ወይም ትንሽ ሥራ የሚቀይር የወጣት ፈጣሪ ፈተናም አለው።'}],
+ teacher:{en:'For teachers and parents: each chapter follows the student textbook of the Amhara Region Education Bureau. Stars are saved on this device only. Use the language button to switch every page between Amharic and English.',am:'ለመምህራንና ለወላጆች፦ እያንዳንዱ ምዕራፍ የአማራ ክልል ትምህርት ቢሮ የ3ኛ ክፍል መጽሐፍን ይከተላል። ኮከቦች የሚቀመጡት በዚህ መሣሪያ ላይ ብቻ ነው። እያንዳንዱን ገጽ በአማርኛና በእንግሊዝኛ ለመቀያየር የቋንቋ ቁልፉን ተጠቀሙ።'}
+};
+const UNITS={"amharic-1": 9, "amharic-10": 9, "amharic-2": 9, "amharic-3": 9, "amharic-4": 9, "amharic-5": 9, "amharic-6": 8, "amharic-7": 9, "amharic-8": 9, "amharic-9": 8, "english-1": 9, "english-2": 9, "english-3": 10, "english-4": 8, "english-5": 8, "english-6": 8, "english-7": 8, "english-8": 8, "health-1": 9, "health-2": 7, "health-3": 7, "health-4": 8, "health-5": 8, "health-6": 6, "math-1": 9, "math-10": 7, "math-11": 7, "math-2": 8, "math-3": 7, "math-4": 8, "math-5": 7, "math-6": 7, "math-7": 8, "math-8": 6, "math-9": 7, "moral-1": 7, "moral-2": 7, "moral-3": 6, "moral-4": 6, "moral-5": 6, "moral-6": 6};
+const GR=2,PFX='g2-',ROOT='../';const AVAIL={1:'grade-1/',2:'grade-2/',3:''};
+/* Grade 2 chapters (from the Grade 2 student books) */
+SUBJECTS.length=0;
+SUBJECTS.push(
+ {key:'math',mark:'123',name:{en:'Mathematics',am:'ሒሳብ'},chs:[
+  [{en:'Numbers up to 1,000',am:'እስከ 1000 ያሉ ቁጥሮች'}],[{en:'Adding and subtracting up to 1,000',am:'እስከ 1000 ያሉ ቁጥሮችን መደመርና መቀነስ'}],
+  [{en:'Halves and quarters',am:'ግማሽና ሩብ'}],[{en:'Multiplying up to 100',am:'እስከ 100 ያሉ ቁጥሮችን ማባዛት'}],[{en:'Patterns',am:'ፓተርን'}],[{en:'Measurement',am:'ልኬት'}],
+  [{en:'Adding and subtracting with regrouping',am:'ባለ ሦስት ሆሄ ቁጥሮችን በአለኝታና በብድር'}],[{en:'Data handling',am:'መረጃ አያያዝ'}],[{en:'Shapes',am:'የጂኦሜትሪ ምስሎች'}],[{en:'Money',am:'ገንዘብ'}],[{en:'Time',am:'ጊዜ'}]]},
+ {key:'amharic',mark:'ሀ',name:{en:'Amharic',am:'አማርኛ'},chs:[
+  [{en:'Clothes',am:'አልባሳት'}],[{en:'Seasons',am:'ወቅቶች'}],[{en:'Stories',am:'ታሪኮች'}],[{en:'The home garden',am:'የጓሮ አትክልት'}],[{en:'A clean environment',am:'የአካባቢ ንጽህና'}],
+  [{en:'Traditional music',am:'ባህላዊ ሙዚቃ'}],[{en:'Good manners',am:'መልካም ሥነምግባር'}],[{en:'Preparing food',am:'የምግብ አዘገጃጀት'}],[{en:'Digital devices',am:'ዲጂታል መሣሪያዎች'}],[{en:'Wild animals',am:'የዱር እንስሳት'}]]},
+ {key:'english',mark:'Aa',name:{en:'English',am:'እንግሊዝኛ'},chs:[
+  [{en:'Our Surroundings',am:'አካባቢያችን'}],[{en:'Days of the Week',am:'የሳምንቱ ቀናት'}],[{en:'Traffic Lights',am:'የትራፊክ መብራቶች'}],[{en:'Forest',am:'ደን'}],
+  [{en:'Food Crops',am:'የምግብ ሰብሎች'}],[{en:'Foods',am:'ምግቦች'}],[{en:'Polluted Environment',am:'የተበከለ አካባቢ'}],[{en:'Good Manners',am:'መልካም ሥነምግባር'}]]},
+ {key:'env',mark:'🌍',name:{en:'Environmental Science',am:'አካባቢ ሳይንስ'},chs:[[{en:'Coming soon: book not yet added',am:'በቅርቡ፦ መጽሐፉ ገና አልተጨመረም'}]]},
+ {key:'moral',mark:'♥',name:{en:'Moral Education',am:'ግብረገብ'},chs:[
+  [{en:'Self-respect and safety',am:'የራስን ክብርና ደህንነት መጠበቅ'}],[{en:'Truthfulness and honesty',am:'እውነተኛነትና ታማኝነት'}],[{en:'Fairness and justice',am:'ፍትህ'}],
+  [{en:'Good social relations',am:'መልካም ማህበራዊ ግንኙነት'}],[{en:'Caring for common property',am:'ለጋራ ንብረት መጠንቀቅ'}],[{en:'Cultural heritage',am:'ባህላዊ ቅርሶች'}]]},
+ {key:'health',mark:'🏃',name:{en:'Health & Physical Education',am:'ጤናና ሰውነት ማጎልመሻ'},chs:[
+  [{en:'Basic movement skills',am:'መሠረታዊ የእንቅስቃሴ ክህሎት'}],[{en:'Rhythmic movement',am:'ሪትሚካዊ (የምት) እንቅስቃሴ'}],[{en:'Games for feelings and friendship',am:'ማህበራዊ መስተጋብርና ስሜታዊነት'}],
+  [{en:'Health and fitness',am:'ጤናና የአካል ብቃት'}],[{en:'Gymnastics',am:'ጅምናስቲክስ'}],[{en:'Ethiopian traditional dances and games',am:'የኢትዮጵያ ባህላዊ ጭፈራና ጨዋታዎች'}]]},
+ {key:'art',mark:'🎨',name:{en:'Performing & Visual Arts',am:'ሥነ ጥበባት'},chs:[[{en:'Coming soon: book not yet added',am:'በቅርቡ፦ መጽሐፉ ገና አልተጨመረም'}]]}
+);
+Object.assign(T,{
+ g3:{en:'Grade 2',am:'2ኛ ክፍል'},
+ g3sub:{en:'5 subjects ready · 41 chapters',am:'5 ትምህርቶች ዝግጁ · 41 ምዕራፎች'},
+ ready:{en:'Grade 2: {a} of {b} chapters ready',am:'2ኛ ክፍል፦ ከ{b} ምዕራፎች {a} ዝግጁ'},
+ tag:{en:'Grade 2: numbers to 1,000, reading stories, English conversations, being a good person and moving with joy, all with Kokeb the star. In Amharic and English. Created by Dr. Mulusew Kassa Bitew.',am:'2ኛ ክፍል፦ እስከ 1000 ያሉ ቁጥሮች፣ ታሪክ ማንበብ፣ የእንግሊዝኛ ንግግር፣ መልካም ሰው መሆንና በደስታ መንቀሳቀስ፤ ከኮከብ ጋር በአማርኛና በእንግሊዝኛ። የተዘጋጀው በዶ/ር ሙሉሰው ካሳ ቢተው።'},
+ srcIntro:{en:'AMBKidsJoy Grade 2 follows the chapters and learning goals of these Grade 2 books. We thank their authors, editors, illustrators and the copyright holders: the Amhara National Regional State Education Bureau, the FDRE Ministry of Education and the regional bureaus that prepared the Moral Education books.',am:'AMBKidsJoy 2ኛ ክፍል የእነዚህን የ2ኛ ክፍል መጻሕፍት ምዕራፎችና የመማር ግቦች ይከተላል። ደራሲዎቹን፣ አርታኢዎቹን፣ ሠዓሊዎቹንና የቅጂ መብት ባለቤቶቹን፦ የአማራ ብሔራዊ ክልላዊ መንግሥት ትምህርት ቢሮን፣ የኢፌዴሪ ትምህርት ሚኒስቴርንና የግብረገብ መጻሕፍትን ያዘጋጁ የክልል ቢሮዎችን እናመሰግናለን።'},
+ books:[
+  {en:'Mathematics, Grade 2 Student Book. © ANRS Education Bureau, 2015 E.C.',am:'ሒሳብ፣ የ2ኛ ክፍል የተማሪ መጽሐፍ። © አብክመ ትምህርት ቢሮ፣ 2015 ዓ.ም.'},
+  {en:'Amharic, Grade 2 Student Book. © ANRS Education Bureau, 2015 E.C.',am:'አማርኛ፣ የ2ኛ ክፍል የተማሪ መጽሐፍ። © አብክመ ትምህርት ቢሮ፣ 2015 ዓ.ም.'},
+  {en:'English for Ethiopia, Student\'s Book, Grade 2. FDRE Ministry of Education.',am:'English for Ethiopia፣ የ2ኛ ክፍል የተማሪ መጽሐፍ። የኢፌዴሪ ትምህርት ሚኒስቴር።'},
+  {en:'Moral Education, Grade 2 Student Book and Teacher\'s Guide (Amharic edition, prepared under the FDRE Ministry of Education; teacher\'s guide © Oromia Education Bureau, 2015 E.C.).',am:'የግብረገብ ትምህርት፣ የ2ኛ ክፍል የተማሪ መጽሐፍና የመምህር መምሪያ (በኢፌዴሪ ትምህርት ሚኒስቴር አስተባባሪነት የተዘጋጀ፤ የመምህር መምሪያ © የኦሮሚያ ትምህርት ቢሮ፣ 2015 ዓ.ም.)።'},
+  {en:'Health & Physical Education, Grade 2 Student Book. © ANRS Education Bureau, 2015 E.C.',am:'ጤናና ሰውነት ማጎልመሻ፣ የ2ኛ ክፍል የተማሪ መጽሐፍ። © አብክመ ትምህርት ቢሮ፣ 2015 ዓ.ም.'}],
+ teacher:{en:'For teachers and parents: Grade 2 children can read short texts on their own. Let them read the instructions, then ask them to explain their answers. Stars are saved on this device only.',am:'ለመምህራንና ለወላጆች፦ የ2ኛ ክፍል ልጆች አጫጭር ጽሑፎችን በራሳቸው ማንበብ ይችላሉ። መመሪያውን እንዲያነቡ ፍቀዱላቸው፤ ከዚያ መልሳቸውን እንዲያስረዱ ጠይቋቸው። ኮከቦቹ የሚቀመጡት በዚህ መሣሪያ ላይ ብቻ ነው።'}
+});
+
+SUBJECTS.forEach(s=>s.chs.forEach((c,i)=>{const id=s.key+'-'+(i+1);if(UNITS[id]){c[1]=id+'.html';c[2]=UNITS[id]}else{c.length=1}}));
+const doneCount=(file,n)=>{const id=file.replace('.html','');const d=store.get('g3-done-'+PFX+id,{});return Math.min(n,Object.keys(d).filter(k=>d[k]).length)};
+function render(){
+ document.documentElement.lang=lang;
+ let got=0,tot=0,ready=0,all=0;SUBJECTS.forEach(s=>s.chs.forEach(c=>{all++;if(c[1]){ready++;tot+=c[2];got+=doneCount(c[1],c[2])}}));
+ document.getElementById('app').innerHTML=`
+ <header class="top"><span></span><div class="tools"><div class="pill lang" role="group" aria-label="Language"><button data-lang="am" aria-pressed="${lang==='am'}">አማርኛ</button><button data-lang="en" aria-pressed="${lang==='en'}">English</button></div></div></header>
+ <section class="hero">${KOKEB}<div><h1>AMBKidsJoy</h1><span class="kicker">${esc(tx(T.kicker))}</span><p>${esc(tx(T.tag))}</p>
+  <div class="meter"><span class="pill"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="${starPoints(50,52,46,20)}" fill="#F4B400" stroke="#C98F00" stroke-width="4"/></svg><span class="num">${got}</span>/${tot}</span><div class="bar" aria-label="${esc(tx(T.stars))}"><div style="width:${tot?got/tot*100:0}%"></div></div><span class="small" style="color:var(--ink-soft)">${esc(tx(T.ready).replace('{a}',ready).replace('{b}',all))}</span></div></div></section>
+ <section aria-labelledby="pick-h"><h2 id="pick-h" style="font-size:1.5rem;margin-bottom:10px">${esc(tx(T.pick))}</h2>
+ <div class="grades">${[1,2,3,4,5,6,7,8].map(g=>AVAIL[g]!==undefined?`<a class="gr" href="${g===GR?'':ROOT+AVAIL[g]+'home.html'}#grade-${g}"><span class="l">${esc(tx(T.grade))}</span><span class="n">${g}</span><span class="l">${esc(tx(T.open))} →</span></a>`:`<span class="gr" aria-disabled="true"><span class="l">${esc(tx(T.grade))}</span><span class="n">${g}</span><span class="l">${esc(tx(T.soon))}</span></span>`).join('')}</div></section>
+ <section class="eng"><span class="ic">ABC</span><div><h2>${esc(tx(T.eng))}</h2><p>${esc(tx(T.engSub))}</p></div><span class="soon">${esc(tx(T.soon))}</span></section>
+ <div class="gh" id="grade-${GR}"><h2>${esc(tx(T.g3))}</h2><span>${esc(tx(T.g3sub))}</span></div>
+ <div class="subjects">${SUBJECTS.map(s=>`<article class="subj" data-subj="${s.key}"><header><span class="ic">${s.mark}</span><div><h2>${esc(tx(s.name))}</h2><p>${s.chs.length} ${esc(tx(T.chapter))}</p></div></header>
+  <ol class="chs">${s.chs.map((c,i)=>c[1]?`<li><a class="ch" href="${c[1]}"><span class="no">${i+1}</span><span class="nm">${esc(tx(c[0]))}</span><span class="st">★ ${doneCount(c[1],c[2])}/${c[2]}</span></a></li>`
+   :`<li><span class="ch soon"><span class="no">${i+1}</span><span class="nm">${esc(tx(c[0]))}</span><span class="st">${esc(tx(T.soon))}</span></span></li>`).join('')}</ol></article>`).join('')}</div>
+ <h2 style="font-size:1.5rem">${esc(tx(T.how))}</h2>
+ <div class="method">${['m1','m2','m3','m4','m5'].map(k=>`<div><h3>${esc(tx(T[k][0]))}</h3><p>${esc(tx(T[k][1]))}</p></div>`).join('')}</div>
+ <section class="src" id="sources"><h2>${esc(tx(T.src))}</h2><p>${esc(tx(T.srcIntro))}</p><ul>${T.books.map(b=>`<li>${esc(tx(b))}</li>`).join('')}</ul><p>${esc(tx(T.srcNote))}</p></section>
+ <footer><span>${esc(tx(T.teacher))}</span></footer>`;
+ document.querySelectorAll('.subj').forEach(el=>el.style.cssText='');
+ document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{lang=b.dataset.lang;store.set('g3-lang',lang);render()});
+}
+/* subject accents on cards */
+const st=document.createElement('style');st.textContent=SUBJECTS.map(s=>`.subj[data-subj="${s.key}"]{--accent:var(--${({math:'blue',amharic:'clay',english:'plum',env:'green',moral:'sun',health:'teal',art:'plum'})[s.key]});--accent-soft:var(--${({math:'blue',amharic:'clay',english:'plum',env:'green',moral:'sun',health:'teal',art:'plum'})[s.key]}-soft)}`).join('');document.head.appendChild(st);
+render();
+window.addEventListener('pageshow',render);
+})();
+</script>
+<script src="../author.js?v=202610210848"></script>
+</body></html>

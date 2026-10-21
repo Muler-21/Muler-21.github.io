@@ -142,5 +142,50 @@ function moveMission(title,tip,steps){const {tx,esc}=G3;return{title,tip,type:'c
    <div class="row" style="justify-content:center"><button class="btn primary" data-act="did" style="font-size:1.3rem;padding:14px 26px">${tx({en:'I did one! {k}/{n}',am:'አንዱን ሠራሁ! {k}/{n}'},{k:st.k,n:s.n})}</button></div>`;
   p.onclick=e=>{if(!e.target.closest('[data-act=did]'))return;st.k++;api.S.tick();
    if(st.k>=s.n){st.i++;st.k=0;api.S.yay();if(st.i>=steps.length)api.complete()}api.rerender()}}}}
-window.K1={moveMission,engMissions,readMissions,letterMissions,fam,P,pick,any,tenframe,blocks,clock,coin,coins,shape,row,plus,minus,two};
+
+/* Grade 2 pictures: fractions, arrays, pictographs, birr notes */
+function frac(kind,parts,shaded){const A='var(--accent)',S='var(--surface)',I='var(--ink)';let g='';
+ if(kind==='circle'){for(let i=0;i<parts;i++){const a0=i*2*Math.PI/parts-Math.PI/2,a1=(i+1)*2*Math.PI/parts-Math.PI/2;
+   g+=`<path d="M60 60L${60+50*Math.cos(a0)} ${60+50*Math.sin(a0)}A50 50 0 ${parts===1?1:0} 1 ${60+50*Math.cos(a1)} ${60+50*Math.sin(a1)}Z" fill="${i<shaded?A:S}" stroke="${I}" stroke-width="3"/>`}}
+ else{const w=100/parts;for(let i=0;i<parts;i++)g+=`<rect x="${10+i*w}" y="20" width="${w}" height="80" fill="${i<shaded?A:S}" stroke="${I}" stroke-width="3"/>`}
+ return`<svg viewBox="0 0 120 120" style="width:130px;height:auto" role="img" aria-label="${shaded} of ${parts}">${g}</svg>`}
+const array=(r,c,e)=>`<div class="cnt" style="--per:${c}">${Array.from({length:r*c},()=>`<span class="emo" style="font-size:1.8rem">${e}</span>`).join('')}</div>`;
+function pict(rows,key){return`<table class="pict"><tbody>${rows.map(([lab,e,n])=>`<tr><th>${lab}</th><td>${Array.from({length:n},()=>`<span class="emo">${e}</span>`).join('')}</td></tr>`).join('')}</tbody></table>${key?`<div class="sub small center">${key}</div>`:''}`}
+const NOTE={10:'#6E4B9E',50:'#B5652A',100:'#2E7D5B',200:'#5E7FA8'};
+const note=v=>`<svg viewBox="0 0 160 80" style="width:150px;height:auto" role="img" aria-label="${v} birr"><rect x="2" y="2" width="156" height="76" rx="8" fill="${NOTE[v]}" stroke="#0004" stroke-width="2"/><rect x="10" y="10" width="140" height="60" rx="5" fill="none" stroke="#fff8" stroke-dasharray="4 3"/><circle cx="44" cy="40" r="18" fill="#fff3"/><text x="112" y="48" text-anchor="middle" font-family="Baloo 2" font-weight="800" font-size="30" fill="#fff">${v}</text><text x="112" y="66" text-anchor="middle" font-family="Noto Sans Ethiopic" font-weight="700" font-size="12" fill="#fff">ብር</text></svg>`;
+
+/* Grade 2 Amharic chapter missions */
+function am2(d){const {shuffle}=G3;const M=[];
+ M.push({title:{en:'Words and pictures',am:'ቃላትና ሥዕሎች'},type:'match',tip:{en:'Read each word and find its picture.',am:'እያንዳንዱን ቃል አንብቡና ሥዕሉን ፈልጉ።'},rounds:d.vocab});
+ M.push({title:{en:'Read and understand',am:'አንብቦ መረዳት'},type:'quiz',passage:d.story,tip:{en:'Before reading, guess from the title. Read fluently, then answer.',am:'ከማንበባችሁ በፊት ከርዕሱ ገምቱ። አቀላጥፋችሁ አንብቡ፤ ከዚያ መልሱ።'},items:d.story.qs});
+ if(d.story2)M.push({title:{en:'Read another story',am:'ሌላ ታሪክ አንብቡ'},type:'quiz',passage:d.story2,tip:{en:'Read with expression, like a storyteller.',am:'እንደ ተራኪ በስሜት አንብቡ።'},items:d.story2.qs});
+ M.push({title:{en:'Blend the sounds',am:'ድምፆችን አጣምሩ'},type:'order',tip:{en:'Join the letters to read long words: ይ-ዘ-ራ-ል → ይዘራል.',am:'ረጃጅም ቃላትን ለማንበብ ፊደላቱን አጣምሩ፦ ይ-ዘ-ራ-ል → ይዘራል።'},help:{en:'Tap the letters in order.',am:'ፊደላቱን በቅደም ተከተል ንኩ።'},
+  rounds:d.blend.map(w=>({prompt:{en:`Build: ${[...w].join('-')}`,am:`መሥርቱ፦ ${[...w].join('-')}`},items:[...w]}))});
+ if(d.opp)M.push({title:{en:d.oppTitle?d.oppTitle.en:'Opposites',am:d.oppTitle?d.oppTitle.am:'ተቃራኒ ቃላት'},type:'match',tip:d.oppTip||{en:'Match each word with its opposite.',am:'እያንዳንዱን ቃል ከተቃራኒው ጋር አዛምዱ።'},rounds:[d.opp]});
+ if(d.plural)M.push({title:{en:'One and many',am:'ነጠላና ብዙ ቁጥር'},type:'quiz',shuffle:true,tip:{en:'To make many, we usually add -ኦች or -ዎች: ቀሚስ → ቀሚሶች, ልጅ → ልጆች.',am:'ብዙ ቁጥር ለመሥራት በአብዛኛው -ኦች ወይም -ዎች እንጨምራለን፦ ቀሚስ → ቀሚሶች፣ ልጅ → ልጆች።'},
+  items:d.plural.map(([a,b,x,y])=>{const o=shuffle([b,x,y]);return{q:{en:`Many of "${a}"?`,am:`የ"${a}" ብዙ ቁጥር?`},o,a:o.indexOf(b)}})});
+ if(d.sort)M.push(Object.assign({type:'sort'},d.sort));
+ M.push({title:{en:'Build a sentence',am:'ዓረፍተ ነገር መሥርቱ'},type:'order',tip:{en:'Put the words in order. Amharic sentences usually end with the action word.',am:'ቃላቱን በቅደም ተከተል አስቀምጡ። የአማርኛ ዓረፍተ ነገር በአብዛኛው በድርጊት ቃል ያልቃል።'},help:{en:'Tap the words in order.',am:'ቃላቱን በቅደም ተከተል ንኩ።'},
+  rounds:d.sentences.map(ws=>({prompt:{en:'Make the sentence:',am:'ዓረፍተ ነገሩን ሥሩ፦'},items:ws}))});
+ return M}
+
+/* rhythm copy game (patterns of 👏 and 🦶) */
+function beat(title,tip,R){const {tx}=G3;return{title,tip,type:'custom',
+ init(st){st.r=0;st.tap=[];st.msg='';st.cls=''},
+ render(p,api,st){if(st.r>=R.length){p.innerHTML=`<div class="explain">${tx({en:'You are a rhythm star! Now try it with music.',am:'የምት ኮከብ ናችሁ! አሁን በሙዚቃ ሞክሩ።'})}</div>`;return}
+  const pat=R[st.r];
+  p.innerHTML=`<div class="progress">${tx({en:'Pattern {i} of {n}',am:'ቅደም ተከተል {i} ከ{n}'},{i:st.r+1,n:R.length})}</div>
+   <div class="bigq" style="letter-spacing:6px">${pat.join(' ')}</div>
+   <div class="row" style="justify-content:center"><button class="btn" data-act="play">▶ ${tx({en:'Hear the beat',am:'ምቱን ስሙ'})}</button></div>
+   <div class="bigq" style="min-height:64px;letter-spacing:6px">${st.tap.join(' ')||'…'}</div>
+   <div class="opts" data-pat="${pat.join(',')}" data-done="${st.tap.length}"><button class="opt" data-b="👏"><span class="emo">👏</span></button><button class="opt" data-b="🦶"><span class="emo">🦶</span></button></div>
+   <div class="feedback center ${st.cls}">${st.msg}</div>`;
+  p.onclick=e=>{const b=e.target.closest('button');if(!b)return;
+   if(b.dataset.act==='play'){pat.forEach((x,i)=>setTimeout(()=>api.S.tick(),i*450));return}
+   if(b.dataset.b){st.tap.push(b.dataset.b);api.S.tick();const k=st.tap.length-1;
+    if(st.tap[k]!==pat[k]){st.msg=tx({en:'Oops! Start again.',am:'ኧረ! እንደገና ጀምሩ።'});st.cls='bad';st.tap=[]}
+    else if(st.tap.length===pat.length){st.r++;st.tap=[];st.msg=tx({en:'Perfect rhythm!',am:'ፍጹም ምት!'});st.cls='good';api.S.yay();if(st.r>=R.length)api.complete()}
+    else{st.msg='';st.cls=''}
+    api.rerender()}}}}}
+window.K1={beat,am2,frac,array,pict,note,moveMission,engMissions,readMissions,letterMissions,fam,P,pick,any,tenframe,blocks,clock,coin,coins,shape,row,plus,minus,two};
 })();

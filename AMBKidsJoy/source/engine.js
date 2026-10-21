@@ -70,7 +70,7 @@ const key=v=>typeof v==='object'?JSON.stringify(v):String(v);
 /* ---------- mission types ---------- */
 const T={};
 
-T.quiz={init(m,st){st.i=0;st.picked=null;st.order=m.items.map((_,i)=>i);if(m.shuffle)st.order=shuffle(st.order)},
+T.quiz={init(m,st){st.i=0;st.picked=null;st.oo={};st.order=m.items.map((_,i)=>i);if(m.shuffle)st.order=shuffle(st.order)},
  render(m,p,api,st){
   if(st.i>=m.items.length){p.innerHTML=(m.passage?passage(m.passage):'')+`<div class="explain">${tx(UI.allDone)}</div><div><button class="btn" data-act="restart">${tx(UI.playAgain)}</button></div>`;
    p.onclick=e=>{if(e.target.closest('[data-act=restart]')){this.init(m,st);api.rerender()}};return}
@@ -79,7 +79,7 @@ T.quiz={init(m,st){st.i=0;st.picked=null;st.order=m.items.map((_,i)=>i);if(m.shu
   <div class="progress">${tx(UI.item,{i:st.i+1,n:m.items.length})}</div>
   ${it.fig?`<div class="qfig">${it.fig}</div>`:''}
   <div class="q">${it.say?sayBtn(it.say,it.sayLang):''}<span class="qt">${tx(it.q)}</span></div>
-  <div class="opts ${it.o.some(o=>tx(o).length>18)?'long':''}">${it.o.map((o,j)=>`<button class="opt ${st.picked===j?(j===it.a?'right':'wrong'):''}" data-j="${j}" ${solved?'disabled':''}>${show(o)}</button>`).join('')}</div>
+  <div class="opts ${it.o.some(o=>tx(o).length>18)?'long':''}">${(st.oo[st.order[st.i]]=st.oo[st.order[st.i]]||(it.keep?it.o.map((_,j)=>j):shuffle(it.o.map((_,j)=>j)))).map(j=>{const o=it.o[j];return`<button class="opt ${st.picked===j?(j===it.a?'right':'wrong'):''}" data-j="${j}" ${solved?'disabled':''}>${show(o)}</button>`}).join('')}</div>
   <div class="feedback ${st.picked===null?'':solved?'good':'bad'}" aria-live="polite">${st.picked===null?'':solved?tx(UI.good):tx(it.hint||UI.bad)}</div>
   ${solved&&it.e?`<div class="explain">${tx(it.e)}</div>`:''}
   ${solved?`<div><button class="btn primary" data-act="next">${tx(UI.next)}</button></div>`:''}`;

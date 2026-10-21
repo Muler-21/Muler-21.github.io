@@ -70,44 +70,43 @@ if MATH_SRC:
         HEAD + head + '</head><body style="margin:0"><div class="wrap">' + body.replace('</body>', '<script src="author.js"></script></body>') + ('' if '</body>' in body else '<script src="author.js"></script>') + '</body></html>')
 shutil.copy(os.path.join(DIST, 'home.html'), os.path.join(DIST, 'index.html'))
 
-# ---------- Grade 1 (dist/grade-1/) ----------
-G1 = os.path.join(SRC, 'grade1')
-if os.path.isdir(G1):
-    D1 = os.path.join(DIST, 'grade-1'); os.makedirs(os.path.join(D1, 'units'), exist_ok=True)
-    for _k in ('summaries1.js', 'kit1.js'): shutil.copy(os.path.join(G1, _k), os.path.join(D1, _k))
+# ---------- Grades 1, 2 (dist/grade-N/) ----------
+for GN in (1, 2):
+    G1 = os.path.join(SRC, f'grade{GN}')
+    if not os.path.isdir(G1): continue
+    D1 = os.path.join(DIST, f'grade-{GN}'); os.makedirs(os.path.join(D1, 'units'), exist_ok=True)
+    SUMF = f'summaries{GN}.js'
+    shutil.copy(os.path.join(G1, SUMF), os.path.join(D1, SUMF))
+    if GN == 1: shutil.copy(os.path.join(G1, 'kit1.js'), os.path.join(D1, 'kit1.js'))
+    KIT = 'kit1.js' if GN == 1 else '../grade-1/kit1.js'
     c1 = {}
-    S1 = set(re.findall(r"^'g1-([a-z]+-\d+)':", open(os.path.join(G1, 'summaries1.js'), encoding='utf-8').read(), re.M))
     for f in sorted(glob.glob(os.path.join(G1, 'units', '*.js'))):
         uid = os.path.basename(f)[:-3]; short = uid[3:]
         src = open(f, encoding='utf-8').read()
         shutil.copy(f, os.path.join(D1, 'units', uid + '.js'))
-        c1[short] = len(re.findall(r"type:'(?:quiz|match|sort|order|tapwords|spell|custom|notes|exam|drill|trace)'", src)) + (1 if short in S1 else 0)
         m = re.search(r"title:\{en:'([^']+)'", src)
-        html = (HEAD + f'<title>{m.group(1) if m else short} · Grade 1 · AMBKidsJoy</title>' + FONTS + '<link rel="stylesheet" href="../style.css"></head><body>'
-                '<script src="../icons.js"></script><script src="../summaries.js"></script><script src="summaries1.js"></script><script src="../summary.js"></script><script src="../engine.js"></script><script src="kit1.js"></script>'
+        html = (HEAD + f'<title>{m.group(1) if m else short} · Grade {GN} · AMBKidsJoy</title>' + FONTS + '<link rel="stylesheet" href="../style.css"></head><body>'
+                f'<script src="../icons.js"></script><script src="../summaries.js"></script><script src="{SUMF}"></script><script src="../summary.js"></script><script src="../engine.js"></script><script src="{KIT}"></script>'
                 f'<script src="units/{uid}.js"></script><script src="../author.js"></script></body></html>')
         open(os.path.join(D1, short + '.html'), 'w', encoding='utf-8').write(html)
-    try:
-        import subprocess
-        c1 = json.loads(subprocess.check_output(['node', os.path.join(G1, 'count1.js')]))
-    except Exception as _e:
-        print('count1 fallback', _e)
-    h1 = TPL.replace('/*UNITS*/{}', json.dumps(c1, sort_keys=True)).replace("/*GR*/3", "1").replace("/*PFX*/''", "'g1-'").replace("/*ROOT*/''", "'../'")
+    import subprocess
+    c1 = json.loads(subprocess.check_output(['node', os.path.join(SRC, 'grade1', 'count1.js'), G1, SUMF]))
+    h1 = TPL.replace('/*UNITS*/{}', json.dumps(c1, sort_keys=True)).replace("/*GR*/3", str(GN)).replace("/*PFX*/''", f"'g{GN}-'").replace("/*ROOT*/''", "'../'")
     h1 = h1.replace('/*GRADEDATA*/', open(os.path.join(G1, 'hub-data.js'), encoding='utf-8').read())
-    h1 = h1.replace('href="style.css"', 'href="../style.css"').replace('<title>AMBKidsJoy · Learning Hub</title>', '<title>Grade 1 · AMBKidsJoy</title>')
+    h1 = h1.replace('href="style.css"', 'href="../style.css"').replace('<title>AMBKidsJoy · Learning Hub</title>', f'<title>Grade {GN} · AMBKidsJoy</title>')
     h1 = h1.replace('</script>\n', '</script>\n<script src="../author.js"></script>\n', 1)
     hd, bd = h1.split('<div class="wrap" id="app">', 1)
     page = HEAD + hd + '</head><body><div class="wrap" id="app">' + bd + '</body></html>'
     for n in ('index.html', 'home.html'):
         open(os.path.join(D1, n), 'w', encoding='utf-8').write(page)
-    print('grade 1 units', c1)
+    print(f'grade {GN} units', len(c1), sum(c1.values()))
 
 print('built', sorted(os.listdir(DIST)))
 
 # cache-busting: make browsers fetch fresh scripts/styles after each update
 import re as _re, glob as _glob, time as _time
 _V = _time.strftime('%Y%m%d%H%M')
-for _f in _glob.glob(os.path.join(DIST, '*.html')) + _glob.glob(os.path.join(DIST, 'grade-1', '*.html')):
+for _f in _glob.glob(os.path.join(DIST, '*.html')) + _glob.glob(os.path.join(DIST, 'grade-*', '*.html')):
     _s = open(_f, encoding='utf-8').read()
     _s = _re.sub(r'((?:src|href)=")((?:\.\./)?(?:units/)?[\w-]+\.(?:js|css))(")', lambda m: m.group(1) + m.group(2) + '?v=' + _V + m.group(3), _s)
     open(_f, 'w', encoding='utf-8').write(_s)
