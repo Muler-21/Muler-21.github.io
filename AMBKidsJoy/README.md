@@ -2,7 +2,7 @@
 
 **AMBKidsJoy** is a free, bilingual (Amharic / English) interactive learning hub for children from Grade 1 to Grade 8.
 
-**Available now: Grades 1 to 4.**
+**Available now: Grades 1 to 4 and Grade 7.**
 
 **Grade 1** (folder `grade-1/`): Mathematics (10 chapters), Amharic (10), English (8 units), Environmental Science (5) and Health & PE (6): 39 chapters with finger-tracing of letters and numbers, counting games, listening (spoken English words), picture matching and movement challenges. Moral Education and Arts come when the books are added.
 
@@ -12,7 +12,9 @@
 
 **Grade 4** (folder `grade-4/`): all seven subjects: Mathematics (9), Amharic (10), English (10 units), Environmental Science (5), Ge'ez (11), Health & PE (6) and Performing & Visual Arts (5): 56 chapters with place-value and fraction drills, angle and bar-graph pictures, reading passages, Ge'ez words and numerals, rhythm games and arts projects.
 
-**Coming next:** Grades 5 to 8 and *Joyful English · Grades 1 to 8*, a simple, clear guide to listening, speaking, reading and writing English. Every chapter opens with a one-picture summary and a guide for teachers and parents.
+**Grade 7** (folder `grade-7/`): nine subjects: Mathematics (7), Amharic (10), English (10 units), General Science (7), Social Studies (7), Career & Technical Education (8), Information Technology (6), Health & PE (7) and Performing & Visual Arts (5): 67 chapters with sets, integers, equations and area drills, science calculations (speed, density, force), time-zone, map-scale and population-density drills, history timelines, LOGO turtle shapes, CV and interview practice, grammar in both languages and a Young Innovator project in every chapter.
+
+**Coming next:** Grades 5, 6 and 8 and *Joyful English · Grades 1 to 8*, a simple, clear guide to listening, speaking, reading and writing English. Every chapter opens with a one-picture summary and a guide for teachers and parents.
 
 ▶ **Open the platform:** https://muler-21.github.io/AMBKidsJoy/  
 ▶ **YouTube lessons:** https://www.youtube.com/@kidseducation9276
@@ -68,8 +70,9 @@ AMBKidsJoy follows these student books. Thank you to their writers. All activiti
 - **Grade 2:** Mathematics (Sintayehu Mesfin, Lakew Asnake); Amharic (Abebech Tesfaye, Eshete Mebrat); Health & PE (Mesfin Ketema, Adane Eshetu); English for Ethiopia Grade 2 (© FDRE Ministry of Education); Moral Education student book and teacher's guide (FDRE Ministry of Education; guide © Oromia Education Bureau).
 - **Grade 3:** Mathematics (Liulseged Assefa, Kefyalew Shiferaw); Amharic (Hana Filate, Andargachew Mengesha); Environmental Science (Iyasu Adane, Kiros Tareke); Moral Education (Maru Mateos, Kidane Hailu; Amharic © ANRS Education Bureau, 2016 E.C.); Health & PE (Abebe Dese, Belete Assefa); Performing & Visual Arts (Semira Seid, Tehone Bante); Grade 3 English Student's Book.
 - **Grade 4:** Mathematics (Kebede Alemu, Yilma Tsehayu); Amharic (Tsegaye Beyene, Fasil Mekuanint); English for Ethiopia Grade 4 (Melkamu Dumessa PhD, Temesgen Mereba PhD; © FDRE Ministry of Education); Environmental Science (Neknike Zewde, Assefa Yihune); Ge'ez (Muluken Andualem PhD, Gebre Ab Bogale; © 2017 E.C.); Health & PE (Abebe Dese, Belete Assefa); Performing & Visual Arts (Hussen Assen, Asfaw Reta).
+- **Grade 7:** Mathematics (Zelalem Addis, Atalel Alameneh); Amharic (Zewdu Milkit, Meaza Legesse); English (Dr. Haile Shibabaw, Dr. Zewudie Tamiru); General Science (Hassen Worku PhD, Awoke Debebe, Seid Mohammed, Muluneh Workie); Social Studies (Shewanesseh Fisseha, Seid Hussen); Health & PE (Dr. Demisse Gashu, Yimam Arage, Dr. Ambachew Amede); Performing & Visual Arts (Mastewal Geta, Yohannes Tadesse); Career & Technical Education (Getachew Habtamu PhD, Ashenafi Kebede PhD; © FDRE Ministry of Education); Information Technology (Birhanu Hailu PhD, Belete Biazen; © FDRE Ministry of Education).
 
-Teachers and parents: please report any mistake, especially in the Amharic and Ge'ez text, through **Issues**.
+Teachers and parents: please report any mistake, especially in the Amharic, Ge'ez and history text, through **Issues**.
 
 ## Licence
 

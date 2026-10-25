@@ -71,7 +71,7 @@ if MATH_SRC:
 shutil.copy(os.path.join(DIST, 'home.html'), os.path.join(DIST, 'index.html'))
 
 # ---------- Grades 1, 2 (dist/grade-N/) ----------
-for GN in (1, 2, 4):
+for GN in (1, 2, 4, 7):
     G1 = os.path.join(SRC, f'grade{GN}')
     if not os.path.isdir(G1): continue
     D1 = os.path.join(DIST, f'grade-{GN}'); os.makedirs(os.path.join(D1, 'units'), exist_ok=True)

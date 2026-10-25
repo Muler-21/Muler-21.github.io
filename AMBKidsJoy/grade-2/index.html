@@ -3,7 +3,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;600;700&display=swap">
-<link rel="stylesheet" href="../style.css?v=202610250222">
+<link rel="stylesheet" href="../style.css?v=202610251130">
 <style>
 .hero{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;padding:clamp(18px,3vw,28px);border-radius:28px;background:var(--surface);border:2px solid var(--line)}
 .hero>svg{width:clamp(76px,14vw,120px);height:auto}
@@ -92,7 +92,7 @@ const SUBJECTS=[
 ];
 const T={
  kicker:{en:'Learning Hub · Grades 1 to 8',am:'የልጆች የደስታ መማሪያ ማዕከል · ከ1ኛ እስከ 8ኛ ክፍል'},
- tag:{en:'Interactive lessons in Amharic and English, with Kokeb the star as your guide. Learn by thinking, playing, experimenting and explaining why. Grades 1 to 4 are ready now, and more grades are on the way.',am:'በአማርኛና በእንግሊዝኛ በይነ-ተግባራዊ ትምህርቶች፤ መሪያችሁ ኮከብ ናት። በማሰብ፣ በመጫወት፣ በመሞከርና ምክንያቱን በማስረዳት ተማሩ። ከ1ኛ እስከ 4ኛ ክፍል አሁን ዝግጁ ናቸው፤ ሌሎች ክፍሎችም በመንገድ ላይ ናቸው።'},
+ tag:{en:'Interactive lessons in Amharic and English, with Kokeb the star as your guide. Learn by thinking, playing, experimenting and explaining why. Grades 1 to 4 and Grade 7 are ready now, and Grades 5, 6 and 8 are on the way.',am:'በአማርኛና በእንግሊዝኛ በይነ-ተግባራዊ ትምህርቶች፤ መሪያችሁ ኮከብ ናት። በማሰብ፣ በመጫወት፣ በመሞከርና ምክንያቱን በማስረዳት ተማሩ። ከ1ኛ እስከ 4ኛ ክፍልና 7ኛ ክፍል አሁን ዝግጁ ናቸው፤ 5ኛ፣ 6ኛና 8ኛ ክፍሎች በመንገድ ላይ ናቸው።'},
  pick:{en:'Choose your grade',am:'ክፍላችሁን ምረጡ'},
  grade:{en:'Grade',am:'ክፍል'},
  g3:{en:'Grade 3',am:'3ኛ ክፍል'},
@@ -124,7 +124,7 @@ const T={
  teacher:{en:'For teachers and parents: each chapter follows the student textbook of the Amhara Region Education Bureau. Stars are saved on this device only. Use the language button to switch every page between Amharic and English.',am:'ለመምህራንና ለወላጆች፦ እያንዳንዱ ምዕራፍ የአማራ ክልል ትምህርት ቢሮ የ3ኛ ክፍል መጽሐፍን ይከተላል። ኮከቦች የሚቀመጡት በዚህ መሣሪያ ላይ ብቻ ነው። እያንዳንዱን ገጽ በአማርኛና በእንግሊዝኛ ለመቀያየር የቋንቋ ቁልፉን ተጠቀሙ።'}
 };
 const UNITS={"amharic-1": 9, "amharic-10": 9, "amharic-2": 9, "amharic-3": 9, "amharic-4": 9, "amharic-5": 9, "amharic-6": 8, "amharic-7": 9, "amharic-8": 9, "amharic-9": 8, "english-1": 9, "english-2": 9, "english-3": 10, "english-4": 8, "english-5": 8, "english-6": 8, "english-7": 8, "english-8": 8, "health-1": 9, "health-2": 7, "health-3": 7, "health-4": 8, "health-5": 8, "health-6": 6, "math-1": 9, "math-10": 7, "math-11": 7, "math-2": 8, "math-3": 7, "math-4": 8, "math-5": 7, "math-6": 7, "math-7": 8, "math-8": 6, "math-9": 7, "moral-1": 7, "moral-2": 7, "moral-3": 6, "moral-4": 6, "moral-5": 6, "moral-6": 6};
-const GR=2,PFX='g2-',ROOT='../';const AVAIL={1:'grade-1/',2:'grade-2/',3:'',4:'grade-4/'};
+const GR=2,PFX='g2-',ROOT='../';const AVAIL={1:'grade-1/',2:'grade-2/',3:'',4:'grade-4/',7:'grade-7/'};
 /* Grade 2 chapters (from the Grade 2 student books) */
 SUBJECTS.length=0;
 SUBJECTS.push(
@@ -186,10 +186,10 @@ function render(){
  document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{lang=b.dataset.lang;store.set('g3-lang',lang);render()});
 }
 /* subject accents on cards */
-const st=document.createElement('style');st.textContent=SUBJECTS.map(s=>`.subj[data-subj="${s.key}"]{--accent:var(--${({math:'blue',amharic:'clay',english:'plum',env:'green',moral:'sun',health:'teal',art:'plum',geez:'clay'})[s.key]});--accent-soft:var(--${({math:'blue',amharic:'clay',english:'plum',env:'green',moral:'sun',health:'teal',art:'plum',geez:'clay'})[s.key]}-soft)}`).join('');document.head.appendChild(st);
+const st=document.createElement('style');st.textContent=SUBJECTS.map(s=>`.subj[data-subj="${s.key}"]{--accent:var(--${({math:'blue',amharic:'clay',english:'plum',env:'green',moral:'sun',health:'teal',art:'plum',geez:'clay',science:'green',social:'clay',cte:'sun',it:'blue'})[s.key]});--accent-soft:var(--${({math:'blue',amharic:'clay',english:'plum',env:'green',moral:'sun',health:'teal',art:'plum',geez:'clay',science:'green',social:'clay',cte:'sun',it:'blue'})[s.key]}-soft)}`).join('');document.head.appendChild(st);
 render();
 window.addEventListener('pageshow',render);
 })();
 </script>
-<script src="../author.js?v=202610250222"></script>
+<script src="../author.js?v=202610251130"></script>
 </body></html>
