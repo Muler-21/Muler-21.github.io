@@ -2,7 +2,7 @@
 
 **AMBKidsJoy** is a free, bilingual (Amharic / English) interactive learning hub for children from Grade 1 to Grade 8.
 
-**Available now: Grades 1, 2 and 3.**
+**Available now: Grades 1 to 4.**
 
 **Grade 1** (folder `grade-1/`): Mathematics (10 chapters), Amharic (10), English (8 units), Environmental Science (5) and Health & PE (6): 39 chapters with finger-tracing of letters and numbers, counting games, listening (spoken English words), picture matching and movement challenges. Moral Education and Arts come when the books are added.
 
@@ -10,20 +10,18 @@
 
 **Grade 3**: It covers all seven subjects of the Grade 3 curriculum of the Amhara Region, Ethiopia: **54 chapters** with nearly 400 activities. Kokeb, a friendly star, guides children through games, experiments and stories.
 
-**Coming next:** the other grades (4 to 8) and *Joyful English · Grades 1 to 8*, a simple, clear guide to listening, speaking, reading and writing English. Every chapter opens with a one-picture summary and a guide for teachers and parents.
+**Grade 4** (folder `grade-4/`): all seven subjects: Mathematics (9), Amharic (10), English (10 units), Environmental Science (5), Ge'ez (11), Health & PE (6) and Performing & Visual Arts (5): 56 chapters with place-value and fraction drills, angle and bar-graph pictures, reading passages, Ge'ez words and numerals, rhythm games and arts projects.
+
+**Coming next:** Grades 5 to 8 and *Joyful English · Grades 1 to 8*, a simple, clear guide to listening, speaking, reading and writing English. Every chapter opens with a one-picture summary and a guide for teachers and parents.
 
 ▶ **Open the platform:** https://muler-21.github.io/AMBKidsJoy/  
 ▶ **YouTube lessons:** https://www.youtube.com/@kidseducation9276
 
 ## Author
 
-**Mulusew Kassa Bitew (PhD)**, founder of AMBKidsJoy, researcher and educator.
+**Mulusew Kassa Bitew (PhD)**, researcher and educator, made AMBKidsJoy so that every child can learn with joy. [GitHub](https://muler-21.github.io/) · [Subscribe on YouTube](https://www.youtube.com/@kidseducation9276?sub_confirmation=1)
 
-Dr. Mulusew Kassa Bitew holds a PhD in Agricultural Technologies and Biotechnologies from the University of Molise (Italy) and an MSc from Wageningen University (the Netherlands). He is a Postdoctoral Research Fellow in the area of MultiOmics at the University of Molise, was a fellow at ILRI in Addis Ababa, and taught at Debre Markos and Mekelle Universities. He created AMBKidsJoy so that every child can learn with joy, think sharply and grow up to build Ethiopia.
-
-GitHub: [@Muler-21](https://github.com/Muler-21)
-
-## What is inside
+## What is inside (Grade 3)
 
 | Subject | Chapters |
 |---|---|
@@ -64,20 +62,15 @@ Go to **Settings → Pages**, choose **Deploy from a branch**, then select `main
 
 ## Sources and acknowledgement
 
-AMBKidsJoy follows the chapters and learning goals of the Grade 3 student books of the Amhara National Regional State (ANRS) Education Bureau:
-Mathematics, Amharic, Environmental Science, Health & Physical Education and Performing & Visual Arts (© ANRS Education Bureau, 2015 E.C.), Moral Education (English edition by the FDRE Ministry of Education; Amharic translation © ANRS Education Bureau, 2016 E.C.), and the Grade 3 English Student's Book.
+AMBKidsJoy follows these student books. Thank you to their writers. All activities and drawings are new and support (not replace) the textbooks; AMBKidsJoy is not an official Education Bureau publication. Unless noted, books are © ANRS Education Bureau, 2015 E.C.
 
-We thank their authors, editors and illustrators. All stories, questions, games, drawings and innovator challenges in AMBKidsJoy were written and drawn new. They support the textbooks and the teacher; they do not replace them. AMBKidsJoy is not an official publication of the Education Bureau.
+- **Grade 1:** Mathematics (Bire Gete); Amharic (Hawaz Woldeyes, Getachew Tefera, Zinet Ahmed); Environmental Science (Ketemaw Wubet, Worku Melese); Health & PE (Adane Eshetu, Mesfin Ketema); English for Ethiopia Grade 1 (© FDRE Ministry of Education).
+- **Grade 2:** Mathematics (Sintayehu Mesfin, Lakew Asnake); Amharic (Abebech Tesfaye, Eshete Mebrat); Health & PE (Mesfin Ketema, Adane Eshetu); English for Ethiopia Grade 2 (© FDRE Ministry of Education); Moral Education student book and teacher's guide (FDRE Ministry of Education; guide © Oromia Education Bureau).
+- **Grade 3:** Mathematics (Liulseged Assefa, Kefyalew Shiferaw); Amharic (Hana Filate, Andargachew Mengesha); Environmental Science (Iyasu Adane, Kiros Tareke); Moral Education (Maru Mateos, Kidane Hailu; Amharic © ANRS Education Bureau, 2016 E.C.); Health & PE (Abebe Dese, Belete Assefa); Performing & Visual Arts (Semira Seid, Tehone Bante); Grade 3 English Student's Book.
+- **Grade 4:** Mathematics (Kebede Alemu, Yilma Tsehayu); Amharic (Tsegaye Beyene, Fasil Mekuanint); English for Ethiopia Grade 4 (Melkamu Dumessa PhD, Temesgen Mereba PhD; © FDRE Ministry of Education); Environmental Science (Neknike Zewde, Assefa Yihune); Ge'ez (Muluken Andualem PhD, Gebre Ab Bogale; © 2017 E.C.); Health & PE (Abebe Dese, Belete Assefa); Performing & Visual Arts (Hussen Assen, Asfaw Reta).
 
-Teachers and parents: please report any mistake, especially in the Amharic text, through **Issues**.
+Teachers and parents: please report any mistake, especially in the Amharic and Ge'ez text, through **Issues**.
 
 ## Licence
 
 © 2026 Mulusew Kassa Bitew. Shared under the **Creative Commons Attribution-NonCommercial-ShareAlike 4.0** licence (CC BY-NC-SA 4.0). You may use, copy and adapt AMBKidsJoy for free, non-commercial education if you credit the author and share your changes under the same licence. See `LICENSE`.
-
-
-### Grade 1 sources
-AMBKidsJoy Grade 1 follows the chapters of these Grade 1 student books: Mathematics, Amharic, Environmental Science, and Health & Physical Education (© ANRS Education Bureau, 2015 E.C.); English for Ethiopia, Student's Book Grade 1 (FDRE Ministry of Education). The activities, stories and drawings are new, written for AMBKidsJoy to support (not replace) the textbooks.
-
-### Grade 2 sources
-AMBKidsJoy Grade 2 follows the chapters of these Grade 2 books: Mathematics, Amharic, and Health & Physical Education student books (© ANRS Education Bureau, 2015 E.C.); English for Ethiopia, Student's Book Grade 2 (FDRE Ministry of Education); Moral Education Grade 2 student book and teacher's guide (Amharic edition prepared under the FDRE Ministry of Education; teacher's guide © Oromia Education Bureau, 2015 E.C.). The activities, stories and drawings are new, written for AMBKidsJoy to support (not replace) the textbooks.

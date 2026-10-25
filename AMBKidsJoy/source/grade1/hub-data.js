@@ -26,13 +26,13 @@ Object.assign(T,{
  g3:{en:'Grade 1',am:'1ኛ ክፍል'},
  g3sub:{en:'5 subjects ready · 39 chapters',am:'5 ትምህርቶች ዝግጁ · 39 ምዕራፎች'},
  ready:{en:'Grade 1: {a} of {b} chapters ready',am:'1ኛ ክፍል፦ ከ{b} ምዕራፎች {a} ዝግጁ'},
- tag:{en:'Grade 1: learn to count, read, write and explore with Kokeb the star. Big pictures, finger tracing, counting games and songs, in Amharic and English. Created by Dr. Mulusew Kassa Bitew.',am:'1ኛ ክፍል፦ ከኮከብ ጋር መቁጠር፣ ማንበብ፣ መጻፍና ማሰስ ተማሩ። ትልልቅ ስዕሎች፣ በጣት መጻፍ፣ የቁጥር ጨዋታዎችና መዝሙሮች በአማርኛና በእንግሊዝኛ። የተዘጋጀው በዶ/ር ሙሉሰው ካሳ ቢተው።'},
- srcIntro:{en:'AMBKidsJoy Grade 1 follows the chapters and learning goals of these Grade 1 student books. We thank their authors, editors, illustrators, the Amhara National Regional State Education Bureau and the FDRE Ministry of Education, which hold the copyright of the books.',am:'AMBKidsJoy 1ኛ ክፍል የእነዚህን የ1ኛ ክፍል የተማሪ መጻሕፍት ምዕራፎችና የመማር ግቦች ይከተላል። ደራሲዎቹን፣ አርታኢዎቹን፣ ሠዓሊዎቹን፣ የመጻሕፍቱ የቅጂ መብት ባለቤቶች የሆኑትን የአማራ ብሔራዊ ክልላዊ መንግሥት ትምህርት ቢሮንና የኢፌዴሪ ትምህርት ሚኒስቴርን እናመሰግናለን።'},
+ tag:{en:'Grade 1: learn to count, read, write and explore with Kokeb the star. Big pictures, finger tracing, counting games and songs, in Amharic and English.',am:'1ኛ ክፍል፦ ከኮከብ ጋር መቁጠር፣ ማንበብ፣ መጻፍና ማሰስ ተማሩ። ትልልቅ ስዕሎች፣ በጣት መጻፍ፣ የቁጥር ጨዋታዎችና መዝሙሮች በአማርኛና በእንግሊዝኛ።'},
+ srcIntro:{en:'Grade 1 follows these student books. Thank you to their writers.',am:'1ኛ ክፍል እነዚህን የተማሪ መጻሕፍት ይከተላል። አዘጋጆቻቸውን እናመሰግናለን።'},
  books:[
-  {en:'Mathematics, Grade 1 Student Book. © ANRS Education Bureau, 2015 E.C.',am:'ሒሳብ፣ የ1ኛ ክፍል የተማሪ መጽሐፍ። © አብክመ ትምህርት ቢሮ፣ 2015 ዓ.ም.'},
-  {en:'Amharic, Grade 1 Student Book. © ANRS Education Bureau, 2015 E.C.',am:'አማርኛ፣ የ1ኛ ክፍል የተማሪ መጽሐፍ። © አብክመ ትምህርት ቢሮ፣ 2015 ዓ.ም.'},
-  {en:'English for Ethiopia, Student\'s Book, Grade 1. FDRE Ministry of Education.',am:'English for Ethiopia፣ የ1ኛ ክፍል የተማሪ መጽሐፍ። የኢፌዴሪ ትምህርት ሚኒስቴር።'},
-  {en:'Environmental Science, Grade 1 Student Book. © ANRS Education Bureau, 2015 E.C.',am:'አካባቢ ሳይንስ፣ የ1ኛ ክፍል የተማሪ መጽሐፍ። © አብክመ ትምህርት ቢሮ፣ 2015 ዓ.ም.'},
-  {en:'Health & Physical Education, Grade 1 Student Book. © ANRS Education Bureau, 2015 E.C.',am:'ጤናና ሰውነት ማጎልመሻ፣ የ1ኛ ክፍል የተማሪ መጽሐፍ። © አብክመ ትምህርት ቢሮ፣ 2015 ዓ.ም.'}],
+  {en:'Mathematics: Bire Gete. © ANRS Education Bureau, 2015 E.C.',am:'ሒሳብ፦ ብሬ ጌቴ። © አብክመ ትምህርት ቢሮ፣ 2015 ዓ.ም.'},
+  {en:'Amharic: Hawaz Woldeyes, Getachew Tefera, Zinet Ahmed. © ANRS Education Bureau, 2015 E.C.',am:'አማርኛ፦ ሐዋዝ ወልደየስ፣ ጌታቸው ተፈራ፣ ዚነት አህመድ። © አብክመ ትምህርት ቢሮ፣ 2015 ዓ.ም.'},
+  {en:'English for Ethiopia, Grade 1. © FDRE Ministry of Education.',am:'English for Ethiopia፣ 1ኛ ክፍል። © የኢፌዴሪ ትምህርት ሚኒስቴር።'},
+  {en:'Environmental Science: Ketemaw Wubet, Worku Melese. © ANRS Education Bureau, 2015 E.C.',am:'አካባቢ ሳይንስ፦ ከተማው ውበት፣ ወርቁ መለሰ። © አብክመ ትምህርት ቢሮ፣ 2015 ዓ.ም.'},
+  {en:'Health & PE: Adane Eshetu, Mesfin Ketema. © ANRS Education Bureau, 2015 E.C.',am:'ጤናና ሰውነት ማጎልመሻ፦ አዳነ እሸቱ፣ መስፍን ከተማ። © አብክመ ትምህርት ቢሮ፣ 2015 ዓ.ም.'}],
  teacher:{en:'For teachers and parents: Grade 1 children learn best with you beside them. Read the instructions aloud, let them tap and trace, and ask "how do you know?". Stars are saved on this device only.',am:'ለመምህራንና ለወላጆች፦ የ1ኛ ክፍል ልጆች እናንተ አጠገባቸው ስትሆኑ በደንብ ይማራሉ። መመሪያውን ጮክ ብላችሁ አንብቡላቸው፣ እንዲነኩና እንዲጽፉ ፍቀዱላቸው፤ "እንዴት አወቅህ/ሽ?" ብላችሁ ጠይቁ። ኮከቦቹ የሚቀመጡት በዚህ መሣሪያ ላይ ብቻ ነው።'}
 });

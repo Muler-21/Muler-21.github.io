@@ -71,7 +71,7 @@ if MATH_SRC:
 shutil.copy(os.path.join(DIST, 'home.html'), os.path.join(DIST, 'index.html'))
 
 # ---------- Grades 1, 2 (dist/grade-N/) ----------
-for GN in (1, 2):
+for GN in (1, 2, 4):
     G1 = os.path.join(SRC, f'grade{GN}')
     if not os.path.isdir(G1): continue
     D1 = os.path.join(DIST, f'grade-{GN}'); os.makedirs(os.path.join(D1, 'units'), exist_ok=True)
@@ -79,6 +79,9 @@ for GN in (1, 2):
     shutil.copy(os.path.join(G1, SUMF), os.path.join(D1, SUMF))
     if GN == 1: shutil.copy(os.path.join(G1, 'kit1.js'), os.path.join(D1, 'kit1.js'))
     KIT = 'kit1.js' if GN == 1 else '../grade-1/kit1.js'
+    EXTRA = ''
+    for _k in sorted(glob.glob(os.path.join(G1, 'kit[2-9].js'))):
+        shutil.copy(_k, os.path.join(D1, os.path.basename(_k))); EXTRA += f'<script src="{os.path.basename(_k)}"></script>'
     c1 = {}
     for f in sorted(glob.glob(os.path.join(G1, 'units', '*.js'))):
         uid = os.path.basename(f)[:-3]; short = uid[3:]
@@ -86,7 +89,7 @@ for GN in (1, 2):
         shutil.copy(f, os.path.join(D1, 'units', uid + '.js'))
         m = re.search(r"title:\{en:'([^']+)'", src)
         html = (HEAD + f'<title>{m.group(1) if m else short} · Grade {GN} · AMBKidsJoy</title>' + FONTS + '<link rel="stylesheet" href="../style.css"></head><body>'
-                f'<script src="../icons.js"></script><script src="../summaries.js"></script><script src="{SUMF}"></script><script src="../summary.js"></script><script src="../engine.js"></script><script src="{KIT}"></script>'
+                f'<script src="../icons.js"></script><script src="../summaries.js"></script><script src="{SUMF}"></script><script src="../summary.js"></script><script src="../engine.js"></script><script src="{KIT}"></script>{EXTRA}'
                 f'<script src="units/{uid}.js"></script><script src="../author.js"></script></body></html>')
         open(os.path.join(D1, short + '.html'), 'w', encoding='utf-8').write(html)
     import subprocess
