@@ -20,6 +20,8 @@ SUBJECTS.push(
 );
 Object.assign(T,{
  g3:{en:'Joyful English',am:'እንግሊዝኛ በደስታ'},
+ bookT:{en:'Joyful English Web Book: from first words to work',am:'የእንግሊዝኛ በደስታ የድር መጽሐፍ፦ ከመጀመሪያ ቃላት እስከ ሥራ'},
+ bookS:{en:'Find your level, then follow 8 stages with 600+ free lessons from the British Council, VOA, Cambridge and more, checked on their official pages. Search, bookmark, take notes and track progress.',am:'ደረጃችሁን ፈልጉ፤ ከዚያ ከብሪቲሽ ካውንስል፣ ከVOA፣ ከካምብሪጅና ከሌሎች በይፋዊ ገጾቻቸው የተረጋገጡ 600+ ነጻ ትምህርቶችን የያዙ 8 ደረጃዎችን ተከተሉ። ፈልጉ፣ ዕልባት አድርጉ፣ ማስታወሻ ያዙ፣ እድገታችሁን ተከታተሉ።'},
  kicker:{en:'Joyful English · Grade 1 to the workplace',am:'እንግሊዝኛ በደስታ · ከ1ኛ ክፍል እስከ ሥራ ዓለም'},
  chapter:{en:'lessons',am:'ትምህርቶች'},
  g3sub:{en:'8 levels · Grade 1 to the workplace',am:'8 ደረጃዎች · ከ1ኛ ክፍል እስከ ሥራ ዓለም'},

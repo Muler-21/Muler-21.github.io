@@ -16,6 +16,8 @@
 
 **Joyful English** (folder `joyful/`): eight levels from Grade 1 to university and the workplace (CEFR Pre-A1 to B2–C1). Lesson 1 of every level is ready: listening, a sound target for the sounds Amharic speakers find hard, speaking with the microphone (speech recognition in Chrome or Edge), reading, grammar and writing. More lessons are coming.
 
+**Joyful English Web Book** (folder `joyful/book/`): a free path from first words (Stage 0) to proficiency (Stage 6) plus a Workplace pathway, with a placement check, 33 modules, a searchable catalogue of 623 free resources (British Council, VOA, Cambridge, Purdue OWL and more) labelled by how each was checked, bookmarks, notes and progress tracking. Research report, curriculum blueprint, expansion plan, catalogue (CSV/JSON) and tests are in that folder.
+
 **Coming next:** Grades 5, 6 and 8 and more Joyful English lessons. Every chapter opens with a one-picture summary and a guide for teachers and parents.
 
 ▶ **Open the platform:** https://muler-21.github.io/AMBKidsJoy/  

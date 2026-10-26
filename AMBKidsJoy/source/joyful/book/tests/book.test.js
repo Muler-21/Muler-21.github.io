@@ -1,0 +1,33 @@
+// Browser tests for the web book. Run from the AMBKidsJoy root: node joyful/book/tests/book.test.js (needs Playwright + Chromium).
+const { chromium } = require('playwright');const path=require('path');
+const URL='file://'+path.resolve(__dirname,'..','index.html');
+(async()=>{const b=await chromium.launch();let fail=0;const ok=(c,m)=>{console.log((c?'PASS':'FAIL')+' '+m);if(!c)fail++};
+ const pg=await b.newPage({viewport:{width:1100,height:900}});const errs=[];pg.on('pageerror',e=>errs.push(e.message));
+ await pg.addInitScript(()=>{try{localStorage.clear()}catch(e){}});
+ await pg.goto(URL+'#/home');await pg.waitForSelector('.stage-card');
+ ok((await pg.$$('.stage-card')).length===8,'home shows 8 stages');
+ ok((await pg.$$eval('.bk-nav a',a=>a.length))>=17,'navigation has all book sections');
+ await pg.goto(URL+'#/s/2');await pg.waitForSelector('.module');
+ ok((await pg.$$('.module')).length===5,'stage 2 renders 5 modules');
+ ok(await pg.$eval('.module a.btn-s.primary[href^="../l"]',a=>a.getAttribute('href'))!=null,'module links to a Joyful English lesson');
+ await pg.goto(URL+'#/dir');await pg.waitForSelector('#fq');
+ const total=+(await pg.$eval('.count',e=>e.textContent)).match(/\d+/)[0];ok(total>500,'directory lists all resources ('+total+')');
+ await pg.fill('#fq','conditionals');await pg.waitForTimeout(200);
+ const n1=+(await pg.$eval('.count',e=>e.textContent)).match(/\d+/)[0];ok(n1>0&&n1<20,'search narrows results ('+n1+')');
+ await pg.fill('#fq','');await pg.selectOption('[data-f="c"]','C1');await pg.waitForTimeout(150);
+ await pg.selectOption('[data-f="sk"]','writing');await pg.waitForTimeout(150);
+ const titles=await pg.$$eval('.res h3',h=>h.length);const n2=+(await pg.$eval('.count',e=>e.textContent)).match(/\d+/)[0];ok(n2>0&&titles>0,'level + skill filters work ('+n2+')');
+ const all=await pg.evaluate(()=>CATALOG.filter(r=>JEB.match(r,{q:'',c:'C1',sk:'writing'})).every(r=>r.c.includes('C1')&&r.sk.includes('writing')));ok(all,'filter logic returns only matching records');
+ await pg.click('.res [data-bm]');await pg.click('.res [data-done]');
+ await pg.goto(URL+'#/progress');await pg.waitForSelector('h1');ok((await pg.$$('.res')).length===1,'bookmark appears in My progress');
+ await pg.fill('#gnote','My first note');const saved=await pg.evaluate(()=>JSON.parse(localStorage.getItem('jeb-notes'))._general);ok(saved==='My first note','notes are saved');
+ await pg.goto(URL+'#/start');await pg.waitForSelector('#place');
+ for(let i=0;i<4;i++)await pg.check(`input[name="c${i}"][value="2"]`);
+ for(const [i,j] of [[0,1],[1,1],[2,1],[3,1]])await pg.check(`input[name="q${i}"][value="${j}"]`);
+ await pg.click('#place button[type=submit]');await pg.waitForSelector('#placeOut section');
+ const res=await pg.$eval('#placeOut h2',h=>h.textContent);ok(/B1|A2/.test(res),'placement gives a level ('+res.trim()+')');
+ await pg.goto(URL+'#/lib/pron');await pg.waitForSelector('.res');ok((await pg.$$('.res')).length>0,'pronunciation library has resources');
+ await pg.click('[data-lang="am"]');await pg.waitForTimeout(100);ok((await pg.$eval('html',h=>h.lang))==='am','Amharic interface switch');
+ const ph=await b.newPage({viewport:{width:375,height:800}});for(const h of ['#/home','#/s/W','#/dir','#/start','#/guide']){await ph.goto(URL+h);await ph.waitForTimeout(150);const sw=await ph.evaluate(()=>document.documentElement.scrollWidth);ok(sw<=376,'no horizontal scroll at 375px on '+h+' ('+sw+')')}
+ ok(errs.length===0,'no JavaScript errors '+errs.join('|'));
+ await b.close();console.log(fail?`${fail} FAILED`:'ALL PASSED');process.exit(fail?1:0)})();

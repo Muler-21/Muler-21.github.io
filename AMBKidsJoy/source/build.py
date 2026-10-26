@@ -105,6 +105,11 @@ for GN in (1, 2, 4, 7, 'J'):
         open(os.path.join(D1, n), 'w', encoding='utf-8').write(page)
     print(f'grade {GN} units', len(c1), sum(c1.values()))
 
+_bk=os.path.join(SRC,'joyful','book')
+if os.path.isdir(_bk):
+    _dbk=os.path.join(DIST,'joyful','book')
+    if os.path.isdir(_dbk): shutil.rmtree(_dbk)
+    shutil.copytree(_bk,_dbk,ignore=shutil.ignore_patterns('__pycache__','node_modules'))
 print('built', sorted(os.listdir(DIST)))
 
 # cache-busting: make browsers fetch fresh scripts/styles after each update
