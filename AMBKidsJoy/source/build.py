@@ -122,3 +122,16 @@ for _f in _glob.glob(os.path.join(DIST, '*.html')) + _glob.glob(os.path.join(DIS
 
 import shutil as _sh
 _sh.copy(os.path.join(SRC,'cover.png'), os.path.join(DIST,'cover.png'))
+
+# Visitor counter (GoatCounter: cookieless; counts pageviews, country/region, device, referrer)
+GC = '<script data-goatcounter="https://ambkidsjoy.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>'
+for _root, _dirs, _files in os.walk(DIST):
+    for _f in _files:
+        if not _f.endswith('.html') or _f == 'hub.html':
+            continue
+        _p = os.path.join(_root, _f)
+        _s = open(_p, encoding='utf-8').read()
+        if 'goatcounter' in _s:
+            continue
+        _s = _s.replace('</body>', GC + '</body>', 1) if '</body>' in _s else _s + GC
+        open(_p, 'w', encoding='utf-8').write(_s)
