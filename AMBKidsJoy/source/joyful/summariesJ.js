@@ -1,0 +1,12 @@
+/* Joyful English: one big idea per lesson */
+window.AMB_SUMMARY=window.AMB_SUMMARY||{};
+Object.assign(window.AMB_SUMMARY,{
+'je-l1-1':{"concept":{"en":"Hello! I can greet and say my name","am":"ሰላም! ሰላምታ መስጠትና ስሜን መናገር እችላለሁ"},"labels":[{"en":"Greetings","am":"ሰላምታ"},{"en":"Who I am","am":"ማንነቴ"},{"en":"/æ/ and /e/","am":"/æ/ እና /e/"},{"en":"Capital letters","am":"ትልቅ ፊደል"}]},
+'je-l2-1':{"concept":{"en":"My day: routines in the present simple","am":"ቀኔ፦ የዕለት ተግባር በpresent simple"},"labels":[{"en":"Routine words","am":"የዕለት ቃላት"},{"en":"Telling time","am":"ጊዜ መናገር"},{"en":"He/she/it + -s","am":"He/she/it + -s"},{"en":"/iː/ and /ɪ/","am":"/iː/ እና /ɪ/"}]},
+'je-l3-1':{"concept":{"en":"Tell what happened: the past simple at the market","am":"የሆነውን መናገር፦ past simple በገበያ"},"labels":[{"en":"Market words","am":"የገበያ ቃላት"},{"en":"Past simple","am":"Past simple"},{"en":"Shopping questions","am":"የግብይት ጥያቄዎች"},{"en":"/θ/ and /ð/","am":"/θ/ እና /ð/"}]},
+'je-l4-1':{"concept":{"en":"Explain processes in English, step by step","am":"ሂደቶችን በእንግሊዝኛ ደረጃ በደረጃ አብራሩ"},"labels":[{"en":"Subject words","am":"የትምህርት ቃላት"},{"en":"Sequence words","am":"የቅደም ተከተል ቃላት"},{"en":"Science passive","am":"የሳይንስ ተደራጊ"},{"en":"Word stress","am":"የቃል ጭነት"}]},
+'je-l5-1':{"concept":{"en":"Give opinions clearly, politely, with reasons","am":"አስተያየትን በግልጽ፣ በትሕትና፣ በምክንያት ስጡ"},"labels":[{"en":"Opinion phrases","am":"የአስተያየት አገላለጾች"},{"en":"Agree and disagree","am":"መስማማትና አለመስማማት"},{"en":"Reasons and examples","am":"ምክንያትና ምሳሌ"},{"en":"/v/ and /f/","am":"/v/ እና /f/"}]},
+'je-l6-1':{"concept":{"en":"Read like an examiner: main idea, inference, links","am":"እንደ ፈታኝ አንብቡ፦ ዋና ሐሳብ፣ ግምት፣ ማያያዣ"},"labels":[{"en":"Main idea","am":"ዋና ሐሳብ"},{"en":"Inference","am":"ግምት"},{"en":"Linking words","am":"ማያያዣ ቃላት"},{"en":"Diphthongs","am":"ተንሸራታች አናባቢዎች"}]},
+'je-l7-1':{"concept":{"en":"University English: signposts, notes and careful claims","am":"የዩኒቨርሲቲ እንግሊዝኛ፦ ምልክቶች፣ ማስታወሻና ጥንቁቅ አገላለጽ"},"labels":[{"en":"Signposts","am":"የምልክት ቃላት"},{"en":"Hedging","am":"ጥንቃቄ"},{"en":"Note-taking","am":"ማስታወሻ መያዝ"},{"en":"Academic stress","am":"አካዳሚያዊ ጭነት"}]},
+'je-l8-1':{"concept":{"en":"English at work: confident, polite, concise","am":"እንግሊዝኛ በሥራ ቦታ፦ በራስ መተማመን፣ ትሕትና፣ አጭርነት"},"labels":[{"en":"Interview answers","am":"የቃለ መጠይቅ መልሶች"},{"en":"Polite requests","am":"ትሑት ጥያቄዎች"},{"en":"Professional emails","am":"ሙያዊ ኢሜይሎች"},{"en":"Consonant clusters","am":"ተከታታይ ተነባቢዎች"}]},
+});

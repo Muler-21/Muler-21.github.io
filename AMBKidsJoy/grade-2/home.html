@@ -3,7 +3,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;600;700&display=swap">
-<link rel="stylesheet" href="../style.css?v=202610251130">
+<link rel="stylesheet" href="../style.css?v=202610261718">
 <style>
 .hero{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;padding:clamp(18px,3vw,28px);border-radius:28px;background:var(--surface);border:2px solid var(--line)}
 .hero>svg{width:clamp(76px,14vw,120px);height:auto}
@@ -98,8 +98,8 @@ const T={
  g3:{en:'Grade 3',am:'3ኛ ክፍል'},
  g3sub:{en:'7 subjects · 54 chapters',am:'7 ትምህርቶች · 54 ምዕራፎች'},
  open:{en:'Open',am:'ክፈቱ'},
- eng:{en:'Joyful English · Grades 1 to 8',am:'እንግሊዝኛ በደስታ · ከ1ኛ እስከ 8ኛ ክፍል'},
- engSub:{en:'A simple, clear communication guide: listen, speak, read and write English with confidence, step by step from Grade 1 to Grade 8.',am:'ቀላልና ግልጽ የመግባቢያ መመሪያ፦ ከ1ኛ እስከ 8ኛ ክፍል ደረጃ በደረጃ እንግሊዝኛን በልበ ሙሉነት ማዳመጥ፣ መናገር፣ ማንበብና መጻፍ።'},
+ eng:{en:'Joyful English · 8 levels, Grade 1 to work',am:'እንግሊዝኛ በደስታ · 8 ደረጃዎች፣ ከ1ኛ ክፍል እስከ ሥራ ዓለም'},
+ engSub:{en:'Listen, speak, read and write English with confidence, level by level from Grade 1 to university and the workplace. Speak into the microphone and get a star.',am:'ከ1ኛ ክፍል እስከ ዩኒቨርሲቲና ሥራ ዓለም ደረጃ በደረጃ እንግሊዝኛን በልበ ሙሉነት ማዳመጥ፣ መናገር፣ ማንበብና መጻፍ። በማይክሮፎን ተናገሩና ኮከብ አግኙ።'},
  stars:{en:'Stars collected',am:'የተሰበሰቡ ኮከቦች'},
  soon:{en:'Coming soon',am:'በቅርቡ'},
  chapter:{en:'chapters',am:'ምዕራፎች'},
@@ -173,7 +173,7 @@ function render(){
   <div class="meter"><span class="pill"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="${starPoints(50,52,46,20)}" fill="#F4B400" stroke="#C98F00" stroke-width="4"/></svg><span class="num">${got}</span>/${tot}</span><div class="bar" aria-label="${esc(tx(T.stars))}"><div style="width:${tot?got/tot*100:0}%"></div></div><span class="small" style="color:var(--ink-soft)">${esc(tx(T.ready).replace('{a}',ready).replace('{b}',all))}</span></div></div></section>
  <section aria-labelledby="pick-h"><h2 id="pick-h" style="font-size:1.5rem;margin-bottom:10px">${esc(tx(T.pick))}</h2>
  <div class="grades">${[1,2,3,4,5,6,7,8].map(g=>AVAIL[g]!==undefined?`<a class="gr" href="${g===GR?'':ROOT+AVAIL[g]+'home.html'}#grade-${g}"><span class="l">${esc(tx(T.grade))}</span><span class="n">${g}</span><span class="l">${esc(tx(T.open))} →</span></a>`:`<span class="gr" aria-disabled="true"><span class="l">${esc(tx(T.grade))}</span><span class="n">${g}</span><span class="l">${esc(tx(T.soon))}</span></span>`).join('')}</div></section>
- <section class="eng"><span class="ic">ABC</span><div><h2>${esc(tx(T.eng))}</h2><p>${esc(tx(T.engSub))}</p></div><span class="soon">${esc(tx(T.soon))}</span></section>
+ ${GR==='J'?'':`<a class="eng" href="${ROOT}joyful/home.html" style="text-decoration:none;color:inherit"><span class="ic">ABC</span><div><h2>${esc(tx(T.eng))}</h2><p>${esc(tx(T.engSub))}</p></div><span class="soon">${esc(tx(T.open))} →</span></a>`}
  <div class="gh" id="grade-${GR}"><h2>${esc(tx(T.g3))}</h2><span>${esc(tx(T.g3sub))}</span></div>
  <div class="subjects">${SUBJECTS.map(s=>`<article class="subj" data-subj="${s.key}"><header><span class="ic">${s.mark}</span><div><h2>${esc(tx(s.name))}</h2><p>${s.chs.length} ${esc(tx(T.chapter))}</p></div></header>
   <ol class="chs">${s.chs.map((c,i)=>c[1]?`<li><a class="ch" href="${c[1]}"><span class="no">${i+1}</span><span class="nm">${esc(tx(c[0]))}</span><span class="st">★ ${doneCount(c[1],c[2])}/${c[2]}</span></a></li>`
@@ -186,10 +186,10 @@ function render(){
  document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{lang=b.dataset.lang;store.set('g3-lang',lang);render()});
 }
 /* subject accents on cards */
-const st=document.createElement('style');st.textContent=SUBJECTS.map(s=>`.subj[data-subj="${s.key}"]{--accent:var(--${({math:'blue',amharic:'clay',english:'plum',env:'green',moral:'sun',health:'teal',art:'plum',geez:'clay',science:'green',social:'clay',cte:'sun',it:'blue'})[s.key]});--accent-soft:var(--${({math:'blue',amharic:'clay',english:'plum',env:'green',moral:'sun',health:'teal',art:'plum',geez:'clay',science:'green',social:'clay',cte:'sun',it:'blue'})[s.key]}-soft)}`).join('');document.head.appendChild(st);
+const st=document.createElement('style');st.textContent=SUBJECTS.map(s=>`.subj[data-subj="${s.key}"]{--accent:var(--${({math:'blue',amharic:'clay',english:'plum',env:'green',moral:'sun',health:'teal',art:'plum',geez:'clay',science:'green',social:'clay',cte:'sun',it:'blue',l1:'sun',l2:'green',l3:'teal',l4:'blue',l5:'plum',l6:'clay',l7:'blue',l8:'green'})[s.key]});--accent-soft:var(--${({math:'blue',amharic:'clay',english:'plum',env:'green',moral:'sun',health:'teal',art:'plum',geez:'clay',science:'green',social:'clay',cte:'sun',it:'blue',l1:'sun',l2:'green',l3:'teal',l4:'blue',l5:'plum',l6:'clay',l7:'blue',l8:'green'})[s.key]}-soft)}`).join('');document.head.appendChild(st);
 render();
 window.addEventListener('pageshow',render);
 })();
 </script>
-<script src="../author.js?v=202610251130"></script>
+<script src="../author.js?v=202610261718"></script>
 </body></html>

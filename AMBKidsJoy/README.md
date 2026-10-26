@@ -14,7 +14,9 @@
 
 **Grade 7** (folder `grade-7/`): nine subjects: Mathematics (7), Amharic (10), English (10 units), General Science (7), Social Studies (7), Career & Technical Education (8), Information Technology (6), Health & PE (7) and Performing & Visual Arts (5): 67 chapters with sets, integers, equations and area drills, science calculations (speed, density, force), time-zone, map-scale and population-density drills, history timelines, LOGO turtle shapes, CV and interview practice, grammar in both languages and a Young Innovator project in every chapter.
 
-**Coming next:** Grades 5, 6 and 8 and *Joyful English · Grades 1 to 8*, a simple, clear guide to listening, speaking, reading and writing English. Every chapter opens with a one-picture summary and a guide for teachers and parents.
+**Joyful English** (folder `joyful/`): eight levels from Grade 1 to university and the workplace (CEFR Pre-A1 to B2–C1). Lesson 1 of every level is ready: listening, a sound target for the sounds Amharic speakers find hard, speaking with the microphone (speech recognition in Chrome or Edge), reading, grammar and writing. More lessons are coming.
+
+**Coming next:** Grades 5, 6 and 8 and more Joyful English lessons. Every chapter opens with a one-picture summary and a guide for teachers and parents.
 
 ▶ **Open the platform:** https://muler-21.github.io/AMBKidsJoy/  
 ▶ **YouTube lessons:** https://www.youtube.com/@kidseducation9276

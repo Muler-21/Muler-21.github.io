@@ -71,10 +71,11 @@ if MATH_SRC:
 shutil.copy(os.path.join(DIST, 'home.html'), os.path.join(DIST, 'index.html'))
 
 # ---------- Grades 1, 2 (dist/grade-N/) ----------
-for GN in (1, 2, 4, 7):
-    G1 = os.path.join(SRC, f'grade{GN}')
+for GN in (1, 2, 4, 7, 'J'):
+    G1 = os.path.join(SRC, 'joyful' if GN == 'J' else f'grade{GN}')
     if not os.path.isdir(G1): continue
-    D1 = os.path.join(DIST, f'grade-{GN}'); os.makedirs(os.path.join(D1, 'units'), exist_ok=True)
+    D1 = os.path.join(DIST, 'joyful' if GN == 'J' else f'grade-{GN}'); os.makedirs(os.path.join(D1, 'units'), exist_ok=True)
+    GL = 'Joyful English' if GN == 'J' else f'Grade {GN}'
     SUMF = f'summaries{GN}.js'
     shutil.copy(os.path.join(G1, SUMF), os.path.join(D1, SUMF))
     if GN == 1: shutil.copy(os.path.join(G1, 'kit1.js'), os.path.join(D1, 'kit1.js'))
@@ -88,15 +89,15 @@ for GN in (1, 2, 4, 7):
         src = open(f, encoding='utf-8').read()
         shutil.copy(f, os.path.join(D1, 'units', uid + '.js'))
         m = re.search(r"title:\{en:'([^']+)'", src)
-        html = (HEAD + f'<title>{m.group(1) if m else short} · Grade {GN} · AMBKidsJoy</title>' + FONTS + '<link rel="stylesheet" href="../style.css"></head><body>'
+        html = (HEAD + f'<title>{m.group(1) if m else short} · {GL} · AMBKidsJoy</title>' + FONTS + '<link rel="stylesheet" href="../style.css"></head><body>'
                 f'<script src="../icons.js"></script><script src="../summaries.js"></script><script src="{SUMF}"></script><script src="../summary.js"></script><script src="../engine.js"></script><script src="{KIT}"></script>{EXTRA}'
                 f'<script src="units/{uid}.js"></script><script src="../author.js"></script></body></html>')
         open(os.path.join(D1, short + '.html'), 'w', encoding='utf-8').write(html)
     import subprocess
     c1 = json.loads(subprocess.check_output(['node', os.path.join(SRC, 'grade1', 'count1.js'), G1, SUMF]))
-    h1 = TPL.replace('/*UNITS*/{}', json.dumps(c1, sort_keys=True)).replace("/*GR*/3", str(GN)).replace("/*PFX*/''", f"'g{GN}-'").replace("/*ROOT*/''", "'../'")
+    h1 = TPL.replace('/*UNITS*/{}', json.dumps(c1, sort_keys=True)).replace("/*GR*/3", "'J'" if GN == 'J' else str(GN)).replace("/*PFX*/''", "'je-'" if GN == 'J' else f"'g{GN}-'").replace("/*ROOT*/''", "'../'")
     h1 = h1.replace('/*GRADEDATA*/', open(os.path.join(G1, 'hub-data.js'), encoding='utf-8').read())
-    h1 = h1.replace('href="style.css"', 'href="../style.css"').replace('<title>AMBKidsJoy · Learning Hub</title>', f'<title>Grade {GN} · AMBKidsJoy</title>')
+    h1 = h1.replace('href="style.css"', 'href="../style.css"').replace('<title>AMBKidsJoy · Learning Hub</title>', f'<title>{GL} · AMBKidsJoy</title>')
     h1 = h1.replace('</script>\n', '</script>\n<script src="../author.js"></script>\n', 1)
     hd, bd = h1.split('<div class="wrap" id="app">', 1)
     page = HEAD + hd + '</head><body><div class="wrap" id="app">' + bd + '</body></html>'
@@ -109,7 +110,7 @@ print('built', sorted(os.listdir(DIST)))
 # cache-busting: make browsers fetch fresh scripts/styles after each update
 import re as _re, glob as _glob, time as _time
 _V = _time.strftime('%Y%m%d%H%M')
-for _f in _glob.glob(os.path.join(DIST, '*.html')) + _glob.glob(os.path.join(DIST, 'grade-*', '*.html')):
+for _f in _glob.glob(os.path.join(DIST, '*.html')) + _glob.glob(os.path.join(DIST, 'grade-*', '*.html')) + _glob.glob(os.path.join(DIST, 'joyful', '*.html')):
     _s = open(_f, encoding='utf-8').read()
     _s = _re.sub(r'((?:src|href)=")((?:\.\./)?(?:units/)?[\w-]+\.(?:js|css))(")', lambda m: m.group(1) + m.group(2) + '?v=' + _V + m.group(3), _s)
     open(_f, 'w', encoding='utf-8').write(_s)
