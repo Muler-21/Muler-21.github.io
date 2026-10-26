@@ -19,9 +19,9 @@
       "Hear the rhythm of English"
      ],
      "resources": [
-      "super-simple-songs",
       "kids-listen-watch-songs",
-      "kids-sounds"
+      "kids-sounds",
+      "kids-sounds-shakey-shakey"
      ],
      "joyful": null,
      "assessment": "Can sing along and do the actions for 3 songs.",
@@ -54,8 +54,8 @@
      "resources": [
       "kids-short-stories",
       "kids-story-goldilocks-three-bears",
-      "storyline-online",
-      "unite-for-literacy"
+      "kids-story-eric-engine",
+      "storyweaver"
      ],
      "joyful": null,
      "assessment": "Complete the linked activities and the self-check at the end of the module.",
@@ -82,8 +82,8 @@
       "Hear the first sound in a word"
      ],
      "resources": [
-      "starfall",
       "kids-sounds",
+      "kids-sounds-button",
       "kids-sounds-jacks-sack",
       "kids-sounds-clap-clap-clap"
      ],
@@ -99,7 +99,7 @@
       "Read sight words and short sentences"
      ],
      "resources": [
-      "starfall",
+      "kids-read-write",
       "african-storybook",
       "storyweaver",
       "global-digital-library"
@@ -119,7 +119,7 @@
       "kids-story-little-red-riding-hood",
       "kids-story-jack-beanstalk",
       "kids-listen-watch-listening-practice-level-1-listening",
-      "storyline-online"
+      "kids-story-george-dragon"
      ],
      "joyful": null,
      "assessment": "Complete the linked activities and the self-check at the end of the module.",
@@ -149,7 +149,7 @@
       "bc-speaking-a1-meeting-new-people",
       "bc-grammar-present-simple",
       "bc-grammar-present-simple-be",
-      "esl-easy-morning-routine",
+      "teens-listening-a2-free-time",
       "bc-vocab-actions"
      ],
      "joyful": 2,
@@ -168,7 +168,7 @@
       "bc-listening-a1-shopping-clothes",
       "bc-grammar-nouns-countable-uncountable",
       "bc-reading-a1-restaurant-menu",
-      "esl-easy-restaurant-order"
+      "teens-listening-a2-eating-out"
      ],
      "joyful": 3,
      "assessment": "Complete the linked activities and the self-check at the end of the module.",
@@ -184,8 +184,8 @@
      "resources": [
       "bc-grammar-past-continuous-past-simple",
       "bc-writing-a2-my-last-holiday",
-      "voa-lle1-22",
-      "voa-lle2-1"
+      "bc-listening-a2-missing-class",
+      "bc-reading-a2-email-friend"
      ],
      "joyful": null,
      "assessment": "Complete the linked activities and the self-check at the end of the module.",
@@ -319,7 +319,7 @@
       "bc-grammar-passives",
       "bc-grammar-reported-speech-statements",
       "bc-grammar-relative-clauses-defining-relative-clauses",
-      "voa-eg-3988378"
+      "bc-grammar-past-perfect"
      ],
      "joyful": null,
      "assessment": "Complete the linked activities and the self-check at the end of the module.",
@@ -349,7 +349,7 @@
       "bc-speaking-b2-challenging-someones-ideas",
       "bc-speaking-b2-discussing-advantages-disadvantages",
       "bc-writing-b2-opinion-essay",
-      "owl-aw-establishing_arguments"
+      "bc-writing-c1-opinion-essay"
      ],
      "joyful": null,
      "assessment": "Complete the linked activities and the self-check at the end of the module.",
@@ -366,7 +366,7 @@
       "bc-listening-b2-lecture-about-experiment",
       "bc-reading-b2-why-bridges-collapse",
       "bc-reading-b2-asteroids",
-      "esl-academic-english"
+      "bc-listening-b2-talk-about-motivation"
      ],
      "joyful": 7,
      "assessment": "Complete the linked activities and the self-check at the end of the module.",
@@ -426,8 +426,8 @@
       "Research papers and annotated bibliographies"
      ],
      "resources": [
-      "owl-aw-paragraphs_and_paragraphing",
-      "owl-aw-conciseness",
+      "bc-writing-c1-essay-about-women-science",
+      "bc-grammar-avoiding-repetition-text",
       "owl-ca-research_papers",
       "owl-ca-annotated_bibliographies",
       "bc-writing-c1-report-research-study"
@@ -447,7 +447,7 @@
       "bc-listening-c1-introverts-redressing-balance",
       "bc-listening-c1-history-hand-gestures",
       "bc-listening-c1-helix",
-      "owl-aw-learning_from_lectures"
+      "bc-listening-c1-challenges-work"
      ],
      "joyful": null,
      "assessment": "Complete the linked activities and the self-check at the end of the module.",
@@ -520,9 +520,9 @@
       "Edit for concision, tone and emphasis"
      ],
      "resources": [
-      "owl-aw-paramedic_method",
-      "owl-aw-adding_emphasis",
-      "owl-aw-sentence_variety",
+      "bc-grammar-ellipsis",
+      "bc-grammar-emphasis-cleft-sentences-inversion-auxiliaries",
+      "bc-writing-c1-describing-table",
       "write-improve"
      ],
      "joyful": null,
@@ -538,7 +538,7 @@
      "resources": [
       "cam-c1l062",
       "cam-c1l069",
-      "esl-difficult"
+      "bc-listening-c1-tech-addiction"
      ],
      "joyful": null,
      "assessment": "Complete the linked activities and the self-check at the end of the module.",
@@ -567,7 +567,7 @@
      "resources": [
       "bc-listening-a1-meeting-new-team-member",
       "bc-speaking-a2-talking-about-your-job",
-      "esl-easy-meeting-coworkers",
+      "bc-listening-a2-whos-who-office",
       "bc-reading-a1-business-cards"
      ],
      "joyful": null,
@@ -585,7 +585,7 @@
       "bc-emails-unit-5-making-arrangements",
       "bc-emails-unit-6-enquiries",
       "bc-emails-unit-9-email-etiquette",
-      "owl-aw-email_etiquette"
+      "bc-emails-unit-8-proofreading"
      ],
      "joyful": null,
      "assessment": "Complete the linked activities and the self-check at the end of the module.",
@@ -603,7 +603,7 @@
       "bc-writing-b2-covering-email",
       "bc-hub-youre-hired",
       "bc-listening-c1-job-interview",
-      "voa-lle2-2"
+      "bc-listening-b2-business-interview"
      ],
      "joyful": 8,
      "assessment": "Complete the linked activities and the self-check at the end of the module.",
@@ -635,9 +635,9 @@
      ],
      "resources": [
       "bc-listening-b2-design-presentation",
-      "owl-aw-public_speaking_and_presentations",
+      "bc-podpro-change-management",
       "bc-writing-c1-proposal-digital-newspaper",
-      "owl-ca-research_posters"
+      "bc-writing-c1-conference-bios"
      ],
      "joyful": null,
      "assessment": "Complete the linked activities and the self-check at the end of the module.",

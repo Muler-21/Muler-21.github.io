@@ -10,17 +10,17 @@ def sound(title,tip,pairs,stress=False):
     items=[]
     for w1,w2,k,ex in pairs:
         o=[w1,w2]
-        if stress: items.append({'say':o[k].lower(),'sayLang':'en-US','q':E('Listen. Where is the stress (the strong part)?','አዳምጡ። ጭነቱ (ጠንካራው ክፍል) የት ነው?'),'o':o,'a':k,'e':E(*ex)})
-        else: items.append({'say':o[k],'sayLang':'en-US','q':E('Listen. Which word do you hear?','አዳምጡ። የትኛውን ቃል ሰማችሁ?'),'o':o,'a':k,'e':E(*ex)})
+        if stress: items.append({'say':o[k].lower(),'sayLang':'en-GB','q':E('Listen. Where is the stress (the strong part)?','አዳምጡ። ጭነቱ (ጠንካራው ክፍል) የት ነው?'),'o':o,'a':k,'e':E(*ex)})
+        else: items.append({'say':o[k],'sayLang':'en-GB','q':E('Listen. Which word do you hear?','አዳምጡ። የትኛውን ቃል ሰማችሁ?'),'o':o,'a':k,'e':E(*ex)})
     return {'title':E(*title),'type':'quiz','tip':E(*tip),'items':items}
 def sp(lines,title=('Say it','ተናገሩት'),tip=('Listen to each sentence, then tap Speak and say it. The page gives a star when it understands you.','እያንዳንዱን ዓረፍተ ነገር አዳምጡ፤ ከዚያ ተናገሩን ንኩና ተናገሩት። ገጹ ሲረዳችሁ ኮከብ ይሰጣል።')):
     return {'title':E(*title),'tip':E(*tip),'lines':[{'t':t,'am':am,'e':e} for t,am,e in lines]}
 def q(en,am,opts,a=0,say=None):
     d={'q':E(en,am) if am else en,'o':[T(o) for o in opts],'a':a}
-    if say: d['say']=say;d['sayLang']='en-US'
+    if say: d['say']=say;d['sayLang']='en-GB'
     return d
-def sq(sent,opts,a=0): return {'say':sent.replace('___',opts[a]),'sayLang':'en-US','q':sent,'o':opts,'a':a}
-def read(ptitle,paras,items): return {'title':E('Read and answer','አንብቡና መልሱ'),'type':'quiz','tip':E('Tap 🔊 to hear the text, read it yourself, then answer.','ጽሑፉን ለመስማት 🔊 ንኩ፣ ራሳችሁ አንብቡ፣ ከዚያ መልሱ።'),'passage':{'title':ptitle,'paras':paras,'say':' '.join(paras),'sayLang':'en-US'},'items':items}
+def sq(sent,opts,a=0): return {'say':sent.replace('___',opts[a]),'sayLang':'en-GB','q':sent,'o':opts,'a':a}
+def read(ptitle,paras,items): return {'title':E('Read and answer','አንብቡና መልሱ'),'type':'quiz','tip':E('Tap 🔊 to hear the text, read it yourself, then answer.','ጽሑፉን ለመስማት 🔊 ንኩ፣ ራሳችሁ አንብቡ፣ ከዚያ መልሱ።'),'passage':{'title':ptitle,'paras':paras,'say':' '.join(paras),'sayLang':'en-GB'},'items':items}
 def gram(title,tip,items): return {'title':E(*title),'type':'quiz','tip':E(*tip),'items':items}
 def notes(big,pts,words,rem,ex,inn):
     return {'big':E(*big),'points':[E(*p) for p in pts],'words':[[w,E(en,am)] for w,en,am in words],'remember':E(*rem),'exam':[[T(a),T(b)] for a,b in ex],

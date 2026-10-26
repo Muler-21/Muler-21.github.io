@@ -70,7 +70,7 @@ function card(r,opts={}){
 function stageProgress(s){const ids=[...new Set(s.modules.flatMap(m=>m.resources))];const n=ids.filter(i=>done[i]).length;return [n,ids.length]}
 function pageHome(){
  const stages=CUR.stages;
- return `<h1>Joyful English Web Book</h1><p class="lead">${lang==='am'?'ከመጀመሪያ የእንግሊዝኛ ቃላት እስከ ሙያዊ እንግሊዝኛ ነጻና የተደራጀ መንገድ። ምንጮቹ በይፋዊ ገጾች ላይ ተፈትሸዋል፤ የእንግሊዝኛ በደስታ ትምህርቶች ደግሞ ለመናገርና ለማዳመጥ ይረዳሉ።':'A free, structured path from first English words to professional English. Every external resource was checked on the provider\'s official pages, and Joyful English lessons add speaking and listening practice.'}</p>
+ return `<h1>Joyful English Web Book</h1><p class="lead">${lang==='am'?'ከመጀመሪያ የእንግሊዝኛ ቃላት እስከ ሙያዊ እንግሊዝኛ ነጻና የተደራጀ መንገድ። ምንጮቹ በይፋዊ ገጾች ላይ ተፈትሸዋል፤ የእንግሊዝኛ በደስታ ትምህርቶች ደግሞ ለመናገርና ለማዳመጥ ይረዳሉ። መጽሐፉ በሙሉ የብሪቲሽ እንግሊዝኛን (አጻጻፍና አነባበብ) ይጠቀማል።':'A free, structured path from first English words to professional English. Every external resource was checked on the provider\'s official pages, and Joyful English lessons add speaking and listening practice. The book uses British English (spelling and accent) throughout; other varieties appear only when you choose them in the filters.'}</p>
  <p><a class="btn-s primary" href="#/start">${esc(t('start'))} →</a> <a class="btn-s" href="#/dir">${esc(t('dir'))}</a></p>
  <h2>${esc(t('learn'))}</h2><div class="grid">${stages.map(s=>{const [a,b]=stageProgress(s);return `<a class="card stage-card" href="#/s/${s.id}"><b>${esc(s.name)}</b><span class="meta">${esc(s.cefr)} · ${esc(s.grades)}</span><span>${esc(s.goal)}</span><div class="bar" aria-label="${a} of ${b} done"><i style="width:${b?a/b*100:0}%"></i></div><span class="meta">${a}/${b} ✓</span></a>`}).join('')}</div>
  <h2>${lang==='am'?'ደረጃ፣ ክፍልና CEFR':'Stages, grades and CEFR'}</h2>${mapTable()}
@@ -95,7 +95,7 @@ function pageStageGroup(k){
  const extra=ageF?`<h2>${lang==='am'?'ተጨማሪ ለ':'More for '}${esc(t(k))}</h2><div class="grid">${CAT.filter(r=>(r.age||[]).includes(ageF)&&r.ty!=='lesson').slice(0,12).map(r=>card(r,{brief:true})).join('')}</div>`:'';
  return `<h1>${esc(t(k))}</h1><p class="lead">${lang==='am'?'ደረጃ ምረጡ፦':'Choose a stage:'}</p><div class="grid">${ids.map(i=>{const s=CUR.stages.find(x=>x.id===i);const [a,b]=stageProgress(s);return `<a class="card stage-card" href="#/s/${s.id}"><b>${esc(s.name)}</b><span class="meta">${esc(s.cefr)} · ${esc(s.ages)}</span><span>${esc(s.goal)}</span><div class="bar"><i style="width:${b?a/b*100:0}%"></i></div></a>`}).join('')}</div>${extra}`}
 /* directory with filters */
-let F={q:'',c:'',sk:'',age:'',f:'',va:'',tr:'',pr:'',pu:'',v:''},LIMIT=40;
+let F={q:'',c:'',sk:'',age:'',f:'',va:'British',tr:'',pr:'',pu:'',v:''},LIMIT=40;
 function match(r,f){
  if(f.q){const q=f.q.toLowerCase();if(!(r.t+' '+r.to+' '+r.p).toLowerCase().includes(q))return false}
  if(f.c&&!(r.c||[]).includes(f.c))return false; if(f.sk&&!(r.sk||[]).includes(f.sk))return false; if(f.age&&!(r.age||[]).includes(f.age))return false;
@@ -121,7 +121,7 @@ function filtersHTML(){const uniq=k=>[...new Set(CAT.flatMap(r=>[].concat(r[k]||
   <label>${esc(t('ver'))}<select data-f="v">${opts(Object.entries(VER).map(([k,v])=>[k,v[1]]),F.v)}</select></label>
  </div>`}
 function pageList(title,lead,base){
- const list=base.filter(r=>match(r,F));
+ const list=base.filter(r=>match(r,F)).sort((a,b)=>(a.va!=='British')-(b.va!=='British'));
  return `<h1>${esc(title)}</h1><p class="lead">${esc(lead)}</p>${filtersHTML()}<p class="count" aria-live="polite">${esc(tf('results',{n:list.length}))}</p>
  <div class="grid" id="list">${list.slice(0,LIMIT).map(r=>card(r)).join('')}</div>${list.length>LIMIT?`<p class="more"><button class="btn-s" id="moreBtn">${esc(t('showMore'))} (${list.length-LIMIT})</button></p>`:''}`}
 const LIBLEAD={reading:['Stories, articles and libraries from beginner to advanced. Open-licence libraries (StoryWeaver, African Storybook) can be printed and translated.','ከጀማሪ እስከ ላቀ ደረጃ ታሪኮች፣ ጽሑፎችና ቤተ መጻሕፍት።'],listening:['Audio and video lessons with tasks; filter for transcripts.','ተግባራት ያሏቸው የድምፅና የቪዲዮ ትምህርቶች፤ ጽሑፍ ቅጂ ያላቸውን አጣሩ።'],speaking:['Phrases for real conversations. Practise aloud with the Joyful English microphone lessons too.','ለእውነተኛ ውይይት አገላለጾች።'],writing:['Model texts, emails, essays and reports, plus Write & Improve for instant feedback.','የናሙና ጽሑፎች፣ ኢሜይሎች፣ ድርሰቶችና ሪፖርቶች።'],grammar:['Grammar explanations with tests, and topic vocabulary by level.','ሰዋስው ከፈተና ጋር፣ የቃላት ዝርዝሮች በደረጃ።'],pron:['Sounds, phonics and pronunciation. Joyful English lessons train the sounds Amharic speakers find hard.','ድምፆች፣ ፎኒክስና አነባበብ።'],quiz:['Activities with questions or interactive tasks.','ጥያቄዎችና በይነ-ተግባራዊ ተግባራት ያሏቸው።']};
@@ -155,6 +155,7 @@ function pageGuide(){
  <h2>${lang==='am'?'ምንጮቹ እንዴት ተረጋገጡ':'How resources were checked'}</h2>
  <p>${lang==='am'?'እያንዳንዱ ምንጭ የማረጋገጫ ምልክት አለው፦':'Every resource carries a verification label:'}</p><ul>${Object.entries(VER).map(([k,v])=>`<li>${verChip(k)} ${c[k]||0}</li>`).join('')}</ul>
  <p>${lang==='am'?'ጥናቱ የተካሄደው በ':'Research was carried out on '}${esc(CAT[0]?CAT[0].d:'')}. ${lang==='am'?'ተደራሽ ያልሆኑ ገጾች «አልተረጋገጠም» ተብለዋል፤ ያልታዩ መረጃዎች «not stated» ተብለዋል።':'Pages the research tool could not open are labelled as such, and details we did not see are recorded as "not stated", never guessed.'}</p>
+ <h2>${lang==='am'?'የብሪቲሽ እንግሊዝኛ':'British English'}</h2><p>${lang==='am'?'መጽሐፉና የእንግሊዝኛ በደስታ ትምህርቶች የብሪቲሽ አጻጻፍና አነባበብ ይጠቀማሉ (colour, practise, centre)። የንግግር ልምምዱ የብሪቲሽ ድምፅና የብሪቲሽ የንግግር ማወቂያ ይጠቀማል። ቤተ መጻሕፍቱ በነባሪ የብሪቲሽ ምንጮችን ያሳያሉ፤ የአሜሪካ ምንጮችን ለማየት ማጣሪያውን «ሁሉም» አድርጉ። ጥቂት የአካዳሚያዊ አጻጻፍ መመሪያዎች (Purdue OWL) የአሜሪካ አጻጻፍ ይጠቀማሉ፤ በራሳችሁ ጽሑፍ የብሪቲሽ አጻጻፍ ተከተሉ።':'The book and the Joyful English lessons use British spelling and pronunciation (colour, practise, centre). Speaking practice uses a British voice and British speech recognition. Libraries show British resources by default; set the English variety filter to “All” to see American ones. A few academic writing guides (Purdue OWL) use American spelling: follow British spelling in your own writing.'}</p>
  <h2>${lang==='am'?'ደረጃና ክፍል':'Levels and grades'}</h2>${mapTable()}
  <h2>${lang==='am'?'የቅጂ መብት':'Copyright'}</h2><p>${lang==='am'?'የውጭ ትምህርቶች ይዘት እዚህ አልተቀዳም፤ ማገናኛ ብቻ ነው። በክፍት ፈቃድ ያሉ ቤተ መጻሕፍት (StoryWeaver, African Storybook, Project Gutenberg) ማተምና መተርጎም ይፈቅዳሉ፤ ለእያንዳንዱ ታሪክ ፈቃዱን ያረጋግጡ።':'No external lesson content is copied here; the book links to each provider. Open-licence libraries (StoryWeaver, African Storybook, Project Gutenberg) allow printing and translation; check the licence of each item.'}</p>
  <h2>${lang==='am'?'ሰነዶችና መረጃ':'Documents and data'}</h2><ul><li><a href="docs/research-report.md">Research report</a></li><li><a href="docs/curriculum-blueprint.md">Curriculum blueprint</a></li><li><a href="docs/expansion-plan.md">Expansion plan</a></li><li><a href="data/catalog.csv">Catalogue (CSV)</a> · <a href="data/catalog.json">Catalogue (JSON)</a> · <a href="data/curriculum.json">Curriculum (JSON)</a></li></ul>`}
@@ -162,7 +163,7 @@ function pageGuide(){
 /* ---------- router ---------- */
 function route(){
  const h=(location.hash||'#/home').slice(2).split('/');let html;
- const key=h.slice(0,2).join('/');if(key!==route.last){if(h[0]==='lib'||h[0]==='dir'){F={q:'',c:'',sk:'',age:'',f:'',va:'',tr:'',pr:'',pu:'',v:''};LIMIT=40}route.last=key}
+ const key=h.slice(0,2).join('/');if(key!==route.last){if(h[0]==='lib'||h[0]==='dir'){F={q:'',c:'',sk:'',age:'',f:'',va:'British',tr:'',pr:'',pu:'',v:''};LIMIT=40}route.last=key}
  if(h[0]==='s')html=pageStage(h[1]);
  else if(h[0]==='stage')html=pageStageGroup(h[1]);
  else if(h[0]==='lib'&&LIBS[h[1]])html=pageList(t(h[1]),lang==='am'?LIBLEAD[h[1]][1]:LIBLEAD[h[1]][0],filterLib(LIBS[h[1]]));

@@ -50,7 +50,7 @@ function tone(fr,dur=.12,type='triangle',vol=.18){if(!G.sound)return;try{AC=AC||
    g.gain.setValueAtTime(.0001,t0);g.gain.exponentialRampToValueAtTime(vol,t0+.02);g.gain.exponentialRampToValueAtTime(.0001,t0+dur*1.6);
    o.connect(g);g.connect(AC.destination);o.start(t0);o.stop(t0+dur*2)})}catch(e){}}
 const S={yay:()=>tone([523,659,784]),nope:()=>tone([300,240],.15),tick:()=>tone([700],.05),fanfare:()=>tone([523,659,784,1047,784,1047],.13),tone};
-function say(text,lang){try{const u=new SpeechSynthesisUtterance(text);u.lang=lang||'en-US';u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+function say(text,lang){try{lang=lang||'en-US';if(window.AMB_EN&&/^en/.test(lang))lang=window.AMB_EN;const u=new SpeechSynthesisUtterance(text);u.lang=lang;const vs=speechSynthesis.getVoices?speechSynthesis.getVoices():[];const v=vs.find(x=>(x.lang||'').replace('_','-')===lang);if(v)u.voice=v;u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
 const SPEAK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
 const sayBtn=(text,lang)=>`<button class="say" data-say="${esc(text)}" data-lang="${lang||'en-US'}" aria-label="Listen">${SPEAK}</button>`;
 document.addEventListener('click',e=>{const b=e.target.closest('[data-say]');if(b){e.stopPropagation();say(b.dataset.say,b.dataset.lang)}},true);

@@ -1,5 +1,6 @@
 /* Joyful English kit: speaking practice with the browser's speech recognition (falls back to self-check) */
 (function(){
+window.AMB_EN='en-GB'; /* Joyful English uses British English voice and recognition throughout */
 const norm=s=>String(s).toLowerCase().replace(/[’']/g,"'").replace(/[^a-z0-9' ]+/g,' ').split(/\s+/).filter(Boolean);
 function score(target,heard){const T=norm(target),H=norm(heard);if(!T.length)return 0;const pool=H.slice();let hit=0;
  for(const w of T){const k=pool.indexOf(w);if(k>=0){hit++;pool.splice(k,1)}}return hit/T.length}
@@ -21,10 +22,10 @@ function speak(title,tip,lines){const {tx,esc}=G3;const SR=window.SpeechRecognit
    <div class="feedback center ${st.cls}" aria-live="polite">${st.msg||tx(SR?{en:'Tap Listen, then tap Speak and say the sentence.',am:'አዳምጡን ንኩ፤ ከዚያ ተናገሩን ንኩና ዓረፍተ ነገሩን ተናገሩ።'}:{en:'Listen, then say the sentence aloud and tap "I said it aloud".',am:'አዳምጡ፤ ከዚያ ዓረፍተ ነገሩን ጮክ ብላችሁ ተናገሩና "ጮክ ብዬ ተናገርኩ"ን ንኩ።'})}</div>`;
   const next=()=>{st.i++;st.msg='';st.cls='';api.S.yay();if(st.i>=lines.length)api.complete();api.rerender()};
   p.onclick=e=>{const b=e.target.closest('button');if(!b||b.disabled)return;const a=b.dataset.act;
-   if(a==='hear'){api.say(L.t,'en-US');return}
+   if(a==='hear'){api.say(L.t,'en-GB');return}
    if(a==='did'){next();return}
    if(a==='mic'){let r;try{r=new SR()}catch(err){st.msg=tx({en:'This browser cannot listen. Say it aloud and tap "I said it aloud".',am:'ይህ ብራውዘር ማዳመጥ አይችልም። ጮክ ብላችሁ ተናገሩና "ጮክ ብዬ ተናገርኩ"ን ንኩ።'});api.rerender();return}
-    r.lang='en-US';r.interimResults=false;r.maxAlternatives=4;st.busy=true;st.msg='';api.rerender();
+    r.lang='en-GB';r.interimResults=false;r.maxAlternatives=4;st.busy=true;st.msg='';api.rerender();
     r.onresult=ev=>{const alts=[...ev.results[0]].map(x=>x.transcript);const sc=Math.max(...alts.map(h=>score(L.t,h)));st.busy=false;
      if(sc>=0.7){st.msg=tx({en:'Great! I understood you: "{h}"',am:'በጣም ጥሩ! ተረዳኋችሁ፦ "{h}"'},{h:alts[0]});st.cls='good';api.S.tick();setTimeout(next,1100);api.rerender()}
      else{st.msg=tx({en:'I heard: "{h}". Listen again and say every word clearly.',am:'የሰማሁት፦ "{h}"። እንደገና አዳምጡና እያንዳንዱን ቃል በግልጽ ተናገሩ።'},{h:alts[0]||'…'});st.cls='bad';api.rerender()}};
