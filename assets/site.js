@@ -16,6 +16,12 @@ const APPS = [
   { icon:"🌡️", title:"AdaptFit: will it thrive here?", tag:"Climate & Genomics", color:"#14c9a4", live:true,
     desc:"For farmers, breeders and planners. Pick places and a livestock type or crop, get a Good / Watch / Risky verdict from 35 years of climate, test warming and tolerance, and print a one-page brief. Adds climate-model projections, country context, research partners and mapped services for innovators. Phenotype, genome and gene tools for researchers. Open data, no keys.",
     url:"apps/adaptfit/" },
+  { icon:"🌿", title:"Sebel Hakim: plant disease helper", tag:"Agri-tech", color:"#22c55e", live:true,
+    desc:"Free app that aims to identify crop diseases from a photo and suggest solutions, for farmers, students and researchers with a focus on Africa. Early version; photos are not stored centrally.",
+    url:"https://muler-21.github.io/sebel-hakim/" },
+  { icon:"⚽", title:"Genna Clash", tag:"Education & Games", color:"#f5a524", live:true,
+    desc:"Multiplayer classroom quiz game inspired by the traditional Gojjam Genna game. Two teams join a four-letter code and answer timed questions to push the ball to goal. English and Amharic.",
+    url:"https://muler-21.github.io/genna-clash/" },
   { icon:"⭐", title:"AMBKidsJoy: Learning Hub, Grades 1 to 8", tag:"Education", color:"#F4B400", live:true,
     desc:"Free, bilingual (Amharic and English) interactive lessons for children, with Kokeb the star as guide. Grades 1 to 4 and Grade 7 are ready now: 257 chapters, a one-picture summary per chapter, experiments, exam practice and Young Innovator challenges. Joyful English (8 levels, Grade 1 to the workplace) has started; more grades are coming. Works on phones and offline.",
     url:"AMBKidsJoy/" }
