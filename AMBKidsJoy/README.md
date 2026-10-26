@@ -1,3 +1,5 @@
+![AMBKidsJoy: ልጆች በደስታ ይማሩ! Free Amharic–English learning hub](cover.png)
+
 # AMBKidsJoy — Learning Hub, Grades 1 to 8
 
 **AMBKidsJoy** is a free, bilingual (Amharic / English) interactive learning hub for children from Grade 1 to Grade 8.

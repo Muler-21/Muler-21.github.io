@@ -119,3 +119,6 @@ for _f in _glob.glob(os.path.join(DIST, '*.html')) + _glob.glob(os.path.join(DIS
     _s = open(_f, encoding='utf-8').read()
     _s = _re.sub(r'((?:src|href)=")((?:\.\./)?(?:units/)?[\w-]+\.(?:js|css))(")', lambda m: m.group(1) + m.group(2) + '?v=' + _V + m.group(3), _s)
     open(_f, 'w', encoding='utf-8').write(_s)
+
+import shutil as _sh
+_sh.copy(os.path.join(SRC,'cover.png'), os.path.join(DIST,'cover.png'))
