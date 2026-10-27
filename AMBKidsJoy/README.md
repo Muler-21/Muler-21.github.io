@@ -4,7 +4,7 @@
 
 **AMBKidsJoy** is a free, bilingual (Amharic / English) interactive learning hub for children from Grade 1 to Grade 8.
 
-**Available now: Grades 1 to 4 and Grade 7.**
+**Available now: Grades 1 to 5 and Grade 7.**
 
 **Grade 1** (folder `grade-1/`): Mathematics (10 chapters), Amharic (10), English (8 units), Environmental Science (5) and Health & PE (6): 39 chapters with finger-tracing of letters and numbers, counting games, listening (spoken English words), picture matching and movement challenges. Moral Education and Arts come when the books are added.
 
@@ -13,6 +13,8 @@
 **Grade 3**: It covers all seven subjects of the Grade 3 curriculum of the Amhara Region, Ethiopia: **54 chapters** with nearly 400 activities. Kokeb, a friendly star, guides children through games, experiments and stories.
 
 **Grade 4** (folder `grade-4/`): all seven subjects: Mathematics (9), Amharic (10), English (10 units), Environmental Science (5), Ge'ez (11), Health & PE (6) and Performing & Visual Arts (5): 56 chapters with place-value and fraction drills, angle and bar-graph pictures, reading passages, Ge'ez words and numerals, rhythm games and arts projects.
+
+**Grade 5** (folder `grade-5/`): six subjects: Mathematics (8), Amharic (10), English (10 units, British English voice), Environmental Science (6), Health & PE (7) and Performing & Visual Arts (5): 46 chapters with fraction, decimal, percent and algebra drills with pictures, mean and probability, angles, solids, area and volume; reading passages and grammar in both languages; Ethiopia's location, climate zones, heritage and language families; athletics, gymnastics and traditional dances; colour, music notes and cave art; and a Young Innovator project in every chapter.
 
 **Grade 7** (folder `grade-7/`): nine subjects: Mathematics (7), Amharic (10), English (10 units), General Science (7), Social Studies (7), Career & Technical Education (8), Information Technology (6), Health & PE (7) and Performing & Visual Arts (5): 67 chapters with sets, integers, equations and area drills, science calculations (speed, density, force), time-zone, map-scale and population-density drills, history timelines, LOGO turtle shapes, CV and interview practice, grammar in both languages and a Young Innovator project in every chapter.
 

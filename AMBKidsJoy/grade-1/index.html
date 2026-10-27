@@ -1,7 +1,7 @@
 <!doctype html><html lang="am"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Grade 1 · AMBKidsJoy</title>
-<meta name="description" content="ልጆች በደስታ ይማሩ! Free Amharic–English learning hub from Ethiopian textbooks: Grades 1–4 and 7, plus Joyful English.">
+<meta name="description" content="ልጆች በደስታ ይማሩ! Free Amharic–English learning hub from Ethiopian textbooks: Grades 1–5 and 7, plus Joyful English.">
 <meta property="og:title" content="AMBKidsJoy · ልጆች በደስታ ይማሩ!">
-<meta property="og:description" content="Free Amharic–English learning hub from Ethiopian textbooks: Grades 1–4 and 7, plus Joyful English.">
+<meta property="og:description" content="Free Amharic–English learning hub from Ethiopian textbooks: Grades 1–5 and 7, plus Joyful English.">
 <meta property="og:image" content="https://muler-21.github.io/AMBKidsJoy/cover.png">
 <meta property="og:image:width" content="1280"><meta property="og:image:height" content="720">
 <meta property="og:url" content="https://muler-21.github.io/AMBKidsJoy/">
@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;600;700&display=swap">
-<link rel="stylesheet" href="../style.css?v=202610262206">
+<link rel="stylesheet" href="../style.css?v=202610272240">
 <style>
 .hero{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;padding:clamp(18px,3vw,28px);border-radius:28px;background:var(--surface);border:2px solid var(--line)}
 .hero>svg{width:clamp(76px,14vw,120px);height:auto}
@@ -101,7 +101,7 @@ const SUBJECTS=[
 ];
 const T={
  kicker:{en:'Learning Hub · Grades 1 to 8',am:'የልጆች የደስታ መማሪያ ማዕከል · ከ1ኛ እስከ 8ኛ ክፍል'},
- tag:{en:'Interactive lessons in Amharic and English, with Kokeb the star as your guide. Learn by thinking, playing, experimenting and explaining why. Grades 1 to 4 and Grade 7 are ready now, and Grades 5, 6 and 8 are on the way.',am:'በአማርኛና በእንግሊዝኛ በይነ-ተግባራዊ ትምህርቶች፤ መሪያችሁ ኮከብ ናት። በማሰብ፣ በመጫወት፣ በመሞከርና ምክንያቱን በማስረዳት ተማሩ። ከ1ኛ እስከ 4ኛ ክፍልና 7ኛ ክፍል አሁን ዝግጁ ናቸው፤ 5ኛ፣ 6ኛና 8ኛ ክፍሎች በመንገድ ላይ ናቸው።'},
+ tag:{en:'Interactive lessons in Amharic and English, with Kokeb the star as your guide. Learn by thinking, playing, experimenting and explaining why. Grades 1 to 5 and Grade 7 are ready now, and Grades 6 and 8 are on the way.',am:'በአማርኛና በእንግሊዝኛ በይነ-ተግባራዊ ትምህርቶች፤ መሪያችሁ ኮከብ ናት። በማሰብ፣ በመጫወት፣ በመሞከርና ምክንያቱን በማስረዳት ተማሩ። ከ1ኛ እስከ 5ኛ ክፍልና 7ኛ ክፍል አሁን ዝግጁ ናቸው፤ 6ኛና 8ኛ ክፍሎች በመንገድ ላይ ናቸው።'},
  pick:{en:'Choose your grade',am:'ክፍላችሁን ምረጡ'},
  grade:{en:'Grade',am:'ክፍል'},
  g3:{en:'Grade 3',am:'3ኛ ክፍል'},
@@ -133,7 +133,7 @@ const T={
  teacher:{en:'For teachers and parents: each chapter follows the student textbook of the Amhara Region Education Bureau. Stars are saved on this device only. Use the language button to switch every page between Amharic and English.',am:'ለመምህራንና ለወላጆች፦ እያንዳንዱ ምዕራፍ የአማራ ክልል ትምህርት ቢሮ የ3ኛ ክፍል መጽሐፍን ይከተላል። ኮከቦች የሚቀመጡት በዚህ መሣሪያ ላይ ብቻ ነው። እያንዳንዱን ገጽ በአማርኛና በእንግሊዝኛ ለመቀያየር የቋንቋ ቁልፉን ተጠቀሙ።'}
 };
 const UNITS={"amharic-1": 11, "amharic-10": 11, "amharic-2": 12, "amharic-3": 12, "amharic-4": 13, "amharic-5": 10, "amharic-6": 10, "amharic-7": 11, "amharic-8": 10, "amharic-9": 10, "english-1": 10, "english-2": 11, "english-3": 10, "english-4": 10, "english-5": 10, "english-6": 10, "english-7": 10, "english-8": 11, "env-1": 10, "env-2": 9, "env-3": 7, "env-4": 10, "env-5": 7, "health-1": 8, "health-2": 6, "health-3": 8, "health-4": 7, "health-5": 7, "health-6": 7, "math-1": 11, "math-10": 8, "math-2": 9, "math-3": 10, "math-4": 9, "math-5": 9, "math-6": 9, "math-7": 9, "math-8": 8, "math-9": 8};
-const GR=1,PFX='g1-',ROOT='../';const AVAIL={1:'grade-1/',2:'grade-2/',3:'',4:'grade-4/',7:'grade-7/'};
+const GR=1,PFX='g1-',ROOT='../';const AVAIL={1:'grade-1/',2:'grade-2/',3:'',4:'grade-4/',5:'grade-5/',7:'grade-7/'};
 /* Grade 1 chapters (from the Grade 1 student books) */
 SUBJECTS.length=0;
 SUBJECTS.push(
@@ -202,5 +202,5 @@ render();
 window.addEventListener('pageshow',render);
 })();
 </script>
-<script src="../author.js?v=202610262206"></script>
+<script src="../author.js?v=202610272240"></script>
 <script data-goatcounter="https://ambkidsjoy.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></body></html>
