@@ -4,7 +4,7 @@
 
 **AMBKidsJoy** is a free, bilingual (Amharic / English) interactive learning hub for children from Grade 1 to Grade 8.
 
-**Available now: Grades 1 to 5 and Grade 7.**
+**Available now: Grades 1 to 7.**
 
 **Grade 1** (folder `grade-1/`): Mathematics (10 chapters), Amharic (10), English (8 units), Environmental Science (5) and Health & PE (6): 39 chapters with finger-tracing of letters and numbers, counting games, listening (spoken English words), picture matching and movement challenges. Moral Education and Arts come when the books are added.
 
@@ -15,6 +15,8 @@
 **Grade 4** (folder `grade-4/`): all seven subjects: Mathematics (9), Amharic (10), English (10 units), Environmental Science (5), Ge'ez (11), Health & PE (6) and Performing & Visual Arts (5): 56 chapters with place-value and fraction drills, angle and bar-graph pictures, reading passages, Ge'ez words and numerals, rhythm games and arts projects.
 
 **Grade 5** (folder `grade-5/`): six subjects: Mathematics (8), Amharic (10), English (10 units, British English voice), Environmental Science (6), Health & PE (7) and Performing & Visual Arts (5): 46 chapters with fraction, decimal, percent and algebra drills with pictures, mean and probability, angles, solids, area and volume; reading passages and grammar in both languages; Ethiopia's location, climate zones, heritage and language families; athletics, gymnastics and traditional dances; colour, music notes and cave art; and a Young Innovator project in every chapter.
+
+**Grade 6** (folder `grade-6/`): six subjects: Mathematics (6), Amharic (10), English (10 units, British English voice), Environmental Science (6), Health & PE (7) and Performing & Visual Arts (5): 44 chapters with divisibility, primes, GCF and LCM, fraction–decimal–percent conversions with sales tax and discount, scientific notation, linear equations and inequalities, direct and inverse proportion, angle pairs, circles and pie charts, mean, median and mode; reading passages and grammar in both languages (collective nouns, adverbs, pronouns, transitive verbs, direct and indirect objects; past, present continuous, passive and conditionals); East Africa's location, climate, resources, population and heritage; atoms, acids and bases, sound, light, heat, electricity and magnets; the Olympic symbols, fitness and the harm of doping, athletics, gymnastics, volleyball and football skills, and Amhara dances and games; major and minor scales, stencil printing, calligraphy and weaving; and a Young Innovator project in every chapter.
 
 **Grade 7** (folder `grade-7/`): nine subjects: Mathematics (7), Amharic (10), English (10 units), General Science (7), Social Studies (7), Career & Technical Education (8), Information Technology (6), Health & PE (7) and Performing & Visual Arts (5): 67 chapters with sets, integers, equations and area drills, science calculations (speed, density, force), time-zone, map-scale and population-density drills, history timelines, LOGO turtle shapes, CV and interview practice, grammar in both languages and a Young Innovator project in every chapter.
 
