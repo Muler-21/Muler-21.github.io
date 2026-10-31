@@ -54,8 +54,15 @@ const srv = http.createServer((q, r) => { const p = path.join(ROOT, decodeURICom
   const chip = story.subtitle[lang];
   const plan = []; let clock = 0; const srt = [];
   for (const s of story.scenes) {
-    const mp3 = path.join(voiceDir, lang, s.id + '.mp3'), meta = JSON.parse(fs.readFileSync(path.join(voiceDir, lang, s.id + '.json'), 'utf8'));
-    const vd = dur(mp3), sents = sentences(meta, vd);
+    const meta = JSON.parse(fs.readFileSync(path.join(voiceDir, lang, s.id + '.json'), 'utf8'));
+    let mp3 = path.join(voiceDir, lang, s.id + '.mp3'), vd, sents;
+    if (meta.v >= 2) { // one file per sentence: join them with a calm pause after each sentence
+      const GAP = lang === 'am' ? 0.75 : 0.55; sents = []; let t = 0; const ins = [], filt = [];
+      meta.sentences.forEach((x, i) => { const f = path.join(voiceDir, lang, x.file), dd = dur(f); sents.push({ text: x.text, t0: t, t1: t + dd }); t += dd + GAP; ins.push('-i', f); filt.push(`[${i}:a]aresample=48000,aformat=channel_layouts=mono,apad=pad_dur=${GAP}[a${i}]`); });
+      mp3 = path.join(outDir, `voice_${lang}_${s.id}.wav`);
+      execFileSync('ffmpeg', ['-y', '-v', 'error', ...ins, '-filter_complex', filt.join(';') + ';' + meta.sentences.map((_, i) => `[a${i}]`).join('') + `concat=n=${meta.sentences.length}:v=0:a=1[o]`, '-map', '[o]', mp3]);
+      vd = dur(mp3) - GAP;
+    } else { vd = dur(mp3); sents = sentences(meta, vd); }
     let phases = sents.map(x => LEAD + x.t0);
     const pm = s.phaseMap && s.phaseMap[lang]; if (pm) phases = pm.map(i => phases[i]);
     const d = LEAD + vd + TAIL + (s.kind === 'quiz' ? QUIZ_PAUSE : 0);

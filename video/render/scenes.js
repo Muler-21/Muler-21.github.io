@@ -128,6 +128,144 @@ function makeKokeb() {
   return g;
 }
 const kokeb = makeKokeb(); scene.add(kokeb);
+// ---------- Saba and Dawit: cartoon kids in Ethiopian cultural dress ----------
+const SKIN = '#8a5a3b', HAIR = '#1b1310';
+// tibeb: the woven coloured border of Ethiopian cotton clothing (habesha kemis, netela, gabi)
+function tibebStrip(g, x, y, w, h, vertical) {
+  const cols = ['#1f8a4c', '#f2c230', '#d23b2f', '#1f8a4c'];
+  g.save(); g.translate(x, y); if (vertical) { g.translate(w, 0); g.rotate(Math.PI / 2); [w, h] = [h, w]; }
+  g.fillStyle = '#1f8a4c'; g.fillRect(0, 0, w, h * .14); g.fillRect(0, h * .86, w, h * .14);
+  g.fillStyle = '#f2c230'; g.fillRect(0, h * .14, w, h * .08); g.fillRect(0, h * .78, w, h * .08);
+  const n = Math.max(2, Math.round(w / (h * .62)));
+  for (let i = 0; i < n; i++) { const cx = (i + .5) * w / n, s = h * .26; g.fillStyle = cols[i % 3 === 0 ? 2 : i % 3 === 1 ? 0 : 1];
+    g.beginPath(); g.moveTo(cx, h / 2 - s); g.lineTo(cx + s * .9, h / 2); g.lineTo(cx, h / 2 + s); g.lineTo(cx - s * .9, h / 2); g.closePath(); g.fill();
+    g.fillStyle = '#ffffff'; g.beginPath(); g.arc(cx, h / 2, s * .28, 0, 7); g.fill(); }
+  g.restore();
+}
+function clothTex(kind) {
+  const cv = document.createElement('canvas'); cv.width = 1024; cv.height = 512; const g = cv.getContext('2d');
+  g.fillStyle = '#fbfaf4'; g.fillRect(0, 0, 1024, 512);
+  g.globalAlpha = .05; g.fillStyle = '#8a7f60'; for (let i = 0; i < 512; i += 4) g.fillRect(0, i, 1024, 1); g.globalAlpha = 1; // cotton weave
+  if (kind === 'kemis') { tibebStrip(g, 0, 512 - 80, 1024, 64); tibebStrip(g, 0, 6, 1024, 34); tibebStrip(g, -34, 30, 68, 400, true); tibebStrip(g, 1024 - 34, 30, 68, 400, true); }
+  if (kind === 'tunic') { tibebStrip(g, 0, 512 - 54, 1024, 40); tibebStrip(g, 0, 4, 1024, 30); tibebStrip(g, -20, 30, 40, 250, true); tibebStrip(g, 1024 - 20, 30, 40, 250, true); }
+  if (kind === 'netela') { tibebStrip(g, 0, 512 - 90, 1024, 70); }
+  if (kind === 'sleeve') { tibebStrip(g, 0, 512 - 90, 1024, 70); }
+  const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; return t;
+}
+const CLOTH = {}; ['kemis', 'tunic', 'netela', 'sleeve', 'plain'].forEach(k => CLOTH[k] = mat('#ffffff', { map: clothTex(k), roughness: .85 }));
+function lathe(profile, m) { const g = new THREE.LatheGeometry(profile.map(([r, y]) => new THREE.Vector2(r, y)), 40); const o = new THREE.Mesh(g, m); o.castShadow = true; return o; }
+
+function makeKid(girl) {
+  const kid = new THREE.Group(), body = new THREE.Group(); kid.add(body);
+  const skin = mat(SKIN, { roughness: .6 }), dark = mat('#3b2418', { roughness: .7 });
+  if (girl) {
+    body.add(lathe([[.001, .18], [.78, .18], [.7, .5], [.5, 1.05], [.36, 1.38], [.38, 1.62], [.4, 1.86], [.3, 2.02], [.13, 2.08], [.001, 2.08]], CLOTH.kemis));
+    const shawl = new THREE.Mesh(new THREE.CylinderGeometry(.47, .6, .95, 32, 1, true, Math.PI * .55, Math.PI * .9), CLOTH.netela); shawl.position.y = 1.62; shawl.castShadow = true; body.add(shawl);
+  } else {
+    for (const sx of [-.18, .18]) { const leg = new THREE.Mesh(new THREE.CylinderGeometry(.15, .17, .95, 16), CLOTH.plain); leg.position.set(sx, .58, 0); leg.castShadow = true; body.add(leg); }
+    body.add(lathe([[.001, .98], [.56, .98], [.5, 1.3], [.4, 1.6], [.42, 1.86], [.32, 2.02], [.13, 2.08], [.001, 2.08]], CLOTH.tunic));
+    const sash = new THREE.Mesh(new RoundedBoxGeometry(.24, 1.15, .08, 2, .03), CLOTH.netela); sash.position.set(0, 1.68, .4); sash.rotation.z = .62; sash.castShadow = true; body.add(sash);
+  }
+  for (const sx of [-.2, .2]) { const sh = new THREE.Mesh(new THREE.SphereGeometry(.16, 16, 10), dark); sh.scale.set(1, .55, 1.5); sh.position.set(sx, .1, .06); body.add(sh); }
+  const neck = new THREE.Mesh(new THREE.CylinderGeometry(.12, .13, .25, 12), skin); neck.position.y = 2.12; body.add(neck);
+  const head = new THREE.Group(); head.position.y = 2.62; body.add(head);
+  const skull = new THREE.Mesh(new THREE.SphereGeometry(.52, 32, 24), skin); skull.castShadow = true; head.add(skull);
+  for (const sx of [-.51, .51]) { const ear = new THREE.Mesh(new THREE.SphereGeometry(.1, 12, 10), skin); ear.position.set(sx, -.02, 0); ear.scale.z = .6; head.add(ear); }
+  const hairM = mat(HAIR, { roughness: .9 });
+  const cap = new THREE.Mesh(new THREE.SphereGeometry(.555, 32, 16, 0, Math.PI * 2, 0, Math.PI * (girl ? .5 : .44)), hairM); cap.rotation.x = -.32; cap.position.set(0, .04, -.04); head.add(cap);
+  if (girl) { // shuruba: braided cornrows running back, and a small bun of braids
+    for (let i = -2; i <= 2; i++) { const r = new THREE.Mesh(new THREE.TorusGeometry(.53, .045, 8, 30, Math.PI * 1.05), hairM); r.rotation.set(0, Math.PI / 2 + i * .2, 0); r.position.set(i * .002, .06, -.04); r.rotation.x = -.35; head.add(r); }
+    const bun = new THREE.Mesh(new THREE.SphereGeometry(.2, 16, 12), hairM); bun.position.set(0, .18, -.56); head.add(bun);
+    for (const sx of [-.15, 0, .15]) { const bead = new THREE.Mesh(new THREE.SphereGeometry(.045, 10, 8), mat(sx ? '#f2c230' : '#d23b2f')); bead.position.set(sx, -.06, -.66); head.add(bead); }
+  } else { const top = new THREE.Mesh(new THREE.SphereGeometry(.5, 24, 16, 0, Math.PI * 2, 0, Math.PI * .4), hairM); top.position.set(0, .11, -.02); top.scale.set(1.08, 1, 1.08); head.add(top); }
+  const eyes = [];
+  const eyeW = mat('#ffffff', { roughness: .3 }), eyeB = mat('#1a1a1a', { roughness: .2 });
+  for (const sx of [-.18, .18]) { const e = new THREE.Group(); const w = new THREE.Mesh(new THREE.SphereGeometry(.12, 18, 12), eyeW); w.scale.z = .55; const p = new THREE.Mesh(new THREE.SphereGeometry(.075, 14, 10), eyeB); p.position.z = .05; p.scale.z = .5; const hl = new THREE.Mesh(new THREE.SphereGeometry(.025, 8, 6), eyeW); hl.position.set(.03, .035, .085); e.add(w, p, hl); e.position.set(sx, .06, .45); head.add(e); eyes.push(e);
+    const brow = new THREE.Mesh(new RoundedBoxGeometry(.16, .035, .03, 2, .012), hairM); brow.position.set(sx, .22, .48); brow.rotation.z = sx > 0 ? -.12 : .12; head.add(brow); }
+  const nose = new THREE.Mesh(new THREE.SphereGeometry(.06, 12, 10), mat('#7a4c31')); nose.position.set(0, -.06, .52); head.add(nose);
+  const smile = new THREE.Mesh(new THREE.TorusGeometry(.13, .025, 8, 20, Math.PI), mat('#5a1e24')); smile.rotation.z = Math.PI; smile.position.set(0, -.17, .47); head.add(smile);
+  if (girl) for (const sx of [-.3, .3]) { const ch = new THREE.Mesh(new THREE.CircleGeometry(.07, 14), new THREE.MeshBasicMaterial({ color: '#c96f6a', transparent: true, opacity: .45 })); ch.position.set(sx, -.08, .44); ch.lookAt(sx * 3, -.2, 3); head.add(ch); }
+  const arms = [-1, 1].map(side => { const a = new THREE.Group(); a.position.set(side * .42, 1.95, 0); body.add(a);
+    const sl = new THREE.Mesh(new THREE.CylinderGeometry(.13, .15, .78, 14), CLOTH.sleeve); sl.position.y = -.39; sl.castShadow = true; a.add(sl);
+    const hand = new THREE.Mesh(new THREE.SphereGeometry(.12, 14, 10), skin); hand.position.y = -.86; a.add(hand); a.userData.side = side; return a; });
+  kid.userData = { body, head, eyes, arms };
+  return kid;
+}
+const saba = makeKid(true), dawit = makeKid(false); scene.add(saba, dawit);
+const bubbles = [0, 1].map(() => { const g = new THREE.Group(); scene.add(g); return g; });
+function setBubble(i, text) {
+  const g = bubbles[i]; if (g.userData.text === text) return; g.userData.text = text; g.clear(); if (!text) return;
+  const l = label(text, .62, { color: C.ink, size: 110, bg: '#ffffff', pad: 34, radius: 60 }); g.add(l);
+  const tail = new THREE.Mesh(new THREE.CircleGeometry(.22, 3), new THREE.MeshBasicMaterial({ color: '#ffffff' })); tail.rotation.z = -Math.PI / 2; tail.position.set(i ? .35 : -.35, -.42, -.01); g.add(tail);
+}
+// poses: [left arm raise, left arm forward, right arm raise, right arm forward, body lift, head tilt]
+function pose(kind, t, inner) {
+  const w = Math.sin(t * 10), s = Math.sin(t * 2);
+  const P = { idle: [.14, .05 + s * .03, .14, .05 - s * .03, 0, s * .04] };
+  if (kind === 'wave') P.x = inner > 0 ? [.14, .05, 2.6 + w * .3, .2, 0, .12] : [2.6 + w * .3, .2, .14, .05, 0, -.12];
+  if (kind === 'point') P.x = inner > 0 ? [.14, .05, 1.45, .35, 0, -.1 * inner] : [1.45, .35, .14, .05, 0, -.1 * inner];
+  if (kind === 'pointCam') P.x = inner > 0 ? [.14, .05, .25, 1.45, 0, 0] : [.25, 1.45, .14, .05, 0, 0];
+  if (kind === 'clap') { const c = Math.abs(Math.sin(t * 9)); P.x = [-.25 - c * .2, 1.25, -.25 - c * .2, 1.25, 0, .05]; }
+  if (kind === 'cheer') P.x = [2.7 + w * .15, .2, 2.7 - w * .15, .2, Math.abs(Math.sin(t * 6)) * .45, 0];
+  if (kind === 'think') P.x = inner > 0 ? [.14, .05, -.35, 2.35, 0, .18] : [-.35, 2.35, .14, .05, 0, -.18];
+  if (kind === 'eskista') { const b = Math.abs(Math.sin(t * 8)); P.x = [.55 + b * .2, .25, .55 + b * .2, .25, b * .12, Math.sin(t * 8) * .12]; }
+  if (kind === 'nod') P.x = [.14, .05, .14, .05, 0, 0];
+  return P;
+}
+let CHOREO = null;
+function kidsUpdate(t) {
+  if (!CHOREO) { saba.visible = dawit.visible = false; bubbles.forEach(b => b.visible = false); return; }
+  [saba, dawit].forEach((kid, i) => {
+    const c = CHOREO.kids[i]; kid.visible = !!c; bubbles[i].visible = false; if (!c) return;
+    const inner = c.x < 0 ? 1 : -1;
+    kid.position.set(c.x, 0, c.z ?? 3.4); kid.scale.setScalar(c.s ?? 1); kid.rotation.y = (c.turn ?? .32) * inner + Math.sin(t * .7 + i) * .04;
+    const acts = (CHOREO.acts || []).filter(a => a.k === i && t >= a.t0 && t < a.t0 + a.d);
+    const a = acts[acts.length - 1];
+    const id = pose('idle', t + i, inner).idle; let tgt = id, wgt = 0;
+    if (a) { tgt = pose(a.a, t - a.t0, inner).x; wgt = Math.min(clamp((t - a.t0) / .3), clamp((a.t0 + a.d - t) / .3)); }
+    const v = id.map((x, j) => lerp(x, tgt[j], ease(wgt)));
+    const u = kid.userData; const [L, R] = u.arms;
+    L.rotation.set(-v[1], 0, -v[0]); R.rotation.set(-v[3], 0, v[2]);
+    u.body.position.y = v[4] + Math.sin(t * 2.4 + i) * .02; u.head.rotation.z = v[5];
+    u.head.rotation.x = a && a.a === 'nod' ? Math.sin((t - a.t0) * 9) * .18 : Math.sin(t * .9 + i) * .03;
+    u.head.rotation.y = a && (a.a === 'point' || a.a === 'think') ? .25 * inner : 0;
+    const bl = ((t + i * 1.7) % 4.1) < .12 ? .1 : 1; u.eyes.forEach(e => e.scale.y = bl);
+    const b = (CHOREO.bubbles || []).filter(x => x.k === i && t >= x.t0 && t < x.t0 + x.d).pop();
+    if (b) { setBubble(i, b.text); const g = bubbles[i]; g.visible = true; const p = pop(t, b.t0, .45) * Math.min(1, clamp((b.t0 + b.d - t) / .25));
+      g.scale.setScalar(Math.max(p, .001) * (c.s ?? 1)); g.position.set(c.x + inner * 1.3 * (c.s ?? 1), 4.15 * (c.s ?? 1) + v[4], (c.z ?? 3.4) + .2); }
+  });
+}
+// scene choreography: where the kids stand, what they do (synced to the narration) and what they say in speech bubbles
+function choreo(kind) {
+  const L = (en, am) => CTX.lang === 'am' ? am : en, ve = CTX.voiceEnd;
+  const K = (x, o = {}) => ({ x, ...o });
+  const A = (k, a, t0, d = 2.2) => ({ k, a, t0, d }), Bb = (k, text, t0, d = 2.6) => ({ k, text, t0, d });
+  const base = { kids: [K(-8.4, { s: 1.08 }), K(8.4, { s: 1.08 })] };
+  const m = {
+    intro: { kids: [K(-7.3, { z: 3 }), K(7.3, { z: 3 })], acts: [A(0, 'eskista', .2, 3), A(1, 'eskista', .2, 3), A(0, 'wave', P(0), 2.6), A(1, 'wave', P(0) + .3, 2.6), A(0, 'clap', P(3) + .5, 2), A(1, 'point', P(3) + .3, 2.4)],
+      bubbles: [Bb(0, L('Hello!', 'ሰላም!'), P(0) + .2, 2.4), Bb(1, L("Let's learn!", 'እንማር!'), P(2), 2.6)] },
+    blocks: { acts: [A(0, 'point', P(1), 2.4), A(1, 'point', P(2) + 1, 2.4), A(0, 'nod', P(3) + 1.2, 1.5), A(1, 'cheer', P(4) + 2.2, 2.4), A(0, 'clap', P(5) + .5, 2.5)],
+      bubbles: [Bb(0, L('One!', 'አንድ!'), P(1) + .4), Bb(1, L('Ten!', 'አስር!'), P(2) + 1.6), Bb(0, L('A hundred!', 'መቶ!'), P(3) + 2), Bb(1, L('A thousand!', 'ሺህ!'), P(4) + 2.8)] },
+    placevalue: { acts: [A(1, 'think', P(0) + .5, 2.5), A(0, 'point', P(1) + .5, 3), A(1, 'point', P(2) + .6, 2.8), A(0, 'clap', P(2) + 2.6, 2)],
+      bubbles: [Bb(1, '4 → 40,000!', P(2) + 1.4, 3)] },
+    expanded: { acts: [A(0, 'point', P(0) + 1, 3), A(1, 'nod', P(0) + 3, 1.6), A(1, 'point', P(1) + .4, 2.6), A(0, 'clap', P(1) + 2.6, 2)],
+      bubbles: [Bb(1, L('Zero adds nothing!', '0 ምንም አይጨምርም!'), P(1) + .8, 3)] },
+    compare: { acts: [A(0, 'think', P(0), 2.5), A(1, 'point', P(1), 2.4), A(0, 'nod', P(2) + .5, 1.4), A(0, 'nod', P(3) + .5, 1.4), A(1, 'point', P(4) + .5, 2.5), A(0, 'cheer', P(5) + 1, 2.4), A(1, 'clap', P(5) + 1, 2.4)],
+      bubbles: [Bb(0, '= ✓', P(2) + .6, 1.6), Bb(1, '9 > 7!', P(4) + 1, 2.4), Bb(0, L('359,104 is bigger!', '359,104 ይበልጣል!'), P(5) + 1.4, 3)] },
+    round: { acts: [A(1, 'think', P(1) + .3, 2.5), A(0, 'point', P(3) + .4, 2.6), A(1, 'point', P(4), 2.6), A(0, 'cheer', P(5) + 2.2, 2.4)],
+      bubbles: [Bb(0, '4 < 5', P(3) + 1, 2.6), Bb(1, '8,300!', P(5) + 2.4, 2.8)] },
+    ethiopic: { acts: [A(0, 'wave', P(0), 2), A(1, 'point', P(1) + .5, 3), A(0, 'point', P(2) + .5, 3), A(1, 'clap', P(3) + 2, 2.2), A(0, 'nod', P(4) + .3, 1.6)],
+      bubbles: [Bb(1, '፩ ፪ ፫!', P(1) + 1.2, 2.6), Bb(0, '፴ + ፭ = ፴፭', P(3) + 2.2, 3)] },
+    quiz: { kids: [K(-7.7, { z: 3.2, s: 1.1 }), K(7.7, { z: 3.2, s: 1.1 })], acts: [A(0, 'pointCam', P(0) + .2, 2.6), A(1, 'pointCam', P(0) + .4, 2.6), A(0, 'think', ve - .3, 6), A(1, 'think', ve, 6)],
+      bubbles: [Bb(0, L('Your turn!', 'ተራችሁ!'), P(0) + .3, 2.6), Bb(1, L('Hmm…', 'እምም…'), ve + .4, 3.5), Bb(0, '?', ve + 1.5, 3.5)] },
+    answer: { kids: [K(-7.7, { z: 3.2, s: 1.1 }), K(7.7, { z: 3.2, s: 1.1 })], acts: [A(0, 'cheer', .2, 3.2), A(1, 'cheer', .4, 3.2), A(0, 'clap', 3.6, 2), A(1, 'clap', 3.6, 2)],
+      bubbles: [Bb(0, '፷፰!', .6, 2.8), Bb(1, L('Yay!', 'ጎበዝ!'), 1, 2.6)] },
+    recap: { acts: [A(0, 'nod', P(0) + .3, 1.5), A(1, 'nod', P(1) + .3, 1.5), A(0, 'point', P(3) + .3, 3), A(1, 'clap', P(4) + .5, 2.4), A(0, 'wave', P(5) - .2, 3.5), A(1, 'wave', P(5) - .1, 3.5)],
+      bubbles: [Bb(0, L('Good job!', 'ጎበዝ!'), P(2) + .5, 2.4), Bb(1, L('Bye!', 'ቻው!'), P(5), 3)] },
+  }[kind] || {};
+  return { ...base, ...m };
+}
+
 
 // ---------- HUD (captions, chip, fade) ----------
 const hudChip = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ transparent: true })); hud.add(hudChip);
@@ -247,7 +385,7 @@ const SCENES = {
     const ans = board(10.5, 1.6, '357,812 < 359,104', { size: 140, color: '#fff3c4' }); ans.position.set(0, 9.1, 0); root.add(ans);
     return t => {
       camTo(0, 5.2, 19.5, 0, 4.7, 0);
-      kokeb.position.set(-10.2, 1.8, 1); kokeb.scale.setScalar(.95); kokeb.update(t, CTX.amp(t));
+      kokeb.position.set(-10.2, 8.7, 0); kokeb.scale.setScalar(.85); kokeb.update(t, CTX.amp(t));
       ra.forEach((b, i) => show(b, pop(t, .2 + i * .1))); rb.forEach((b, i) => show(b, pop(t, .6 + i * .1)));
       const ax = ease(pr(t, P(1), 1.6)); arrow.position.x = lerp(-9.4, -6, ax); arrow.visible = t > P(1) && t < P(4) + 1;
       let col = 0; if (t > P(3)) col = 1; if (t > P(4)) col = 2;
@@ -299,7 +437,7 @@ const SCENES = {
     const n35 = label('= 35', .9, { color: C.ink, size: 120, stroke: 14 }); n35.position.set(ex + .45, 2.0, .5); root.add(n35);
     return t => {
       camTo(0, 5.2, 19.5, 0, 4.7, 0);
-      kokeb.position.set(9.9, 1.9, 1); kokeb.scale.setScalar(.95); kokeb.update(t, CTX.amp(t));
+      kokeb.position.set(10.4, 9.3, 0); kokeb.scale.setScalar(.75); kokeb.update(t, CTX.amp(t));
       const d1 = Math.max(.15, (P(2) - P(1) - .4) / 9);
       r1.forEach((b, i) => show(b, pop(t, P(1) + i * d1)));
       r2.forEach((b, i) => show(b, pop(t, P(2) + i * .22)));
@@ -318,7 +456,7 @@ const SCENES = {
     const tEnd = CTX.voiceEnd;
     return t => {
       camTo(0, 5, 18.5, 0, 4.6, 0);
-      kokeb.position.set(-6.8, 4.6, 1); kokeb.scale.setScalar(1.7); kokeb.update(t, CTX.amp(t), { spin: Math.sin(t * .7) * .3 });
+      kokeb.position.set(-5.4, 6.0, 0); kokeb.scale.setScalar(1.5); kokeb.update(t, CTX.amp(t), { spin: Math.sin(t * .7) * .3 });
       show(q, pop(t, .3)); show(big, pop(t, .8)); big.rotation.y = Math.sin(t * 1.4) * .12;
       const c = t - tEnd; show(ring, pop(t, tEnd - .2));
       const k = clamp(c / 5);
@@ -336,7 +474,7 @@ const SCENES = {
     for (let i = 0; i < 90; i++) { const m = new THREE.Mesh(new THREE.BoxGeometry(.18, .3, .04), new THREE.MeshStandardMaterial({ color: COLS[i % 6], roughness: .6 })); m.userData.p = [r() * 22 - 11, 10 + r() * 6, r() * 4 - 2, r() * 6, .8 + r() * 1.2]; root.add(m); conf.push(m); }
     return t => {
       camTo(0, 5, 18.5, 0, 4.6, 0);
-      kokeb.position.set(-6.6, 4.6, 1); kokeb.scale.setScalar(1.7);
+      kokeb.position.set(-5.4, 6.0, 0); kokeb.scale.setScalar(1.5);
       kokeb.update(t, CTX.amp(t), { jump: Math.abs(Math.sin(t * 5)) * .9 * (t < 2.4 ? 1 : 0), spin: ease(pr(t, 0, 1.2)) * Math.PI * 2 });
       show(big, pop(t, .2)); show(a, pop(t, .9)); show(pl, pop(t, 1.2)); show(b, pop(t, 1.5));
       conf.forEach(m => { const [x, y, z, ph, v] = m.userData.p; const yy = y - t * v * 2.4; m.visible = yy > -.5; m.position.set(x + Math.sin(t * 2 + ph) * .5, yy, z); m.rotation.set(t * 3 + ph, t * 2 + ph, ph); });
@@ -356,7 +494,7 @@ const SCENES = {
     return t => {
       camTo(0, 5.1, 19, 0, 4.8, 0);
       const fin = t > P(4) - .3;
-      kokeb.position.set(fin ? -7.3 : 9.6, fin ? 4.6 : 1.8, 1); kokeb.scale.setScalar(fin ? 1.6 : .95);
+      kokeb.position.set(fin ? -5.2 : 10.2, fin ? 6.0 : 9.0, 0); kokeb.scale.setScalar(fin ? 1.4 : .75);
       kokeb.update(t, CTX.amp(t), { wave: t > P(5) - .2, jump: fin ? Math.abs(Math.sin(t * 3)) * .25 : 0 });
       const out = ease(pr(t, P(3) - .3, .5));
       cards.forEach((c, i) => { show(c, pop(t, P(Math.min(i, 2)) + (i === 3 ? 1.6 : .3)) * (1 - out)); c.rotation.y = Math.sin(t + i) * .05; });
@@ -371,7 +509,7 @@ window.setupScene = (ctx) => {
   CTX = ctx; for (const c of [...root.children]) root.remove(c);
   const amp = ctx.ampArr; CTX.amp = t => { const i = Math.floor((t - ctx.voiceStart) * 30); return i >= 0 && i < amp.length ? amp[i] : 0; };
   CTX.phases = ctx.phases;
-  S = SCENES[ctx.kind]();
+  S = SCENES[ctx.kind](); CHOREO = choreo(ctx.kind);
   setHudTex(hudChip, ctx.chip, { size: 64, weight: 700, color: '#ffffff', bg: 'rgba(29,43,83,.82)', pad: 26, radius: 40, hpx: 64 }, 40, H - 62);
   setHudTex(hudBrand, 'AMBKidsJoy', { size: 64, weight: 800, color: C.blue, bg: 'rgba(255,255,255,.88)', pad: 22, radius: 40, hpx: 60 }, W - 40, H - 62, 'right');
   capText = undefined; setCaption(null);
@@ -379,7 +517,7 @@ window.setupScene = (ctx) => {
 };
 window.renderAt = (t) => {
   const clouds = scene.getObjectByName('clouds'); clouds.children.forEach(c => { c.position.x = ((c.position.x + 40 + c.userData.v / 30) % 80) - 40; });
-  S(t);
+  S(t); kidsUpdate(t);
   const cap = CTX.caps.find(c => t >= c.t0 && t < c.t1); setCaption(cap ? cap.text : null);
   const f = Math.min(clamp(t / .3), clamp((CTX.dur - t) / .3)); fade.material.opacity = (1 - f) * (CTX.fadeIn || t > 1 ? 1 : 0);
   renderer.clear(); renderer.render(scene, camera); renderer.clearDepth(); renderer.render(hud, hudCam);
