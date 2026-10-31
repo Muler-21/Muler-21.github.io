@@ -315,7 +315,7 @@ const SCENES = {
   },
   blocks() {
     const words = [T('one', 'አንድ'), T('ten', 'አስር'), T('hundred', 'መቶ'), T('thousand', 'ሺህ')];
-    const zx = [-8.6, -6.4, -2.6, 4.4];
+    const zx = [-6.3, -4.7, -1.3, 5.0];
     const unit = block(.45, .45, .45, C.yellow, null); unit.position.set(zx[0], .5, 0); root.add(unit);
     const rodCubes = []; for (let i = 0; i < 10; i++) { const c = block(.45, .45, .45, C.blue, null); c.position.set(zx[1], .5 + i * .46, 0); root.add(c); rodCubes.push(c); }
     const rods = []; for (let i = 0; i < 10; i++) { const r = gridBox(.45, 4.5, .45, 1, 10, 1, C.green); r.position.set(zx[2] - 2.03 + i * .45, .27 + 2.25, 0); root.add(r); rods.push(r); }
@@ -325,9 +325,9 @@ const SCENES = {
     const times = ['×10', '×10', '×10'].map((s, i) => { const l = label(s, .8, { color: C.red, size: 120, stroke: 16 }); l.position.set((zx[i] + zx[i + 1]) / 2 + (i === 2 ? .3 : 0), 7.4, .6); root.add(l); return l; });
     const rule = board(15, 1.5, T('Ten of one place make one of the next place!', 'የአንድ ቤት አስሩ የቀጣዩን ቤት አንድ ያደርጋሉ!'), { size: 100, color: '#fff3c4' }); rule.position.set(0, 8.9, 0); root.add(rule);
     return t => {
-      camTo(lerp(-2.5, 0, ease(pr(t, P(4), 2))), 5, 19, lerp(-3, 0, ease(pr(t, P(4), 2))), 4.1, 0);
+      camTo(0, 5, 19.5, .3, 4.2, 0);
       kokeb.position.set(lerp(6.4, 8.4, ease(pr(t, P(4), 2))), 8.0, 1); kokeb.scale.setScalar(1.0); kokeb.update(t, CTX.amp(t));
-      show(unit, pop(t, P(1))); unit.rotation.y = t * .6;
+      show(unit, pop(t, P(0) + .6)); unit.rotation.y = t * .6;
       rodCubes.forEach((c, i) => { const s = P(2) + i * .16; const k = ease(pr(t, s, .35)); c.visible = t > s; c.position.y = lerp(9, .5 + i * .46, k); });
       rods.forEach((r, i) => { const s = P(3) + i * .18; const k = pr(t, s, .4); r.visible = t > s; r.position.x = zx[2] - 2.03 + i * .45; r.position.y = 2.52 + (1 - k * k) * 8; });
       slabs.forEach((s, i) => { const s0 = P(4) + i * .2; const k = ease(pr(t, s0, .4)); s.visible = t > s0; s.position.y = lerp(7, 0, k); });
@@ -397,8 +397,8 @@ const SCENES = {
     };
   },
   round() {
-    const x0 = -9, step = 1.8, xOf = v => x0 + (v - 8300) / 10 * step;
-    const line = new THREE.Mesh(new RoundedBoxGeometry(19.2, .25, .5, 3, .1), mat(C.ink)); line.position.set(0, 3, 0); line.castShadow = true; root.add(line);
+    const x0 = -7.5, step = 1.5, xOf = v => x0 + (v - 8300) / 10 * step;
+    const line = new THREE.Mesh(new RoundedBoxGeometry(16.2, .25, .5, 3, .1), mat(C.ink)); line.position.set(0, 3, 0); line.castShadow = true; root.add(line);
     for (let i = 0; i <= 10; i++) { const big = i % 5 === 0; const tk = new THREE.Mesh(new THREE.BoxGeometry(.12, big ? 1 : .55, .3), mat(C.ink)); tk.position.set(x0 + i * step, 3, 0); root.add(tk); }
     const lbl = [8300, 8350, 8400].map((v, i) => { const l = label(v.toLocaleString('en-US'), i === 1 ? .7 : 1, { color: i === 1 ? '#6b7280' : C.ink, size: 130, stroke: 14 }); l.position.set(xOf(v), 1.75, .5); root.add(l); return l; });
     const hump = new THREE.Mesh(new THREE.TorusGeometry(1.3, .18, 12, 40, Math.PI), mat('#f4a261')); hump.position.set(xOf(8350), 3.1, 0); root.add(hump);
@@ -406,8 +406,8 @@ const SCENES = {
     const pin = label('8,349', .8, { color: C.red, size: 120, stroke: 14 }); root.add(pin);
     const digs = '8349'.split('').map((d, i) => { const b = block(1.3, 1.5, .7, '#ffffff', d, { tc: i === 2 ? C.red : C.ink, size: 170 }); b.position.set(-4.6 + i * 1.5, 8.6, 0); root.add(b); return b; });
     const q = label(T('→ nearest 100', '→ ወደ ቅርብ 100'), .95, { color: C.ink, size: 110, stroke: 14 }); q.position.set(3.6, 8.6, .4); root.add(q);
-    const stay = block(4.2, 1.2, .5, C.green, T('0–4: stay ↓', '0–4፦ ባለበት ↓'), { size: 110 }); stay.position.set(-5.5, 5.6, 0); root.add(stay);
-    const up = block(4.2, 1.2, .5, C.orange, T('5–9: go up ↑', '5–9፦ ወደ ላይ ↑'), { size: 110 }); up.position.set(5.5, 5.6, 0); root.add(up);
+    const stay = block(4.2, 1.2, .5, C.green, T('0–4: stay ↓', '0–4፦ ባለበት ↓'), { size: 110 }); stay.position.set(-4.6, 5.6, 0); root.add(stay);
+    const up = block(4.2, 1.2, .5, C.orange, T('5–9: go up ↑', '5–9፦ ወደ ላይ ↑'), { size: 110 }); up.position.set(4.6, 5.6, 0); root.add(up);
     const ans = board(7.6, 1.4, '8,349 ≈ 8,300', { size: 140, color: '#fff3c4' }); ans.position.set(0, 5.6, .8); root.add(ans);
     return t => {
       camTo(0, 5, 19, 0, 4.6, 0);
