@@ -1,0 +1,392 @@
+{
+ "id": "g3-english-1-2",
+ "title": {
+  "en": "My School & Months of the Year",
+  "am": "ትምህርት ቤቴና የዓመቱ ወራት"
+ },
+ "subtitle": {
+  "en": "Grade 3 English · Units 1 & 2",
+  "am": "3ኛ ክፍል እንግሊዝኛ · ምዕራፍ 1 እና 2"
+ },
+ "voices": {
+  "am": "am-ET-MekdesNeural",
+  "en": "en-GB-LibbyNeural"
+ },
+ "animals": true,
+ "scenes": [
+  {
+   "id": "s01",
+   "kind": "g3intro",
+   "en": [
+    "Hello, children! I'm Kokeb, the star, and these are my friends Saba and Dawit.",
+    "Look! Our animal friends have come to school too: the lion, the gelada, the walia ibex, the cow and the chicken!",
+    "Today in Grade 3 English we learn two units. Unit 1 is My School, and Unit 2 is Months of the Year.",
+    "We will sing, dance eskista and learn lots of new words. Let's go!"
+   ],
+   "am": [
+    "ሰላም ልጆች! እኔ ኮከብ ነኝ፤ እነዚህ ደግሞ ጓደኞቼ ሳባና ዳዊት ናቸው።",
+    "ተመልከቱ! የእንስሳት ጓደኞቻችንም ወደ ትምህርት ቤት መጥተዋል፦ አንበሳ፣ ጭላዳ ዝንጀሮ፣ ዋልያ፣ ላምና ዶሮ!",
+    "ዛሬ በሦስተኛ ክፍል እንግሊዝኛ ሁለት ምዕራፎችን እንማራለን። ምዕራፍ አንድ {My School} ነው፤ ትምህርት ቤቴ ማለት ነው። ምዕራፍ ሁለት {Months of the Year} ነው፤ የዓመቱ ወራት ማለት ነው።",
+    "እንዘምራለን፣ እስክስታ እንወርዳለን፣ ብዙ አዳዲስ ቃላትንም እንማራለን። እንጀምር!"
+   ]
+  },
+  {
+   "id": "s02",
+   "kind": "places",
+   "en": [
+    "Unit 1 is My School. Let's walk around our school and learn the names of the places.",
+    "This is the gate. We come in through the gate every morning.",
+    "This is the library. We read and borrow books in the library.",
+    "This is the laboratory. We do experiments in the laboratory.",
+    "This is the hall. Many people meet in the hall for big meetings.",
+    "This is the café. We drink tea and milk at the café.",
+    "This is the rest-room. We wash our hands in the rest-room."
+   ],
+   "am": [
+    "ምዕራፍ አንድ {My School} ነው። በትምህርት ቤታችን እየዞርን የቦታዎቹን ስም በእንግሊዝኛ እንማር።",
+    "ይህ {gate} ነው፤ በር ማለት ነው። በየቀኑ ጠዋት በበሩ እንገባለን።",
+    "ይህ {library} ነው፤ ቤተ መጻሕፍት ማለት ነው። እዚያ መጻሕፍትን እናነባለን፣ እንዋሳለን።",
+    "ይህ {laboratory} ነው፤ ቤተ ሙከራ ማለት ነው። እዚያ ሙከራዎችን እንሠራለን።",
+    "ይህ {hall} ነው፤ አዳራሽ ማለት ነው። ብዙ ሰዎች ለስብሰባ እዚያ ይገናኛሉ።",
+    "ይህ {café} ነው፤ ካፌ ማለት ነው። እዚያ ሻይና ወተት እንጠጣለን።",
+    "ይህ {rest-room} ነው፤ መታጠቢያና መጸዳጃ ቤት ማለት ነው። እዚያ እጃችንን እንታጠባለን።"
+   ]
+  },
+  {
+   "id": "s03",
+   "kind": "song",
+   "en": "Now let's sing the School Song! Stand up and dance eskista with us. Shoulders up, shoulders down!",
+   "am": "አሁን የትምህርት ቤት መዝሙራችንን እንዘምር! ተነሱና ከእኛ ጋር እስክስታ ውረዱ። ትከሻ ወደ ላይ፣ ትከሻ ወደ ታች!",
+   "song": {
+    "bpm": 104,
+    "seed": 7,
+    "intro_bars": 2,
+    "outro_bars": 2,
+    "title": {
+     "en": "The School Song",
+     "am": "የትምህርት ቤት መዝሙር"
+    },
+    "lines": [
+     {
+      "en": "Gate, gate, the big green gate!"
+     },
+     {
+      "am": "በር፣ በር፣ ትልቁ አረንጓዴ በር!"
+     },
+     {
+      "en": "Library, library, books are great!"
+     },
+     {
+      "am": "ቤተ መጻሕፍት፣ መጽሐፍ እናንብብ!"
+     },
+     {
+      "en": "Laboratory, seeds and leaves!"
+     },
+     {
+      "am": "ቤተ ሙከራ፣ ዘርና ቅጠል!"
+     },
+     {
+      "en": "Café, café, tea, yes please!"
+     },
+     {
+      "am": "ካፌ፣ ካፌ፣ ሻይ እንጠጣ!"
+     },
+     {
+      "en": "Hall, hall, we meet in the hall!"
+     },
+     {
+      "am": "አዳራሽ፣ አዳራሽ፣ ሁላችንም እዚህ!"
+     },
+     {
+      "en": "Rest-room, wash your hands, one and all!"
+     },
+     {
+      "am": "እጃችንን እንታጠብ፣ ንጹሕ እንሁን!"
+     },
+     {
+      "en": "This is my school, my happy school!"
+     },
+     {
+      "am": "ይህ ትምህርት ቤቴ ነው፣ ደስ የሚል!"
+     }
+    ]
+   },
+   "data": {
+    "pairs": [
+     [
+      "gate",
+      "በር",
+      "gate"
+     ],
+     [
+      "library",
+      "ቤተ መጻሕፍት",
+      "library"
+     ],
+     [
+      "laboratory",
+      "ቤተ ሙከራ",
+      "lab"
+     ],
+     [
+      "café",
+      "ካፌ",
+      "cafe"
+     ],
+     [
+      "hall",
+      "አዳራሽ",
+      "hall"
+     ],
+     [
+      "rest-room",
+      "መታጠቢያ ቤት",
+      "restroom"
+     ],
+     [
+      "my school",
+      "ትምህርት ቤቴ",
+      "school"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "s04",
+   "kind": "classroom",
+   "en": [
+    "Now let's go inside our classroom. What can we see?",
+    "This is a desk, and this is the blackboard. The teacher writes on the blackboard.",
+    "This is a ruler, and this is a pencil. We draw straight lines with a ruler.",
+    "This is a schoolbag. I carry my books in my schoolbag.",
+    "In maths we use a set square and a compass. In science we use a test tube and a funnel.",
+    "Let's spell! Ruler: R, U, L, E, R. Pencil: P, E, N, C, I, L."
+   ],
+   "am": [
+    "አሁን ወደ ክፍላችን እንግባ። ምን ምን እናያለን?",
+    "ይህ {desk} ነው፤ የመማሪያ ጠረጴዛ። ይህ ደግሞ {blackboard} ነው፤ ጥቁር ሰሌዳ። መምህራችን በሰሌዳው ላይ ይጽፋሉ።",
+    "ይህ {ruler} ነው፤ ማስመሪያ። ይህ ደግሞ {pencil} ነው፤ እርሳስ። በማስመሪያ ቀጥ ያለ መስመር እናሰምራለን።",
+    "ይህ {schoolbag} ነው፤ የትምህርት ቤት ቦርሳ። መጻሕፍቶቻችንን በቦርሳ እንይዛለን።",
+    "በሒሳብ {set square} እና {compass} እንጠቀማለን። በሳይንስ ደግሞ {test tube} እና {funnel} እንጠቀማለን።",
+    "ፊደል በፊደል እንጥራ! {Ruler: R, U, L, E, R.} {Pencil: P, E, N, C, I, L.}"
+   ]
+  },
+  {
+   "id": "s05",
+   "kind": "story",
+   "en": [
+    "Now listen to a story. It is called Our School.",
+    "My name is Selam. I am in Grade 3. Our school is near the river. It has a big green gate and a small café.",
+    "Every morning, my friend Dawit and I walk to school.",
+    "We take our books to the library on Tuesday. In the laboratory, we look at seeds and leaves.",
+    "I love my school because the teachers are kind.",
+    "Question! What colour is the school gate? Yes, it is green!"
+   ],
+   "am": [
+    "አሁን ታሪክ እናዳምጥ። ርዕሱ {Our School} ነው፤ ትምህርት ቤታችን ማለት ነው።",
+    "{My name is Selam. I am in Grade 3.} ስሟ ሰላም ነው፤ ሦስተኛ ክፍል ትማራለች። {Our school is near the river. It has a big green gate and a small café.} ትምህርት ቤታቸው ከወንዝ አጠገብ ነው፤ ትልቅ አረንጓዴ በርና ትንሽ ካፌ አለው።",
+    "{Every morning, my friend Dawit and I walk to school.} በየጠዋቱ ከጓደኛዋ ከዳዊት ጋር በእግር ወደ ትምህርት ቤት ይሄዳሉ።",
+    "{We take our books to the library on Tuesday.} ማክሰኞ መጻሕፍታቸውን ወደ ቤተ መጻሕፍት ይወስዳሉ። {In the laboratory, we look at seeds and leaves.} በቤተ ሙከራ ዘርና ቅጠል ያያሉ።",
+    "{I love my school because the teachers are kind.} መምህራኑ ደግ ስለሆኑ ትምህርት ቤቷን ትወዳለች።",
+    "ጥያቄ! {What colour is the school gate?} የትምህርት ቤቱ በር ምን አይነት ቀለም ነው? አዎ፣ {green}፤ አረንጓዴ ነው!"
+   ]
+  },
+  {
+   "id": "s06",
+   "kind": "months",
+   "en": [
+    "Unit 2 is Months of the Year. There are twelve months in a year.",
+    "January, February, March, April, May, June.",
+    "July, August, September, October, November, December.",
+    "Remember: the name of a month always starts with a capital letter. January starts with a capital J.",
+    "January is the first month, and December is the last month."
+   ],
+   "am": [
+    "ምዕራፍ ሁለት {Months of the Year} ነው፤ የዓመቱ ወራት። በአንድ ዓመት አስራ ሁለት ወራት አሉ። በእንግሊዝኛ እንጥራቸው።",
+    "{January, February, March, April, May, June.}",
+    "{July, August, September, October, November, December.}",
+    "አስታውሱ፦ በእንግሊዝኛ የወር ስም ሁልጊዜ በትልቅ ፊደል ይጀምራል። {January} በትልቁ {J} ይጀምራል።",
+    "{January} የመጀመሪያው ወር ነው፤ {December} ደግሞ የመጨረሻው ወር ነው።"
+   ]
+  },
+  {
+   "id": "s07",
+   "kind": "song",
+   "en": "Let's sing the Months and Days Song! Clap your hands and move your shoulders.",
+   "am": "የወራትና የቀናት መዝሙር እንዘምር! እጃችሁን አጨብጭቡ፣ ትከሻችሁን አንቀሳቅሱ።",
+   "song": {
+    "bpm": 108,
+    "seed": 21,
+    "intro_bars": 2,
+    "outro_bars": 2,
+    "title": {
+     "en": "Months and Days Song",
+     "am": "የወራትና የቀናት መዝሙር"
+    },
+    "lines": [
+     {
+      "en": "January, February, March!"
+     },
+     {
+      "am": "አንድ፣ ሁለት፣ ሦስት!"
+     },
+     {
+      "en": "April, May, June!"
+     },
+     {
+      "am": "አራት፣ አምስት፣ ስድስት!"
+     },
+     {
+      "en": "July, August, September!"
+     },
+     {
+      "am": "ሰባት፣ ስምንት፣ ዘጠኝ!"
+     },
+     {
+      "en": "October, November, December!"
+     },
+     {
+      "am": "አስር፣ አስራ አንድ፣ አስራ ሁለት!"
+     },
+     {
+      "en": "Twelve months make a year!"
+     },
+     {
+      "am": "አስራ ሁለት ወራት አንድ ዓመት!"
+     },
+     {
+      "en": "Monday, Tuesday, Wednesday, Thursday!"
+     },
+     {
+      "am": "ሰኞ፣ ማክሰኞ፣ ረቡዕ፣ ሐሙስ!"
+     },
+     {
+      "en": "Friday, Saturday, Sunday!"
+     },
+     {
+      "am": "ዓርብ፣ ቅዳሜ፣ እሑድ!"
+     },
+     {
+      "en": "Seven days make a week!"
+     },
+     {
+      "am": "ሰባት ቀናት አንድ ሳምንት!"
+     }
+    ]
+   },
+   "data": {
+    "pairs": [
+     [
+      "January\nFebruary · March",
+      "1 · 2 · 3",
+      "m0"
+     ],
+     [
+      "April · May · June",
+      "4 · 5 · 6",
+      "m3"
+     ],
+     [
+      "July · August\nSeptember",
+      "7 · 8 · 9",
+      "m6"
+     ],
+     [
+      "October\nNovember · December",
+      "10 · 11 · 12",
+      "m9"
+     ],
+     [
+      "12 months = 1 year",
+      "12 ወራት = 1 ዓመት",
+      "year"
+     ],
+     [
+      "Monday · Tuesday\nWednesday · Thursday",
+      "ሰኞ · ማክሰኞ · ረቡዕ · ሐሙስ",
+      "d0"
+     ],
+     [
+      "Friday · Saturday\nSunday",
+      "ዓርብ · ቅዳሜ · እሑድ",
+      "d4"
+     ],
+     [
+      "7 days = 1 week",
+      "7 ቀናት = 1 ሳምንት",
+      "week"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "s08",
+   "kind": "days",
+   "en": [
+    "There are seven days in a week: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday and Sunday.",
+    "Today is Monday. Yesterday was Sunday. Tomorrow is Tuesday.",
+    "Today is Wednesday. Yesterday was Tuesday. Tomorrow is Thursday."
+   ],
+   "am": [
+    "በአንድ ሳምንት ሰባት ቀናት አሉ፦ {Monday, Tuesday, Wednesday, Thursday, Friday, Saturday and Sunday.}",
+    "{Today is Monday.} ዛሬ ሰኞ ነው። {Yesterday was Sunday.} ትናንት እሑድ ነበር። {Tomorrow is Tuesday.} ነገ ማክሰኞ ነው።",
+    "{Today is Wednesday. Yesterday was Tuesday. Tomorrow is Thursday.} ዛሬ ረቡዕ፣ ትናንት ማክሰኞ፣ ነገ ሐሙስ!"
+   ]
+  },
+  {
+   "id": "s09",
+   "kind": "quizg",
+   "en": "Now it's your turn! Today is Friday. What day is tomorrow? Think!",
+   "am": "አሁን የእናንተ ተራ ነው! {Today is Friday. What day is tomorrow?} ዛሬ ዓርብ ነው፤ ነገ ምን ቀን ነው? አስቡ!",
+   "data": {
+    "q": "Today is Friday.\nTomorrow is …?",
+    "qam": "ዛሬ ዓርብ ነው። ነገ …?",
+    "today": 4
+   }
+  },
+  {
+   "id": "s10",
+   "kind": "answerg",
+   "en": "Well done! Tomorrow is Saturday.",
+   "am": "ጎበዝ! {Tomorrow is Saturday.} ነገ ቅዳሜ ነው።",
+   "data": {
+    "a": "Tomorrow is Saturday!",
+    "today": 4
+   }
+  },
+  {
+   "id": "s11",
+   "kind": "ethcal",
+   "en": [
+    "Did you know? Ethiopia has its own calendar with thirteen months!",
+    "Twelve months have thirty days each.",
+    "The last month, Pagume, has five days, or six days every fourth year.",
+    "Ethiopian New Year comes in September. Families celebrate with yellow Adey Abeba flowers and songs.",
+    "From June to August there is heavy rain. From October to January it is mostly dry and sunny, and farmers harvest their crops."
+   ],
+   "am": [
+    "ታውቃላችሁ? ኢትዮጵያ አስራ ሦስት ወራት ያሉት የራሷ የዘመን አቆጣጠር አላት!",
+    "አስራ ሁለቱ ወራት እያንዳንዳቸው ሠላሳ ቀናት አሏቸው።",
+    "የመጨረሻው ወር ጳጉሜ አምስት ቀናት አሉት፤ በየአራት ዓመቱ ደግሞ ስድስት ቀናት ይኖሩታል።",
+    "የኢትዮጵያ አዲስ ዓመት በመስከረም ነው፤ በእንግሊዝኛ {September} ወር ውስጥ። ቤተሰቦች በቢጫ አደይ አበባና በዘፈን ያከብራሉ።",
+    "ከሰኔ እስከ ነሐሴ፣ በእንግሊዝኛ {June to August}፣ ብዙ ዝናብ ይዘንባል። ከጥቅምት እስከ ጥር ደግሞ ደረቅና ፀሐያማ ነው፤ ገበሬዎችም ምርታቸውን ይሰበስባሉ።"
+   ]
+  },
+  {
+   "id": "s12",
+   "kind": "recapg",
+   "en": [
+    "Let's remember! School places: gate, library, laboratory, hall, café and rest-room.",
+    "There are twelve months in a year and seven days in a week. Their names start with a capital letter.",
+    "Ethiopia has thirteen months, and the New Year comes in September.",
+    "Practise at home: say the months and the days to your family. For more practice, visit AMBKidsJoy, and don't forget to subscribe. Goodbye!"
+   ],
+   "am": [
+    "እናስታውስ! የትምህርት ቤት ቦታዎች፦ {gate, library, laboratory, hall, café, rest-room.}",
+    "በአንድ ዓመት አስራ ሁለት ወራት፣ በአንድ ሳምንት ደግሞ ሰባት ቀናት አሉ። በእንግሊዝኛ ስማቸው በትልቅ ፊደል ይጀምራል።",
+    "ኢትዮጵያ አስራ ሦስት ወራት አሏት፤ አዲስ ዓመት በመስከረም ይመጣል።",
+    "በቤት ልምምድ፦ ወራትንና ቀናትን በእንግሊዝኛ ለቤተሰባችሁ ንገሩ። ለተጨማሪ ልምምድ አምቢ ኪድስ ጆይን ጎብኙ፤ ቻናላችንንም ሰብስክራይብ አድርጉ። ደህና ሁኑ!"
+   ]
+  }
+ ]
+}

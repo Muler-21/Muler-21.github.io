@@ -1,8 +1,8 @@
 name: AMBKidsJoy 3D lesson videos
 # Push a storyboard to tts/requests/<id>.json on this branch. This workflow
-# 1) makes free neural voices (Amharic + British English) with edge-tts,
+# 1) makes free neural voices (Amharic + British English) with edge-tts, including the chanted song lines,
 # 2) renders the 3D scenes (Three.js in headless Chromium) in parallel jobs,
-# 3) mixes voice, music and captions with ffmpeg,
+# 3) mixes voice, music (lesson bed + eskista song grooves made with numpy) and captions with ffmpeg,
 # 4) publishes the MP4 and SRT files as a GitHub Release named after the chapter.
 # Set the chapter to build with CHAPTER below (or run it by hand from the Actions tab).
 on:
@@ -20,7 +20,7 @@ concurrency:
   group: lesson-videos
   cancel-in-progress: true
 env:
-  CHAPTER: ${{ github.event.inputs.chapter || 'g4-math-1' }}
+  CHAPTER: ${{ github.event.inputs.chapter || 'g3-english-1-2' }}
 jobs:
   voices:
     runs-on: ubuntu-latest
@@ -44,7 +44,7 @@ jobs:
       fail-fast: false
       matrix:
         lang: [am, en]
-        range: ["0:2", "2:4", "4:6", "6:8", "8:10"]
+        range: ["0:1", "1:2", "2:3", "3:4", "4:5", "5:6", "6:7", "7:9", "9:11", "11:12"]
     steps:
       - uses: actions/checkout@v4
         with:

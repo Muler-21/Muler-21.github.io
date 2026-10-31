@@ -10,4 +10,10 @@ Turns an AMBKidsJoy chapter storyboard into finished 3D animated lesson videos, 
    - mixes voice and a home-made music bed (`video/music.py`) with ffmpeg;
    - publishes `<id>-am.mp4`, `<id>-en.mp4` and `.srt` caption files as a GitHub Release named `video-<id>`.
 
+Storyboard extras:
+- Narration can be a list of segments (one animation step each). In Amharic text, `{English words}` are spoken by the English voice.
+- Song scenes (`"kind": "song"`) carry `"song": {"bpm", "seed", "intro_bars", "outro_bars", "title", "lines": [{"en": ...}, {"am": ...}]}`. Each line is chanted on the beat over an original eskista groove (12/8 kebero-style drum, claps, krar-like plucks) made by `video/music.py song`, with karaoke lyrics on screen while the kids and the animal friends (lion, gelada, walia ibex, zebu cow, chicken) dance.
+- `"animals": true` brings the animal friends into every scene.
+- Set `CHAPTER` (or the manual run input) to choose which storyboard to build.
+
 Run locally: `node video/make_video.js tts/requests/<id>.json tts/out/<id> am build/<id>` (needs ffmpeg, Node, Playwright Chromium, three.js linked at `video/render/three`).
