@@ -1,0 +1,70 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": [
+  "Did you know? Ethiopia has its own calendar with thirteen months!",
+  "Twelve months have thirty days each.",
+  "The last month, Pagume, has five days, or six days every fourth year.",
+  "Ethiopian New Year comes in September. Families celebrate with yellow Adey Abeba flowers and songs.",
+  "From June to August there is heavy rain. From October to January it is mostly dry and sunny, and farmers harvest their crops."
+ ],
+ "sentences": [
+  {
+   "text": "Did you know?",
+   "seg": 0,
+   "files": [
+    "s11/000.mp3"
+   ]
+  },
+  {
+   "text": "Ethiopia has its own calendar with thirteen months!",
+   "seg": 0,
+   "files": [
+    "s11/001.mp3"
+   ]
+  },
+  {
+   "text": "Twelve months have thirty days each.",
+   "seg": 1,
+   "files": [
+    "s11/002.mp3"
+   ]
+  },
+  {
+   "text": "The last month, Pagume, has five days, or six days every fourth year.",
+   "seg": 2,
+   "files": [
+    "s11/003.mp3"
+   ]
+  },
+  {
+   "text": "Ethiopian New Year comes in September.",
+   "seg": 3,
+   "files": [
+    "s11/004.mp3"
+   ]
+  },
+  {
+   "text": "Families celebrate with yellow Adey Abeba flowers and songs.",
+   "seg": 3,
+   "files": [
+    "s11/005.mp3"
+   ]
+  },
+  {
+   "text": "From June to August there is heavy rain.",
+   "seg": 4,
+   "files": [
+    "s11/006.mp3"
+   ]
+  },
+  {
+   "text": "From October to January it is mostly dry and sunny, and farmers harvest their crops.",
+   "seg": 4,
+   "files": [
+    "s11/007.mp3"
+   ]
+  }
+ ]
+}

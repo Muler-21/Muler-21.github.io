@@ -1,0 +1,106 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": [
+  "Now listen to a story. It is called Our School.",
+  "My name is Selam. I am in Grade 3. Our school is near the river. It has a big green gate and a small café.",
+  "Every morning, my friend Dawit and I walk to school.",
+  "We take our books to the library on Tuesday. In the laboratory, we look at seeds and leaves.",
+  "I love my school because the teachers are kind.",
+  "Question! What colour is the school gate? Yes, it is green!"
+ ],
+ "sentences": [
+  {
+   "text": "Now listen to a story.",
+   "seg": 0,
+   "files": [
+    "s05/000.mp3"
+   ]
+  },
+  {
+   "text": "It is called Our School.",
+   "seg": 0,
+   "files": [
+    "s05/001.mp3"
+   ]
+  },
+  {
+   "text": "My name is Selam.",
+   "seg": 1,
+   "files": [
+    "s05/002.mp3"
+   ]
+  },
+  {
+   "text": "I am in Grade 3.",
+   "seg": 1,
+   "files": [
+    "s05/003.mp3"
+   ]
+  },
+  {
+   "text": "Our school is near the river.",
+   "seg": 1,
+   "files": [
+    "s05/004.mp3"
+   ]
+  },
+  {
+   "text": "It has a big green gate and a small café.",
+   "seg": 1,
+   "files": [
+    "s05/005.mp3"
+   ]
+  },
+  {
+   "text": "Every morning, my friend Dawit and I walk to school.",
+   "seg": 2,
+   "files": [
+    "s05/006.mp3"
+   ]
+  },
+  {
+   "text": "We take our books to the library on Tuesday.",
+   "seg": 3,
+   "files": [
+    "s05/007.mp3"
+   ]
+  },
+  {
+   "text": "In the laboratory, we look at seeds and leaves.",
+   "seg": 3,
+   "files": [
+    "s05/008.mp3"
+   ]
+  },
+  {
+   "text": "I love my school because the teachers are kind.",
+   "seg": 4,
+   "files": [
+    "s05/009.mp3"
+   ]
+  },
+  {
+   "text": "Question!",
+   "seg": 5,
+   "files": [
+    "s05/010.mp3"
+   ]
+  },
+  {
+   "text": "What colour is the school gate?",
+   "seg": 5,
+   "files": [
+    "s05/011.mp3"
+   ]
+  },
+  {
+   "text": "Yes, it is green!",
+   "seg": 5,
+   "files": [
+    "s05/012.mp3"
+   ]
+  }
+ ]
+}

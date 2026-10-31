@@ -1,0 +1,29 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": "Now let's sing the School Song! Stand up and dance eskista with us. Shoulders up, shoulders down!",
+ "sentences": [
+  {
+   "text": "Now let's sing the School Song!",
+   "seg": 0,
+   "files": [
+    "s03/000.mp3"
+   ]
+  },
+  {
+   "text": "Stand up and dance eskista with us.",
+   "seg": 0,
+   "files": [
+    "s03/001.mp3"
+   ]
+  },
+  {
+   "text": "Shoulders up, shoulders down!",
+   "seg": 0,
+   "files": [
+    "s03/002.mp3"
+   ]
+  }
+ ]
+}

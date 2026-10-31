@@ -1,0 +1,76 @@
+{
+ "v": 3,
+ "voices": {
+  "am": "am-ET-MekdesNeural",
+  "en": "en-GB-LibbyNeural"
+ },
+ "lines": [
+  {
+   "en": "January, February, March!"
+  },
+  {
+   "am": "አንድ፣ ሁለት፣ ሦስት!"
+  },
+  {
+   "en": "April, May, June!"
+  },
+  {
+   "am": "አራት፣ አምስት፣ ስድስት!"
+  },
+  {
+   "en": "July, August, September!"
+  },
+  {
+   "am": "ሰባት፣ ስምንት፣ ዘጠኝ!"
+  },
+  {
+   "en": "October, November, December!"
+  },
+  {
+   "am": "አስር፣ አስራ አንድ፣ አስራ ሁለት!"
+  },
+  {
+   "en": "Twelve months make a year!"
+  },
+  {
+   "am": "አስራ ሁለት ወራት አንድ ዓመት!"
+  },
+  {
+   "en": "Monday, Tuesday, Wednesday, Thursday!"
+  },
+  {
+   "am": "ሰኞ፣ ማክሰኞ፣ ረቡዕ፣ ሐሙስ!"
+  },
+  {
+   "en": "Friday, Saturday, Sunday!"
+  },
+  {
+   "am": "ዓርብ፣ ቅዳሜ፣ እሑድ!"
+  },
+  {
+   "en": "Seven days make a week!"
+  },
+  {
+   "am": "ሰባት ቀናት አንድ ሳምንት!"
+  }
+ ],
+ "pitch": "+12Hz",
+ "files": [
+  "s07/00.mp3",
+  "s07/01.mp3",
+  "s07/02.mp3",
+  "s07/03.mp3",
+  "s07/04.mp3",
+  "s07/05.mp3",
+  "s07/06.mp3",
+  "s07/07.mp3",
+  "s07/08.mp3",
+  "s07/09.mp3",
+  "s07/10.mp3",
+  "s07/11.mp3",
+  "s07/12.mp3",
+  "s07/13.mp3",
+  "s07/14.mp3",
+  "s07/15.mp3"
+ ]
+}

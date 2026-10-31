@@ -1,0 +1,22 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": "Let's sing the Months and Days Song! Clap your hands and move your shoulders.",
+ "sentences": [
+  {
+   "text": "Let's sing the Months and Days Song!",
+   "seg": 0,
+   "files": [
+    "s07/000.mp3"
+   ]
+  },
+  {
+   "text": "Clap your hands and move your shoulders.",
+   "seg": 0,
+   "files": [
+    "s07/001.mp3"
+   ]
+  }
+ ]
+}

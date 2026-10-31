@@ -1,0 +1,36 @@
+{
+ "v": 3,
+ "voice": "am-ET-MekdesNeural",
+ "rate": "-24%",
+ "text": "አሁን የእናንተ ተራ ነው! {Today is Friday. What day is tomorrow?} ዛሬ ዓርብ ነው፤ ነገ ምን ቀን ነው? አስቡ!",
+ "sentences": [
+  {
+   "text": "አሁን የእናንተ ተራ ነው!",
+   "seg": 0,
+   "files": [
+    "s09/000.mp3"
+   ]
+  },
+  {
+   "text": "Today is Friday. What day is tomorrow?",
+   "seg": 0,
+   "files": [
+    "s09/001.mp3"
+   ]
+  },
+  {
+   "text": "ዛሬ ዓርብ ነው፤ ነገ ምን ቀን ነው?",
+   "seg": 0,
+   "files": [
+    "s09/002.mp3"
+   ]
+  },
+  {
+   "text": "አስቡ!",
+   "seg": 0,
+   "files": [
+    "s09/003.mp3"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,29 @@
+{
+ "v": 3,
+ "voice": "am-ET-MekdesNeural",
+ "rate": "-24%",
+ "text": "ጎበዝ! {Tomorrow is Saturday.} ነገ ቅዳሜ ነው።",
+ "sentences": [
+  {
+   "text": "ጎበዝ!",
+   "seg": 0,
+   "files": [
+    "s10/000.mp3"
+   ]
+  },
+  {
+   "text": "Tomorrow is Saturday.",
+   "seg": 0,
+   "files": [
+    "s10/001.mp3"
+   ]
+  },
+  {
+   "text": "ነገ ቅዳሜ ነው።",
+   "seg": 0,
+   "files": [
+    "s10/002.mp3"
+   ]
+  }
+ ]
+}

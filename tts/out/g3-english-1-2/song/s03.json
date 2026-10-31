@@ -1,0 +1,68 @@
+{
+ "v": 3,
+ "voices": {
+  "am": "am-ET-MekdesNeural",
+  "en": "en-GB-LibbyNeural"
+ },
+ "lines": [
+  {
+   "en": "Gate, gate, the big green gate!"
+  },
+  {
+   "am": "በር፣ በር፣ ትልቁ አረንጓዴ በር!"
+  },
+  {
+   "en": "Library, library, books are great!"
+  },
+  {
+   "am": "ቤተ መጻሕፍት፣ መጽሐፍ እናንብብ!"
+  },
+  {
+   "en": "Laboratory, seeds and leaves!"
+  },
+  {
+   "am": "ቤተ ሙከራ፣ ዘርና ቅጠል!"
+  },
+  {
+   "en": "Café, café, tea, yes please!"
+  },
+  {
+   "am": "ካፌ፣ ካፌ፣ ሻይ እንጠጣ!"
+  },
+  {
+   "en": "Hall, hall, we meet in the hall!"
+  },
+  {
+   "am": "አዳራሽ፣ አዳራሽ፣ ሁላችንም እዚህ!"
+  },
+  {
+   "en": "Rest-room, wash your hands, one and all!"
+  },
+  {
+   "am": "እጃችንን እንታጠብ፣ ንጹሕ እንሁን!"
+  },
+  {
+   "en": "This is my school, my happy school!"
+  },
+  {
+   "am": "ይህ ትምህርት ቤቴ ነው፣ ደስ የሚል!"
+  }
+ ],
+ "pitch": "+12Hz",
+ "files": [
+  "s03/00.mp3",
+  "s03/01.mp3",
+  "s03/02.mp3",
+  "s03/03.mp3",
+  "s03/04.mp3",
+  "s03/05.mp3",
+  "s03/06.mp3",
+  "s03/07.mp3",
+  "s03/08.mp3",
+  "s03/09.mp3",
+  "s03/10.mp3",
+  "s03/11.mp3",
+  "s03/12.mp3",
+  "s03/13.mp3"
+ ]
+}

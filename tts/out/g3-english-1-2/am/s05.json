@@ -1,0 +1,145 @@
+{
+ "v": 3,
+ "voice": "am-ET-MekdesNeural",
+ "rate": "-24%",
+ "text": [
+  "አሁን ታሪክ እናዳምጥ። ርዕሱ {Our School} ነው፤ ትምህርት ቤታችን ማለት ነው።",
+  "{My name is Selam. I am in Grade 3.} ስሟ ሰላም ነው፤ ሦስተኛ ክፍል ትማራለች። {Our school is near the river. It has a big green gate and a small café.} ትምህርት ቤታቸው ከወንዝ አጠገብ ነው፤ ትልቅ አረንጓዴ በርና ትንሽ ካፌ አለው።",
+  "{Every morning, my friend Dawit and I walk to school.} በየጠዋቱ ከጓደኛዋ ከዳዊት ጋር በእግር ወደ ትምህርት ቤት ይሄዳሉ።",
+  "{We take our books to the library on Tuesday.} ማክሰኞ መጻሕፍታቸውን ወደ ቤተ መጻሕፍት ይወስዳሉ። {In the laboratory, we look at seeds and leaves.} በቤተ ሙከራ ዘርና ቅጠል ያያሉ።",
+  "{I love my school because the teachers are kind.} መምህራኑ ደግ ስለሆኑ ትምህርት ቤቷን ትወዳለች።",
+  "ጥያቄ! {What colour is the school gate?} የትምህርት ቤቱ በር ምን አይነት ቀለም ነው? አዎ፣ {green}፤ አረንጓዴ ነው!"
+ ],
+ "sentences": [
+  {
+   "text": "አሁን ታሪክ እናዳምጥ።",
+   "seg": 0,
+   "files": [
+    "s05/000.mp3"
+   ]
+  },
+  {
+   "text": "ርዕሱ Our School ነው፤ ትምህርት ቤታችን ማለት ነው።",
+   "seg": 0,
+   "files": [
+    "s05/001.mp3",
+    "s05/002.mp3",
+    "s05/003.mp3"
+   ]
+  },
+  {
+   "text": "My name is Selam. I am in Grade 3.",
+   "seg": 1,
+   "files": [
+    "s05/004.mp3"
+   ]
+  },
+  {
+   "text": "ስሟ ሰላም ነው፤ ሦስተኛ ክፍል ትማራለች።",
+   "seg": 1,
+   "files": [
+    "s05/005.mp3"
+   ]
+  },
+  {
+   "text": "Our school is near the river. It has a big green gate and a small café.",
+   "seg": 1,
+   "files": [
+    "s05/006.mp3"
+   ]
+  },
+  {
+   "text": "ትምህርት ቤታቸው ከወንዝ አጠገብ ነው፤ ትልቅ አረንጓዴ በርና ትንሽ ካፌ አለው።",
+   "seg": 1,
+   "files": [
+    "s05/007.mp3"
+   ]
+  },
+  {
+   "text": "Every morning, my friend Dawit and I walk to school.",
+   "seg": 2,
+   "files": [
+    "s05/008.mp3"
+   ]
+  },
+  {
+   "text": "በየጠዋቱ ከጓደኛዋ ከዳዊት ጋር በእግር ወደ ትምህርት ቤት ይሄዳሉ።",
+   "seg": 2,
+   "files": [
+    "s05/009.mp3"
+   ]
+  },
+  {
+   "text": "We take our books to the library on Tuesday.",
+   "seg": 3,
+   "files": [
+    "s05/010.mp3"
+   ]
+  },
+  {
+   "text": "ማክሰኞ መጻሕፍታቸውን ወደ ቤተ መጻሕፍት ይወስዳሉ።",
+   "seg": 3,
+   "files": [
+    "s05/011.mp3"
+   ]
+  },
+  {
+   "text": "In the laboratory, we look at seeds and leaves.",
+   "seg": 3,
+   "files": [
+    "s05/012.mp3"
+   ]
+  },
+  {
+   "text": "በቤተ ሙከራ ዘርና ቅጠል ያያሉ።",
+   "seg": 3,
+   "files": [
+    "s05/013.mp3"
+   ]
+  },
+  {
+   "text": "I love my school because the teachers are kind.",
+   "seg": 4,
+   "files": [
+    "s05/014.mp3"
+   ]
+  },
+  {
+   "text": "መምህራኑ ደግ ስለሆኑ ትምህርት ቤቷን ትወዳለች።",
+   "seg": 4,
+   "files": [
+    "s05/015.mp3"
+   ]
+  },
+  {
+   "text": "ጥያቄ!",
+   "seg": 5,
+   "files": [
+    "s05/016.mp3"
+   ]
+  },
+  {
+   "text": "What colour is the school gate?",
+   "seg": 5,
+   "files": [
+    "s05/017.mp3"
+   ]
+  },
+  {
+   "text": "የትምህርት ቤቱ በር ምን አይነት ቀለም ነው?",
+   "seg": 5,
+   "files": [
+    "s05/018.mp3"
+   ]
+  },
+  {
+   "text": "አዎ፣ green፤ አረንጓዴ ነው!",
+   "seg": 5,
+   "files": [
+    "s05/019.mp3",
+    "s05/020.mp3",
+    "s05/021.mp3"
+   ]
+  }
+ ]
+}

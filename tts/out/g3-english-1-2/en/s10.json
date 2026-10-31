@@ -1,0 +1,22 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": "Well done! Tomorrow is Saturday.",
+ "sentences": [
+  {
+   "text": "Well done!",
+   "seg": 0,
+   "files": [
+    "s10/000.mp3"
+   ]
+  },
+  {
+   "text": "Tomorrow is Saturday.",
+   "seg": 0,
+   "files": [
+    "s10/001.mp3"
+   ]
+  }
+ ]
+}

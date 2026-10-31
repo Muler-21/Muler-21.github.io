@@ -1,0 +1,61 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": [
+  "There are seven days in a week: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday and Sunday.",
+  "Today is Monday. Yesterday was Sunday. Tomorrow is Tuesday.",
+  "Today is Wednesday. Yesterday was Tuesday. Tomorrow is Thursday."
+ ],
+ "sentences": [
+  {
+   "text": "There are seven days in a week: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday and Sunday.",
+   "seg": 0,
+   "files": [
+    "s08/000.mp3"
+   ]
+  },
+  {
+   "text": "Today is Monday.",
+   "seg": 1,
+   "files": [
+    "s08/001.mp3"
+   ]
+  },
+  {
+   "text": "Yesterday was Sunday.",
+   "seg": 1,
+   "files": [
+    "s08/002.mp3"
+   ]
+  },
+  {
+   "text": "Tomorrow is Tuesday.",
+   "seg": 1,
+   "files": [
+    "s08/003.mp3"
+   ]
+  },
+  {
+   "text": "Today is Wednesday.",
+   "seg": 2,
+   "files": [
+    "s08/004.mp3"
+   ]
+  },
+  {
+   "text": "Yesterday was Tuesday.",
+   "seg": 2,
+   "files": [
+    "s08/005.mp3"
+   ]
+  },
+  {
+   "text": "Tomorrow is Thursday.",
+   "seg": 2,
+   "files": [
+    "s08/006.mp3"
+   ]
+  }
+ ]
+}

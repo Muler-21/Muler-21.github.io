@@ -1,0 +1,106 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": [
+  "Now let's go inside our classroom. What can we see?",
+  "This is a desk, and this is the blackboard. The teacher writes on the blackboard.",
+  "This is a ruler, and this is a pencil. We draw straight lines with a ruler.",
+  "This is a schoolbag. I carry my books in my schoolbag.",
+  "In maths we use a set square and a compass. In science we use a test tube and a funnel.",
+  "Let's spell! Ruler: R, U, L, E, R. Pencil: P, E, N, C, I, L."
+ ],
+ "sentences": [
+  {
+   "text": "Now let's go inside our classroom.",
+   "seg": 0,
+   "files": [
+    "s04/000.mp3"
+   ]
+  },
+  {
+   "text": "What can we see?",
+   "seg": 0,
+   "files": [
+    "s04/001.mp3"
+   ]
+  },
+  {
+   "text": "This is a desk, and this is the blackboard.",
+   "seg": 1,
+   "files": [
+    "s04/002.mp3"
+   ]
+  },
+  {
+   "text": "The teacher writes on the blackboard.",
+   "seg": 1,
+   "files": [
+    "s04/003.mp3"
+   ]
+  },
+  {
+   "text": "This is a ruler, and this is a pencil.",
+   "seg": 2,
+   "files": [
+    "s04/004.mp3"
+   ]
+  },
+  {
+   "text": "We draw straight lines with a ruler.",
+   "seg": 2,
+   "files": [
+    "s04/005.mp3"
+   ]
+  },
+  {
+   "text": "This is a schoolbag.",
+   "seg": 3,
+   "files": [
+    "s04/006.mp3"
+   ]
+  },
+  {
+   "text": "I carry my books in my schoolbag.",
+   "seg": 3,
+   "files": [
+    "s04/007.mp3"
+   ]
+  },
+  {
+   "text": "In maths we use a set square and a compass.",
+   "seg": 4,
+   "files": [
+    "s04/008.mp3"
+   ]
+  },
+  {
+   "text": "In science we use a test tube and a funnel.",
+   "seg": 4,
+   "files": [
+    "s04/009.mp3"
+   ]
+  },
+  {
+   "text": "Let's spell!",
+   "seg": 5,
+   "files": [
+    "s04/010.mp3"
+   ]
+  },
+  {
+   "text": "Ruler: R, U, L, E, R.",
+   "seg": 5,
+   "files": [
+    "s04/011.mp3"
+   ]
+  },
+  {
+   "text": "Pencil: P, E, N, C, I, L.",
+   "seg": 5,
+   "files": [
+    "s04/012.mp3"
+   ]
+  }
+ ]
+}

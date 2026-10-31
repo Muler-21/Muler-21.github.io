@@ -1,0 +1,36 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": "Now it's your turn! Today is Friday. What day is tomorrow? Think!",
+ "sentences": [
+  {
+   "text": "Now it's your turn!",
+   "seg": 0,
+   "files": [
+    "s09/000.mp3"
+   ]
+  },
+  {
+   "text": "Today is Friday.",
+   "seg": 0,
+   "files": [
+    "s09/001.mp3"
+   ]
+  },
+  {
+   "text": "What day is tomorrow?",
+   "seg": 0,
+   "files": [
+    "s09/002.mp3"
+   ]
+  },
+  {
+   "text": "Think!",
+   "seg": 0,
+   "files": [
+    "s09/003.mp3"
+   ]
+  }
+ ]
+}

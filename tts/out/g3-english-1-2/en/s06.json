@@ -1,0 +1,63 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": [
+  "Unit 2 is Months of the Year. There are twelve months in a year.",
+  "January, February, March, April, May, June.",
+  "July, August, September, October, November, December.",
+  "Remember: the name of a month always starts with a capital letter. January starts with a capital J.",
+  "January is the first month, and December is the last month."
+ ],
+ "sentences": [
+  {
+   "text": "Unit 2 is Months of the Year.",
+   "seg": 0,
+   "files": [
+    "s06/000.mp3"
+   ]
+  },
+  {
+   "text": "There are twelve months in a year.",
+   "seg": 0,
+   "files": [
+    "s06/001.mp3"
+   ]
+  },
+  {
+   "text": "January, February, March, April, May, June.",
+   "seg": 1,
+   "files": [
+    "s06/002.mp3"
+   ]
+  },
+  {
+   "text": "July, August, September, October, November, December.",
+   "seg": 2,
+   "files": [
+    "s06/003.mp3"
+   ]
+  },
+  {
+   "text": "Remember: the name of a month always starts with a capital letter.",
+   "seg": 3,
+   "files": [
+    "s06/004.mp3"
+   ]
+  },
+  {
+   "text": "January starts with a capital J.",
+   "seg": 3,
+   "files": [
+    "s06/005.mp3"
+   ]
+  },
+  {
+   "text": "January is the first month, and December is the last month.",
+   "seg": 4,
+   "files": [
+    "s06/006.mp3"
+   ]
+  }
+ ]
+}

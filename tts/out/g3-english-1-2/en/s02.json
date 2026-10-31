@@ -1,0 +1,114 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": [
+  "Unit 1 is My School. Let's walk around our school and learn the names of the places.",
+  "This is the gate. We come in through the gate every morning.",
+  "This is the library. We read and borrow books in the library.",
+  "This is the laboratory. We do experiments in the laboratory.",
+  "This is the hall. Many people meet in the hall for big meetings.",
+  "This is the café. We drink tea and milk at the café.",
+  "This is the rest-room. We wash our hands in the rest-room."
+ ],
+ "sentences": [
+  {
+   "text": "Unit 1 is My School.",
+   "seg": 0,
+   "files": [
+    "s02/000.mp3"
+   ]
+  },
+  {
+   "text": "Let's walk around our school and learn the names of the places.",
+   "seg": 0,
+   "files": [
+    "s02/001.mp3"
+   ]
+  },
+  {
+   "text": "This is the gate.",
+   "seg": 1,
+   "files": [
+    "s02/002.mp3"
+   ]
+  },
+  {
+   "text": "We come in through the gate every morning.",
+   "seg": 1,
+   "files": [
+    "s02/003.mp3"
+   ]
+  },
+  {
+   "text": "This is the library.",
+   "seg": 2,
+   "files": [
+    "s02/004.mp3"
+   ]
+  },
+  {
+   "text": "We read and borrow books in the library.",
+   "seg": 2,
+   "files": [
+    "s02/005.mp3"
+   ]
+  },
+  {
+   "text": "This is the laboratory.",
+   "seg": 3,
+   "files": [
+    "s02/006.mp3"
+   ]
+  },
+  {
+   "text": "We do experiments in the laboratory.",
+   "seg": 3,
+   "files": [
+    "s02/007.mp3"
+   ]
+  },
+  {
+   "text": "This is the hall.",
+   "seg": 4,
+   "files": [
+    "s02/008.mp3"
+   ]
+  },
+  {
+   "text": "Many people meet in the hall for big meetings.",
+   "seg": 4,
+   "files": [
+    "s02/009.mp3"
+   ]
+  },
+  {
+   "text": "This is the café.",
+   "seg": 5,
+   "files": [
+    "s02/010.mp3"
+   ]
+  },
+  {
+   "text": "We drink tea and milk at the café.",
+   "seg": 5,
+   "files": [
+    "s02/011.mp3"
+   ]
+  },
+  {
+   "text": "This is the rest-room.",
+   "seg": 6,
+   "files": [
+    "s02/012.mp3"
+   ]
+  },
+  {
+   "text": "We wash our hands in the rest-room.",
+   "seg": 6,
+   "files": [
+    "s02/013.mp3"
+   ]
+  }
+ ]
+}
