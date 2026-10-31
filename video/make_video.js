@@ -50,7 +50,7 @@ const srv = http.createServer((q, r) => { const p = path.join(ROOT, decodeURICom
   const b = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
   const page = await b.newPage({ viewport: { width: 1920, height: 1080 } });
   page.on('pageerror', e => console.log('PAGE ERROR', e.message));
-  await page.goto(`http://127.0.0.1:${port}/index.html`); await page.waitForFunction(() => window.READY); await page.evaluate(() => document.fonts.ready);
+  await page.goto(`http://127.0.0.1:${port}/index.html${process.env.RENDER_QS || ''}`); await page.waitForFunction(() => window.READY); await page.evaluate(() => document.fonts.ready);
   const chip = story.subtitle[lang];
   const plan = []; let clock = 0; const srt = [];
   for (const s of story.scenes) {
@@ -70,11 +70,11 @@ const srv = http.createServer((q, r) => { const p = path.join(ROOT, decodeURICom
     for (const tg of prev.split(',').map(Number)) { let acc = 0; for (const p of plan) { if (tg < acc + p.d) { await page.evaluate(c => window.setupScene(c), p.ctx); const url = await page.evaluate(t => window.renderAt(t), tg - acc); fs.writeFileSync(path.join(outDir, `prev_${lang}_${tg}.jpg`), Buffer.from(url.split(',')[1], 'base64')); console.log('preview', tg, p.s.id); break; } acc += p.d; } }
     await b.close(); srv.close(); return;
   }
-  const only = arg('--only');
+  const only = arg('--only'), range = (arg('--range') || '0:999').split(':').map(Number), assembleOnly = process.argv.includes('--assemble');
   const parts = [];
   for (const [i, p] of plan.entries()) {
     const out = path.join(outDir, `${lang}_${String(i).padStart(2, '0')}_${p.s.id}.mp4`); parts.push(out);
-    if (only && only !== p.s.id && fs.existsSync(out)) continue;
+    if (assembleOnly || i < range[0] || i >= range[1] || (only && only !== p.s.id && fs.existsSync(out))) continue;
     const tmp = out.replace(/\.mp4$/, '.part.mp4');
     const ff = spawn('ffmpeg', ['-y', '-v', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-', '-c:v', 'libx264', '-preset', 'medium', '-crf', '20', '-pix_fmt', 'yuv420p', '-r', String(FPS), tmp], { stdio: ['pipe', 'inherit', 'inherit'] });
     await page.evaluate(c => window.setupScene(c), p.ctx);
@@ -87,6 +87,7 @@ const srv = http.createServer((q, r) => { const p = path.join(ROOT, decodeURICom
     fs.renameSync(tmp, out); console.log('scene', p.s.id, n, 'frames', ((Date.now() - t0) / 1000).toFixed(0) + 's');
   }
   await b.close(); srv.close();
+  if (process.argv.includes('--range')) { console.log('rendered range', range.join(':')); return; }
   // narration track: each voice placed after its lead-in, padded to the scene length
   const aparts = [];
   for (const [i, p] of plan.entries()) {
@@ -100,7 +101,7 @@ const srv = http.createServer((q, r) => { const p = path.join(ROOT, decodeURICom
   const music = path.join(__dirname, 'music.wav');
   const final = path.join(outDir, `${story.id}-${lang}.mp4`);
   execFileSync('ffmpeg', ['-y', '-v', 'error', '-i', silent, '-i', voice, '-stream_loop', '-1', '-i', music, '-filter_complex',
-    `[2:a]volume=0.16,afade=t=in:d=1.5,afade=t=out:st=${(clock - 3).toFixed(2)}:d=3[m];[m][1:a]sidechaincompress=threshold=0.03:ratio=6:attack=20:release=400[md];[1:a][md]amix=inputs=2:duration=first:normalize=0,loudnorm=I=-16:TP=-1.5[a]`,
+    `[2:a]volume=0.07,afade=t=in:d=1.5,afade=t=out:st=${(clock - 3).toFixed(2)}:d=3[m];[m][1:a]sidechaincompress=threshold=0.03:ratio=6:attack=20:release=400[md];[1:a][md]amix=inputs=2:duration=first:normalize=0,loudnorm=I=-16:TP=-1.5[a]`,
     '-map', '0:v', '-map', '[a]', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '160k', '-t', clock.toFixed(2), '-movflags', '+faststart', final]);
   const ts = x => { const ms = Math.round(x * 1000); const h = Math.floor(ms / 3600000), m = Math.floor(ms / 60000) % 60, s = Math.floor(ms / 1000) % 60; return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')},${String(ms % 1000).padStart(3, '0')}`; };
   fs.writeFileSync(path.join(outDir, `${story.id}-${lang}.srt`), srt.map((c, i) => `${i + 1}\n${ts(c.t0)} --> ${ts(c.t1)}\n${c.text}\n`).join('\n'));

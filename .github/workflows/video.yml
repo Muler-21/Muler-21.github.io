@@ -1,63 +1,105 @@
 name: AMBKidsJoy 3D lesson videos
 # Push a storyboard to tts/requests/<id>.json on this branch. This workflow
 # 1) makes free neural voices (Amharic + British English) with edge-tts,
-# 2) renders the 3D scenes (Three.js in headless Chromium) for each language,
+# 2) renders the 3D scenes (Three.js in headless Chromium) in parallel jobs,
 # 3) mixes voice, music and captions with ffmpeg,
 # 4) publishes the MP4 and SRT files as a GitHub Release named after the chapter.
+# Set the chapter to build with CHAPTER below (or run it by hand from the Actions tab).
 on:
   push:
     branches: [video-tts]
-    paths: ["tts/requests/**", "video/**"]
+    paths: ["tts/requests/**", "video/**", ".github/workflows/video.yml"]
   workflow_dispatch:
+    inputs:
+      chapter:
+        description: "Storyboard id in tts/requests (e.g. g4-math-1)"
+        required: false
 permissions:
   contents: write
+concurrency:
+  group: lesson-videos
+  cancel-in-progress: true
+env:
+  CHAPTER: ${{ github.event.inputs.chapter || 'g4-math-1' }}
 jobs:
-  video:
+  voices:
     runs-on: ubuntu-latest
-    timeout-minutes: 300
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -q edge-tts && python tts/make.py
+      - run: |
+          git config user.name "AMBKidsJoy voice bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add tts/out
+          git diff --cached --quiet || (git commit -m "Voices generated" && git push)
+
+  render:
+    needs: voices
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        lang: [am, en]
+        range: ["0:2", "2:4", "4:6", "6:8", "8:10"]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: video-tts
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Tools and fonts
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fonts-noto-core > /dev/null
+          mkdir -p ~/.local/share/fonts
+          curl -sSL -o ~/.local/share/fonts/Baloo2.ttf "https://github.com/google/fonts/raw/main/ofl/baloo2/Baloo2%5Bwght%5D.ttf"
+          fc-cache -f > /dev/null
+          cd video && npm install --silent three@0.160.0 playwright@1.48.2 && npx playwright install --with-deps chromium > /dev/null
+          ln -sfn ../node_modules/three render/three
+      - name: Render scenes ${{ matrix.range }} (${{ matrix.lang }})
+        run: node video/make_video.js "tts/requests/$CHAPTER.json" "tts/out/$CHAPTER" ${{ matrix.lang }} "build/$CHAPTER" --range ${{ matrix.range }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: parts-${{ matrix.lang }}-${{ strategy.job-index }}
+          path: build/
+          retention-days: 3
+
+  assemble:
+    needs: render
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: video-tts
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Tools and fonts
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: parts-*
+          path: build/
+          merge-multiple: true
+      - name: Tools
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq ffmpeg fonts-noto-core > /dev/null
-          mkdir -p ~/.local/share/fonts
-          curl -sSL -o ~/.local/share/fonts/Baloo2.ttf "https://github.com/google/fonts/raw/main/ofl/baloo2/Baloo2%5Bwght%5D.ttf"
-          fc-cache -f > /dev/null
-          pip install -q edge-tts numpy
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
+          pip install -q numpy && python video/music.py video/music.wav
           cd video && npm install --silent three@0.160.0 playwright@1.48.2 && npx playwright install --with-deps chromium > /dev/null
           ln -sfn ../node_modules/three render/three
-          python music.py music.wav
-      - name: Voices
-        run: python tts/make.py
-      - name: Save voices
+      - name: Mix voice, music and captions
         run: |
-          git config user.name "AMBKidsJoy voice bot"
-          git config user.email "actions@users.noreply.github.com"
-          git add tts/out
-          git diff --cached --quiet || (git commit -m "Voices generated" && git push)
-      - name: Render videos
-        run: |
-          for req in tts/requests/*.json; do
-            id=$(basename "$req" .json)
-            for lang in $(python -c "import json,sys;print(' '.join(json.load(open('$req'))['voices']))"); do
-              node video/make_video.js "$req" "tts/out/$id" "$lang" "build/$id"
-            done
-          done
+          for lang in am en; do node video/make_video.js "tts/requests/$CHAPTER.json" "tts/out/$CHAPTER" $lang "build/$CHAPTER" --assemble; done
       - name: Publish release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          for d in build/*/; do
-            id=$(basename "$d")
-            gh release delete "video-$id" -y --cleanup-tag 2>/dev/null || true
-            gh release create "video-$id" --target video-tts --title "AMBKidsJoy video: $id" \
-              --notes "3D lesson video made automatically from the AMBKidsJoy storyboard. Amharic and English versions with captions (.srt) for YouTube." \
-              $d/$id-*.mp4 $d/$id-*.srt
-          done
+          gh release delete "video-$CHAPTER" -y --cleanup-tag 2>/dev/null || true
+          gh release create "video-$CHAPTER" --target video-tts --title "AMBKidsJoy video: $CHAPTER" \
+            --notes "3D lesson video made automatically from the AMBKidsJoy storyboard: Amharic and English versions, with captions (.srt) for YouTube." \
+            build/$CHAPTER/$CHAPTER-*.mp4 build/$CHAPTER/$CHAPTER-*.srt

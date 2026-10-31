@@ -7,9 +7,10 @@ const FONT = "'Baloo 2','Noto Sans Ethiopic',sans-serif";
 const C = { ink: '#1d2b53', yellow: '#ffc93c', blue: '#4a7fc1', green: '#4f9d69', orange: '#e8873d', red: '#d9534f', purple: '#8a6bbf', teal: '#2aa198', pink: '#ef7fa6', cream: '#fffaf0' };
 const COLS = [C.purple, C.blue, C.green, C.orange, C.red, C.teal];
 
-const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
-renderer.setSize(W, H); renderer.setPixelRatio(1);
-renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+const QS = new URLSearchParams(location.search);
+const renderer = new THREE.WebGLRenderer({ antialias: QS.get('aa') !== '0', preserveDrawingBuffer: true });
+const RS = parseFloat(QS.get('rs') || '1'); renderer.setSize(W * RS, H * RS, false); renderer.setPixelRatio(1);
+renderer.shadowMap.enabled = QS.get('sh') !== '0'; renderer.shadowMap.type = QS.get('sh') === 'soft' ? THREE.PCFSoftShadowMap : THREE.PCFShadowMap;
 renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.autoClear = false;
 document.body.appendChild(renderer.domElement);
 
@@ -52,7 +53,9 @@ function label(text, h, o = {}) {
   const m = new THREE.Mesh(new THREE.PlaneGeometry(h * aspect, h), new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false }));
   m.userData.w = h * aspect; return m;
 }
-function mat(color, o = {}) { return new THREE.MeshStandardMaterial({ color, roughness: .5, metalness: .05, ...o }); }
+function mat(color, o = {}) {
+  if (QS.get('mat') === 'lambert') { const { roughness, metalness, ...rest } = o; return new THREE.MeshLambertMaterial({ color, ...rest }); }
+  return new THREE.MeshStandardMaterial({ color, roughness: .5, metalness: .05, ...o }); }
 function block(w, h, d, color, text, o = {}) {
   const g = new THREE.Group();
   const b = new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 4, Math.min(w, h, d) * .16), mat(color, o.mat));
@@ -88,7 +91,7 @@ const world = new THREE.Group(); scene.add(world);
   g.fillStyle = gr; g.fillRect(0, 0, 16, 512); const bg = new THREE.CanvasTexture(cv); bg.colorSpace = THREE.SRGBColorSpace; scene.background = bg;
   scene.add(new THREE.HemisphereLight('#ffffff', '#c9b28a', 1.25));
   const sun = new THREE.DirectionalLight('#fff3dc', 2.1); sun.position.set(-8, 18, 14); sun.castShadow = true;
-  sun.shadow.mapSize.set(2048, 2048); Object.assign(sun.shadow.camera, { left: -16, right: 16, top: 16, bottom: -6, near: 1, far: 60 }); sun.shadow.bias = -.0006; scene.add(sun);
+  sun.shadow.mapSize.set(+(QS.get('sm') || 2048), +(QS.get('sm') || 2048)); Object.assign(sun.shadow.camera, { left: -16, right: 16, top: 16, bottom: -6, near: 1, far: 60 }); sun.shadow.bias = -.0006; scene.add(sun);
   const ground = new THREE.Mesh(new THREE.CircleGeometry(60, 64), mat('#b8e3a0', { roughness: .95 })); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
   const stage = new THREE.Mesh(new THREE.CylinderGeometry(13, 13.4, .25, 64), mat('#fff1cf', { roughness: .8 })); stage.position.y = .12; stage.receiveShadow = true; scene.add(stage);
   // distant hills and clouds
@@ -383,4 +386,5 @@ window.renderAt = (t) => {
   return renderer.domElement.toDataURL('image/jpeg', .92);
 };
 window.wrapText = wrap;
+window.renderOnly = (t) => { S(t); renderer.clear(); renderer.render(scene, camera); renderer.clearDepth(); renderer.render(hud, hudCam); renderer.getContext().finish(); };
 window.READY = true;
