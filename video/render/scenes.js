@@ -828,8 +828,8 @@ Object.assign(SCENES, {
     const conf = confetti(70, 5);
     return t => {
       const on = t > sg.start - .1, bp = (t - sg.start) / (60 / sg.bpm), b = Math.abs(Math.sin(Math.PI * bp));
-      camTo(Math.sin(t * .15) * 1.2 * (on ? 1 : 0), 5.0, 18.5, 0, 4.4, 0);
-      kokeb.position.set(-6.6, 5.2 + (on ? b * .25 : 0), 0); kokeb.scale.setScalar(1.15); kokeb.update(t, CTX.amp(t), { spin: on ? Math.sin(Math.PI * bp * .5) * .5 : 0 });
+      const cs = CTX.camShift || 0; if (cs) camTo(cs, 4.6, 15.5, cs, 4.1, 0); else camTo(Math.sin(t * .15) * 1.2 * (on ? 1 : 0), 5.0, 18.5, 0, 4.4, 0);
+      kokeb.position.set(cs ? 5.6 : -6.6, (cs ? 7.0 : 5.2) + (on ? b * .25 : 0), 0); kokeb.scale.setScalar(1.15); kokeb.update(t, CTX.amp(t), { spin: on ? Math.sin(Math.PI * bp * .5) * .5 : 0 });
       show(title, pop(t, .3) * (1 - ease(pr(t, sg.start - .2, .4))));
       let li = -1; sg.lines.forEach((l, i) => { if (t >= l.bar0 - .15) li = i; });
       const pi = li < 0 ? -1 : Math.floor(li / 2);
