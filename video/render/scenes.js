@@ -301,7 +301,7 @@ const SCENES = {
   intro() {
     const title = board(9.4, 3.4, CTX.story.title[CTX.lang] + '\n ', { size: 150 }); title.position.set(3.4, 6.2, 0); root.add(title);
     const sub = label(CTX.story.subtitle[CTX.lang], .7, { color: C.blue, size: 90 }); sub.position.set(3.4, 5.25, .2); root.add(sub);
-    const icons = ['645,021', '7 < 9', '≈ 8,300', '፴፭'].map((s, i) => { const b = block(2.4, 1.4, .7, COLS[i + 1], s, { size: 120 }); b.position.set(-1.0 + i * 2.9, 2.2, 0); root.add(b); return b; });
+    const icons = ['645,021', '7 < 9', '≈ 8,300', '፴፭'].map((s, i) => { const b = block(2.4, 1.4, .7, COLS[i + 1], s, { size: 120 }); b.position.set(-3.0 + i * 2.6, 2.2, 0); root.add(b); return b; });
     const floaters = []; const r = rng(3);
     for (let i = 0; i < 10; i++) { const b = block(.9, .9, .9, COLS[i % 6], String(i), { size: 140 }); b.userData.p = [r() * 22 - 11, 3 + r() * 6, -6 - r() * 6, r() * 6]; root.add(b); floaters.push(b); }
     return t => {
