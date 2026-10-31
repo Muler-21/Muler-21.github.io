@@ -1,0 +1,42 @@
+{
+ "voice": "en-GB-LibbyNeural",
+ "text": "Look at these cubes. One small cube is one. Ten ones join together to make one ten. Ten tens make one hundred. And ten hundreds make one thousand. That is the big rule: ten of one place make one of the next place.",
+ "marks": [
+  {
+   "type": "SentenceBoundary",
+   "start": 0.1,
+   "dur": 2.3277173,
+   "text": "Look at these cubes."
+  },
+  {
+   "type": "SentenceBoundary",
+   "start": 2.3777173,
+   "dur": 2.8260869,
+   "text": "One small cube is one."
+  },
+  {
+   "type": "SentenceBoundary",
+   "start": 5.2038042,
+   "dur": 3.8586955,
+   "text": "Ten ones join together to make one ten."
+  },
+  {
+   "type": "SentenceBoundary",
+   "start": 9.0624998,
+   "dur": 3.084239,
+   "text": "Ten tens make one hundred."
+  },
+  {
+   "type": "SentenceBoundary",
+   "start": 12.1467389,
+   "dur": 3.4374999,
+   "text": "And ten hundreds make one thousand."
+  },
+  {
+   "type": "SentenceBoundary",
+   "start": 15.5842388,
+   "dur": 5.3532607,
+   "text": "That is the big rule: ten of one place make one of the next place."
+  }
+ ]
+}

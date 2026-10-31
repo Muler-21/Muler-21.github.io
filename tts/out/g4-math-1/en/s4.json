@@ -1,0 +1,18 @@
+{
+ "voice": "en-GB-LibbyNeural",
+ "text": "Let's write it in expanded form: six hundred thousand, plus forty thousand, plus five thousand, plus twenty, plus one. The hundreds place has a zero, so we add nothing there.",
+ "marks": [
+  {
+   "type": "SentenceBoundary",
+   "start": 0.1,
+   "dur": 9.6646737,
+   "text": "Let's write it in expanded form: six hundred thousand, plus forty thousand, plus five thousand, plus twenty, plus one."
+  },
+  {
+   "type": "SentenceBoundary",
+   "start": 9.7146737,
+   "dur": 4.7554346,
+   "text": "The hundreds place has a zero, so we add nothing there."
+  }
+ ]
+}

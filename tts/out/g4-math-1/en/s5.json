@@ -1,0 +1,42 @@
+{
+ "voice": "en-GB-LibbyNeural",
+ "text": "Which is bigger: 357,812 or 359,104? Start from the left. The hundred thousands are the same. The ten thousands are the same. But in the thousands place, seven and nine are different. Nine is bigger than seven, so 359,104 is the bigger number.",
+ "marks": [
+  {
+   "type": "SentenceBoundary",
+   "start": 0.1,
+   "dur": 9.8956519,
+   "text": "Which is bigger: 357,812 or 359,104?"
+  },
+  {
+   "type": "SentenceBoundary",
+   "start": 9.9456519,
+   "dur": 2.3369564,
+   "text": "Start from the left."
+  },
+  {
+   "type": "SentenceBoundary",
+   "start": 12.2826084,
+   "dur": 2.9755434,
+   "text": "The hundred thousands are the same."
+  },
+  {
+   "type": "SentenceBoundary",
+   "start": 15.2581518,
+   "dur": 2.9347825,
+   "text": "The ten thousands are the same."
+  },
+  {
+   "type": "SentenceBoundary",
+   "start": 18.1929344,
+   "dur": 4.6739129,
+   "text": "But in the thousands place, seven and nine are different."
+  },
+  {
+   "type": "SentenceBoundary",
+   "start": 22.8668474,
+   "dur": 7.9347824,
+   "text": "Nine is bigger than seven, so 359,104 is the bigger number."
+  }
+ ]
+}

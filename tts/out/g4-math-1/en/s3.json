@@ -1,0 +1,24 @@
+{
+ "voice": "en-GB-LibbyNeural",
+ "text": "Now let's read a big number: six hundred and forty-five thousand and twenty-one. It has six places: hundred thousands, ten thousands, thousands, hundreds, tens and ones. The digit four is in the ten thousands place, so its value is forty thousand.",
+ "marks": [
+  {
+   "type": "SentenceBoundary",
+   "start": 0.1,
+   "dur": 6.2543477,
+   "text": "Now let's read a big number: six hundred and forty-five thousand and twenty-one."
+  },
+  {
+   "type": "SentenceBoundary",
+   "start": 6.3043477,
+   "dur": 8.3559781,
+   "text": "It has six places: hundred thousands, ten thousands, thousands, hundreds, tens and ones."
+  },
+  {
+   "type": "SentenceBoundary",
+   "start": 14.6603258,
+   "dur": 6.494565,
+   "text": "The digit four is in the ten thousands place, so its value is forty thousand."
+  }
+ ]
+}

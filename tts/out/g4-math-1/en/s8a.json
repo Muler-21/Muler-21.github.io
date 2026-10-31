@@ -1,0 +1,24 @@
+{
+ "voice": "en-GB-LibbyNeural",
+ "text": "Now it's your turn! How do you write sixty-eight in Ethiopic numerals? Think!",
+ "marks": [
+  {
+   "type": "SentenceBoundary",
+   "start": 0.1,
+   "dur": 2.2733695,
+   "text": "Now it's your turn!"
+  },
+  {
+   "type": "SentenceBoundary",
+   "start": 2.3233695,
+   "dur": 4.4157607,
+   "text": "How do you write sixty-eight in Ethiopic numerals?"
+  },
+  {
+   "type": "SentenceBoundary",
+   "start": 6.7391303,
+   "dur": 1.4402173,
+   "text": "Think!"
+  }
+ ]
+}

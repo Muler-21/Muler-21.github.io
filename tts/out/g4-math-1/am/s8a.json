@@ -1,0 +1,24 @@
+{
+ "voice": "am-ET-MekdesNeural",
+ "text": "አሁን የእናንተ ተራ ነው! ስልሳ ስምንትን በኢትዮጵያ አሃዝ እንዴት ትጽፉታላችሁ? አስቡ!",
+ "marks": [
+  {
+   "type": "SentenceBoundary",
+   "start": 0.1,
+   "dur": 2.3021276,
+   "text": "አሁን የእናንተ ተራ ነው!"
+  },
+  {
+   "type": "SentenceBoundary",
+   "start": 2.3521276,
+   "dur": 3.8563829,
+   "text": "ስልሳ ስምንትን በኢትዮጵያ አሃዝ እንዴት ትጽፉታላችሁ?"
+  },
+  {
+   "type": "SentenceBoundary",
+   "start": 6.2085106,
+   "dur": 1.449468,
+   "text": "አስቡ!"
+  }
+ ]
+}

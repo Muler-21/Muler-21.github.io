@@ -1,0 +1,18 @@
+{
+ "voice": "en-GB-LibbyNeural",
+ "text": "Well done! The answer is the symbol for sixty and the symbol for eight.",
+ "marks": [
+  {
+   "type": "SentenceBoundary",
+   "start": 0.1,
+   "dur": 1.811413,
+   "text": "Well done!"
+  },
+  {
+   "type": "SentenceBoundary",
+   "start": 1.861413,
+   "dur": 4.4972825,
+   "text": "The answer is the symbol for sixty and the symbol for eight."
+  }
+ ]
+}

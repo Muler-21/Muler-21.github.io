@@ -1,0 +1,18 @@
+{
+ "voice": "am-ET-MekdesNeural",
+ "text": "ጎበዝ! መልሱ የስልሳ ምልክትና የስምንት ምልክት ነው።",
+ "marks": [
+  {
+   "type": "SentenceBoundary",
+   "start": 0.1,
+   "dur": 1.4643617,
+   "text": "ጎበዝ!"
+  },
+  {
+   "type": "SentenceBoundary",
+   "start": 1.5143617,
+   "dur": 3.7101063,
+   "text": "መልሱ የስልሳ ምልክትና የስምንት ምልክት ነው።"
+  }
+ ]
+}
