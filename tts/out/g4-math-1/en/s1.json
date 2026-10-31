@@ -1,30 +1,24 @@
 {
+ "v": 2,
  "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
  "text": "Hello, children! I'm Kokeb, the star. Welcome to Grade 4 Maths. In Chapter 1 we are learning about whole numbers: how to read big numbers, compare them and round them, and how to write Ethiopic numerals.",
- "marks": [
+ "sentences": [
   {
-   "type": "SentenceBoundary",
-   "start": 0.1,
-   "dur": 2.3820651,
-   "text": "Hello, children!"
+   "text": "Hello, children!",
+   "file": "s1/00.mp3"
   },
   {
-   "type": "SentenceBoundary",
-   "start": 2.4320651,
-   "dur": 2.5815216,
-   "text": "I'm Kokeb, the star."
+   "text": "I'm Kokeb, the star.",
+   "file": "s1/01.mp3"
   },
   {
-   "type": "SentenceBoundary",
-   "start": 5.0135868,
-   "dur": 2.9891303,
-   "text": "Welcome to Grade 4 Maths."
+   "text": "Welcome to Grade 4 Maths.",
+   "file": "s1/02.mp3"
   },
   {
-   "type": "SentenceBoundary",
-   "start": 8.0027172,
-   "dur": 9.9456519,
-   "text": "In Chapter 1 we are learning about whole numbers: how to read big numbers, compare them and round them, and how to write Ethiopic numerals."
+   "text": "In Chapter 1 we are learning about whole numbers: how to read big numbers, compare them and round them, and how to write Ethiopic numerals.",
+   "file": "s1/03.mp3"
   }
  ]
 }

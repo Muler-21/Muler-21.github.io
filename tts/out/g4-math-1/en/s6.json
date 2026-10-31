@@ -1,42 +1,32 @@
 {
+ "v": 2,
  "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
  "text": "Now let's round. Round 8,349 to the nearest hundred. It is between 8,300 and 8,400. Look at the digit just to the right of the hundreds place: it is four. Zero to four stays the same; five to nine goes up. So the answer is 8,300.",
- "marks": [
+ "sentences": [
   {
-   "type": "SentenceBoundary",
-   "start": 0.1,
-   "dur": 2.2869564,
-   "text": "Now let's round."
+   "text": "Now let's round.",
+   "file": "s6/00.mp3"
   },
   {
-   "type": "SentenceBoundary",
-   "start": 2.3369564,
-   "dur": 5.4619564,
-   "text": "Round 8,349 to the nearest hundred."
+   "text": "Round 8,349 to the nearest hundred.",
+   "file": "s6/01.mp3"
   },
   {
-   "type": "SentenceBoundary",
-   "start": 7.7989129,
-   "dur": 5.3804346,
-   "text": "It is between 8,300 and 8,400."
+   "text": "It is between 8,300 and 8,400.",
+   "file": "s6/02.mp3"
   },
   {
-   "type": "SentenceBoundary",
-   "start": 13.1793475,
-   "dur": 5.1766303,
-   "text": "Look at the digit just to the right of the hundreds place: it is four."
+   "text": "Look at the digit just to the right of the hundreds place: it is four.",
+   "file": "s6/03.mp3"
   },
   {
-   "type": "SentenceBoundary",
-   "start": 18.3559779,
-   "dur": 4.7554346,
-   "text": "Zero to four stays the same; five to nine goes up."
+   "text": "Zero to four stays the same; five to nine goes up.",
+   "file": "s6/04.mp3"
   },
   {
-   "type": "SentenceBoundary",
-   "start": 23.1114126,
-   "dur": 4.035326,
-   "text": "So the answer is 8,300."
+   "text": "So the answer is 8,300.",
+   "file": "s6/05.mp3"
   }
  ]
 }

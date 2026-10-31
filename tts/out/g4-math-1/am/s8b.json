@@ -1,18 +1,16 @@
 {
+ "v": 2,
  "voice": "am-ET-MekdesNeural",
+ "rate": "-24%",
  "text": "ጎበዝ! መልሱ የስልሳ ምልክትና የስምንት ምልክት ነው።",
- "marks": [
+ "sentences": [
   {
-   "type": "SentenceBoundary",
-   "start": 0.1,
-   "dur": 1.4643617,
-   "text": "ጎበዝ!"
+   "text": "ጎበዝ!",
+   "file": "s8b/00.mp3"
   },
   {
-   "type": "SentenceBoundary",
-   "start": 1.5143617,
-   "dur": 3.7101063,
-   "text": "መልሱ የስልሳ ምልክትና የስምንት ምልክት ነው።"
+   "text": "መልሱ የስልሳ ምልክትና የስምንት ምልክት ነው።",
+   "file": "s8b/01.mp3"
   }
  ]
 }

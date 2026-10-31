@@ -1,18 +1,16 @@
 {
+ "v": 2,
  "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
  "text": "Let's write it in expanded form: six hundred thousand, plus forty thousand, plus five thousand, plus twenty, plus one. The hundreds place has a zero, so we add nothing there.",
- "marks": [
+ "sentences": [
   {
-   "type": "SentenceBoundary",
-   "start": 0.1,
-   "dur": 9.6646737,
-   "text": "Let's write it in expanded form: six hundred thousand, plus forty thousand, plus five thousand, plus twenty, plus one."
+   "text": "Let's write it in expanded form: six hundred thousand, plus forty thousand, plus five thousand, plus twenty, plus one.",
+   "file": "s4/00.mp3"
   },
   {
-   "type": "SentenceBoundary",
-   "start": 9.7146737,
-   "dur": 4.7554346,
-   "text": "The hundreds place has a zero, so we add nothing there."
+   "text": "The hundreds place has a zero, so we add nothing there.",
+   "file": "s4/01.mp3"
   }
  ]
 }

@@ -1,36 +1,28 @@
 {
+ "v": 2,
  "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
  "text": "Ethiopia has its own numerals. Here are one to nine. The tens have their own symbols too, from ten up to ninety, and one hundred has its own symbol. To write thirty-five, we join the symbol for thirty and the symbol for five. Ethiopic numerals have no zero.",
- "marks": [
+ "sentences": [
   {
-   "type": "SentenceBoundary",
-   "start": 0.1,
-   "dur": 3.5369564,
-   "text": "Ethiopia has its own numerals."
+   "text": "Ethiopia has its own numerals.",
+   "file": "s7/00.mp3"
   },
   {
-   "type": "SentenceBoundary",
-   "start": 3.5869564,
-   "dur": 2.4048912,
-   "text": "Here are one to nine."
+   "text": "Here are one to nine.",
+   "file": "s7/01.mp3"
   },
   {
-   "type": "SentenceBoundary",
-   "start": 5.9918477,
-   "dur": 7.2282607,
-   "text": "The tens have their own symbols too, from ten up to ninety, and one hundred has its own symbol."
+   "text": "The tens have their own symbols too, from ten up to ninety, and one hundred has its own symbol.",
+   "file": "s7/02.mp3"
   },
   {
-   "type": "SentenceBoundary",
-   "start": 13.2201084,
-   "dur": 5.7744564,
-   "text": "To write thirty-five, we join the symbol for thirty and the symbol for five."
+   "text": "To write thirty-five, we join the symbol for thirty and the symbol for five.",
+   "file": "s7/03.mp3"
   },
   {
-   "type": "SentenceBoundary",
-   "start": 18.9945648,
-   "dur": 3.4782608,
-   "text": "Ethiopic numerals have no zero."
+   "text": "Ethiopic numerals have no zero.",
+   "file": "s7/04.mp3"
   }
  ]
 }

@@ -1,42 +1,32 @@
 {
+ "v": 2,
  "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
  "text": "Let's remember: a digit's value depends on its place. Compare from the left. Zero to four stays; five to nine goes up. Your project: find the population of your town and round it to the nearest thousand. For more practice, visit AMBKidsJoy, and don't forget to subscribe. Goodbye!",
- "marks": [
+ "sentences": [
   {
-   "type": "SentenceBoundary",
-   "start": 0.1,
-   "dur": 4.8277173,
-   "text": "Let's remember: a digit's value depends on its place."
+   "text": "Let's remember: a digit's value depends on its place.",
+   "file": "s9/00.mp3"
   },
   {
-   "type": "SentenceBoundary",
-   "start": 4.8777173,
-   "dur": 2.3641303,
-   "text": "Compare from the left."
+   "text": "Compare from the left.",
+   "file": "s9/01.mp3"
   },
   {
-   "type": "SentenceBoundary",
-   "start": 7.2418476,
-   "dur": 4.3749999,
-   "text": "Zero to four stays; five to nine goes up."
+   "text": "Zero to four stays; five to nine goes up.",
+   "file": "s9/02.mp3"
   },
   {
-   "type": "SentenceBoundary",
-   "start": 11.6168476,
-   "dur": 6.4402172,
-   "text": "Your project: find the population of your town and round it to the nearest thousand."
+   "text": "Your project: find the population of your town and round it to the nearest thousand.",
+   "file": "s9/03.mp3"
   },
   {
-   "type": "SentenceBoundary",
-   "start": 18.0570648,
-   "dur": 6.0190216,
-   "text": "For more practice, visit AMBKidsJoy, and don't forget to subscribe."
+   "text": "For more practice, visit AMBKidsJoy, and don't forget to subscribe.",
+   "file": "s9/04.mp3"
   },
   {
-   "type": "SentenceBoundary",
-   "start": 24.0760865,
-   "dur": 1.5896738,
-   "text": "Goodbye!"
+   "text": "Goodbye!",
+   "file": "s9/05.mp3"
   }
  ]
 }
