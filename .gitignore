@@ -1,0 +1,4 @@
+node_modules/
+video/render/three
+video/music.wav
+build/
