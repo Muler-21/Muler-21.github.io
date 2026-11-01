@@ -1,0 +1,22 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": "Can you count to ten in Amharic? Let's try together!",
+ "sentences": [
+  {
+   "text": "Can you count to ten in Amharic?",
+   "seg": 0,
+   "files": [
+    "s1/000.mp3"
+   ]
+  },
+  {
+   "text": "Let's try together!",
+   "seg": 0,
+   "files": [
+    "s1/001.mp3"
+   ]
+  }
+ ]
+}
