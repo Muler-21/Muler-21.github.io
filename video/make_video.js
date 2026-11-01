@@ -81,7 +81,10 @@ const srv = http.createServer((q, r) => { const p = path.join(ROOT, decodeURICom
       let t = start + (s.song.intro_bars ?? 2) * barL; const lines = [];
       const ins = ['-i', mp3], filt = ['[0:a]aresample=48000,aformat=channel_layouts=mono[v0]'], mixin = ['[v0]'];
       s.song.lines.forEach((ln, i) => {
-        const [[ll, text]] = Object.entries(ln), f = path.join(voiceDir, 'song', sm.files[i]), dl = dur(f);
+        const [[ll, text]] = Object.entries(ln), f = path.join(outDir, `song_${s.id}_${i}.wav`);
+        // trim the silence the voice service leaves before and after each chanted line, so the words land on the beat
+        execFileSync('ffmpeg', ['-y', '-v', 'error', '-i', path.join(voiceDir, 'song', sm.files[i]), '-af', 'silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse', '-ar', '48000', f]);
+        const dl = dur(f);
         const nb = Math.max(1, Math.ceil((dl + 0.2) / slotL)), t0 = t + 0.04;
         lines.push({ text, lang: ll, t0, t1: t0 + dl, bar0: t, bar1: t + nb * slotL });
         ins.push('-i', f); filt.push(`[${i + 1}:a]aresample=48000,aformat=channel_layouts=mono,adelay=${Math.round((t0 - LEAD) * 1000)}[v${i + 1}]`); mixin.push(`[v${i + 1}]`);
