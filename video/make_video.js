@@ -48,9 +48,9 @@ const srv = http.createServer((q, r) => { const p = path.join(ROOT, decodeURICom
 (async () => {
   await new Promise(ok => srv.listen(0, ok)); const port = srv.address().port;
   const b = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
-  const page = await b.newPage({ viewport: { width: 1920, height: 1080 } });
+  const page = await b.newPage({ viewport: story.portrait ? { width: 1080, height: 1920 } : { width: 1920, height: 1080 } });
   page.on('pageerror', e => console.log('PAGE ERROR', e.message));
-  await page.goto(`http://127.0.0.1:${port}/index.html${process.env.RENDER_QS || ''}`); await page.waitForFunction(() => window.READY); await page.evaluate(() => document.fonts.ready);
+  await page.goto(`http://127.0.0.1:${port}/index.html${process.env.RENDER_QS || '?x=1'}${story.portrait ? '&portrait=1' : ''}`); await page.waitForFunction(() => window.READY); await page.evaluate(() => document.fonts.ready);
   const chip = story.subtitle[lang];
   const plan = []; let clock = 0; const srt = [];
   for (const s of story.scenes) {
@@ -77,16 +77,16 @@ const srv = http.createServer((q, r) => { const p = path.join(ROOT, decodeURICom
     let d = LEAD + vd + TAIL + (s.kind === 'quiz' || s.kind === 'quizg' ? QUIZ_PAUSE : 0), song = null;
     if (s.song) { // the song: chant lines (shared by both versions) placed on the beat after the spoken introduction
       const sm = JSON.parse(fs.readFileSync(path.join(voiceDir, 'song', s.id + '.json'), 'utf8'));
-      const bpm = s.song.bpm, barL = 240 / bpm, start = LEAD + vd + 0.6;
+      const bpm = s.song.bpm, barL = 240 / bpm, slotL = (s.song.beats_per_slot || 4) * 60 / bpm, start = LEAD + vd + 0.6;
       let t = start + (s.song.intro_bars ?? 2) * barL; const lines = [];
       const ins = ['-i', mp3], filt = ['[0:a]aresample=48000,aformat=channel_layouts=mono[v0]'], mixin = ['[v0]'];
       s.song.lines.forEach((ln, i) => {
         const [[ll, text]] = Object.entries(ln), f = path.join(voiceDir, 'song', sm.files[i]), dl = dur(f);
-        const nb = Math.max(1, Math.ceil((dl + 0.2) / barL)), t0 = t + 0.04;
-        lines.push({ text, lang: ll, t0, t1: t0 + dl, bar0: t, bar1: t + nb * barL });
+        const nb = Math.max(1, Math.ceil((dl + 0.2) / slotL)), t0 = t + 0.04;
+        lines.push({ text, lang: ll, t0, t1: t0 + dl, bar0: t, bar1: t + nb * slotL });
         ins.push('-i', f); filt.push(`[${i + 1}:a]aresample=48000,aformat=channel_layouts=mono,adelay=${Math.round((t0 - LEAD) * 1000)}[v${i + 1}]`); mixin.push(`[v${i + 1}]`);
-        caps.push({ text: text, t0, t1: Math.min(t0 + dl + .5, t + nb * barL), song: true });
-        t += nb * barL;
+        caps.push({ text: text, t0, t1: Math.min(t0 + dl + .5, t + nb * slotL), song: true });
+        t += nb * slotL;
       });
       const end = t + (s.song.outro_bars ?? 1) * barL;
       mp3 = path.join(outDir, `voice_${lang}_${s.id}_song.wav`);

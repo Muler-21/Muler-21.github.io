@@ -20,7 +20,7 @@ concurrency:
   group: lesson-videos
   cancel-in-progress: true
 env:
-  CHAPTER: ${{ github.event.inputs.chapter || 'g3-math-1-2' }}
+  CHAPTER: ${{ github.event.inputs.chapter || 'short-count10' }}
 jobs:
   voices:
     runs-on: ubuntu-latest

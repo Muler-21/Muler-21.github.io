@@ -1,0 +1,170 @@
+{
+ "id": "short-count10",
+ "portrait": true,
+ "animals": true,
+ "title": {
+  "en": "Count to 10 in Amharic!",
+  "am": "እስከ 10 በእንግሊዝኛ!"
+ },
+ "subtitle": {
+  "en": "Count to 10!",
+  "am": "እስከ 10 እንቁጠር!"
+ },
+ "voices": {
+  "am": "am-ET-MekdesNeural",
+  "en": "en-GB-LibbyNeural"
+ },
+ "scenes": [
+  {
+   "id": "s1",
+   "kind": "short",
+   "en": "Can you count to ten in Amharic? Let's try together!",
+   "am": "እስከ አስር በእንግሊዝኛ መቁጠር ትችላላችሁ? አብረን እንሞክር!",
+   "song": {
+    "bpm": 112,
+    "seed": 12,
+    "intro_bars": 1,
+    "outro_bars": 2,
+    "beats_per_slot": 2,
+    "title": {
+     "en": "Count with me!",
+     "am": "አብራችሁ ቁጠሩ!"
+    },
+    "lines": [
+     {
+      "en": "One!"
+     },
+     {
+      "am": "አንድ!"
+     },
+     {
+      "en": "Two!"
+     },
+     {
+      "am": "ሁለት!"
+     },
+     {
+      "en": "Three!"
+     },
+     {
+      "am": "ሦስት!"
+     },
+     {
+      "en": "Four!"
+     },
+     {
+      "am": "አራት!"
+     },
+     {
+      "en": "Five!"
+     },
+     {
+      "am": "አምስት!"
+     },
+     {
+      "en": "Six!"
+     },
+     {
+      "am": "ስድስት!"
+     },
+     {
+      "en": "Seven!"
+     },
+     {
+      "am": "ሰባት!"
+     },
+     {
+      "en": "Eight!"
+     },
+     {
+      "am": "ስምንት!"
+     },
+     {
+      "en": "Nine!"
+     },
+     {
+      "am": "ዘጠኝ!"
+     },
+     {
+      "en": "Ten!"
+     },
+     {
+      "am": "አስር!"
+     },
+     {
+      "en": "Yay! We can count to ten!"
+     },
+     {
+      "am": "ጎበዝ! እስከ አስር ቆጠርን!"
+     }
+    ]
+   },
+   "data": {
+    "hook": "Can you count\nto 10 in\nAMHARIC?",
+    "hookam": "እስከ 10\nበእንግሊዝኛ\nመቁጠር ትችላላችሁ?",
+    "pairs": [
+     [
+      "1",
+      "፩",
+      "one",
+      "አንድ"
+     ],
+     [
+      "2",
+      "፪",
+      "two",
+      "ሁለት"
+     ],
+     [
+      "3",
+      "፫",
+      "three",
+      "ሦስት"
+     ],
+     [
+      "4",
+      "፬",
+      "four",
+      "አራት"
+     ],
+     [
+      "5",
+      "፭",
+      "five",
+      "አምስት"
+     ],
+     [
+      "6",
+      "፮",
+      "six",
+      "ስድስት"
+     ],
+     [
+      "7",
+      "፯",
+      "seven",
+      "ሰባት"
+     ],
+     [
+      "8",
+      "፰",
+      "eight",
+      "ስምንት"
+     ],
+     [
+      "9",
+      "፱",
+      "nine",
+      "ዘጠኝ"
+     ],
+     [
+      "10",
+      "፲",
+      "ten",
+      "አስር"
+     ]
+    ]
+   }
+  }
+ ]
+}

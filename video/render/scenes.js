@@ -2,7 +2,8 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 
-const W = 1920, H = 1080;
+const PORTRAIT = new URLSearchParams(location.search).get('portrait') === '1';
+const W = PORTRAIT ? 1080 : 1920, H = PORTRAIT ? 1920 : 1080; // portrait = vertical YouTube Shorts
 const FONT = "'Baloo 2','Noto Sans Ethiopic',sans-serif";
 const C = { ink: '#1d2b53', yellow: '#ffc93c', blue: '#4a7fc1', green: '#4f9d69', orange: '#e8873d', red: '#d9534f', purple: '#8a6bbf', teal: '#2aa198', pink: '#ef7fa6', cream: '#fffaf0' };
 const COLS = [C.purple, C.blue, C.green, C.orange, C.red, C.teal];
@@ -299,6 +300,12 @@ function choreo(kind) {
       ahops: [{ k: 'cow', t0: (P(4) + ve) / 2 + .5, d: 1.2 }, { k: 'chicken', t0: (P(4) + ve) / 2 + .8, d: 1.2 }] },
     recapg: { acts: [A(0, 'nod', P(0) + .3, 1.5), A(1, 'nod', P(1) + .3, 1.5), A(0, 'point', P(2) + .3, 2.4), A(0, 'wave', ve - 2.6, 3), A(1, 'wave', ve - 2.5, 3)],
       bubbles: [Bb(0, L('Good job!', 'ጎበዝ!'), P(2) + 1, 2.4), Bb(1, L('Bye!', 'ቻው!'), ve - 2.4, 3)], alay: { to: 'finale', t0: P(3) - .3 }, ahops: AORDER.map((k, i) => ({ k, t0: ve - 2.6 + i * .2, d: 1.6 })) },
+    short: !CTX.song ? {} : { lay: 'short', kids: [K(-2.25, { z: 3.4, s: 1.15, turn: .15 }), K(2.25, { z: 3.4, s: 1.15, turn: .15 })],
+      acts: [A(0, 'wave', .3, 2.2), A(1, 'pointCam', .5, 2.4), A(0, 'cheer', CTX.song.end - .6, 2.4), A(1, 'cheer', CTX.song.end - .6, 2.4)],
+      hero: t => { let j = -1; CTX.song.lines.forEach((l, i) => { if (i % 2 === 0 && i < 20 && t >= l.bar0 - .1) j = i / 2; }); return j >= 0 && t < CTX.song.lines[20].bar0 - .1 ? AORDER[j % 5] : null; },
+      bubbles: [Bb(1, L('You can!', 'ትችላላችሁ!'), CTX.song.start - 1.6, 1.6)],
+      abubbles: CTX.song.lines.filter((l, i) => i % 2 === 0 && i < 20).map((l, j) => Bb(AORDER[j % 5], ASOUND[AORDER[j % 5]], l.bar0, 1.0)),
+      ahops: CTX.song.lines.filter((l, i) => i % 2 === 0 && i < 20).map((l, j) => ({ k: AORDER[j % 5], t0: l.bar0, d: 1.0 })).concat(AORDER.map((k, i) => ({ k, t0: .4 + i * .25, d: 1 }))) },
     thumb: { kids: [K(1.0, { z: 3.6, s: 1.25, turn: -.2 }), K(8.2, { z: 1.6, s: 1.25, turn: .3 })], acts: [A(0, 'cheer', 0, 99), A(1, 'wave', 0, 99)] },
     recap: { acts: [A(0, 'nod', P(0) + .3, 1.5), A(1, 'nod', P(1) + .3, 1.5), A(0, 'point', P(3) + .3, 3), A(1, 'clap', P(4) + .5, 2.4), A(0, 'wave', P(5) - .2, 3.5), A(1, 'wave', P(5) - .1, 3.5)],
       bubbles: [Bb(0, L('Good job!', 'ጎበዝ!'), P(2) + .5, 2.4), Bb(1, L('Bye!', 'ቻው!'), P(5), 3)] },
@@ -335,16 +342,16 @@ function lyrics(t) { // karaoke panel at the top: the line being sung (blue = En
   const bg = cur.lang === 'en' ? 'rgba(46,96,170,.92)' : cur.lang === 'am' ? 'rgba(31,138,76,.92)' : 'rgba(224,120,40,.92)';
   const s = pop(t, li < 0 ? sg.start : cur.bar0 - .15, .35);
   const a = textTex(cur.text, { size: 92, weight: 800, color: '#ffffff', bg, pad: 40, radius: 46 }); lyr.material.map = a.tex; lyr.material.needsUpdate = true;
-  const h = Math.min(132, 1500 / a.aspect); lyr.scale.set(h * a.aspect * Math.max(s, .01), h * Math.max(s, .01), 1); lyr.position.set(W / 2, H - 210, 2); lyr.visible = true;
+  const LY = PORTRAIT ? H - 300 : H - 210; const h = Math.min(PORTRAIT ? 150 : 132, (W - 120) / a.aspect); lyr.scale.set(h * a.aspect * Math.max(s, .01), h * Math.max(s, .01), 1); lyr.position.set(W / 2, LY, 2); lyr.visible = true;
   if (nxt) { const b = textTex(nxt.text, { size: 60, weight: 700, color: '#1d2b53', bg: 'rgba(255,255,255,.85)', pad: 26, radius: 30 }); lyrNext.material.map = b.tex; lyrNext.material.needsUpdate = true;
-    const h2 = Math.min(70, 1100 / b.aspect); lyrNext.scale.set(h2 * b.aspect, h2, 1); lyrNext.position.set(W / 2, H - 210 - h / 2 - 50, 2); lyrNext.visible = true; }
-  if (li >= 0) { const p = clamp((t - cur.t0) / (cur.t1 - cur.t0)); const bw = h * a.aspect * .86; lyrBar.scale.set(Math.max(1, bw * p), 8, 1); lyrBar.position.set(W / 2 - bw / 2 + bw * p / 2, H - 210 - h / 2 + 18, 3); lyrBar.visible = p > 0 && s > .9; }
+    const h2 = Math.min(70, (W - 300) / b.aspect); lyrNext.scale.set(h2 * b.aspect, h2, 1); lyrNext.position.set(W / 2, LY - h / 2 - 50, 2); lyrNext.visible = true; }
+  if (li >= 0) { const p = clamp((t - cur.t0) / (cur.t1 - cur.t0)); const bw = h * a.aspect * .86; lyrBar.scale.set(Math.max(1, bw * p), 8, 1); lyrBar.position.set(W / 2 - bw / 2 + bw * p / 2, LY - h / 2 + 18, 3); lyrBar.visible = p > 0 && s > .9; }
 }
 let capText = null;
 function setCaption(text) {
   if (text === capText) return; capText = text; capMesh.visible = !!text; if (!text) return;
   const { tex, aspect } = textTex(text, { size: 58, weight: 700, color: '#ffffff', bg: 'rgba(20,28,60,.78)', pad: 34, radius: 30 });
-  capMesh.material.map = tex; capMesh.material.needsUpdate = true; const h = Math.min(150, 1700 / aspect); capMesh.scale.set(h * aspect, h, 1); capMesh.position.set(W / 2, 30 + h / 2, 1);
+  capMesh.material.map = tex; capMesh.material.needsUpdate = true; const h = Math.min(150, (W - 140) / aspect); capMesh.scale.set(h * aspect, h, 1); capMesh.position.set(W / 2, (PORTRAIT ? 430 : 30) + h / 2, 1);
 }
 // split long text into caption lines
 function wrap(text, max) {
@@ -688,16 +695,19 @@ const ALAYOUT = {
   finale: { lion: [-4.8, .4, -.3], gelada: [-1.7, 1.0, 0], chicken: [.5, 2.6, .2], ibex: [2.6, .2, .35, 1], cow: [5.6, -.8, .45, 1] },
   bgbig: { lion: [-12.2, -1.4, -.5], chicken: [-11.0, 2.2, .3], cow: [-15.0, -6.4, -.55], gelada: [11.8, -.6, -.3], ibex: [13.9, -4.6, .55, 1] },
   songbig: { lion: [-7.6, .2, -.3], cow: [-11.6, -3.4, -.45], chicken: [-5.0, 4.8, .3], gelada: [7.2, .4, -.2], ibex: [11.4, -3.2, .45, 1] },
+  short: { lion: [-3.1, -2.2, -.45], gelada: [3.0, -1.6, -.25], cow: [-4.9, -6.6, -.5], ibex: [5.0, -6.8, .5, 1], chicken: [1.3, 5.6, .3] },
   song: { lion: [-6.9, .4, -.35], cow: [-10.6, -2.8, -.45], chicken: [-4.7, 4.6, .3], gelada: [6.7, .4, -.2], ibex: [10.6, -2.8, .45, 1] },
 };
 function animalsUpdate(t) {
   const on = CTX && CTX.animals && !CTX.noAnimals;
   const song = CTX && CTX.song, dancing = song && t > song.start - .2 && t < song.end + .3;
-  const al = CHOREO && CHOREO.alay, mv = al ? ease(pr(t, al.t0, 1.6)) : 0, AS = CAST().animal || 1, lay = song ? (AS > 1 ? ALAYOUT.songbig : ALAYOUT.song) : (AS > 1 ? ALAYOUT.bgbig : ALAYOUT.bg), lay2 = al ? ALAYOUT[al.to] : lay;
+  const al = CHOREO && CHOREO.alay, mv = al ? ease(pr(t, al.t0, 1.6)) : 0, AS = CAST().animal || 1, lay = CHOREO && CHOREO.lay ? ALAYOUT[CHOREO.lay] : song ? (AS > 1 ? ALAYOUT.songbig : ALAYOUT.song) : (AS > 1 ? ALAYOUT.bgbig : ALAYOUT.bg), lay2 = al ? ALAYOUT[al.to] : lay;
   const bubs = (CHOREO && CHOREO.abubbles) || [], hops = (CHOREO && CHOREO.ahops) || [];
   AORDER.forEach((k, i) => {
     const a = ANIMALS[k], u = a.userData; a.visible = !!on; aBubbles[k].visible = false; if (!on) return;
-    const A0 = lay[k], A1 = lay2[k], walking = mv > 0 && mv < 1; const x = lerp(A0[0], A1[0], mv), z = lerp(A0[1], A1[1], mv), turn = lerp(A0[2], A1[2], mv), mir = mv < .5 ? A0[3] : A1[3]; a.position.set(x, .12, z); a.rotation.y = turn; const bs = u.base * AS; a.scale.set(bs * (mir ? -1 : 1), bs, bs);
+    const A0 = lay[k], A1 = lay2[k], walking = mv > 0 && mv < 1; let x = lerp(A0[0], A1[0], mv), z = lerp(A0[1], A1[1], mv), turn = lerp(A0[2], A1[2], mv), mir = mv < .5 ? A0[3] : A1[3];
+    if (CHOREO && CHOREO.hero && CHOREO.hero(t) === k) { x = 0; z = 2.2; turn = k === 'gelada' || k === 'chicken' ? 0 : -.35; mir = 0; } // the star of the moment steps to the front
+    a.position.set(x, .12, z); a.rotation.y = turn; const bs = u.base * AS; a.scale.set(bs * (mir ? -1 : 1), bs, bs);
     const bp = song ? (t - song.start) / (60 / song.bpm) : 0, b = Math.abs(Math.sin(Math.PI * bp));
     let bob = Math.sin(t * 2 + i) * .02, nod = Math.sin(t * .8 + i) * .05, sway = 0, hop = 0;
     if (dancing) { bob = b * (k === 'chicken' ? .35 : .18); nod = Math.sin(Math.PI * bp) * .22; sway = Math.sin(Math.PI * bp * .5) * .12; }
@@ -1244,6 +1254,44 @@ Object.assign(SCENES, {
     };
   },
 });
+
+
+// ---------- vertical Short: counting song, 1 to 10 in English, Amharic and Ethiopic numerals ----------
+SCENES.short = function () {
+  const sg = CTX.song, pairs = CTX.data.pairs || [];
+  const hook = board(7.2, 3.0, T(CTX.data.hook, CTX.data.hookam), { size: 120, color: '#fff3c4' }); hook.position.set(0, 9.3, 0); root.add(hook);
+  root.add(bunting(12, 12.6, -2, 12));
+  const fl = []; for (let i = 0; i < 8; i++) { const f = flower(.8); const a = Math.PI * (.1 + i / 7 * .8); f.position.set(-Math.cos(a) * 5.2, .9, -Math.sin(a) * 3 - 1.2); root.add(f); fl.push(f); }
+  const floor = part(new THREE.CylinderGeometry(5.2, 5.2, .06, 64), mat('#ffe9b0', { emissive: '#ffcc33', emissiveIntensity: .2 }), 0, .27, 2); root.add(floor);
+  const nums = pairs.map(([d, eth, en, am], i) => { const g = new THREE.Group(); g.position.set(0, 7.9, 0);
+    const a = block(2.6, 2.6, .9, COLS[i % 6], d, { size: 190 }); a.position.x = -1.5; const b = block(2.6, 2.6, .9, '#ffffff', eth, { tc: COLS[i % 6], size: 190 }); b.position.x = 1.5;
+    const w = label(en + '  ·  ' + am, 1.0, { color: C.ink, size: 110, bg: '#ffffff', pad: 30, radius: 46 }); w.position.set(0, -2.0, .5);
+    g.add(a, b, w); const dots = new THREE.Group(); for (let k = 0; k < i + 1; k++) { const m = part(SPH(.27), mat(COLS[k % 6], { roughness: .35 }), (k % 5 - 2) * .72, -3.2 - Math.floor(k / 5) * .66, .4); dots.add(m); } g.add(dots); g.userData.dots = dots;
+    root.add(g); return g; });
+  const end = new THREE.Group(); end.position.set(0, 7.6, .5); root.add(end);
+  end.add(board(6.6, 1.7, 'AMBKidsJoy', { size: 150, color: '#ffffff', tc: C.blue }));
+  const sub = block(4.6, 1.3, .5, '#e62117', T('▶ Subscribe', '▶ ሰብስክራይብ'), { size: 110 }); sub.position.set(0, -1.8, .2); end.add(sub);
+  const notes = []; const r = rng(9); for (let i = 0; i < 7; i++) { const n = note3d(COLS[i % 6]); n.userData.p = [r() * 8 - 4, r() * 6, r() * 2 - 3, r()]; root.add(n); notes.push(n); }
+  const conf = confetti(70, 29);
+  return t => {
+    const on = t > sg.start - .1, bp = (t - sg.start) / (60 / sg.bpm), b = Math.abs(Math.sin(Math.PI * bp));
+    const zoom = on ? 0 : (1 - ease(pr(t, 0, 1.2))) * 6;   // hook: the camera rushes in
+    camTo(0, 6.0, 19.5 + zoom - (on ? b * .25 : 0), 0, 6.0, 0);
+    if (!on) { kokeb.position.set(0, 5.3, 1.5); kokeb.scale.setScalar(2.0 * pop(t, .1, .6)); kokeb.update(t, CTX.amp(t), { wave: t < 2, spin: (1 - ease(pr(t, 0, 1))) * 6 }); }
+    else { const k = ease(pr(t, sg.start - .1, .6)); kokeb.position.set(lerp(0, -3.0, k), lerp(5.3, 4.9, k) + b * .2, lerp(1.5, .3, k)); kokeb.scale.setScalar(lerp(2.0, .75, k)); kokeb.update(t, CTX.amp(t), { spin: Math.sin(Math.PI * bp * .5) * .5 }); }
+    show(hook, pop(t, .4) * (1 - ease(pr(t, sg.start - .3, .3)))); hook.rotation.z = Math.sin(t * 3) * .03;
+    let li = -1; sg.lines.forEach((l, i) => { if (t >= l.bar0 - .1) li = i; });
+    const pi = li < 0 ? -1 : Math.floor(li / 2);
+    nums.forEach((g, i) => { const st = sg.lines[i * 2] ? sg.lines[i * 2].bar0 - .1 : 1e9, nx = sg.lines[i * 2 + 2] ? sg.lines[i * 2 + 2].bar0 - .25 : 1e9;
+      show(g, i === pi ? pop(t, st, .35) * (1 - ease(pr(t, nx, .2))) : 0); g.rotation.y = Math.sin(t * 2.2) * .12; g.position.y = 7.9 + b * .15;
+      g.userData.dots.children.forEach((d, k) => show(d, pop(t, st + .1 + k * .06, .3))); });
+    show(end, pi >= pairs.length ? pop(t, sg.lines[pairs.length * 2].bar0) : 0); sub.scale.setScalar(1 + Math.max(0, Math.sin(t * 6)) * .07);
+    fl.forEach((f, i) => { show(f, pop(t, .2 + i * .06) * .9); f.rotation.z = Math.sin(Math.PI * bp + i) * .15; });
+    notes.forEach(n => { const [x, y0, z, ph] = n.userData.p; const y = ((t * .9 + y0 + ph * 7) % 6) + 4.5; n.position.set(x + Math.sin(t + ph * 6) * .4, y, z); n.rotation.y = t + ph; show(n, on ? (y < 9.8 ? .8 : 0) : 0); });
+    floor.material.emissiveIntensity = on ? .15 + b * .35 : .1;
+    if (pairs.length * 2 < sg.lines.length) conf(t, sg.lines[pairs.length * 2].bar0);
+  };
+};
 
 // ---------- API used by the node driver ----------
 window.setupScene = (ctx) => {
