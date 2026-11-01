@@ -1,0 +1,22 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": "Time for the Carry and Borrow Song! Clap, sing and move your shoulders!",
+ "sentences": [
+  {
+   "text": "Time for the Carry and Borrow Song!",
+   "seg": 0,
+   "files": [
+    "s12/000.mp3"
+   ]
+  },
+  {
+   "text": "Clap, sing and move your shoulders!",
+   "seg": 0,
+   "files": [
+    "s12/001.mp3"
+   ]
+  }
+ ]
+}

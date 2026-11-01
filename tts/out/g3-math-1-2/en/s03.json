@@ -1,0 +1,70 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": [
+  "Every digit lives in a house. Let's read this number: three thousand, two hundred and ninety-one.",
+  "The houses are thousands, hundreds, tens and ones. Three goes in the thousands house, two in the hundreds, nine in the tens, and one in the ones.",
+  "The house gives the value: three is worth three thousand, two is worth two hundred, nine is worth ninety, and one is worth one.",
+  "So we can write it in expanded form: three thousand plus two hundred plus ninety plus one.",
+  "If a house is empty, we write zero. Seven hundreds and eight ones make seven hundred and eight."
+ ],
+ "sentences": [
+  {
+   "text": "Every digit lives in a house.",
+   "seg": 0,
+   "files": [
+    "s03/000.mp3"
+   ]
+  },
+  {
+   "text": "Let's read this number: three thousand, two hundred and ninety-one.",
+   "seg": 0,
+   "files": [
+    "s03/001.mp3"
+   ]
+  },
+  {
+   "text": "The houses are thousands, hundreds, tens and ones.",
+   "seg": 1,
+   "files": [
+    "s03/002.mp3"
+   ]
+  },
+  {
+   "text": "Three goes in the thousands house, two in the hundreds, nine in the tens, and one in the ones.",
+   "seg": 1,
+   "files": [
+    "s03/003.mp3"
+   ]
+  },
+  {
+   "text": "The house gives the value: three is worth three thousand, two is worth two hundred, nine is worth ninety, and one is worth one.",
+   "seg": 2,
+   "files": [
+    "s03/004.mp3"
+   ]
+  },
+  {
+   "text": "So we can write it in expanded form: three thousand plus two hundred plus ninety plus one.",
+   "seg": 3,
+   "files": [
+    "s03/005.mp3"
+   ]
+  },
+  {
+   "text": "If a house is empty, we write zero.",
+   "seg": 4,
+   "files": [
+    "s03/006.mp3"
+   ]
+  },
+  {
+   "text": "Seven hundreds and eight ones make seven hundred and eight.",
+   "seg": 4,
+   "files": [
+    "s03/007.mp3"
+   ]
+  }
+ ]
+}

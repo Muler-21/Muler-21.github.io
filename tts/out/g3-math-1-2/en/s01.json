@@ -1,0 +1,62 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": [
+  "Hello, children! I'm Kokeb, the star, and here are my friends Saba and Dawit.",
+  "Our animal friends are back: the lion, the gelada, the walia ibex, the cow and the chicken!",
+  "Today in Grade 3 Maths we learn two chapters. Chapter 1 is Numbers up to 10,000, and Chapter 2 is Adding and Subtracting.",
+  "We will count, sing, dance eskista and solve puzzles. Let's go!"
+ ],
+ "sentences": [
+  {
+   "text": "Hello, children!",
+   "seg": 0,
+   "files": [
+    "s01/000.mp3"
+   ]
+  },
+  {
+   "text": "I'm Kokeb, the star, and here are my friends Saba and Dawit.",
+   "seg": 0,
+   "files": [
+    "s01/001.mp3"
+   ]
+  },
+  {
+   "text": "Our animal friends are back: the lion, the gelada, the walia ibex, the cow and the chicken!",
+   "seg": 1,
+   "files": [
+    "s01/002.mp3"
+   ]
+  },
+  {
+   "text": "Today in Grade 3 Maths we learn two chapters.",
+   "seg": 2,
+   "files": [
+    "s01/003.mp3"
+   ]
+  },
+  {
+   "text": "Chapter 1 is Numbers up to 10,000, and Chapter 2 is Adding and Subtracting.",
+   "seg": 2,
+   "files": [
+    "s01/004.mp3"
+   ]
+  },
+  {
+   "text": "We will count, sing, dance eskista and solve puzzles.",
+   "seg": 3,
+   "files": [
+    "s01/005.mp3"
+   ]
+  },
+  {
+   "text": "Let's go!",
+   "seg": 3,
+   "files": [
+    "s01/006.mp3"
+   ]
+  }
+ ]
+}

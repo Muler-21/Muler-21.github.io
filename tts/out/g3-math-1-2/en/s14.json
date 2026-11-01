@@ -1,0 +1,29 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": "Your turn! What is 1,400 plus 1,200? Think in hundreds!",
+ "sentences": [
+  {
+   "text": "Your turn!",
+   "seg": 0,
+   "files": [
+    "s14/000.mp3"
+   ]
+  },
+  {
+   "text": "What is 1,400 plus 1,200?",
+   "seg": 0,
+   "files": [
+    "s14/001.mp3"
+   ]
+  },
+  {
+   "text": "Think in hundreds!",
+   "seg": 0,
+   "files": [
+    "s14/002.mp3"
+   ]
+  }
+ ]
+}

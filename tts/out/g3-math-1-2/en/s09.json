@@ -1,0 +1,29 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": "Well done! The tens digit is six. Six is five or more, so 462 rounds up to 500.",
+ "sentences": [
+  {
+   "text": "Well done!",
+   "seg": 0,
+   "files": [
+    "s09/000.mp3"
+   ]
+  },
+  {
+   "text": "The tens digit is six.",
+   "seg": 0,
+   "files": [
+    "s09/001.mp3"
+   ]
+  },
+  {
+   "text": "Six is five or more, so 462 rounds up to 500.",
+   "seg": 0,
+   "files": [
+    "s09/002.mp3"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,49 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": [
+  "Ethiopia has its own numerals!",
+  "Here are one to nine.",
+  "The tens have their own signs too, from ten up to ninety, and one hundred has its own sign.",
+  "To write thirty-five, we join the sign for thirty and the sign for five.",
+  "Ethiopic numerals have no zero."
+ ],
+ "sentences": [
+  {
+   "text": "Ethiopia has its own numerals!",
+   "seg": 0,
+   "files": [
+    "s07/000.mp3"
+   ]
+  },
+  {
+   "text": "Here are one to nine.",
+   "seg": 1,
+   "files": [
+    "s07/001.mp3"
+   ]
+  },
+  {
+   "text": "The tens have their own signs too, from ten up to ninety, and one hundred has its own sign.",
+   "seg": 2,
+   "files": [
+    "s07/002.mp3"
+   ]
+  },
+  {
+   "text": "To write thirty-five, we join the sign for thirty and the sign for five.",
+   "seg": 3,
+   "files": [
+    "s07/003.mp3"
+   ]
+  },
+  {
+   "text": "Ethiopic numerals have no zero.",
+   "seg": 4,
+   "files": [
+    "s07/004.mp3"
+   ]
+  }
+ ]
+}

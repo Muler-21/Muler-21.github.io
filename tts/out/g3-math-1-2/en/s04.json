@@ -1,0 +1,22 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": "Let's sing the Place Value Song! Stand up and dance eskista with us.",
+ "sentences": [
+  {
+   "text": "Let's sing the Place Value Song!",
+   "seg": 0,
+   "files": [
+    "s04/000.mp3"
+   ]
+  },
+  {
+   "text": "Stand up and dance eskista with us.",
+   "seg": 0,
+   "files": [
+    "s04/001.mp3"
+   ]
+  }
+ ]
+}

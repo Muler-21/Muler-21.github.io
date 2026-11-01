@@ -1,0 +1,76 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": [
+  "A word problem! A farm has 2,450 chickens. 875 chickens are sold. How many chickens are left?",
+  "Chickens are taken away, so we subtract.",
+  "First, estimate: 2,450 is about 2,500, and 875 is about 900. 2,500 minus 900 is 1,600.",
+  "Now the exact answer: 2,450 minus 875 is 1,575. It is close to our estimate, so it makes sense!"
+ ],
+ "sentences": [
+  {
+   "text": "A word problem!",
+   "seg": 0,
+   "files": [
+    "s13/000.mp3"
+   ]
+  },
+  {
+   "text": "A farm has 2,450 chickens.",
+   "seg": 0,
+   "files": [
+    "s13/001.mp3"
+   ]
+  },
+  {
+   "text": "875 chickens are sold.",
+   "seg": 0,
+   "files": [
+    "s13/002.mp3"
+   ]
+  },
+  {
+   "text": "How many chickens are left?",
+   "seg": 0,
+   "files": [
+    "s13/003.mp3"
+   ]
+  },
+  {
+   "text": "Chickens are taken away, so we subtract.",
+   "seg": 1,
+   "files": [
+    "s13/004.mp3"
+   ]
+  },
+  {
+   "text": "First, estimate: 2,450 is about 2,500, and 875 is about 900.",
+   "seg": 2,
+   "files": [
+    "s13/005.mp3"
+   ]
+  },
+  {
+   "text": "2,500 minus 900 is 1,600.",
+   "seg": 2,
+   "files": [
+    "s13/006.mp3"
+   ]
+  },
+  {
+   "text": "Now the exact answer: 2,450 minus 875 is 1,575.",
+   "seg": 3,
+   "files": [
+    "s13/007.mp3"
+   ]
+  },
+  {
+   "text": "It is close to our estimate, so it makes sense!",
+   "seg": 3,
+   "files": [
+    "s13/008.mp3"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,77 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": [
+  "Now let's subtract: 5,342 minus 1,728.",
+  "Ones: two is smaller than eight, so we regroup. Borrow one ten: twelve minus eight is four.",
+  "Tens: now three minus two is one.",
+  "Hundreds: three is smaller than seven, so borrow one thousand: thirteen minus seven is six. Thousands: four minus one is three.",
+  "The answer is 3,614. Check by adding: 3,614 plus 1,728 is 5,342. Correct!"
+ ],
+ "sentences": [
+  {
+   "text": "Now let's subtract: 5,342 minus 1,728.",
+   "seg": 0,
+   "files": [
+    "s11/000.mp3"
+   ]
+  },
+  {
+   "text": "Ones: two is smaller than eight, so we regroup.",
+   "seg": 1,
+   "files": [
+    "s11/001.mp3"
+   ]
+  },
+  {
+   "text": "Borrow one ten: twelve minus eight is four.",
+   "seg": 1,
+   "files": [
+    "s11/002.mp3"
+   ]
+  },
+  {
+   "text": "Tens: now three minus two is one.",
+   "seg": 2,
+   "files": [
+    "s11/003.mp3"
+   ]
+  },
+  {
+   "text": "Hundreds: three is smaller than seven, so borrow one thousand: thirteen minus seven is six.",
+   "seg": 3,
+   "files": [
+    "s11/004.mp3"
+   ]
+  },
+  {
+   "text": "Thousands: four minus one is three.",
+   "seg": 3,
+   "files": [
+    "s11/005.mp3"
+   ]
+  },
+  {
+   "text": "The answer is 3,614.",
+   "seg": 4,
+   "files": [
+    "s11/006.mp3"
+   ]
+  },
+  {
+   "text": "Check by adding: 3,614 plus 1,728 is 5,342.",
+   "seg": 4,
+   "files": [
+    "s11/007.mp3"
+   ]
+  },
+  {
+   "text": "Correct!",
+   "seg": 4,
+   "files": [
+    "s11/008.mp3"
+   ]
+  }
+ ]
+}

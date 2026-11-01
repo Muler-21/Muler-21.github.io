@@ -1,0 +1,84 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": [
+  "Chapter 2: adding and subtracting! Let's add 2,456 and 1,378. Line up the houses: ones under ones, tens under tens.",
+  "Start with the ones: six plus eight is fourteen. Write four and carry one to the tens.",
+  "Tens: five plus seven plus the carried one is thirteen. Write three and carry one.",
+  "Hundreds: four plus three plus one is eight. Thousands: two plus one is three.",
+  "So 2,456 plus 1,378 is 3,834!"
+ ],
+ "sentences": [
+  {
+   "text": "Chapter 2: adding and subtracting!",
+   "seg": 0,
+   "files": [
+    "s10/000.mp3"
+   ]
+  },
+  {
+   "text": "Let's add 2,456 and 1,378.",
+   "seg": 0,
+   "files": [
+    "s10/001.mp3"
+   ]
+  },
+  {
+   "text": "Line up the houses: ones under ones, tens under tens.",
+   "seg": 0,
+   "files": [
+    "s10/002.mp3"
+   ]
+  },
+  {
+   "text": "Start with the ones: six plus eight is fourteen.",
+   "seg": 1,
+   "files": [
+    "s10/003.mp3"
+   ]
+  },
+  {
+   "text": "Write four and carry one to the tens.",
+   "seg": 1,
+   "files": [
+    "s10/004.mp3"
+   ]
+  },
+  {
+   "text": "Tens: five plus seven plus the carried one is thirteen.",
+   "seg": 2,
+   "files": [
+    "s10/005.mp3"
+   ]
+  },
+  {
+   "text": "Write three and carry one.",
+   "seg": 2,
+   "files": [
+    "s10/006.mp3"
+   ]
+  },
+  {
+   "text": "Hundreds: four plus three plus one is eight.",
+   "seg": 3,
+   "files": [
+    "s10/007.mp3"
+   ]
+  },
+  {
+   "text": "Thousands: two plus one is three.",
+   "seg": 3,
+   "files": [
+    "s10/008.mp3"
+   ]
+  },
+  {
+   "text": "So 2,456 plus 1,378 is 3,834!",
+   "seg": 4,
+   "files": [
+    "s10/009.mp3"
+   ]
+  }
+ ]
+}

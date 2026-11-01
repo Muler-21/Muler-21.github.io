@@ -1,0 +1,60 @@
+{
+ "v": 3,
+ "voices": {
+  "am": "am-ET-MekdesNeural",
+  "en": "en-GB-LibbyNeural"
+ },
+ "lines": [
+  {
+   "en": "Start with the ones, line them up!"
+  },
+  {
+   "am": "ከአንዶች ጀምሩ፣ አሰልፉ!"
+  },
+  {
+   "en": "Ten or more? Carry the one!"
+  },
+  {
+   "am": "አስር ከሞላ፣ አንዱን አሻግሩ!"
+  },
+  {
+   "en": "Top too small? Borrow a ten!"
+  },
+  {
+   "am": "ላይኛው ካነሰ፣ አስር ተበደሩ!"
+  },
+  {
+   "en": "Check it, check it, add it back!"
+  },
+  {
+   "am": "አረጋግጡ፣ መልሳችሁ ደምሩ!"
+  },
+  {
+   "en": "Estimate first, and then you know!"
+  },
+  {
+   "am": "መጀመሪያ ገምቱ፣ ከዚያ ታውቃላችሁ!"
+  },
+  {
+   "en": "Maths is fun! Eskista, go!"
+  },
+  {
+   "am": "ሒሳብ ደስ ይላል! እስክስታ!"
+  }
+ ],
+ "pitch": "+12Hz",
+ "files": [
+  "s12/00.mp3",
+  "s12/01.mp3",
+  "s12/02.mp3",
+  "s12/03.mp3",
+  "s12/04.mp3",
+  "s12/05.mp3",
+  "s12/06.mp3",
+  "s12/07.mp3",
+  "s12/08.mp3",
+  "s12/09.mp3",
+  "s12/10.mp3",
+  "s12/11.mp3"
+ ]
+}

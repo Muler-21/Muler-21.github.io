@@ -1,0 +1,68 @@
+{
+ "v": 3,
+ "voices": {
+  "am": "am-ET-MekdesNeural",
+  "en": "en-GB-LibbyNeural"
+ },
+ "lines": [
+  {
+   "en": "One, ten, hundred, thousand!"
+  },
+  {
+   "am": "አንድ፣ አስር፣ መቶ፣ ሺህ!"
+  },
+  {
+   "en": "Every digit has a house!"
+  },
+  {
+   "am": "እያንዳንዱ ሆሄ ቤት አለው!"
+  },
+  {
+   "en": "Ten ones make one ten!"
+  },
+  {
+   "am": "አስር አንዶች፣ አንድ አስር!"
+  },
+  {
+   "en": "Ten tens make one hundred!"
+  },
+  {
+   "am": "አስር አስሮች፣ አንድ መቶ!"
+  },
+  {
+   "en": "Ten hundreds make a thousand!"
+  },
+  {
+   "am": "አስር መቶዎች፣ አንድ ሺህ!"
+  },
+  {
+   "en": "Five or more? Go up, go up!"
+  },
+  {
+   "am": "አምስትና በላይ? ወደ ላይ!"
+  },
+  {
+   "en": "Four or less? Stay, stay down!"
+  },
+  {
+   "am": "አራትና በታች? ባለበት ቁም!"
+  }
+ ],
+ "pitch": "+12Hz",
+ "files": [
+  "s04/00.mp3",
+  "s04/01.mp3",
+  "s04/02.mp3",
+  "s04/03.mp3",
+  "s04/04.mp3",
+  "s04/05.mp3",
+  "s04/06.mp3",
+  "s04/07.mp3",
+  "s04/08.mp3",
+  "s04/09.mp3",
+  "s04/10.mp3",
+  "s04/11.mp3",
+  "s04/12.mp3",
+  "s04/13.mp3"
+ ]
+}

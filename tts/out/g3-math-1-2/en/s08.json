@@ -1,0 +1,29 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": "Your turn! Round 462 to the nearest hundred. Think!",
+ "sentences": [
+  {
+   "text": "Your turn!",
+   "seg": 0,
+   "files": [
+    "s08/000.mp3"
+   ]
+  },
+  {
+   "text": "Round 462 to the nearest hundred.",
+   "seg": 0,
+   "files": [
+    "s08/001.mp3"
+   ]
+  },
+  {
+   "text": "Think!",
+   "seg": 0,
+   "files": [
+    "s08/002.mp3"
+   ]
+  }
+ ]
+}

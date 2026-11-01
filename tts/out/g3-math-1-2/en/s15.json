@@ -1,0 +1,29 @@
+{
+ "v": 3,
+ "voice": "en-GB-LibbyNeural",
+ "rate": "-12%",
+ "text": "Great! Fourteen hundreds plus twelve hundreds is twenty-six hundreds. That is 2,600.",
+ "sentences": [
+  {
+   "text": "Great!",
+   "seg": 0,
+   "files": [
+    "s15/000.mp3"
+   ]
+  },
+  {
+   "text": "Fourteen hundreds plus twelve hundreds is twenty-six hundreds.",
+   "seg": 0,
+   "files": [
+    "s15/001.mp3"
+   ]
+  },
+  {
+   "text": "That is 2,600.",
+   "seg": 0,
+   "files": [
+    "s15/002.mp3"
+   ]
+  }
+ ]
+}
