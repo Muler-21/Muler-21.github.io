@@ -20,7 +20,7 @@ concurrency:
   group: lesson-videos
   cancel-in-progress: true
 env:
-  CHAPTER: ${{ github.event.inputs.chapter || 'g3-english-1-2' }}
+  CHAPTER: ${{ github.event.inputs.chapter || 'g3-math-1-2' }}
 jobs:
   voices:
     runs-on: ubuntu-latest
@@ -44,7 +44,7 @@ jobs:
       fail-fast: false
       matrix:
         lang: [am, en]
-        range: ["0:1", "1:2", "2:3", "3:4", "4:5", "5:6", "6:7", "7:9", "9:11", "11:12"]
+        range: ["0:2", "2:3", "3:4", "4:6", "6:9", "9:10", "10:11", "11:12", "12:13", "13:16"]
     steps:
       - uses: actions/checkout@v4
         with:

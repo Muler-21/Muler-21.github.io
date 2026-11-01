@@ -215,13 +215,15 @@ function pose(kind, t, inner) {
   return P;
 }
 let CHOREO = null;
+const CAST = () => (CTX && CTX.story && CTX.story.cast) || {};
 const BEAT = t => CTX && CTX.song ? (t - CTX.song.start) / (60 / CTX.song.bpm) : t * 1.6;
 function kidsUpdate(t) {
   if (!CHOREO) { saba.visible = dawit.visible = false; bubbles.forEach(b => b.visible = false); return; }
   [saba, dawit].forEach((kid, i) => {
     const c = CHOREO.kids[i]; kid.visible = !!c; bubbles[i].visible = false; if (!c) return;
-    const cx = typeof c.x === 'function' ? c.x(t) : c.x, inner = cx < 0 ? 1 : -1;
-    kid.position.set(cx, 0, c.z ?? 3.4); kid.scale.setScalar(c.s ?? 1); kid.rotation.y = (c.turn ?? .32) * inner + Math.sin(t * .7 + i) * .04;
+    const KS = CAST().kid || 1, LV = CAST().lively ? 1 : 0;
+    const cx = (typeof c.x === 'function' ? c.x(t) : c.x) * (1 + (KS - 1) * .2), inner = cx < 0 ? 1 : -1, cs = (c.s ?? 1) * KS;
+    kid.position.set(cx, 0, c.z ?? 3.4); kid.scale.setScalar(cs); kid.rotation.y = (c.turn ?? .32) * inner + Math.sin(t * .7 + i) * .04;
     const acts = (CHOREO.acts || []).filter(a => a.k === i && t >= a.t0 && t < a.t0 + a.d);
     const a = acts[acts.length - 1];
     const id = pose('idle', t + i, inner).idle; let tgt = id, wgt = 0;
@@ -232,13 +234,13 @@ function kidsUpdate(t) {
     const u = kid.userData; const [L, R] = u.arms;
     L.rotation.set(-v[1], 0, -v[0]); R.rotation.set(-v[3], 0, v[2]);
     const sh = dance ? Math.sin(Math.PI * BEAT(t) * 2) * .09 : 0; L.position.y = 1.95 + sh; R.position.y = 1.95 - sh; u.head.position.z = dance ? Math.sin(Math.PI * BEAT(t) * 2) * .07 : 0; // eskista: shoulders and neck on the beat
-    u.body.position.y = v[4] + Math.sin(t * 2.4 + i) * .02; u.head.rotation.z = v[5];
+    u.body.position.y = v[4] + Math.sin(t * 2.4 + i) * .02 + LV * Math.abs(Math.sin(t * 3.2 + i)) * .05; u.body.rotation.z = LV * Math.sin(t * 1.6 + i * 2) * .045; u.head.rotation.z = v[5];
     u.head.rotation.x = a && a.a === 'nod' ? Math.sin((t - a.t0) * 9) * .18 : Math.sin(t * .9 + i) * .03;
-    u.head.rotation.y = a && (a.a === 'point' || a.a === 'think') ? .25 * inner : 0;
+    u.head.rotation.y = a && (a.a === 'point' || a.a === 'think') ? .25 * inner : LV * Math.sin(t * .8 + i * 1.7) * .22;
     const bl = ((t + i * 1.7) % 4.1) < .12 ? .1 : 1; u.eyes.forEach(e => e.scale.y = bl);
     const b = (CHOREO.bubbles || []).filter(x => x.k === i && t >= x.t0 && t < x.t0 + x.d).pop();
     if (b) { setBubble(i, b.text); const g = bubbles[i]; g.visible = true; const p = pop(t, b.t0, .45) * Math.min(1, clamp((b.t0 + b.d - t) / .25));
-      g.scale.setScalar(Math.max(p, .001) * (c.s ?? 1)); g.position.set(cx + inner * 1.3 * (c.s ?? 1), 4.15 * (c.s ?? 1) + v[4], (c.z ?? 3.4) + .2); }
+      g.scale.setScalar(Math.max(p, .001) * cs); g.position.set(cx + inner * 1.3 * cs, 4.15 * cs + v[4], (c.z ?? 3.4) + .2); }
   });
 }
 // scene choreography: where the kids stand, what they do (synced to the narration) and what they say in speech bubbles
@@ -301,7 +303,16 @@ function choreo(kind) {
     recap: { acts: [A(0, 'nod', P(0) + .3, 1.5), A(1, 'nod', P(1) + .3, 1.5), A(0, 'point', P(3) + .3, 3), A(1, 'clap', P(4) + .5, 2.4), A(0, 'wave', P(5) - .2, 3.5), A(1, 'wave', P(5) - .1, 3.5)],
       bubbles: [Bb(0, L('Good job!', 'ጎበዝ!'), P(2) + .5, 2.4), Bb(1, L('Bye!', 'ቻው!'), P(5), 3)] },
   }[kind] || {};
-  return { ...base, ...m };
+  const out = { ...base, ...m };
+  if (CAST().lively && kind !== 'song' && kind !== 'thumb') {
+    const G = ['point', 'clap', 'nod', 'wave', 'cheer', 'eskista'], auto = [];
+    CTX.phases.forEach((p, i) => { auto.push(A(i % 2, G[i % 6], p + .15, 1.8)); auto.push(A(1 - i % 2, G[(i + 3) % 6], p + 1.2, 1.6)); });
+    for (let t = 4; t < CTX.dur - 2; t += 7) auto.push(A(Math.round(t / 7) % 2, 'eskista', t, 1.4));
+    out.acts = auto.concat(out.acts || []);
+    const hops = []; AORDER.forEach((k, i) => { for (let t = 1.5 + i * 1.3; t < CTX.dur - 1; t += 6.5) hops.push({ k, t0: t, d: .9 }); });
+    out.ahops = hops.concat(out.ahops || []);
+  }
+  return out;
 }
 
 
@@ -664,7 +675,7 @@ const ANIMALS = { lion: makeLion(), gelada: makeGelada(), ibex: makeIbex(), cow:
 const ANAMES = { lion: ['lion', 'አንበሳ'], gelada: ['gelada', 'ጭላዳ'], ibex: ['walia ibex', 'ዋልያ'], cow: ['cow', 'ላም'], chicken: ['chicken', 'ዶሮ'] };
 const ASOUND = { lion: 'Roar!', gelada: 'Hoo-hoo!', ibex: 'Meh-eh!', cow: 'Moo!', chicken: 'Cluck!' };
 const AORDER = ['lion', 'gelada', 'ibex', 'cow', 'chicken'];
-Object.entries(ANIMALS).forEach(([k, a]) => { a.scale.setScalar(k === 'lion' ? 1.15 : 1); a.userData.base = a.scale.x; scene.add(a); a.visible = false; });
+Object.entries(ANIMALS).forEach(([k, a]) => { a.userData.base = k === 'lion' ? 1.15 : 1; scene.add(a); a.visible = false; });
 const aBubbles = {}; AORDER.forEach(k => { const g = new THREE.Group(); scene.add(g); aBubbles[k] = g; });
 function setABubble(k, text) {
   const g = aBubbles[k]; if (g.userData.text === text) return; g.userData.text = text; g.clear(); if (!text) return;
@@ -675,16 +686,18 @@ const ALAYOUT = {
   bg: { lion: [-12.6, -2.6, -.55], chicken: [-10.9, 1.2, .25], cow: [-15.2, -7.4, -.55], gelada: [11.9, -1.2, -.3], ibex: [13.8, -5.2, .55, 1] },
   intro: { lion: [-3.4, -1.6, -.35], gelada: [-.2, -1.2, -.1], ibex: [3.0, -2.2, .4, 1], cow: [6.0, -3.0, .45, 1], chicken: [-1.8, 1.2, .2] },
   finale: { lion: [-4.8, .4, -.3], gelada: [-1.7, 1.0, 0], chicken: [.5, 2.6, .2], ibex: [2.6, .2, .35, 1], cow: [5.6, -.8, .45, 1] },
+  bgbig: { lion: [-12.2, -1.4, -.5], chicken: [-11.0, 2.2, .3], cow: [-15.0, -6.4, -.55], gelada: [11.8, -.6, -.3], ibex: [13.9, -4.6, .55, 1] },
+  songbig: { lion: [-7.6, .2, -.3], cow: [-11.6, -3.4, -.45], chicken: [-5.0, 4.8, .3], gelada: [7.2, .4, -.2], ibex: [11.4, -3.2, .45, 1] },
   song: { lion: [-6.9, .4, -.35], cow: [-10.6, -2.8, -.45], chicken: [-4.7, 4.6, .3], gelada: [6.7, .4, -.2], ibex: [10.6, -2.8, .45, 1] },
 };
 function animalsUpdate(t) {
   const on = CTX && CTX.animals && !CTX.noAnimals;
   const song = CTX && CTX.song, dancing = song && t > song.start - .2 && t < song.end + .3;
-  const al = CHOREO && CHOREO.alay, mv = al ? ease(pr(t, al.t0, 1.6)) : 0, lay = song ? ALAYOUT.song : ALAYOUT.bg, lay2 = al ? ALAYOUT[al.to] : lay;
+  const al = CHOREO && CHOREO.alay, mv = al ? ease(pr(t, al.t0, 1.6)) : 0, AS = CAST().animal || 1, lay = song ? (AS > 1 ? ALAYOUT.songbig : ALAYOUT.song) : (AS > 1 ? ALAYOUT.bgbig : ALAYOUT.bg), lay2 = al ? ALAYOUT[al.to] : lay;
   const bubs = (CHOREO && CHOREO.abubbles) || [], hops = (CHOREO && CHOREO.ahops) || [];
   AORDER.forEach((k, i) => {
     const a = ANIMALS[k], u = a.userData; a.visible = !!on; aBubbles[k].visible = false; if (!on) return;
-    const A0 = lay[k], A1 = lay2[k], walking = mv > 0 && mv < 1; const x = lerp(A0[0], A1[0], mv), z = lerp(A0[1], A1[1], mv), turn = lerp(A0[2], A1[2], mv), mir = mv < .5 ? A0[3] : A1[3]; a.position.set(x, .12, z); a.rotation.y = turn; a.scale.set(u.base * (mir ? -1 : 1), u.base, u.base);
+    const A0 = lay[k], A1 = lay2[k], walking = mv > 0 && mv < 1; const x = lerp(A0[0], A1[0], mv), z = lerp(A0[1], A1[1], mv), turn = lerp(A0[2], A1[2], mv), mir = mv < .5 ? A0[3] : A1[3]; a.position.set(x, .12, z); a.rotation.y = turn; const bs = u.base * AS; a.scale.set(bs * (mir ? -1 : 1), bs, bs);
     const bp = song ? (t - song.start) / (60 / song.bpm) : 0, b = Math.abs(Math.sin(Math.PI * bp));
     let bob = Math.sin(t * 2 + i) * .02, nod = Math.sin(t * .8 + i) * .05, sway = 0, hop = 0;
     if (dancing) { bob = b * (k === 'chicken' ? .35 : .18); nod = Math.sin(Math.PI * bp) * .22; sway = Math.sin(Math.PI * bp * .5) * .12; }
@@ -700,7 +713,7 @@ function animalsUpdate(t) {
     const bl = ((t + i * 1.3) % 3.9) < .12 ? .1 : 1; u.eyes.forEach(e => e.scale.y = bl);
     const bb = bubs.filter(x => x.k === k && t >= x.t0 && t < x.t0 + x.d).pop();
     if (bb) { setABubble(k, bb.text); const g = aBubbles[k]; g.visible = true; const s = pop(t, bb.t0, .4) * Math.min(1, clamp((bb.t0 + bb.d - t) / .25));
-      g.scale.setScalar(Math.max(s, .001)); g.position.set(x, (k === 'chicken' ? 1.9 : 3.3) + hop, z + .6); }
+      g.scale.setScalar(Math.max(s, .001)); g.position.set(x, ((k === 'chicken' ? 1.9 : 3.3) + hop) * AS, z + .6); }
   });
 }
 
@@ -1019,6 +1032,210 @@ Object.assign(SCENES, {
       camTo(0, 5.1, 19, 0, 4.8, 0);
       const fin = t > P(3) - .3;
       kokeb.position.set(fin ? -5.2 : 10.2, fin ? 6.4 : 9.0, 0); kokeb.scale.setScalar(fin ? 1.4 : .75);
+      kokeb.update(t, CTX.amp(t), { wave: t > CTX.voiceEnd - 2.5, jump: fin ? Math.abs(Math.sin(t * 3)) * .25 : 0 });
+      const out = ease(pr(t, P(3) - .3, .5));
+      cards.forEach((c, i) => { show(c, pop(t, P(i) + .3) * (1 - out)); c.rotation.y = Math.sin(t + i) * .04; });
+      show(end, pop(t, P(3))); sub.scale.setScalar(1 + Math.max(0, Math.sin(t * 5)) * .06 * (t > P(3) + .5 ? 1 : 0));
+      conf(t, CTX.voiceEnd - 2.5);
+    };
+  },
+});
+
+// ---------- maths scenes (data-driven, from the storyboard "data") ----------
+const fmt = n => Number(n).toLocaleString('en-US');
+const HOUSES = () => CTX.lang === 'am' ? ['ሺዎች', 'መቶዎች', 'አስሮች', 'አንዶች'] : ['Thousands', 'Hundreds', 'Tens', 'Ones'];
+const CX4 = [-4.5, -1.5, 1.5, 4.5];
+function crocMouth(col = '#3fa34d') { // the "hungry mouth" of < and >: it always opens towards the bigger number
+  const g = new THREE.Group(), m = mat(col, { roughness: .5 }), tooth = M('#ffffff');
+  const up = new THREE.Group(), lo = new THREE.Group(); g.add(up, lo);
+  up.add(part(new RoundedBoxGeometry(1.8, .38, .9, 3, .15), m, .9, .19, 0)); lo.add(part(new RoundedBoxGeometry(1.8, .38, .9, 3, .15), m, .9, -.19, 0));
+  for (let i = 0; i < 4; i++) { const a = part(new THREE.ConeGeometry(.09, .2, 6), tooth, .5 + i * .35, -.08, .3); a.rotation.x = Math.PI; up.add(a); lo.add(part(new THREE.ConeGeometry(.09, .2, 6), tooth, .5 + i * .35, .08, .3)); }
+  const eyes = eyePair(up, .22, .48, .2, .14); eyes.forEach(e => e.position.x += .35);
+  g.userData = { up, lo }; return g;
+}
+Object.assign(SCENES, {
+  houses() {
+    const n = CTX.data.n, digs = n.split(''), H4 = HOUSES(), vals = digs.map((d, i) => fmt(+d * 10 ** (3 - i)));
+    const hs = digs.map((d, i) => { const g = house(2.6, 2.0, 1.6, ['#ffe0a8', '#cfe8ff', '#d8f0d0', '#ffd6e0'][i], COLS[i]); const s = signBoard(H4[i], 2.6); s.position.set(0, 3.7, .3); g.add(s); g.position.set(CX4[i], .25, -.6); root.add(g); return g; });
+    const num = board(5.2, 1.5, fmt(n), { size: 140, color: '#fff3c4' }); num.position.set(0, 9.0, 0); root.add(num);
+    const db = digs.map((d, i) => { const b = block(1.15, 1.3, .6, '#ffffff', d, { tc: COLS[i], size: 170 }); root.add(b); return b; });
+    const vb = vals.map((v, i) => { const b = block(2.3, 1.0, .5, COLS[i], v, { size: 110 }); b.position.set(CX4[i], 6.0, .4); root.add(b); return b; });
+    const exp = board(13.6, 1.5, fmt(n) + ' = ' + vals.join(' + '), { size: 120, color: '#e6f4ea' }); exp.position.set(0, 7.5, .6); root.add(exp);
+    const zero = board(12.4, 1.4, T('7 hundreds + 8 ones = 708   (0 tens!)', '7 መቶዎች + 8 አንዶች = 708   (0 አስሮች!)'), { size: 100, color: '#fff3c4' }); zero.position.set(0, 9.0, .8); root.add(zero);
+    return t => {
+      camTo(0, 5.4, 19.8, 0, 4.9, 0);
+      kokeb.position.set(-10.4, 9.2, 0); kokeb.scale.setScalar(.8); kokeb.update(t, CTX.amp(t));
+      show(num, pop(t, .3) * (1 - ease(pr(t, P(4) - .2, .3))));
+      hs.forEach((h, i) => { show(h, pop(t, .6 + i * .2)); h.position.y = .25 + (t > P(2) + i * .7 && t < P(2) + i * .7 + .6 ? Math.sin((t - P(2) - i * .7) / .6 * Math.PI) * .5 : 0); });
+      db.forEach((b, i) => { const s0 = P(1) + 1.2 + i * Math.max(.6, (SEGEND(1) - P(1) - 1.5) / 4); const k = ease(pr(t, s0, .9));
+        const x0 = -1.2 + i * .8, y0 = 9.0; b.position.set(lerp(x0 * 1.5, CX4[i], k), lerp(y0, 1.15, k) + Math.sin(k * Math.PI) * 2.2, lerp(.3, 1.4, k)); b.rotation.y = k * Math.PI * 2; show(b, t > P(1) ? 1 : pop(t, .5) * 0); });
+      vb.forEach((b, i) => show(b, pop(t, P(2) + .2 + i * Math.max(.6, (SEGEND(2) - P(2) - .5) / 4)) * (1 - ease(pr(t, P(3) - .2, .3)))));
+      show(exp, pop(t, P(3) + .3) * (1 - ease(pr(t, P(4) - .2, .3))));
+      show(zero, pop(t, P(4) + .2));
+      const z = t > P(4) + .2; db[0].visible = db[0].visible && !z; db[1].userData.label.visible = true;
+      if (z) { [['7', 1], ['0', 2], ['8', 3]].forEach(([d, i]) => { const b = db[i]; if (b.userData.zd !== d) { b.userData.zd = d; b.remove(b.userData.label); const l = label(d, 1.3 * .72, { color: d === '0' ? '#9aa1ab' : COLS[i], size: 170, pad: 10 }); l.position.z = .32; b.add(l); b.userData.label = l; } }); }
+    };
+  },
+  compare4() {
+    const A = CTX.data.a, B = CTX.data.b, H4 = HOUSES();
+    let d = 0; while (d < 4 && A[d] === B[d]) d++;
+    const heads = H4.map((h, i) => { const b = block(2.5, .8, .3, COLS[i], h, { size: 80 }); b.position.set(CX4[i], 8.1, 0); root.add(b); return b; });
+    const ra = A.split('').map((c, i) => { const b = block(1.8, 1.9, .9, '#ffffff', c, { tc: C.blue, size: 170 }); b.position.set(CX4[i], 6.3, 0); root.add(b); return b; });
+    const rb = B.split('').map((c, i) => { const b = block(1.8, 1.9, .9, '#ffffff', c, { tc: C.orange, size: 170 }); b.position.set(CX4[i], 3.8, 0); root.add(b); return b; });
+    const frame = part(new RoundedBoxGeometry(2.4, 5.0, .2, 3, .1), mat('#ffe066', { transparent: true, opacity: .5, emissive: '#ffd000', emissiveIntensity: .4 })); frame.position.set(CX4[0], 5.05, -.6); root.add(frame);
+    const marks = [0, 1, 2, 3].map(i => { const txt = i < d ? '=' : i === d ? `${A[i]} ${A[i] < B[i] ? '<' : '>'} ${B[i]}` : ''; const b = block(i < d ? 1.2 : 2.4, .9, .4, i < d ? C.green : C.red, txt || ' ', { size: 130 }); b.position.set(CX4[i], 2.2, .9); root.add(b); return b; });
+    const ans = new THREE.Group(); ans.position.set(0, 9.4, .6); root.add(ans);
+    const la = block(3.6, 1.4, .5, '#ffffff', fmt(A), { tc: C.blue, size: 140 }), lb = block(3.6, 1.4, .5, '#ffffff', fmt(B), { tc: C.orange, size: 140 }); la.position.x = -4.0; lb.position.x = 4.0; ans.add(la, lb);
+    const croc = crocMouth(); ans.add(croc); const big = A < B ? 1 : -1; croc.scale.set(big * 1.5, 1.5, 1.5); croc.position.x = -big * 1.35;
+    return t => {
+      camTo(0, 5.6, 20, 0, 5.2, 0);
+      kokeb.position.set(-10.4, 9.0, 0); kokeb.scale.setScalar(.8); kokeb.update(t, CTX.amp(t));
+      heads.forEach((b, i) => show(b, pop(t, .2 + i * .1)));
+      ra.forEach((b, i) => show(b, pop(t, .4 + i * .12))); rb.forEach((b, i) => show(b, pop(t, .8 + i * .12)));
+      let col = -1; for (let i = 1; i <= 3; i++) if (t > P(i) - .2) col = i - 1;
+      frame.visible = col >= 0 && t < P(4); if (col >= 0) frame.position.x = lerp(CX4[Math.max(0, col - 1)], CX4[col], ease(pr(t, P(col + 1) - .2, .5))); frame.material.color.set(col === d ? '#ff9a8a' : '#ffe066');
+      marks.forEach((m, i) => show(m, i <= d ? pop(t, P(Math.min(i + 1, 3)) + .9 + (i > 2 ? .6 : 0)) * (1 - ease(pr(t, P(4) - .2, .3))) : 0));
+      const bz = col === d ? Math.abs(Math.sin((t - P(3)) * 6)) * .3 : 0; ra[d].position.y = 6.3 + bz; rb[d].position.y = 3.8 + bz;
+      show(ans, pop(t, P(4) + .3)); const ch = Math.abs(Math.sin(t * 5)) * .35 + .1; croc.userData.up.rotation.z = ch; croc.userData.lo.rotation.z = -ch;
+      heads.forEach(h => h.visible = h.visible && t < P(4));
+    };
+  },
+  roundg() {
+    const { n, lo, hi, look } = CTX.data, unit = hi - lo, x0 = -7.5, step = 1.5, xOf = v => x0 + (v - lo) / (unit / 10) * step, digs = String(n).split('');
+    const line = part(new RoundedBoxGeometry(16.2, .25, .5, 3, .1), M(C.ink), 0, 3, 0); root.add(line);
+    for (let i = 0; i <= 10; i++) root.add(part(new THREE.BoxGeometry(.12, i % 5 ? .55 : 1, .3), M(C.ink), x0 + i * step, 3, 0));
+    const lbl = [lo, lo + unit / 2, hi].map((v, i) => { const l = label(fmt(v), i === 1 ? .7 : 1, { color: i === 1 ? '#6b7280' : C.ink, size: 130, stroke: 14 }); l.position.set(xOf(v), 1.75, .5); root.add(l); return l; });
+    const hump = part(new THREE.TorusGeometry(1.3, .18, 12, 40, Math.PI), M('#f4a261'), xOf(lo + unit / 2), 3.1, 0); root.add(hump);
+    const ball = part(new THREE.SphereGeometry(.45, 32, 20), mat(C.red, { roughness: .3 })); root.add(ball);
+    const pin = label(fmt(n), .8, { color: C.red, size: 120, stroke: 14 }); root.add(pin);
+    const db = digs.map((d, i) => { const b = block(1.3, 1.5, .7, '#ffffff', d, { tc: i === look ? C.red : C.ink, size: 170 }); b.position.set(-4.6 + i * 1.5, 8.8, 0); root.add(b); return b; });
+    const q = label(T('→ nearest ' + unit, '→ ወደ ቅርብ ' + unit), .95, { color: C.ink, size: 110, stroke: 14 }); q.position.set(3.4, 8.8, .4); root.add(q);
+    const stay = block(4.4, 1.2, .5, C.green, T('0–4: stay ↓', '0–4፦ ባለበት ↓'), { size: 110 }); stay.position.set(-4.6, 5.8, 0); root.add(stay);
+    const up = block(4.4, 1.2, .5, C.orange, T('5–9: go up ↑', '5–9፦ ወደ ላይ ↑'), { size: 110 }); up.position.set(4.6, 5.8, 0); root.add(up);
+    const goes = digs[look] >= 5 ? hi : lo;
+    const ans = board(8.4, 1.5, fmt(n) + ' ≈ ' + fmt(goes), { size: 140, color: '#fff3c4' }); ans.position.set(0, 5.8, .8); root.add(ans);
+    return t => {
+      camTo(0, 5.2, 19.5, 0, 4.8, 0);
+      kokeb.position.set(10.2, 8.6, 0); kokeb.scale.setScalar(.85); kokeb.update(t, CTX.amp(t));
+      db.forEach((b, i) => show(b, pop(t, .3 + i * .12))); show(q, pop(t, .9));
+      const g = ease(pr(t, P(2), .5)); db[look].position.y = 8.8 + g * .5; db[look].rotation.z = Math.sin(t * 8) * .1 * g * (t < P(3) ? 1 : 0);
+      lbl.forEach((l, i) => show(l, i === 1 ? pop(t, P(3)) : pop(t, P(1) + i * .2))); show(hump, pop(t, P(3)));
+      show(stay, pop(t, P(3) + .6) * (1 - ease(pr(t, P(4) - .3, .4)))); show(up, pop(t, P(3) + 1.4) * (1 - ease(pr(t, P(4) - .3, .4))));
+      const roll = ease(pr(t, P(4) - .3, 2.0)); const bx = lerp(xOf(n), xOf(goes), roll), by = 3.6 + Math.abs(Math.sin(roll * Math.PI * 3)) * .6 * (1 - roll);
+      ball.position.set(bx, by, 0); ball.rotation.z = -roll * 12; show(ball, pop(t, P(1) + .4));
+      pin.position.set(bx, by + 1.0, .3); show(pin, pop(t, P(1) + .6) * (1 - ease(pr(t, P(4) - .3, .4))));
+      show(ans, pop(t, P(4) + 1.6));
+    };
+  },
+  quizq() {
+    const q = board(6.8, 2.6, CTX.lang === 'am' ? CTX.data.qam : CTX.data.q, { size: 110 }); q.position.set(-3.6, 7.3, 0); root.add(q);
+    const big = block(7.6, 2.0, .8, C.purple, CTX.data.big, { size: 140 }); big.position.set(.5, 3.6, .5); root.add(big);
+    const ring = new THREE.Group(); ring.position.set(4.8, 7.3, 0); root.add(ring);
+    ring.add(part(new THREE.TorusGeometry(1.1, .16, 12, 64), M('#dfe5ee')));
+    let arc = null; const nums = [5, 4, 3, 2, 1].map(n => { const l = label(String(n), 1.3, { color: C.red, size: 180 }); l.position.z = .1; ring.add(l); return l; });
+    const tEnd = CTX.voiceEnd;
+    return t => {
+      camTo(0, 5.2, 19.5, 0, 5.0, 0);
+      kokeb.position.set(-10.2, 8.9, 0); kokeb.scale.setScalar(.85); kokeb.update(t, CTX.amp(t), { spin: Math.sin(t * .7) * .3 });
+      show(q, pop(t, .3)); show(big, pop(t, .8)); big.rotation.y = Math.sin(t * 1.4) * .1;
+      const c = t - tEnd; show(ring, pop(t, tEnd - .2));
+      if (arc) { ring.remove(arc); arc.geometry.dispose(); }
+      arc = part(new THREE.TorusGeometry(1.1, .17, 12, 64, Math.max(.001, (1 - clamp(c / 5)) * Math.PI * 2)), M(C.red)); arc.rotation.z = Math.PI / 2; arc.position.z = .05; ring.add(arc);
+      nums.forEach((l, i) => l.visible = c >= i && c < i + 1);
+    };
+  },
+  answerq() {
+    const big = block(9.6, 2.2, .8, C.green, CTX.data.big, { size: 140 }); big.position.set(0, 6.6, 0); root.add(big);
+    const note = board(7.2, 1.4, CTX.lang === 'am' ? CTX.data.noteam : CTX.data.note, { size: 100, color: '#fff3c4' }); note.position.set(0, 3.9, .6); root.add(note);
+    const conf = confetti(90, 17);
+    return t => {
+      camTo(0, 5.2, 19.5, 0, 5.0, 0);
+      kokeb.position.set(-10.2, 8.6, 0); kokeb.scale.setScalar(1.0); kokeb.update(t, CTX.amp(t), { jump: Math.abs(Math.sin(t * 5)) * .6 * (t < 2.4 ? 1 : 0), spin: ease(pr(t, 0, 1.2)) * Math.PI * 2 });
+      show(big, pop(t, .2)); big.scale.multiplyScalar(1 + Math.max(0, Math.sin(t * 4)) * .05 * (t < 3 ? 1 : 0)); show(note, pop(t, 1.0)); conf(t, .2);
+    };
+  },
+  column() {
+    const A = CTX.data.a.split('').map(Number), B = CTX.data.b.split('').map(Number), add = CTX.data.op === '+';
+    const top = A.slice(), res = [], carry = [0, 0, 0, 0], borrowed = [false, false, false, false], lent = [false, false, false, false];
+    if (add) { let c = 0; for (let i = 3; i >= 0; i--) { const s = A[i] + B[i] + c; res[i] = s % 10; c = s >= 10 ? 1 : 0; if (i > 0) carry[i - 1] = c; } }
+    else { for (let i = 3; i >= 0; i--) { if (top[i] < B[i]) { top[i - 1] -= 1; top[i] += 10; borrowed[i] = true; lent[i - 1] = true; } res[i] = top[i] - B[i]; } }
+    const H4 = HOUSES().map(h => h.slice(0, CTX.lang === 'am' ? 9 : 4) + (CTX.lang === 'am' ? '' : '.'));
+    const XC = [-3.3, -1.1, 1.1, 3.3], YA = 6.2, YB = 4.5, YR = 2.2;
+    const heads = HOUSES().map((h, i) => { const b = block(2.0, .7, .3, COLS[i], h, { size: 66 }); b.position.set(XC[i], 8.2, 0); root.add(b); return b; });
+    const ra = A.map((d, i) => { const b = block(1.6, 1.5, .6, '#ffffff', String(d), { tc: C.blue, size: 160 }); b.position.set(XC[i], YA, 0); root.add(b); return b; });
+    const rb = B.map((d, i) => { const b = block(1.6, 1.5, .6, '#ffffff', String(d), { tc: C.orange, size: 160 }); b.position.set(XC[i], YB, 0); root.add(b); return b; });
+    const sign = label(add ? '+' : '−', 1.6, { color: C.ink, size: 200 }); sign.position.set(-5.3, YB, .4); root.add(sign);
+    const bar = part(new RoundedBoxGeometry(9.6, .16, .3, 2, .06), M(C.ink), -.4, 3.45, 0); root.add(bar);
+    const rr = res.map((d, i) => { const b = block(1.6, 1.5, .6, '#fff3c4', String(d), { tc: C.green, size: 160 }); b.position.set(XC[i], YR, .2); root.add(b); return b; });
+    const smalls = [0, 1, 2, 3].map(i => { // carried 1 (addition) or new digit after lending (subtraction)
+      const txt = add ? (carry[i] ? '1' : '') : (lent[i] ? String(top[i] + (borrowed[i] ? -10 : 0)) : '');
+      const b = block(.75, .75, .3, add ? C.red : C.purple, txt || ' ', { size: 120 }); b.position.set(XC[i] + (add ? 0 : .35), 7.35, .5); root.add(b); return b; });
+    const slashes = [0, 1, 2, 3].map(i => { const s = part(new THREE.BoxGeometry(1.7, .14, .1), M(C.red), XC[i], YA, .45); s.rotation.z = .8; root.add(s); return s; });
+    const tens = [0, 1, 2, 3].map(i => { const b = block(.9, .75, .3, C.purple, borrowed[i] ? String(top[i]) : ' ', { size: 120 }); b.position.set(XC[i] - .35, 7.35, .5); root.add(b); return b; });
+    const frame = part(new RoundedBoxGeometry(2.0, 6.2, .2, 3, .1), mat('#ffe066', { transparent: true, opacity: .45, emissive: '#ffd000', emissiveIntensity: .4 }), XC[3], 4.6, -.6); root.add(frame);
+    const segOf = [3, 3, 2, 1]; // column -> segment it is worked in (ones in 1, tens in 2, hundreds+thousands in 3)
+    const colT = i => i === 3 ? P(1) : i === 2 ? P(2) : i === 1 ? P(3) : (P(3) + SEGEND(3)) / 2;
+    const fmtN = a => fmt(+a.join(''));
+    const fin = board(12.4, 1.5, add ? `${fmtN(A)} + ${fmtN(B)} = ${fmtN(res)}` : T(`Check: ${fmtN(res)} + ${fmtN(B)} = ${fmtN(A)} ✓`, `ማረጋገጫ፦ ${fmtN(res)} + ${fmtN(B)} = ${fmtN(A)} ✓`), { size: 120, color: '#e6f4ea' }); fin.position.set(0, 9.3, .6); root.add(fin);
+    return t => {
+      camTo(0, 5.4, 19.6, 0, 5.0, 0);
+      kokeb.position.set(-10.3, 8.9, 0); kokeb.scale.setScalar(.8); kokeb.update(t, CTX.amp(t));
+      heads.forEach((b, i) => show(b, pop(t, .3 + i * .1)));
+      ra.forEach((b, i) => show(b, pop(t, .6 + i * .12))); rb.forEach((b, i) => show(b, pop(t, 1.0 + i * .12))); show(sign, pop(t, 1.5)); show(bar, pop(t, 1.7));
+      let cur = -1; [3, 2, 1, 0].forEach(i => { if (t > colT(i) - .2) cur = i; });
+      frame.visible = cur >= 0 && t < P(4); if (cur >= 0) frame.position.x = XC[cur];
+      [0, 1, 2, 3].forEach(i => {
+        const t0 = colT(i), work = t > t0 && t < (i ? colT(i - 1) : P(4)) - .2;
+        ra[i].position.y = YA + (work ? Math.abs(Math.sin((t - t0) * 4)) * .15 : 0);
+        show(rr[i], pop(t, t0 + Math.min(2.4, (SEGEND(segOf[i]) - t0) * .55)));
+        if (add) { // carried 1 flies from this column's answer up to the top of the next column
+          if (i > 0 && carry[i - 1]) { const s = smalls[i - 1], k = ease(pr(t, t0 + 2.6, .8)); s.visible = t > t0 + 2.6; s.position.set(lerp(XC[i], XC[i - 1], k), lerp(YR, 7.35, k) + Math.sin(k * Math.PI) * 1.2, .5); s.scale.setScalar(1); }
+        }
+      });
+      if (!add) { // regroup: the next house lends 1 (its digit is crossed out and lowered), this house gets 10 more
+        const sl = [0, 0, 0, 0], sm = [0, 0, 0, 0], tn = [0, 0, 0, 0];
+        [1, 2, 3].forEach(i => { if (!borrowed[i]) return; const tb = colT(i) + .6;
+          sl[i - 1] = Math.max(sl[i - 1], pop(t, tb)); sm[i - 1] = pop(t, tb + .4); tn[i] = pop(t, tb + 1.0); sl[i] = Math.max(sl[i], pop(t, tb + 1.0)); });
+        slashes.forEach((x, i) => show(x, sl[i])); smalls.forEach((x, i) => show(x, sm[i])); tens.forEach((x, i) => show(x, tn[i]));
+      }
+      if (add) { smalls.forEach((s, i) => { if (!carry[i]) s.visible = false; }); slashes.forEach(x => x.visible = false); tens.forEach(x => x.visible = false); }
+      show(fin, pop(t, P(4) + (add ? .5 : 2.6)));
+    };
+  },
+  wordprob() {
+    const L = CTX.lang === 'am';
+    const q = board(14, 2.5, L ? CTX.data.textam : CTX.data.text, { size: 100, color: '#ffffff' }); q.position.set(0, 8.8, 0); root.add(q);
+    const opb = block(4.4, 1.1, .5, C.red, L ? CTX.data.opam : CTX.data.op, { size: 100 }); opb.position.set(0, 6.6, .4); root.add(opb);
+    const est = block(8.8, 1.2, .5, C.blue, CTX.data.est, { size: 110 }); est.position.set(0, 5.1, .5); root.add(est);
+    const eq = board(9.6, 1.5, CTX.data.eq, { size: 130, color: '#e6f4ea' }); eq.position.set(0, 3.5, .8); root.add(eq);
+    const chicks = []; const r = rng(23);
+    for (let i = 0; i < 9; i++) { const c = makeChicken(); c.scale.setScalar(.95); c.userData.p = [-5 + (i % 5) * 2.4 + r() * .6, 1.0 + Math.floor(i / 5) * 1.4, r() * 6]; root.add(c); chicks.push(c); }
+    const truck = new THREE.Group(); truck.add(part(new RoundedBoxGeometry(3.2, 1.6, 1.6, 3, .2), mat('#e8873d'), 0, 1.3, 0), part(new RoundedBoxGeometry(1.4, 1.2, 1.5, 3, .2), mat(C.blue), 2.2, 1.1, 0));
+    for (const sx of [-1, 1.8]) for (const sz of [-.8, .8]) { const w = part(new THREE.CylinderGeometry(.38, .38, .25, 20), M('#333'), sx, .4, sz); w.rotation.x = Math.PI / 2; truck.add(w); }
+    const sold = label(L ? 'ተሸጡ' : 'sold', .7, { color: '#ffffff', size: 100, bg: C.red, pad: 20, radius: 30 }); sold.position.set(0, 2.6, .9); truck.add(sold);
+    truck.position.set(14, .25, 1.2); root.add(truck);
+    return t => {
+      camTo(0, 5.4, 19.8, 0, 5.0, 0);
+      kokeb.position.set(10.4, 9.4, 0); kokeb.scale.setScalar(.7); kokeb.update(t, CTX.amp(t));
+      show(q, pop(t, .3));
+      const go = pr(t, P(1) - .2, 3.0), tk = ease(pr(t, P(1) - 1.4, 1.2)) - ease(pr(t, P(1) + 1.8, 1.4));
+      truck.position.x = lerp(14, 5.2, ease(pr(t, P(1) - 1.4, 1.2))) + ease(pr(t, P(1) + 1.8, 1.4)) * 12; truck.visible = t > P(1) - 1.5;
+      chicks.forEach((c, i) => { const [x, z, ph] = c.userData.p, leaving = i >= 5, k = leaving ? ease(pr(t, P(1) + .2 + (i - 5) * .25, 1.2)) : 0, gone = leaving && t > P(1) + 1.8;
+        c.position.set(gone ? truck.position.x : lerp(x, 4.6, k), .25 + Math.abs(Math.sin(t * 6 + ph)) * .12 * (k > 0 && k < 1 ? 3 : 1), lerp(z, 1.2, k)); c.rotation.y = k > 0 && k < 1 ? Math.PI / 2 : Math.sin(t + ph) * .6;
+        c.visible = !gone; show(c, gone ? 0 : pop(t, .4 + i * .08)); c.userData.head.position.y = 1.05 - Math.max(0, Math.sin(t * 2.3 + ph)) * .25; });
+      show(opb, pop(t, P(1) + 1.2)); show(est, pop(t, P(2) + .5)); show(eq, pop(t, P(3) + .5));
+    };
+  },
+  recapd() {
+    const cards = CTX.data.cards.map(([he, ha, be, ba, col], i) => { const g = new THREE.Group(); const c = board(11.2, 2.0, T(he, ha) + '\n' + T(be, ba), { size: 76, color: '#ffffff' }); g.add(c); const strip = part(new RoundedBoxGeometry(.35, 2.0, .34, 3, .1), mat(col)); strip.position.x = -5.6; g.add(strip); g.position.set(0, 8.4 - i * 2.35, 0); root.add(g); return g; });
+    const end = new THREE.Group(); end.position.set(1.6, 6.4, 1.2); root.add(end);
+    end.add(board(9.5, 2.0, 'AMBKidsJoy', { size: 160, color: '#ffffff', tc: C.blue }));
+    const sub = block(5.2, 1.4, .5, '#e62117', T('▶ Subscribe', '▶ ሰብስክራይብ'), { size: 120 }); sub.position.set(0, -2.1, .2); end.add(sub);
+    const conf = confetti(80, 19);
+    return t => {
+      camTo(0, 5.1, 19, 0, 4.8, 0);
+      const fin = t > P(3) - .3;
+      kokeb.position.set(fin ? -5.2 : 10.2, fin ? 6.6 : 9.0, 0); kokeb.scale.setScalar(fin ? 1.4 : .75);
       kokeb.update(t, CTX.amp(t), { wave: t > CTX.voiceEnd - 2.5, jump: fin ? Math.abs(Math.sin(t * 3)) * .25 : 0 });
       const out = ease(pr(t, P(3) - .3, .5));
       cards.forEach((c, i) => { show(c, pop(t, P(i) + .3) * (1 - out)); c.rotation.y = Math.sin(t + i) * .04; });
