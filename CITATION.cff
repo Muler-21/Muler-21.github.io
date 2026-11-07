@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+message: "If you use AMBKidsJoy (the learning hub, its 3D lesson videos or its songs), please cite it as below. More formats: https://muler-21.github.io/AMBKidsJoy/cite.html"
+title: "AMBKidsJoy: A free bilingual Amharic–English interactive learning hub for Grades 1–7"
+abstract: "Free, bilingual (Amharic/English) interactive learning hub and 3D animated lesson videos for children, built on the Grade 1–7 curriculum of the Amhara Region, Ethiopia, with original characters, songs and music."
+type: software
+authors:
+  - family-names: Bitew
+    given-names: Mulusew Kassa
+    orcid: "https://orcid.org/0000-0001-6223-0037"
+license: CC-BY-NC-SA-4.0
+url: "https://muler-21.github.io/AMBKidsJoy/"
+repository-code: "https://github.com/Muler-21/muler-21.github.io"
+date-released: "2026-11-07"
+keywords:
+  - education
+  - Amharic
+  - Ethiopia
+  - bilingual learning
+  - children
+  - 3D animation
+  - open educational resources
+references:
+  - type: book
+    title: "Student books, Grades 1–7 (Amharic-medium subjects)"
+    authors:
+      - name: "Amhara National Regional State Education Bureau"
+    publisher:
+      name: "Amhara National Regional State Education Bureau"
+    year: 2022
+    notes: "© 2015 E.C.; prepared in collaboration with the Amhara Council of Scholars. Chapter structure and learning goals followed; copyright remains with the Bureau."
+  - type: book
+    title: "English student books, Grades 1–7"
+    authors:
+      - name: "Ministry of Education, Federal Democratic Republic of Ethiopia"
+    publisher:
+      name: "Ministry of Education, Federal Democratic Republic of Ethiopia"
+    notes: "English units and the Grade 3 English video follow these books; copyright remains with the Ministry."
+  - type: software
+    title: "three.js"
+    authors:
+      - name: "three.js authors"
+    version: "r160"
+    license: MIT
+    url: "https://threejs.org"

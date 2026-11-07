@@ -33,6 +33,33 @@
 
 **Mulusew Kassa Bitew (PhD)**, researcher and educator, made AMBKidsJoy so that every child can learn with joy. [GitHub](https://muler-21.github.io/) · [Subscribe on YouTube](https://www.youtube.com/@kidseducation9276?sub_confirmation=1)
 
+## How to cite
+
+If you use AMBKidsJoy in teaching, research or your own materials, please cite it:
+
+> Bitew, M. K. (2026). *AMBKidsJoy: A free bilingual Amharic–English interactive learning hub for Grades 1–7* [Web application]. https://muler-21.github.io/AMBKidsJoy/
+
+```bibtex
+@misc{bitew2026ambkidsjoy,
+  author       = {Bitew, Mulusew Kassa},
+  title        = {{AMBKidsJoy}: A free bilingual {Amharic}--{English} interactive learning hub for Grades 1--7},
+  year         = {2026},
+  howpublished = {Web application},
+  url          = {https://muler-21.github.io/AMBKidsJoy/},
+  note         = {ORCID: 0000-0001-6223-0037. Licensed CC BY-NC-SA 4.0}
+}
+```
+
+Formats for chapters, videos and songs, plus the attribution line to use when you adapt the material: **https://muler-21.github.io/AMBKidsJoy/cite.html**. On GitHub, the "Cite this repository" button gives APA and BibTeX from `CITATION.cff`.
+
+## Sources
+
+- Amhara National Regional State Education Bureau, in collaboration with the Amhara Council of Scholars: student books, Grades 1–7 (© 2015 E.C., 2022/23; Ge'ez Grade 4 © 2017 E.C.). Chapter structure, learning goals and examples follow these books; they remain the Bureau's copyright.
+- Ministry of Education, Federal Democratic Republic of Ethiopia: English student books, Grades 1–7.
+- Joyful English: free resources catalogued and linked in `joyful/book/`.
+- Tools: three.js (MIT), Baloo 2 and Noto Sans Ethiopic fonts (SIL OFL 1.1), Microsoft Edge neural voices via edge-tts (LGPL-3.0), FFmpeg, Playwright, GoatCounter.
+- Characters, 3D scenes, song lyrics and music are original to AMBKidsJoy. Nothing is taken from other channels.
+
 ## What is inside (Grade 3)
 
 | Subject | Chapters |
